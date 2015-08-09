@@ -6,6 +6,12 @@ ln -s "$DIR/.vimrc" "$HOME/.vimrc"
 ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
 ln -s "$DIR/.zshrc" "$HOME/.zshrc"
 ln -s "$DIR/.i3" "$HOME/.i3"
+test -d "$HOME/.config" || mkdir "$HOME/.config"
+cp "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
+echo -n "latitude:  " && read LAT
+echo -n "longitude: " && read LON
+echo "lat=$LAT" >> "$HOME/.config/redshift.conf"
+echo "lon=$LON" >> "$HOME/.config/redshift.conf"
 
 GIT=false
 which git > /dev/null && GIT=true
