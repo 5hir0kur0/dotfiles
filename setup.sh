@@ -5,7 +5,7 @@ DIR="$(pwd)"
 ln -s "$DIR/.vimrc" "$HOME/.vimrc"
 ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
 ln -s "$DIR/.zshrc" "$HOME/.zshrc"
-ln -s "$DIR/.i3" "$HOME/.i3"
+ln -s "$DIR/.i3" "$HOME"
 test -d "$HOME/.config" || mkdir "$HOME/.config"
 cp "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
 echo -n "latitude:  " && read LAT
