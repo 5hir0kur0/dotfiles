@@ -1,7 +1,7 @@
 general {
         output_format = "i3bar"
         colors = true
-        interval = 5
+        interval = 1
 }
 
 #order += "ipv6"
@@ -12,6 +12,7 @@ order += "disk /"
 order += "ethernet eth0"
 #order += "battery 0"
 order += "cpu_temperature 0"
+order += "cpu_usage"
 order += "volume master"
 #order += "load"
 #order += "tztime tokyo"
@@ -61,6 +62,10 @@ volume master {
 #load {
         #format = "%5min"
 #}
+
+cpu_usage {
+        format = "CPU: %usage%%"
+}
 
 cpu_temperature 0 {
         format = "T: %degrees °C"
