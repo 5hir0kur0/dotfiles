@@ -1,0 +1,4 @@
+colorscheme darkness
+noremap <C-+> zI
+noremap <C--> zO
+noremap <C-0> zz
