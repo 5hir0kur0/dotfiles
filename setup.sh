@@ -2,20 +2,36 @@
 
 DIR="$(pwd)"
 
-ln -s "$DIR/.vimrc" "$HOME/.vimrc"
-ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
-ln -s "$DIR/.zshrc" "$HOME/.zshrc"
-ln -s "$DIR/.tmux.conf" "$HOME/.tmux.conf"
-ln -s "$DIR/.i3" "$HOME"
-test -d "$HOME/.config" || mkdir "$HOME/.config"
-cp "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
-echo -n "latitude:  " && read LAT
-echo -n "longitude: " && read LON
-echo "lat=$LAT" >> "$HOME/.config/redshift.conf"
-echo "lon=$LON" >> "$HOME/.config/redshift.conf"
+[ -f "$HOME/.vimrc" ]             || ln -s "$DIR/.vimrc" "$HOME/.vimrc"
+[ -f "$HOME/.bashrc" ]            || ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
+[ -f "$HOME/.zshrc" ]             || ln -s "$DIR/.zshrc" "$HOME/.zshrc"
+[ -f "$HOME/.tmux.conf" ]         || ln -s "$DIR/.tmux.conf" "$HOME/.tmux.conf"
+[ -d "$HOME/.i3" ]                || ln -s "$DIR/.i3" "$HOME"
+[ -f "$HOME/.vimperatorrc" ]      || ln -s "$DIR/vimperator/.vimperattorrc" "$HOME"
+[ -d "$HOME/.config" ]            || mkdir "$HOME/.config"
+[ -d "$HOME/.vimperator" ]        || mkdir "$HOME/.vimperator"
+[ -d "$HOME/.vimperator/colors" ] || mkdir "$HOME/.vimperator/colors"
 
-GIT=false
-which git > /dev/null && GIT=true
+
+if [ ! -f "$HOME/.vimperator/colors/darkness.vimp" ]; then
+  cp "$DIR/vimperator/darkness.vimp" "$HOME/.vimperator/colors/"
+fi
+
+
+if [ ! -f "$HOME/.config/redshift.conf" ]; then
+  cp "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
+  echo -n "latitude:  " && read LAT
+  echo -n "longitude: " && read LON
+  echo "lat=$LAT" >> "$HOME/.config/redshift.conf"
+  echo "lon=$LON" >> "$HOME/.config/redshift.conf"
+fi
+
+GIT='false'
+which git &> /dev/null && GIT='true'
+if $GIT; then
+  git config --global --list &> /dev/null
+  [ "$?" -eq 0 ] && GIT='false'
+fi
 
 if $GIT; then
   echo 'configuring git...'
@@ -27,5 +43,5 @@ if $GIT; then
   git config --global push.default simple
   git config --global merge.tool vimdiff
 else
-  echo 'git is not installed'
+  echo 'git is not installed or already configured'
 fi
