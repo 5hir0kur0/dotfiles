@@ -273,3 +273,5 @@ exec --no-startup-id ~/.i3/set_wallpaper.sh
 
 #choose a different random wallpaper
 bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
+
+exec --no-startup-id deja-dup
