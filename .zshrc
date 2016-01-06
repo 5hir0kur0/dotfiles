@@ -33,13 +33,12 @@ alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-u
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
 
-alias soundtrack="mplayer -cache 4096 http://hivane01.frequence3.net:80/m2classic-128.mp3"
-alias oosumi="mplayer -cache 4096 http://bbcube.jp:8000/0033FM"
-
-alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip'
-
 function rmbackups() {
     rm ./*~;
+}
+
+function rmbackups_hidden() {
+    rm ./.*~;
 }
 
 function f() {
