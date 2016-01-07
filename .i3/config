@@ -141,7 +141,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit, suspend, shutdown, reboot
 set $exitscript ~/.i3/exit.sh
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '$exitscript suspend' -b 'Shutdown' '$exitscript shutdown' -b 'Reboot' '$exitscript reboot'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '$exitscript suspend' -b 'Shutdown' '$exitscript shutdown' -b 'Reboot' '$exitscript reboot'"
 #lock screen (Mod1 ist Alt)
 bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
 
