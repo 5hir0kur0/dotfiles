@@ -19,15 +19,12 @@ retab
 "<Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
 inoremap { {<CR>}<Esc>O
-inoremap " ""<Esc>i
 
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
 
-colorscheme evening
+colorscheme base16-default
 
 if has("mouse")
   set mouse=a

@@ -2,9 +2,11 @@
 HISTFILE=~/.histfile
 HISTSIZE=4200
 SAVEHIST=4200
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
+bindkey -v #vi mode
+#make backwards search work like in emacs mode
+bindkey '^r' history-incremental-search-backward 
+#enable backwards search by typing / in NORMAL mode
+bindkey -M vicmd '/' history-incremental-search-backward
 zstyle :compinstall filename '/home/nerd/.zshrc'
 
 #autojump
@@ -47,6 +49,14 @@ function f() {
 
 function ff() {
     find . -iname "*$1*";
+}
+
+function fancy_unixtime() {
+     while true; do
+         figlet -tc $(date +%s)
+         sleep 1
+         echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
+    done
 }
 
 #make ctrl - left/right arrow work like in bash

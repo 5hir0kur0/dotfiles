@@ -42,19 +42,18 @@
 *.color15:      base07
 
 ! URxvt config
-URxvt*background: base00
+!URxvt*background: base00
+!URxvt*foreground: base05
 URxvt*inheritPixmap: true
 URxvt*.transparent: true
 ! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-URxvt*.shading: 12
-! Use the specified colour as the windows foreground colour [default Black]
-URxvt*foreground: base05
+URxvt*.shading: 24
 ! Fade the text by the given percentage when focus is lost
 URxvt*fading: 20
 ! Fade to this colour, when fading is used (see fading:). The default colour is
 URxvt*fadeColor: base00
 ! Select the fonts to be used. This is a comma separated list of font names
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=16 
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=14 
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false
@@ -64,8 +63,8 @@ URxvt.secondaryScroll: 0
 URxvt*saveLines: 1000
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
-URxvt.resize-font.smaller: C-Down
-URxvt.resize-font.bigger: C-Up
+URxvt.resize-font.smaller: C-minus
+URxvt.resize-font.bigger: C-plus
 URxvt.perl-ext-common: resize-font
 URxvt.iso14755: false
 URxvt.iso14755_52: false

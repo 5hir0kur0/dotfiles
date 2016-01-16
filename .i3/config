@@ -141,7 +141,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit, suspend, shutdown, reboot
 set $exitscript ~/.i3/exit.sh
-bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '$exitscript suspend' -b 'Shutdown' '$exitscript shutdown' -b 'Reboot' '$exitscript reboot'"
+#bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '/bin/bash $exitscript suspend' -b 'Shutdown' '/bin/bash $exitscript shutdown' -b 'Reboot' '/bin/bash $exitscript reboot'"
 #lock screen (Mod1 ist Alt)
 bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
 
@@ -218,6 +218,20 @@ mode "move" {
 }
 
 bindsym $mod+m mode "move"
+
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id       $exitscript lock, mode "default"
+    bindsym e exec --no-startup-id       $exitscript logout, mode "default"
+    bindsym s exec --no-startup-id       $exitscript suspend, mode "default"
+    bindsym r exec --no-startup-id       "$exitscript reboot", mode "default"
+    bindsym Shift+s exec --no-startup-id $exitscript shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_system"
 
 #set up colors
 set $bg     #2c2c2e
