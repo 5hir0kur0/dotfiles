@@ -3,41 +3,41 @@
 #
 
 super + shift + e
-	pkill -x panel; bspc quit
+        pkill -x panel; bspc quit
 
 # kill active window
 super + shift + q
-	bspc window -c
+        bspc window -c
 
 # next tiling mode
 super + t
-	bspc desktop -l next
+        bspc desktop -l next
 
 # -B / --balance: Adjust split ratios so all windows occupy the same area
 super + b
-	bspc desktop -B
+        bspc desktop -B
 
 # make selected window floating or fullscreen
 super + {shift + f,f}
-	bspc window -t {floating,fullscreen}
+        bspc window -t {floating,fullscreen}
 
 # select last/next desktop
 super + ctrl + Tab
-	bspc desktop -f last
+        bspc desktop -f last
 
 # swap selected window with last selected window
 super + shift + s
-	bspc window -s last
+        bspc window -s last
 
 # focus older/newer windows
 super + {o,i}
-	bspc control --record-history off; \
-	bspc window {older,newer} -f; \
-	bspc control --record-history on
+        bspc control --record-history off; \
+        bspc window {older,newer} -f; \
+        bspc control --record-history on
 
 # swap current window with biggest window
 super + m
-	bspc window -s biggest
+        bspc window -s biggest
 
 # i3-like scratchpad terminal
 super + i
@@ -46,15 +46,15 @@ super + i
             || urxvt -name URxvtQuake -geometry 110x20+297+1 &
 # focus/swap with left,bottom,top,right window
 super + {_,shift + }{h,j,k,l}
-	bspc window -{f,s} {left,down,up,right}
+        bspc window -{f,s} {left,down,up,right}
 
 # cycle through windows
 super + {_,shift + }Tab
-	bspc window -f {next,prev}
+        bspc window -f {next,prev}
 
 # "rotate" window layout (circulate binary tree leaves)
 super + {_,shift + }r
-	bspc desktop -C {forward,backward}
+        bspc desktop -C {forward,backward}
 
 # rotate window orientation
 super + ctrl + {_,shift + }r
@@ -62,38 +62,38 @@ super + ctrl + {_,shift + }r
 
 # previous/next desktop
 super + {p,n}
-	bspc desktop -f {prev,next}
+        bspc desktop -f {prev,next}
 
 # preselect left/bottom/top/right edge of current window
 super + ctrl + {h,j,k,l}
-	bspc window -p {left,down,up,right}
+        bspc window -p {left,down,up,right}
 
 # cancel window/desktop preselection
 super + ctrl + {_,shift + }c
-	bspc {window -p cancel,desktop -c}
+        bspc {window -p cancel,desktop -c}
 
 super + alt + {h,j,k,l}
-	bspc window -e {left -10,down +10,up -10,right +10}
+        bspc window -e {left -10,down +10,up -10,right +10}
 
 super + alt + shift + {h,j,k,l}
-	bspc window -e {right -10,up +10,down -10,left +10}
+        bspc window -e {right -10,up +10,down -10,left +10}
 
 # preselection amout
 # (how much of the current window's area will be replaced by a new one)
 super + ctrl + {1-9}
-	bspc window -r 0.{1-9}
+        bspc window -r 0.{1-9}
 
 # select desktop or move window to desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
+        bspc {desktop -f,window -d} ^{1-9,10}
 
 # mouse click focus
 #~button1
-#	bspc pointer -g focus
+#       bspc pointer -g focus
 
 # start move/resize
 super + button{1-3}
-	bspc pointer -g {resize_corner,move,resize_side}
+        bspc pointer -g {resize_corner,move,resize_side}
 
 # move/resize
 super + !button{1-3}
@@ -101,18 +101,21 @@ super + !button{1-3}
 
 # end move/resize
 super + @button{1-3}
-	bspc pointer -u
+        bspc pointer -u
 
 #
 # wm independent hotkeys
 #
 
 super + Return
-	urxvt
+        urxvt
 
 super + d 
-	dmenu_run
+        dmenu_run
+
+super + shift + w
+        ~/.config/bspwm/set_wallpaper.sh
 
 # make sxhkd reload its configuration files:
 super + shift + c 
-	pkill -USR1 -x sxhkd
+        pkill -USR1 -x sxhkd
