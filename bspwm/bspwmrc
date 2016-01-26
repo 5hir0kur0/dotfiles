@@ -21,4 +21,5 @@ cd ~/.config/bspwm
 pkill -x "redshift-gtk"
 redshift-gtk &
 ./set_wallpaper.sh &
-xrdb ~/.Xresources
+xrdb ~/.Xresources &
+/usr/lib64/gnome-settings-daemon/gnome-settings-daemon &
