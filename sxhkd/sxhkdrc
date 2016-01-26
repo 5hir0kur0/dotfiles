@@ -10,16 +10,16 @@ super + shift + q
         bspc window -c
 
 # next tiling mode
-super + t
+super + w
         bspc desktop -l next
 
 # -B / --balance: Adjust split ratios so all windows occupy the same area
 super + b
         bspc desktop -B
 
-# make selected window floating or fullscreen
-super + {shift + f,f}
-        bspc window -t {floating,fullscreen}
+# make selected window floating, fullscreen or sticky
+super + {shift+f,f,s}
+        bspc window -t {floating,fullscreen,sticky}
 
 # select last/next desktop
 super + ctrl + Tab
