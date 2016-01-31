@@ -21,6 +21,14 @@ super + b
 super + {shift+f,f,s}
         bspc window -t {floating,fullscreen,sticky}
 
+# alternative mapping to make window floating
+super + shift + space
+        bspc window -t floating
+
+# select the last floating window
+super + space
+        bspc window -f last.floating
+
 # select last/next desktop
 super + ctrl + Tab
         bspc desktop -f last
@@ -95,7 +103,7 @@ super + {_,shift + }{1-9,0}
 
 # start move/resize
 super + button{1-3}
-        bspc pointer -g {resize_corner,move,resize_side}
+        bspc pointer -g {move,resize_side,resize_corner}
 
 # move/resize
 super + !button{1-3}
