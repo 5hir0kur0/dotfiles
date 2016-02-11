@@ -74,6 +74,7 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
+bindsym $mod+Ctrl+c move position center
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -122,6 +123,12 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+
+# switch to next/previous workspace
+bindsym $mod+n workspace next_on_output
+bindsym $mod+Shift+n workspace prev_on_output
+bindsym $mod+m workspace next
+bindsym $mod+Shift+m workspace prev
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -189,35 +196,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-mode "move" {
-        bindsym c move position center 
-        
-        bindsym h move left 10 px
-        bindsym j move down 10 px
-        bindsym k move up 10 px
-        bindsym l move right 10 px
-
-        bindsym Shift+h move left 4 px 
-        bindsym Shift+j move down 4 px
-        bindsym Shift+k move up 4 px
-        bindsym Shift+l move right 4 px 
-
-        bindsym Left move left 10 px 
-        bindsym Down move down 10 px
-        bindsym Up move up 10 px
-        bindsym Right move right 10 px 
-
-        bindsym Shift+Left move left 4 px 
-        bindsym Shift+Down move down 4 px 
-        bindsym Shift+Up move up 4 px 
-        bindsym Shift+Right move right 4 px 
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+m mode "move"
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
