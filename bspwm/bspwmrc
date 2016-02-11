@@ -15,4 +15,11 @@ bspc rule -a URxvtQuake sticky=on floating=on
 bspc monitor DVI-I-0 -d VI VII VIII IX X
 bspc monitor HDMI-0 -d I II III IV V
 
-$XDG_CONFIG_HOME/bspwm/panel &
+pkill -x "panel"
+cd ~/.config/bspwm
+./panel &
+pkill -x "redshift-gtk"
+redshift-gtk &
+./set_wallpaper.sh &
+xrdb ~/.Xresources &
+/usr/lib64/gnome-settings-daemon/gnome-settings-daemon &
