@@ -130,6 +130,10 @@ bindsym $mod+Shift+n workspace prev_on_output
 bindsym $mod+m workspace next
 bindsym $mod+Shift+m workspace prev
 
+# move workspace (Mod1 is alt)
+bindsym $mod+Mod1+l move workspace to output right
+bindsym $mod+Mod1+h move workspace to output left
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
