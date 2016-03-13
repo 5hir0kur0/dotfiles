@@ -123,6 +123,7 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+Shift+d exec ~/.i3/workspace.sh
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
