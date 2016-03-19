@@ -24,7 +24,7 @@ inoremap { {<CR>}<Esc>O
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
 
-colorscheme base16-default
+colorscheme base16-solarized
 
 if has("mouse")
   set mouse=a
