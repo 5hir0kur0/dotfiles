@@ -167,6 +167,7 @@ bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
 #scratchpad
 bindsym $mod+Shift+i move scratchpad
 bindsym $mod+i scratchpad show
+bindsym $mod+u [instance="urxvt"] scratchpad show
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -285,9 +286,9 @@ client.urgent $base02 $base08 $base07 $base08
 
 bar {
    status_command i3status --config ~/.i3/i3status
-   position top
+   position bottom
    tray_output primary
-   font pango:DejaVu Sans Mono 9 
+   font pango:DejaVu Sans Mono 10 
    colors {
         separator $base03
         background $base01

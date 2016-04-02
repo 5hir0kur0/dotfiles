@@ -46,9 +46,9 @@
 URxvt*inheritPixmap: true
 URxvt*.transparent: true
 ! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-URxvt*.shading: 21
+URxvt*.shading: 8
 ! Fade the text by the given percentage when focus is lost
-URxvt*fading: 20
+URxvt*fading: 15
 ! Fade to this colour, when fading is used (see fading:). The default colour is
 URxvt*fadeColor: base00
 ! Select the fonts to be used. This is a comma separated list of font names
