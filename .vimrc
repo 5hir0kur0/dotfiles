@@ -19,7 +19,14 @@ retab
 "<Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
+" C-c does not trigger the InsertLeave autocommand by default so you cannot
+" use it to insert multiple lines at once from visual mode
+inoremap <C-c> <Esc><Esc>
+
 inoremap { {<CR>}<Esc>O
+
+"force saving files that require root permission 
+cnoremap w!! w !sudo tee > /dev/null %
 
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
