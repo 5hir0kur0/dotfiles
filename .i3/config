@@ -18,7 +18,8 @@ set $mod Mod4
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-font pango:DejaVu Sans Mono 9 
+font pango:DejaVu Sans Mono 10
+# font pango:Inconsolata 13px
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -51,7 +52,8 @@ bindsym $mod+Shift+x exec unity-control-center
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec dmenu_run -fn 'DejaVu Sans Mono-10' -nb '#002b36' -nf '#eee8d5' -sb '#268bd2' -sf '#002b36' -i -l 5
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -123,12 +125,15 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+Shift+d exec ~/.i3/workspace.sh
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
 bindsym $mod+Shift+n workspace prev_on_output
+bindsym $mod+p workspace prev_on_output
 bindsym $mod+m workspace next
 bindsym $mod+Shift+m workspace prev
+bindsym $mod+Shift+p workspace prev
 
 # move workspace (Mod1 is alt)
 bindsym $mod+Mod1+l move workspace to output right
@@ -215,39 +220,83 @@ mode "$mode_system" {
 }
 bindsym $mod+Pause mode "$mode_system"
 
-#set up colors
-set $bg     #2c2c2e
-set $fg     #9f9f9f
-set $hi     #efef8f
-set $ac     #a0afa0
-set $tx     #040404
-set $ia     #8f8f8f
-set $be     #8faf9f
-set $yw     #ccdc90
-set $gn     #88b090
-set $rd     #e89393
+# OLD COLORS
+##set up colors
+#set $bg     #2c2c2e
+#set $fg     #9f9f9f
+#set $hi     #efef8f
+#set $ac     #a0afa0
+#set $tx     #040404
+#set $ia     #8f8f8f
+#set $be     #8faf9f
+#set $yw     #ccdc90
+#set $gn     #88b090
+#set $rd     #e89393
+#
+## set some nice colors      border     background  text
+#client.focused              $ac        $ac         $tx
+#client.unfocused            $bg        $bg         $ia
+#client.focused_inactive     $bg        $bg         $ac
+#client.urgent               $rd        $rd         $tx
+#
+## Start i3bar to display a workspace bar (plus the system information i3status
+## finds out, if available)
+#bar {
+#    status_command i3status --config ~/.i3/i3status
+#
+#    colors {
+#        background          $bg
+#        statusline          $fg
+#        separator           $hi
+#        focused_workspace   $gn        $bg        $ac
+#        active_workspace    $gn        $ac        $tx
+#        inactive_workspace  $bg        $bg        $ia
+#        urgent_workspace    $rd        $bg        $ac
+#    }
+#    mode hide
+#}
 
-# set some nice colors      border     background  text
-client.focused              $ac        $ac         $tx
-client.unfocused            $bg        $bg         $ia
-client.focused_inactive     $bg        $bg         $ac
-client.urgent               $rd        $rd         $tx
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+
+# Base16 Solarized by Ethan Schoonover (http://ethanschoonover.com/solarized)
+# template by Matt Parnell, @parnmatt
+
+set $base00 #002b36
+set $base01 #073642
+set $base02 #586e75
+set $base03 #657b83
+set $base04 #839496
+set $base05 #93a1a1
+set $base06 #eee8d5
+set $base07 #fdf6e3
+set $base08 #dc322f
+set $base09 #cb4b16
+set $base0A #b58900
+set $base0B #859900
+set $base0C #2aa198
+set $base0D #268bd2
+set $base0E #6c71c4
+set $base0F #d33682
+
+client.focused $base0D $base0D $base00 $base01
+client.focused_inactive $base02 $base02 $base01 $base01
+client.unfocused $base01 $base01 $base03 $base01
+client.urgent $base02 $base08 $base07 $base08
+
 bar {
-    status_command i3status --config ~/.i3/i3status
-
-    colors {
-        background          $bg
-        statusline          $fg
-        separator           $hi
-        focused_workspace   $gn        $bg        $ac
-        active_workspace    $gn        $ac        $tx
-        inactive_workspace  $bg        $bg        $ia
-        urgent_workspace    $rd        $bg        $ac
+   status_command i3status --config ~/.i3/i3status
+   position top
+   tray_output primary
+   font pango:DejaVu Sans Mono 9 
+   colors {
+        separator $base03
+        background $base01
+        statusline $base05
+        focused_workspace $base0C $base0D $base00
+        active_workspace $base02 $base02 $base07
+        inactive_workspace $base01 $base01 $base03
+        urgent_workspace $base08 $base08 $base07
     }
-    mode hide
 }
 
 hide_edge_borders both
