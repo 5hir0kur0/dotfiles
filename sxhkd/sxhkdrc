@@ -17,6 +17,10 @@ super + w
 super + b
         bspc desktop -B
 
+# reset desktop split ratios
+super + e
+        bspc desktop -E
+
 # make selected window floating, fullscreen or sticky
 super + {shift+f,f,s}
         bspc window -t {floating,fullscreen,sticky}
@@ -125,6 +129,16 @@ super + d
 
 super + shift + w
         ~/.config/bspwm/set_wallpaper.sh
+
+# Media keys
+XF86AudioRaiseVolume
+	pactl set-sink-volume 0 +5%
+
+XF86AudioLowerVolume
+	pactl set-sink-volume 0 -- -5%
+
+XF86AudioMute
+	amixer -q set Master toggle
 
 # make sxhkd reload its configuration files:
 super + shift + c 
