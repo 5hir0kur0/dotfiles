@@ -42,6 +42,7 @@ if $GIT; then
   git config --global core.editor vim
   git config --global push.default simple
   git config --global merge.tool vimdiff
+  git config --global alias.pull 'git pull --ff --only-ff'
 else
   echo 'git is not installed or already configured'
 fi

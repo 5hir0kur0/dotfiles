@@ -30,7 +30,7 @@ alias grep='grep --color=auto'
 alias thx="echo You\'re welcome"
 alias die="kill -9"
 alias wipe_out="sudo killall"
-alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade'
+alias update='sudo apt update && sudo apt upgrade && sudo apt full-upgrade'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
