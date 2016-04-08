@@ -1,70 +1,91 @@
-! Base16 Solarized
-! Scheme: Ethan Schoonover (http://ethanschoonover.com/solarized)
+!! solarized theme from https://github.com/solarized/xresources/blob/master/Xresources.dark
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
 
-#define base00 #002b36
-#define base01 #073642
-#define base02 #586e75
-#define base03 #657b83
-#define base04 #839496
-#define base05 #93a1a1
-#define base06 #eee8d5
-#define base07 #fdf6e3
-#define base08 #dc322f
-#define base09 #cb4b16
-#define base0A #b58900
-#define base0B #859900
-#define base0C #2aa198
-#define base0D #268bd2
-#define base0E #6c71c4
-#define base0F #d33682
+*background:            S_base03
+*foreground:            S_base0
+*fadeColor:             S_base03
+*cursorColor:           S_base1
+*pointerColorBackground:S_base01
+*pointerColorForeground:S_base1
 
-*foreground:   base05
-*background:   base00
-*cursorColor:  base05
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
 
-*color0:       base00
-*color1:       base08
-*color2:       base0B
-*color3:       base0A
-*color4:       base0D
-*color5:       base0E
-*color6:       base0C
-*color7:       base05
+!! black dark/light
+*color0:                S_base02
+*color8:                S_base03
 
-*color8:       base03
-*color9:       base09
-*color10:      base01
-*color11:      base02
-*color12:      base04
-*color13:      base06
-*color14:      base0F
-*color15:      base07
+!! red dark/light
+*color1:                S_red
+*color9:                S_orange
+
+!! green dark/light
+*color2:                S_green
+*color10:               S_base01
+
+!! yellow dark/light
+*color3:                S_yellow
+*color11:               S_base00
+
+!! blue dark/light
+*color4:                S_blue
+*color12:               S_base0
+
+!! magenta dark/light
+*color5:                S_magenta
+*color13:               S_violet
+
+!! cyan dark/light
+*color6:                S_cyan
+*color14:               S_base1
+
+!! white dark/light
+*color7:                S_base2
+*color15:               S_base3
+
+
 
 ! URxvt config
 !URxvt*background: base00
 !URxvt*foreground: base05
-URxvt*inheritPixmap: true
-URxvt*.transparent: true
+
+! (uncomment for transparent background)
+!URxvt*inheritPixmap: true
+!URxvt*transparent: true
 ! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-URxvt*.shading: 8
+!URxvt*.shading: 12
 ! Fade the text by the given percentage when focus is lost
-URxvt*fading: 15
-! Fade to this colour, when fading is used (see fading:). The default colour is
-URxvt*fadeColor: base00
+!URxvt*fading: 15
+! Fade to this colour, when fading is used (see fading:)
+!URxvt*fadeColor: S_base02
+
 ! Select the fonts to be used. This is a comma separated list of font names
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=14 
+URxvt*font: xft:Droid Sans Mono:pixelsize=17,xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=14 
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false
 URxvt*scrollBar_right: false
-Rxvt.secondaryScreen: 1
-URxvt.secondaryScroll: 0
+URxvt*secondaryScreen: 1
+URxvt*secondaryScroll: 0
 URxvt*saveLines: 1000
 URxvt*internalBorder: 0
 URxvt*externalBorder: 0
-URxvt.resize-font.smaller: C-minus
-URxvt.resize-font.bigger: C-plus
-URxvt.perl-ext-common: resize-font
-URxvt.iso14755: false
-URxvt.iso14755_52: false
-URxvt.letterSpace: -1
+URxvt*resize-font.smaller: C-minus
+URxvt*resize-font.bigger: C-plus
+URxvt*perl-ext-common: resize-font
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+URxvt*letterSpace: -1

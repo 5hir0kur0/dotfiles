@@ -25,7 +25,7 @@ font pango:DejaVu Sans Mono 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec urxvtcd
 
 #start a floating terminal
 #bindsym $mod+Shift+Return exec "i3-sensible-terminal && i3-msg floating enable"
@@ -170,6 +170,9 @@ bindsym $mod+i scratchpad show
 bindsym $mod+u [instance="urxvt"] scratchpad show
 
 # resize window (you can also use the mouse for that)
+#choose a different random wallpaper
+
+bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -312,12 +315,7 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-exec --no-startup-id unity-settings-daemon
-exec --no-startup-id redshift-gtk
-
-exec --no-startup-id ~/.i3/set_wallpaper.sh
-
-#choose a different random wallpaper
-bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
-
-exec --no-startup-id deja-dup
+exec --no-startup-id unity-settings-daemon &
+exec --no-startup-id redshift-gtk &
+exec --no-startup-id ~/.i3/set_wallpaper.sh &
+exec --no-startup-id xautolock -time 42 -locker '$exitscript lock' & 

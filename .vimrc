@@ -29,9 +29,9 @@ inoremap { {<CR>}<Esc>O
 cnoremap w!! w !sudo tee > /dev/null %
 
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
-highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
+"highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
 
-colorscheme base16-solarized
+colorscheme solarized
 
 if has("mouse")
   set mouse=a
