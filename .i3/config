@@ -150,6 +150,13 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Mod1+n  move container to workspace next_on_output
+bindsym $mod+Mod1+Shift+n move container to workspace prev_on_output
+bindsym $mod+Mod1+p move container to workspace prev_on_output
+bindsym $mod+Mod1+m move container to workspace next
+bindsym $mod+Mod1+Shift+m move container to workspace prev
+bindsym $mod+Mod1+Shift+p move container to workspace prev
+bindsym $mod+Mod1+d exec --no-startup-id ~/.i3/move_to_workspace.sh 
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
