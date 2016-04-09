@@ -16,7 +16,9 @@ export AUTOJUMP_IGNORE_CASE=1
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+
+# use case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ##Own aliases
 alias ls='ls --color=auto'
