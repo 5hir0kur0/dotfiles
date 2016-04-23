@@ -9,6 +9,8 @@ set wildmenu
 
 set background=dark
 
+set relativenumber
+
 filetype indent plugin on
 
 syntax on
