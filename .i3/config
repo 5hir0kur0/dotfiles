@@ -27,25 +27,19 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec urxvtcd
 
-#start a floating terminal
-#bindsym $mod+Shift+Return exec "i3-sensible-terminal && i3-msg floating enable"
+# start a floating terminal
+bindsym $mod+Shift+Return exec "urxvt -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
 
-#start chrome
+# start chrome
 bindsym $mod+c exec google-chrome
 
-#start firefox
-bindsym $mod+Shift+f exec firefox -profilemanager
-
-#start firefox with pws / chrome style
-bindsym $mod+Shift+v exec firefox -p "ChromeRep"
-
-#start nautilus
+# start nautilus
 bindsym $mod+e exec nautilus --no-desktop
 
-#start eclipse
+# start eclipse
 bindsym $mod+x exec ~/Dokumente/programs/eclipse/eclipse
 
-#start unity control center
+# start unity control center
 bindsym $mod+Shift+x exec unity-control-center
 
 # kill focused window
@@ -104,6 +98,9 @@ bindsym $mod+t layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+
+# toggle bar mode
+bindsym $mod+b bar mode toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -168,6 +165,9 @@ set $exitscript ~/.i3/exit.sh
 #lock screen (Mod1 ist Alt)
 bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
 
+# choose a different random wallpaper
+bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
+
 #suspend
 #bindsym $mod+Shift+s exec sudo pm-suspend
 
@@ -177,9 +177,6 @@ bindsym $mod+i scratchpad show
 bindsym $mod+u [instance="urxvt"] scratchpad show
 
 # resize window (you can also use the mouse for that)
-#choose a different random wallpaper
-
-bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -310,7 +307,7 @@ bar {
     }
 }
 
-hide_edge_borders both
+#hide_edge_borders both
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute

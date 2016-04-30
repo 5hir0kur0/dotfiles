@@ -1,7 +1,8 @@
 #!/bin/sh
 
 lock() {
-    gnome-screensaver-command -l
+    #gnome-screensaver-command -l
+    ~/.i3/pixel_screenshot_lock.sh
 }
 
 killapps() {
