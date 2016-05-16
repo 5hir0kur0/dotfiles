@@ -7,7 +7,7 @@ bindkey -v #vi mode
 bindkey '^r' history-incremental-search-backward 
 #enable backwards search by typing / in NORMAL mode
 bindkey -M vicmd '/' history-incremental-search-backward
-zstyle :compinstall filename '/home/nerd/.zshrc'
+#zstyle :compinstall filename '~/.zshrc'
 
 #autojump
 . /usr/share/autojump/autojump.zsh
@@ -18,7 +18,7 @@ autoload -Uz compinit
 compinit
 
 # use case-insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ##Own aliases
 alias ls='ls --color=auto'
