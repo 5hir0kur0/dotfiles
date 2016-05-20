@@ -284,7 +284,7 @@ set $base0D #686868
 set $base0E #747474
 set $base0F #5e5e5e
 
-client.focused $base0D $base0D $base00 $base01
+client.focused $base04 $base04 $base00 $base01
 client.focused_inactive $base00 $base00 $base04 $base01
 client.unfocused $base01 $base01 $base04 $base01
 client.urgent $base03 $base03 $base07 $base08
