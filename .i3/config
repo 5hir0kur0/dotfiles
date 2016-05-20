@@ -126,7 +126,7 @@ bindsym $mod+p workspace prev_on_output
 bindsym $mod+Shift+p move workspace prev_on_output
 bindsym $mod+m workspace next
 bindsym $mod+Shift+m workspace prev
-bindsym $mod+$mod1+m move workspace next
+bindsym $mod+$mod1+m move workspace next # does not work when I use "Mod1" instead of "$mod1"
 bindsym $mod+Shift+$mod1+m move workspace prev
 
 # switch to last workspace
@@ -284,7 +284,7 @@ set $base0D #686868
 set $base0E #747474
 set $base0F #5e5e5e
 
-client.focused $base04 $base04 $base00 $base01
+client.focused $base0E $base0E $base00 $base01
 client.focused_inactive $base00 $base00 $base04 $base01
 client.unfocused $base01 $base01 $base04 $base01
 client.urgent $base03 $base03 $base07 $base08
