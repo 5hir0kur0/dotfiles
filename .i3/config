@@ -121,11 +121,13 @@ bindsym $mod+Shift+d exec ~/.i3/workspace.sh
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
-bindsym $mod+Shift+n workspace prev_on_output
+bindsym $mod+Shift+n move workspace next_on_output
 bindsym $mod+p workspace prev_on_output
+bindsym $mod+Shift+p move workspace prev_on_output
 bindsym $mod+m workspace next
 bindsym $mod+Shift+m workspace prev
-bindsym $mod+Shift+p workspace prev
+bindsym $mod+$mod1+m move workspace next
+bindsym $mod+Shift+$mod1+m move workspace prev
 
 # switch to last workspace
 bindsym $mod+Tab workspace back_and_forth
