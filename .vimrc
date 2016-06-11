@@ -2,7 +2,7 @@ set nocompatible
 set ruler laststatus=2 hlsearch number showcmd title
 set autoindent backup writebackup history=1337
 set incsearch ignorecase smartcase
-set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=2 softtabstop=4 
+set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=4 softtabstop=4 
 set colorcolumn=81
 set wildmode=longest,list,full
 set wildmenu
@@ -32,6 +32,10 @@ cnoremap w!! w !sudo tee > /dev/null %
 
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 "highlight LineNr ctermbg=darkgrey ctermfg=darkblue guibg=darkgrey guifg=darkblue
+
+" enable spell checking for certain file types
+autocmd FileType gitcommit setlocal spell
+autocmd FileType markdown setlocal spell
 
 colorscheme solarized
 
