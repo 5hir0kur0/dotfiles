@@ -28,7 +28,7 @@ floating_modifier $mod
 bindsym $mod+Return exec urxvtcd
 
 # start a floating terminal
-bindsym $mod+Shift+Return exec "urxvt -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
+bindsym $mod+Shift+Return exec "urxvtcd -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
 
 # start nautilus
 bindsym $mod+e exec nautilus --no-desktop

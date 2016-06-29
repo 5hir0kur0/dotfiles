@@ -3,6 +3,10 @@
 DIR="$(pwd)"
 
 [ -f "$HOME/.vimrc" ]             || ln -s "$DIR/.vimrc" "$HOME/.vimrc"
+[ -d "$HOME/.vim" ]               || mkdir "$HOME/.vim"
+[ -d "$HOME/.vim/backup" ]        || mkdir "$HOME/.vim/backup"
+[ -d "$HOME/.vim/swp" ]           || mkdir "$HOME/.vim/swp"
+
 [ -f "$HOME/.bashrc" ]            || ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
 [ -f "$HOME/.zshrc" ]             || ln -s "$DIR/.zshrc" "$HOME/.zshrc"
 [ -f "$HOME/.tmux.conf" ]         || ln -s "$DIR/.tmux.conf" "$HOME/.tmux.conf"
