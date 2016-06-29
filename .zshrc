@@ -22,8 +22,9 @@ compinit
 
 ##Own aliases
 alias ls='ls --color=auto'
-alias ll='ls -Alh'
+alias ll='ls -lh'
 alias la='ls -A'
+alias lla='la -Alh'
 alias l='ls -C'
 alias '..'='cd ..'
 

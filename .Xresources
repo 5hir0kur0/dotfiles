@@ -73,8 +73,8 @@
 !URxvt*fadeColor: S_base02
 
 ! Select the fonts to be used. This is a comma separated list of font names
-!URxvt*font: xft:Droid Sans Mono:pixelsize=17,xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=14 
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=16,xft:Terminus:pixelsize=14 
+URxvt*font: xft:Inconsolata\-dz for Powerline:style=dzForPowerline:pixelsize=19
+!,xft:DejaVu Sans Mono:pixelsize=16
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false

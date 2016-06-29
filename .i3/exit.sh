@@ -9,7 +9,7 @@ killapps() {
     i3-msg '[class=".*"] kill' # close all windows
     while pgrep -f '/usr/bin/anki'; do sleep '0.1'; done # wait for anki to sync
     HOSTNAME=`hostname`
-    while [ `xlsclients | grep -vE "^$HOSTNAME\s*(ibus-x11|unity-settings-daemon)?\s*$" | wc -l` -gt 0 ]; do sleep '0.1'; done
+    while [ `xlsclients | grep -vE "^$HOSTNAME\s*(ibus-x11|unity-settings-daemon|notify-osd|gnome-screensaver|mozc_renderer)?\s*$" | wc -l` -gt 0 ]; do sleep '0.1'; done
     return 0
 }
 
