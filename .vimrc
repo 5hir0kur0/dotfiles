@@ -7,7 +7,7 @@ set colorcolumn=81
 set wildmode=longest,list,full
 set wildmenu
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:\ ,precedes:↤,extends:↦
 
 set background=dark
 
@@ -29,7 +29,7 @@ nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 " use it to insert multiple lines at once from visual mode
 inoremap <C-c> <Esc><Esc>
 
-" force saving files that require root permission 
+" force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
