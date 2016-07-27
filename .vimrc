@@ -13,6 +13,8 @@ set background=dark
 
 set relativenumber
 
+set pastetoggle=<F10>
+
 " create backups and swap files in the .vim directory (the double slashes
 " mean, VIM uses the full path)
 set backupdir=~/.vim/backup//
