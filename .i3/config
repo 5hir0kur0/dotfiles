@@ -155,6 +155,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit, suspend, shutdown, reboot
 set $exitscript ~/.i3/exit.sh
+set $pulsescript ~/.i3/pulse.sh
 #bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '/bin/bash $exitscript suspend' -b 'Shutdown' '/bin/bash $exitscript shutdown' -b 'Reboot' '/bin/bash $exitscript reboot'"
 #lock screen (Mod1 ist Alt)
 bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
@@ -218,6 +219,17 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode "$mode_system"
+
+set $mode_command Commands (t) Toggle Audio card (p) Pause notifications (r) Resume notifications
+mode "$mode_command" {
+    bindsym t exec --no-startup-id $pulsescript toggle, mode "default"
+    bindsym p exec --no-startup-id killall -SIGUSR1 dunst, mode "default"
+    bindsym r exec --no-startup-id killall -SIGUSR2 dunst, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+x mode "$mode_command"
 
 # OLD COLORS
 ##set up colors
@@ -299,9 +311,9 @@ bar {
 #hide_edge_borders both
 
 #enable multimedia keys
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
-bindsym XF86AudioMute exec amixer -qD pulse set Master toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
+bindsym XF86AudioLowerVolume exec --no-startup-id $pulsescript down
+bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
 #does not really work...
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause

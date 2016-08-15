@@ -8,5 +8,7 @@ pkill -x 'fcitx'
 fcitx &
 pkill -x 'nm-applet'
 nm-applet &
+pkill -x 'dunst'
+dunst &
 pkill -x 'xautolock'
 xautolock -time 42 -locker '~/.i3/exit.sh lock' &

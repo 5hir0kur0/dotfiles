@@ -13,6 +13,7 @@ DIR="$(pwd)"
 [ -d "$HOME/.i3" ]                || ln -s "$DIR/.i3" "$HOME"
 [ -f "$HOME/.vimperatorrc" ]      || ln -s "$DIR/vimperator/.vimperatorrc" "$HOME"
 [ -d "$HOME/.config" ]            || mkdir "$HOME/.config"
+[ -d "$HOME/.config/dunst" ]      || ln -s "$DIR/dunst" "$HOME/.config/dunst"
 [ -d "$HOME/.vimperator" ]        || mkdir "$HOME/.vimperator"
 [ -d "$HOME/.vimperator/colors" ] || mkdir "$HOME/.vimperator/colors"
 
