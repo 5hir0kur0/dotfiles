@@ -1,4 +1,4 @@
 #!/bin/bash
 
-wallpapers=(~/Bilder/wallpapers/*)
+wallpapers=(~/pics/wall/*)
 feh --bg-fill "${wallpapers[RANDOM % ${#wallpapers[@]}]}"

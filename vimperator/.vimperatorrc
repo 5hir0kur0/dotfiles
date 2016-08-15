@@ -1,4 +1,11 @@
+set gui=none
+set animations
+set hintchars=hjklasdfgzuiopqwertnmyxcvb
 colorscheme darkness
 noremap <C-+> zI
 noremap <C--> zO
 noremap <C-0> zz
+noremap <C-m> :emenu
+noremap x d
+noremap J gT
+noremap K gt

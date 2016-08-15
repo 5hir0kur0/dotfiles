@@ -55,15 +55,34 @@ killapps() {
 }
 
 my_shutdown() {
-    /usr/bin/dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+    ERROR=`systemctl poweroff`
+    if [ $? -ne 0 ]; then
+        i3-nagbar -t warning -m "Could not shut down: $ERROR" \
+            -b 'Force Shutdown' '/bin/bash $THIS shutdown_force'
+    fi
+}
+
+my_shutdown_force() {
+    systemctl poweroff -i
 }
 
 my_reboot() {
-    /usr/bin/dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+    ERROR=`systemctl reboot`
+    if [ $? -ne 0 ]; then
+        i3-nagbar -t warning -m "Could not reboot: $ERROR" \
+            -b 'Force Reboot' '/bin/bash $THIS reboot_force'
+    fi
+}
+
+my_reboot_force() {
+    systemctl reboot -i
 }
 
 my_suspend() {
-    /usr/bin/dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+    ERROR=`systemctl suspend`
+    if [ $? -ne 0 ]; then
+        i3-nagbar -t warning -m "Could not suspend: $ERROR"
+    fi
 }
 
 case "$1" in
@@ -83,13 +102,13 @@ case "$1" in
         killapps; my_reboot
         ;;
     reboot_force)
-        my_reboot
+        my_reboot_force
         ;;
     shutdown)
         killapps; my_shutdown
         ;;
     shutdown_force)
-        my_shutdown
+        my_shutdown_force
         ;;
     listclients)
         listclients
