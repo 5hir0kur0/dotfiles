@@ -25,16 +25,10 @@ font pango:DejaVu Sans Mono 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtcd
+bindsym $mod+Return exec urxvtc
 
-# start a floating terminal
-bindsym $mod+Shift+Return exec "urxvtcd -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
-
-# start nautilus
-bindsym $mod+e exec nautilus --no-desktop
-
-# start unity control center
-bindsym $mod+Shift+x exec unity-control-center
+# start a floating terminal with tmux
+bindsym $mod+Shift+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -166,10 +160,7 @@ set $exitscript ~/.i3/exit.sh
 bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # choose a different random wallpaper
-bindsym $mod+Shift+w exec ~/.i3/set_wallpaper.sh
-
-#suspend
-#bindsym $mod+Shift+s exec sudo pm-suspend
+bindsym $mod+Shift+w exec --no-startup-id ~/.i3/set_wallpaper.sh
 
 #scratchpad
 bindsym $mod+Shift+i move scratchpad
@@ -194,7 +185,7 @@ mode "resize" {
         bindsym Down resize grow height 10 px
         bindsym Up resize shrink height 10 px
         bindsym Right resize grow width 10 px
-        
+
         #own bindings for resizing in smaller steps (arrow keys)
         bindsym Shift+Left resize shrink width 4 px 
         bindsym Shift+Down resize grow height 4 px
@@ -317,7 +308,4 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-exec --no-startup-id unity-settings-daemon &
-exec --no-startup-id redshift-gtk &
-exec --no-startup-id ~/.i3/set_wallpaper.sh &
-exec --no-startup-id xautolock -time 42 -locker '$exitscript lock' & 
+exec --no-startup-id ~/.i3/init.sh
