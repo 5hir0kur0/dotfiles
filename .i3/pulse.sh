@@ -48,20 +48,24 @@ get_volume() {
 increase_volume() {
     DEFAULT_SINK="`default_sink`"
     unmute_sinks "$DEFAULT_SINK"
-    pactl set-sink-volume "$DEFAULT_SINK" "+${1}%"
     NEW_VOLUME="`get_volume`"
-    if [ "$NEW_VOLUME" -gt "$UPPER_VOLUME_LIMIT" ]; then
-        pactl set-sink-volume "$DEFAULT_SINK" "${UPPER_VOLUME_LIMIT}%"
+    NEW_VOLUME=$((NEW_VOLUME + $1))
+    if [ "$NEW_VOLUME" -le "$UPPER_VOLUME_LIMIT" ]; then
+        pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
+    else
+        pactl set-sink-volume "$DEFAULT_SINK" "$UPPER_VOLUME_LIMIT%"
     fi
 }
 
 decrease_volume() {
     DEFAULT_SINK="`default_sink`"
     unmute_sinks "$DEFAULT_SINK"
-    pactl set-sink-volume "$DEFAULT_SINK" "-${1}%"
     NEW_VOLUME="`get_volume`"
-    if [ "$NEW_VOLUME" -lt "$LOWER_VOLUME_LIMIT" ]; then
-        pactl set-sink-volume "$DEFAULT_SINK" "${LOWER_VOLUME_LIMIT}%"
+    NEW_VOLUME=$((NEW_VOLUME - $1))
+    if [ "$NEW_VOLUME" -ge "$LOWER_VOLUME_LIMIT" ]; then
+        pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
+    else
+        pactl set-sink-volume "$DEFAULT_SINK" "$LOWER_VOLUME_LIMIT%"
     fi
 }
 
@@ -110,10 +114,10 @@ move_inputs_to_default() {
 
 case "$1" in
     up)
-        increase_volume 5
+        increase_volume ${2-5}
         ;;
     down)
-        decrease_volume 5
+        decrease_volume ${2-5}
         ;;
     mute)
         pactl set-sink-mute "`default_sink`" toggle
