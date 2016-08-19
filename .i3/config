@@ -34,12 +34,12 @@ bindsym $mod+Shift+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchp
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run -fn 'DejaVu Sans Mono-10' -nb '#101010' -nf '#b9b9b9' -sb '#b9b9b9' -sf '#101010' -i -l 5
+#bindsym $mod+d exec dmenu_run -fn 'DejaVu Sans Mono-10' -nb '#101010' -nf '#b9b9b9' -sb '#b9b9b9' -sf '#101010' -i -l 5
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+h focus left
@@ -206,7 +206,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
+set $mode_system system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id       $exitscript lock, mode "default"
     bindsym e exec --no-startup-id       $exitscript logout, mode "default"
@@ -220,11 +220,15 @@ mode "$mode_system" {
 }
 bindsym $mod+Pause mode "$mode_system"
 
-set $mode_command Commands (t) Toggle Audio card (p) Pause notifications (r) Resume notifications
+set $mode_command command: (t) toggle default sink, (m) move inputs to default sink, (p) pause dunst, (r) resume dunst, (u) volume++, (d) volume--
 mode "$mode_command" {
     bindsym t exec --no-startup-id $pulsescript toggle, mode "default"
+    bindsym m exec --no-startup-id $pulsescript move, mode "default"
     bindsym p exec --no-startup-id killall -SIGUSR1 dunst, mode "default"
     bindsym r exec --no-startup-id killall -SIGUSR2 dunst, mode "default"
+    # the following to commands do NOT switch back to default mode
+    bindsym u exec --no-startup-id $pulsescript up 1
+    bindsym d exec --no-startup-id $pulsescript down 1
 
     bindsym Return mode "default"
     bindsym Escape mode "default"

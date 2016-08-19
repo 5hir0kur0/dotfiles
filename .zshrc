@@ -33,7 +33,7 @@ alias grep='grep --color=auto'
 alias thx="echo You\'re welcome"
 alias die="kill -9"
 alias wipe_out="sudo killall"
-alias update='sudo pacman -Syy && sudo pacman -Syu'
+alias update='sudo pacman -Syyu'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
