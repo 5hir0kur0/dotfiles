@@ -5,7 +5,10 @@ colorscheme darkness
 noremap <C-+> zI
 noremap <C--> zO
 noremap <C-0> zz
-noremap <C-m> :emenu
+" the trailing space is there on purpose
+noremap <C-m> :emenu 
+" in theory, gr should do the same, but it doesn't always work
+noremap <C-l> :emenu View.Enter Reader View<CR>
 noremap x d
 noremap J gT
 noremap K gt
