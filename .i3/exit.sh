@@ -1,10 +1,9 @@
 #!/bin/bash
 
-
-THIS="`dirname $0`/$0" # path to script
-# X clients that should be ignored
+# X clients that should be ignored (treated as regex)
 WHITELIST=(ibus-x11 ibus-ui-gtk3 unity-settings-daemon notify-osd \
-    gnome-screensaver mozc_renderer redshift-gtk) 
+    gnome-screensaver mozc_renderer redshift-gtk pasystray nm-applet \
+    ^.*kwalletd$ kded4 kdeinit4)
 HOSTNAME=`hostname`
 
 lock() {
@@ -25,7 +24,7 @@ listclients() {
         local CLIENT=`echo $LINE | sed -rn 's/^\S+\s+(.+)$/\1/p'`
         if [ -n "$CLIENT" ]; then
             for IGNORED in "${WHITELIST[@]}"; do
-                if [ "$CLIENT" = "$IGNORED" ]; then continue 2; fi
+                if [[ "$CLIENT" =~ $IGNORED ]]; then continue 2; fi
             done
             CLIENTS[$INDEX]="$CLIENT"
             INDEX=$((INDEX + 1))
@@ -47,8 +46,8 @@ killapps() {
         i3-nagbar -t warning \
             -m "The following clients refused to close: `listclients`" \
             -b 'Logout' 'i3-msg exit' \
-            -b 'Shutdown' "/bin/bash $THIS shutdown_force" \
-            -b 'Reboot' "/bin/bash $THIS reboot_force" &
+            -b 'Shutdown' "$0 shutdown_force" \
+            -b 'Reboot' "$0 reboot_force" &
     fi
     while [ `countclients` -gt 0 ]; do sleep '0.1'; done
     return 0
@@ -58,7 +57,7 @@ my_shutdown() {
     ERROR=`systemctl poweroff`
     if [ $? -ne 0 ]; then
         i3-nagbar -t warning -m "Could not shut down: $ERROR" \
-            -b 'Force Shutdown' '/bin/bash $THIS shutdown_force'
+            -b 'Force Shutdown' "$0 shutdown_force"
     fi
 }
 
@@ -70,7 +69,7 @@ my_reboot() {
     ERROR=`systemctl reboot`
     if [ $? -ne 0 ]; then
         i3-nagbar -t warning -m "Could not reboot: $ERROR" \
-            -b 'Force Reboot' '/bin/bash $THIS reboot_force'
+            -b 'Force Reboot' "$0 reboot_force"
     fi
 }
 
