@@ -27,13 +27,16 @@ alias la='ls -A'
 alias lla='la -Alh'
 alias l='ls -C'
 alias '..'='cd ..'
+alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
+alias mv='mv -iv'
+alias rm='rm -Iv --one-file-system'
 
 alias grep='grep --color=auto'
+alias diff='diff --color=auto'
 
-alias thx="echo You\'re welcome"
-alias die="kill -9"
-alias wipe_out="sudo killall"
-alias update='sudo pacman -Syyu'
+alias update='sudo pacmatic -Syyu'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
@@ -61,6 +64,10 @@ function fancy_unixtime() {
          echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
     done
 }
+
+## Environment variables
+export EDITOR=vim
+PATH="$PATH":~/.local/bin/
 
 #make ctrl - left/right arrow work like in bash
 bindkey ';5D' emacs-backward-word
