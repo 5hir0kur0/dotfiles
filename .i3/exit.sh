@@ -80,7 +80,14 @@ my_reboot_force() {
 my_suspend() {
     ERROR=`systemctl suspend`
     if [ $? -ne 0 ]; then
-        i3-nagbar -t warning -m "Could not suspend: $ERROR"
+        i3-nagbar -t error -m "Could not suspend: $ERROR"
+    fi
+}
+
+my_hybrid_sleep() {
+    ERROR=`systemctl hybrid-sleep`
+    if [ $? -ne 0 ]; then
+        i3-nagbar -t error -m "Could not enter hybrid sleep: $ERROR"
     fi
 }
 
@@ -96,6 +103,9 @@ case "$1" in
         ;;
     suspend)
         lock; my_suspend
+        ;;
+    hybrid_sleep)
+        lock; my_hybrid_sleep
         ;;
     reboot)
         killapps; my_reboot

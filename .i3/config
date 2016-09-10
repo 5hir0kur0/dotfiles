@@ -206,13 +206,14 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $mode_system system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown
+set $mode_system system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep
 mode "$mode_system" {
     bindsym l exec --no-startup-id       $exitscript lock, mode "default"
     bindsym e exec --no-startup-id       $exitscript logout, mode "default"
     bindsym s exec --no-startup-id       $exitscript suspend, mode "default"
-    bindsym r exec --no-startup-id       "$exitscript reboot", mode "default"
+    bindsym r exec --no-startup-id       $exitscript reboot, mode "default"
     bindsym Shift+s exec --no-startup-id $exitscript shutdown, mode "default"
+    bindsym Ctrl+s exec --no-startup-id  $exitscript hybrid_sleep, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
