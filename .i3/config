@@ -30,6 +30,9 @@ bindsym $mod+Return exec urxvtc
 # start a floating terminal with tmux
 bindsym $mod+Shift+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
 
+# start a floating terminal with zsh
+bindsym $mod+Ctrl+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchpad show; clear; zsh'"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
