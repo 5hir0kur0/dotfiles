@@ -57,12 +57,23 @@ function ff() {
     find . -iname "*$1*";
 }
 
+# launch quietly and disown
+function lqd() {
+    ( $@ ) >& /dev/null & disown
+}
+
 function fancy_unixtime() {
      while true; do
          figlet -tc $(date +%s)
          sleep 1
          echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
     done
+}
+
+# go up n directories
+# stolen from: https://www.reddit.com/r/ProgrammerHumor/comments/4f2o6l/typical_entrepreneurs/d25o3wu
+function up() {
+    cd $(eval printf '../'%.0s {1.."$1"})
 }
 
 ## Environment variables
