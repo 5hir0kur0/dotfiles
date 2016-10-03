@@ -62,6 +62,11 @@ function lqd() {
     ( $@ ) >& /dev/null & disown
 }
 
+function output() {
+    PID=`pgrep "$1"`
+    tail -f "/proc/$PID/fd/1" "/proc/$PID/fd/2"
+}
+
 function fancy_unixtime() {
      while true; do
          figlet -tc $(date +%s)
