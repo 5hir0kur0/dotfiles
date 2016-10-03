@@ -31,6 +31,8 @@ nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 " use it to insert multiple lines at once from visual mode
 inoremap <C-c> <Esc><Esc>
 
+noremap <Esc> <Esc><Esc>
+
 " force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
