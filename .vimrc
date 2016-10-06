@@ -20,6 +20,9 @@ set pastetoggle=<F10>
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swp//
 
+" use :help insted of !man to look up word below cursor with K
+set keywordprg=:help
+
 filetype indent plugin on
 
 syntax on
@@ -41,12 +44,9 @@ highlight ColorColumn ctermbg=lightblue guibg=lightblue
 " enable spell checking for certain file types
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown setlocal spell
+autocmd FileType sh setlocal keywordprg=man\ -s
 
 colorscheme solarized
-
-if has("mouse")
-  set mouse=a
-endif
 
 "" Vundle
 " from https://github.com/VundleVim/Vundle.vim/blob/master/README.md#quick-start
