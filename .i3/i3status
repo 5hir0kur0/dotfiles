@@ -7,7 +7,7 @@ general {
 }
 
 #order += "ipv6"
-order += "disk /"
+order += "disk /home"
 #order += "run_watch DHCP"
 #order += "run_watch VPN"
 #order += "wireless wlan0"
@@ -75,6 +75,6 @@ cpu_temperature 0 {
         max_threshold = 60
 }
 
-disk "/" {
+disk "/home" {
         format = "%free"
 }
