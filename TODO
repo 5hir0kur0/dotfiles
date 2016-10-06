@@ -1,7 +1,0 @@
-fix resizing (keyboard)
-fix scratchpad
-fix volume (keyboard)
-fix panel (show volume)
-fix panel (only on first screen)
-add apps list to dotfiles
-add reboot/shutdown/suspend to bspwm
