@@ -36,7 +36,9 @@ alias rm='rm -Iv --one-file-system'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
-alias update='sudo pacmatic -Syyu'
+alias hcat="highlight --force -O ansi"
+
+alias update='sudo pacmatic -Syu'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
