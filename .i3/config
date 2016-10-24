@@ -27,8 +27,10 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec urxvtc
 
+set $scratchclass scratchpad-terminal
+
 # start a floating terminal with tmux
-bindsym $mod+Shift+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchpad show; tmux'"
+bindsym $mod+Shift+Return exec "$HOME/.local/bin/st -c $scratchclass -e tmux"
 
 # start a floating terminal with zsh
 bindsym $mod+Ctrl+Return exec "urxvtc -e sh -c 'i3-msg move scratchpad,scratchpad show; clear; zsh'"
@@ -43,6 +45,7 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Ctrl+d exec --no-startup-id dmenu_run
 
 # change focus
 bindsym $mod+h focus left
@@ -318,16 +321,17 @@ bar {
     }
 }
 
-#hide_edge_borders both
+#rules
+for_window [class="$scratchclass"] move scratchpad, scratchpad show
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
 bindsym XF86AudioLowerVolume exec --no-startup-id $pulsescript down
 bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
 #does not really work...
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+#bindsym XF86AudioPlay exec playerctl play
+#bindsym XF86AudioPause exec playerctl pause
+#bindsym XF86AudioNext exec playerctl next
+#bindsym XF86AudioPrev exec playerctl previous
 
 exec --no-startup-id ~/.i3/init.sh
