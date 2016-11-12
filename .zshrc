@@ -36,6 +36,8 @@ alias rm='rm -Iv --one-file-system'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
+alias less='less -FX'
+
 alias hcat="highlight --force -O ansi"
 
 alias update='sudo pacmatic -Syu'
@@ -70,10 +72,17 @@ function output() {
 }
 
 function fancy_unixtime() {
+    OLDF=""
      while true; do
-         figlet -tc $(date +%s)
-         sleep 1
-         echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
+         SECS=`date +%s`
+         BASE="${1-16}"
+         NEWF="$(figlet -tc $(echo "obase=$BASE; $SECS" | bc))"
+         if [ ! "$OLDF" = "$NEWF" ]; then
+             echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
+             echo "$NEWF"
+             OLDF="$NEWF"
+         fi
+         sleep 0.1
     done
 }
 
