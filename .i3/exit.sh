@@ -3,7 +3,7 @@
 # X clients that should be ignored (treated as regex)
 WHITELIST=(ibus-x11 ibus-ui-gtk3 unity-settings-daemon notify-osd \
     gnome-screensaver mozc_renderer redshift-gtk pasystray nm-applet \
-    ^.*kwalletd$ kded4 kdeinit4)
+    ^.*kwalletd$ kded4 kdeinit4 ^.*knotify4$ udiskie)
 HOSTNAME=`hostname`
 
 lock() {
