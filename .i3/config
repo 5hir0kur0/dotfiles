@@ -74,13 +74,13 @@ bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 #bindsym $mod+b split h
-bindsym $mod+Control+l split h
-bindsym $mod+Control+h split h
+bindsym $mod+Ctrl+l split h
+bindsym $mod+Ctrl+h split h
 
 # split in vertical orientation
 #bindsym $mod+v split v
-bindsym $mod+Control+j split v
-bindsym $mod+Control+k split v
+bindsym $mod+Ctrl+j split v
+bindsym $mod+Ctrl+k split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
@@ -94,6 +94,9 @@ bindsym $mod+t layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
+# toggle sticky
+bindsym $mod+Ctrl+space sticky toggle
+
 # toggle bar mode
 bindsym $mod+b bar mode toggle
 
@@ -104,7 +107,6 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+c focus child
 bindsym $mod+Shift+a focus child
 
 # switch to workspace
@@ -118,7 +120,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-bindsym $mod+Shift+d exec ~/.i3/workspace.sh
+bindsym $mod+c exec ~/.i3/workspace.sh
+bindsym $mod+Shift+c exec ~/.i3/workspace.sh move
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
@@ -157,7 +160,7 @@ bindsym $mod+Mod1+Shift+p move container to workspace prev
 bindsym $mod+Mod1+d exec --no-startup-id ~/.i3/move_to_workspace.sh 
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Ctrl+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit, suspend, shutdown, reboot
@@ -166,7 +169,7 @@ set $pulsescript ~/.i3/pulse.sh
 set $mousescript ~/.i3/mouse_action.sh
 #bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '/bin/bash $exitscript suspend' -b 'Shutdown' '/bin/bash $exitscript shutdown' -b 'Reboot' '/bin/bash $exitscript reboot'"
 #lock screen (Mod1 ist Alt)
-bindsym Control+Mod1+l exec "$exitscript lock && xset dpms force off"
+bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # choose a different random wallpaper
 bindsym $mod+Shift+w exec --no-startup-id ~/.i3/set_wallpaper.sh
