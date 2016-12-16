@@ -2,7 +2,7 @@ set nocompatible
 set ruler laststatus=2 hlsearch number showcmd title
 set autoindent backup writebackup history=1337
 set incsearch ignorecase smartcase
-set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=4 softtabstop=4 
+set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=4 softtabstop=4
 set colorcolumn=81
 set wildmode=longest,list,full
 set wildmenu
@@ -22,6 +22,14 @@ set directory=~/.vim/swp//
 
 " use :help insted of !man to look up word below cursor with K
 set keywordprg=:help
+
+if has("gui")
+    " clean up GUI
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
+endif
 
 filetype indent plugin on
 
@@ -55,6 +63,7 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
 
 call vundle#end()
