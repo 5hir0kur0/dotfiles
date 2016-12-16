@@ -73,8 +73,7 @@
 !URxvt*fadeColor: S_base02
 
 ! Select the fonts to be used. This is a comma separated list of font names
-URxvt*font: xft:Inconsolata\-dz for Powerline:style=dzForPowerline:pixelsize=19
-!,xft:DejaVu Sans Mono:pixelsize=16
+URxvt*font: xft:Terminus:pixelsize=14
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false
@@ -89,4 +88,4 @@ URxvt*resize-font.bigger: C-plus
 URxvt*perl-ext-common: resize-font
 URxvt*iso14755: false
 URxvt*iso14755_52: false
-URxvt*letterSpace: -1
+URxvt*letterSpace: 0
