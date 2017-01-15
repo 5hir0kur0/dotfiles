@@ -35,10 +35,21 @@ filetype indent plugin on
 
 syntax on
 
-" <Ctrl-l> redraws the screen and removes any search highlighting.
+" <C-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
-" C-c does not trigger the InsertLeave autocommand by default so you cannot
+" <C-n> and <C-p> scroll without moving the relative position of the cursor
+nnoremap <C-n> <C-e>j
+nnoremap <C-p> <C-y>k
+
+"remap leader to space
+let mapleader = "\<Space>"
+
+" delete trailing whitespace
+nnoremap <Leader>W m`:s/\s*$//<CR>:noh<CR>``
+nnoremap <Leader>w m`g_ld$``
+
+" <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
 inoremap <C-c> <Esc><Esc>
 
@@ -65,5 +76,14 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()
+
+" airline settings
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_exclude_preview = 0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme = 'tomorrow'
