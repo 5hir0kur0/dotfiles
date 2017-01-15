@@ -1,6 +1,7 @@
 set gui=none
 set animations
 set hintchars=hjklasdfgzuiopqwertnmyxcvb
+set noscrollbars
 colorscheme darkness
 noremap <C-+> zI
 noremap <C--> zO
