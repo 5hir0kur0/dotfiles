@@ -2,12 +2,16 @@
 HISTFILE=~/.histfile
 HISTSIZE=4200
 SAVEHIST=4200
-bindkey -v #vi mode
+bindkey -e #emacs mode
 #make backwards search work like in emacs mode
 bindkey '^r' history-incremental-search-backward 
 #enable backwards search by typing / in NORMAL mode
 bindkey -M vicmd '/' history-incremental-search-backward
 #zstyle :compinstall filename '~/.zshrc'
+
+#better c-p, c-n
+bindkey "^P" up-line-or-search
+bindkey "^N" down-line-or-search
 
 #autojump
 . /usr/share/autojump/autojump.zsh
@@ -92,14 +96,6 @@ function up() {
     cd $(eval printf '../'%.0s {1.."$1"})
 }
 
-## Environment variables
-export EDITOR=vim
-PATH="$PATH":~/.local/bin/
-
-#make ctrl - left/right arrow work like in bash
-bindkey ';5D' emacs-backward-word
-bindkey ';5C' emacs-forward-word
-
 ##set prompt, colors
 autoload -U colors && colors
 PROMPT="%{$fg[red]%}%(?..[%?])%{$fg[magenta]%}%n@%m%{$fg[white]%}:%{$fg[cyan]%}%1~ %# %{$reset_color%}"
@@ -144,3 +140,5 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
+
+[[ -f ~/.profile ]] && . ~/.profile
