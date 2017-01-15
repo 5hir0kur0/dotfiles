@@ -73,7 +73,7 @@
 !URxvt*fadeColor: S_base02
 
 ! Select the fonts to be used. This is a comma separated list of font names
-URxvt*font: xft:Terminus:pixelsize=14
+URxvt*font: xft:xos4 Terminus:pixelsize=14
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false
