@@ -15,4 +15,5 @@ xautolock -time 42 -locker '~/.i3/exit.sh lock' &
 pkill -x 'udiskie'
 udiskie --use-udisks2 --no-automount --smart-tray &
 pkill -x 'unclutter'
-unclutter -noevents -root -idle 42 &
+# i3 behaves buggy without noevents
+unclutter -noevents -root -idle 8 &
