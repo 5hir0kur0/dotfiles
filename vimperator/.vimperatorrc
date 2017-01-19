@@ -1,8 +1,12 @@
-set gui=none
-set animations
-set hintchars=hjklasdfgzuiopqwertnmyxcvb
+" vi: ft=vim
+
+set gui=tabs
 set noscrollbars
 colorscheme darkness
+" set animations
+set tabnumbers
+
+set hintchars=hjklasdfgzuiopqwertnmyxcvb
 noremap <C-+> zI
 noremap <C--> zO
 noremap <C-0> zz
@@ -13,3 +17,54 @@ noremap <C-l> :emenu View.Enter Reader View<CR>
 noremap x d
 noremap J gT
 noremap K gt
+noremap <silent> gd :tabduplicate<CR>
+noremap <silent> gm0 :tabmove 0<CR>
+noremap <silent> gm1 :tabmove 1<CR>
+noremap <silent> gm2 :tabmove 2<CR>
+noremap <silent> gm3 :tabmove 3<CR>
+noremap <silent> gm4 :tabmove 4<CR>
+noremap <silent> gm5 :tabmove 5<CR>
+noremap <silent> gm6 :tabmove 6<CR>
+noremap <silent> gm7 :tabmove 7<CR>
+noremap <silent> gm8 :tabmove 8<CR>
+noremap <silent> gm9 :tabmove 9<CR>
+noremap <silent> gm$ :tabmove<CR>
+noremap <silent> gmm :tabmove<CR>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" stolen from http://superuser.com/a/749441
+map <silent> <F2> :js toggle_navbar()<CR>
+:js << EOF
+function toggle_navbar() {
+    var nb = document.getElementById('nav-bar');
+    if (!nb)
+        return;
+    nb.style.visibility = (nb.style.visibility == '') ? 'collapse' : '';
+    nb.style.overflow = (nb.style.height == '') ? '' : 'hidden';
+    }
+toggle_navbar();
+EOF
+
+map <silent> <F4> :js toggle_tabbar()<CR>
+:js << EOF
+function toggle_tabbar() {
+    var nb = document.getElementById('TabsToolbar');
+    if (!nb)
+        return;
+    nb.style.visibility = (nb.style.visibility == '') ? 'collapse' : '';
+    nb.style.overflow = (nb.style.height == '') ? '' : 'hidden';
+    }
+EOF
+
+" stolen from http://superuser.com/a/706543
+noremap <silent> <F8> :js toggle_bottombar()<CR>
+:js << EOF
+function toggle_bottombar() {
+    var bb = document.getElementById('liberator-bottombar');
+    if (!bb)
+        return;
+    bb.style.height = (bb.style.height == '') ? '0px' : '';
+    bb.style.overflow = (bb.style.height == '') ? '' : 'hidden';
+}
+EOF
