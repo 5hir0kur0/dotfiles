@@ -1,23 +1,34 @@
 " vi: ft=vim
 
-set gui=tabs
-set noscrollbars
-colorscheme darkness
-" set animations
+" limit gui to tabs
+set gui=none,tabs
+" show numbers on tabs
 set tabnumbers
+" disable scroll bars
+set noscrollbars
+colorscheme darkness_custom
 
 set hintchars=hjklasdfgzuiopqwertnmyxcvb
+" maximum number of items to display at once in a listing
+set maxitems=12
+
+" zoom shortcuts
 noremap <C-+> zI
 noremap <C--> zO
 noremap <C-0> zz
+" new private window
+noremap <C-S-n> :winopen -private<CR>
 " the trailing space is there on purpose
 noremap <C-m> :emenu 
 " in theory, gr should do the same, but it doesn't always work
 noremap <C-l> :emenu View.Enter Reader View<CR>
+" some useful vimium bindings
 noremap x d
 noremap J gT
 noremap K gt
+" duplicate current tab
 noremap <silent> gd :tabduplicate<CR>
+" move current tab
 noremap <silent> gm0 :tabmove 0<CR>
 noremap <silent> gm1 :tabmove 1<CR>
 noremap <silent> gm2 :tabmove 2<CR>
@@ -30,35 +41,35 @@ noremap <silent> gm8 :tabmove 8<CR>
 noremap <silent> gm9 :tabmove 9<CR>
 noremap <silent> gm$ :tabmove<CR>
 noremap <silent> gmm :tabmove<CR>
+" make c-p and c-n behave like arrow keys in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+" new tab
+noremap <silent> gn :tabnew<CR>
+" close tab
+noremap <silent> gc :tabclose<CR>
+" move current tab to new window
+noremap <silent> gw :tabdetach<CR>
+" move current tab to existing window (trailing whitespace is there on
+" purpose)
+noremap <silent> gW :tabattach 
 
-" stolen from http://superuser.com/a/749441
-map <silent> <F2> :js toggle_navbar()<CR>
-:js << EOF
-function toggle_navbar() {
-    var nb = document.getElementById('nav-bar');
-    if (!nb)
-        return;
-    nb.style.visibility = (nb.style.visibility == '') ? 'collapse' : '';
-    nb.style.overflow = (nb.style.height == '') ? '' : 'hidden';
-    }
-toggle_navbar();
-EOF
 
-map <silent> <F4> :js toggle_tabbar()<CR>
-:js << EOF
-function toggle_tabbar() {
-    var nb = document.getElementById('TabsToolbar');
-    if (!nb)
-        return;
-    nb.style.visibility = (nb.style.visibility == '') ? 'collapse' : '';
-    nb.style.overflow = (nb.style.height == '') ? '' : 'hidden';
-    }
-EOF
+" toggle navigation bar
+noremap <silent> zn :set gui=invnavigation<CR>
+
+" toggle tab bar
+noremap <silent> zt :set gui=invtabs<CR>
+
+" toggle menu bar (NOTE: this conflicts with the text zoom mapping zm, which I
+" don't use. I prefer the full zoom version: zM)
+noremap <silent> zm :set gui=invmenu<CR>
+
+" toggle addon bar
+noremap <silent> za :set gui=invaddons<CR>
 
 " stolen from http://superuser.com/a/706543
-noremap <silent> <F8> :js toggle_bottombar()<CR>
+noremap <silent> zb :js toggle_bottombar()<CR>
 :js << EOF
 function toggle_bottombar() {
     var bb = document.getElementById('liberator-bottombar');
@@ -68,3 +79,27 @@ function toggle_bottombar() {
     bb.style.overflow = (bb.style.height == '') ? '' : 'hidden';
 }
 EOF
+
+" youtube "fullscreen" mode (open videos in embed mode)
+
+" open current youtube video or playlist in embedded mode in current tab
+noremap -urls '^https?:\/\/(?:[^.]+.)?youtube.com\/watch\?.*v=.+' <silent> ge :js open_yt_embedded(liberator.CURRENT_TAB)<CR>
+" open current youtube video or playlist in embedded mode in new tab
+noremap -urls '^https?:\/\/(?:[^.]+.)?youtube.com\/watch\?.*v=.+' <silent> gE :js open_yt_embedded(liberator.NEW_TAB)<CR>
+
+:js << EOF
+function open_yt_embedded(open_arg_where) {
+    var base = "https://www.youtube.com/embed/";
+    var end = "&autoplay=1"
+    var current_id = liberator.modules.buffer.URL;
+    var regex = /^https?:\/\/(?:[^.]+.)?youtube.com\/watch\?.*v=(.+)$/;
+    if (current_id.match(regex)) {
+        var new_url = current_id.replace(regex, base + "$1" + end);
+        // in playlists, we need to replace & with ?
+        if (new_url.indexOf("&") >= 0) new_url = new_url.replace("&", "?");
+        liberator.open(new_url, { "where": open_arg_where });
+    }
+}
+EOF
+
+ignorekeys add -except=:,d,D,x,f,t,T,o,O,g,z,H,L,0,1,2,3,4,5,6,7,8,9 '^https?://www.youtube.com/embed/.+'
