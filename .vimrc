@@ -42,6 +42,10 @@ nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 nnoremap <C-n> <C-e>j
 nnoremap <C-p> <C-y>k
 
+" <C-n> and <C-p> behave like arrow keys in command mode
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+
 "remap leader to space
 let mapleader = "\<Space>"
 
