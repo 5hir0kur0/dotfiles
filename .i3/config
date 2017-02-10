@@ -204,6 +204,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+bindsym $mod+Ctrl+b border toggle
 
 set $mode_compton "compton: (i) invert, (k) kill, (s) start"
 mode $mode_compton {
@@ -216,7 +217,7 @@ mode $mode_compton {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+q mode $mode_compton
+bindsym $mod+Mod1+c mode $mode_compton
 
 set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep"
 mode $mode_system {
@@ -303,3 +304,4 @@ bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
 #bindsym XF86AudioPrev exec playerctl previous
 
 exec --no-startup-id ~/.i3/init.sh
+# vi: ft=sh
