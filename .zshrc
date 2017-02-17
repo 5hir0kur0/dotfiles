@@ -98,8 +98,8 @@ function up() {
 
 ##set prompt, colors
 autoload -U colors && colors
-PROMPT="%{$fg[red]%}%(?..[%?])%{$fg[magenta]%}%n@%m%{$fg[white]%}:%{$fg[cyan]%}%1~ %# %{$reset_color%}"
-# RPROMPT="[%{$fg_no_bold[yellow]%}%?%{$reset_color%}]"
+# TODO: use abbreviated path like in fish, maybe remove username and put it into tmux
+PROMPT="%{$fg[red]%}%(?..[%?])%{$fg[magenta]%}%n%{$fg[white]%}:%{$fg[cyan]%}%~ %# %{$reset_color%}"
 
 ##keybindings from archlinux.org
 typeset -A key
@@ -142,3 +142,34 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 [[ -f ~/.profile ]] && . ~/.profile
+
+# use syntax highlighting (needs community/zsh-syntax-highlighting)
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# cd automatically when typing just the directory name (e.g. "$ /tmp<CR>"
+setopt autocd
+# automatically push directories onto the "dirs" stack on cd
+setopt autopushd
+# delete rprompt when accepting a command (when enter is pressed)
+setopt transientrprompt
+# remove rprompt indent
+ZLE_RPROMPT_INDENT=0
+
+# stolen from http://stackoverflow.com/a/1128583
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' actionformats \
+    '%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f'
+zstyle ':vcs_info:*' formats       \
+    '%F{5}[%F{2}%b%F{5}]%f'
+
+zstyle ':vcs_info:*' enable git
+
+# or use pre_cmd, see man zshcontrib
+prompt_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+  fi
+}
+RPROMPT=$'$(prompt_wrapper)'
