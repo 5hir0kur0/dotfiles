@@ -36,11 +36,11 @@ filetype indent plugin on
 syntax on
 
 " <C-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " <C-n> and <C-p> scroll without moving the relative position of the cursor
-nnoremap <C-n> <C-e>j
-nnoremap <C-p> <C-y>k
+nnoremap <silent> <C-n> <C-e>j
+nnoremap <silent> <C-p> <C-y>k
 
 " <C-n> and <C-p> behave like arrow keys in command mode
 cnoremap <C-n> <Down>
@@ -82,6 +82,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/ReplaceWithRegister'
 
 call vundle#end()
 
