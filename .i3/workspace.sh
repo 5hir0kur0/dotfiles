@@ -5,7 +5,8 @@
 set -eu
 
 list_non_numeric_workspaces() {
-    i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")\D+?(?=")'
+    i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")\D+?(?=")' \
+        | sort --ignore-case
 }
 
 MOVE=""
