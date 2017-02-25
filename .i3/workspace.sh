@@ -1,3 +1,15 @@
 #!/bin/sh
 
-i3-msg "${1-}" workspace "$(dmenu -p 'New workspace:' -fn 'DejaVu Sans Mono-11' -nb '#101010' -nf '#b9b9b9' -sb '#b9b9b9' -sf '#101010' -i < /dev/null)"
+# usage: $ ./workspace.sh [move]
+
+set -eu
+
+list_non_numeric_workspaces() {
+    i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")\D+?(?=")'
+}
+
+MOVE=""
+[ -n "${1-}" ] && MOVE="move to "
+WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -p "$MOVE"'workspace:' -i)"
+
+[ -n "$WORKSPACE" ] && i3-msg "${1-}" workspace "$WORKSPACE"
