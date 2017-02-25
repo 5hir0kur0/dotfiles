@@ -115,8 +115,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-bindsym $mod+c exec $workspacescript
-bindsym $mod+Shift+c exec $workspacescript move
+bindsym $mod+c exec --no-startup-id $workspacescript
+bindsym $mod+Shift+c exec --no-startup-id $workspacescript move
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
