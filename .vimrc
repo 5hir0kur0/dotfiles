@@ -9,6 +9,9 @@ set wildmenu
 set list
 set listchars=tab:▸\ ,eol:¬,trail:\ ,precedes:↤,extends:↦
 
+" highlight the line the cursor is on
+set cursorline
+
 set background=dark
 
 set relativenumber
@@ -83,6 +86,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
+Plugin 'w0rp/ale'
 
 call vundle#end()
 
@@ -92,3 +96,7 @@ let g:airline_exclude_preview = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme = 'tomorrow'
+
+" ale settings
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
