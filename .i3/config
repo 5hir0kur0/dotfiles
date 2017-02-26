@@ -5,12 +5,14 @@ set $mousescript ~/.i3/mouse_action.sh
 set $comptonscript ~/.i3/compton.sh
 set $centerscript ~/.i3/center_cursor.sh
 set $workspacescript ~/.i3/workspace.sh
+set $openscript ~/.i3/rofilocate.sh
+set $webscript ~/.i3/rofiweb.sh
 
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font pango:Inconsolata 11
+font pango:Inconsolata 12
 # font pango:Inconsolata 13px
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -37,7 +39,26 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Shift+d exec --no-startup-id dmenu_run
 
-bindsym $mod+space exec --no-startup-id rofi -show combi
+bindsym $mod+space exec --no-startup-id rofi -show drun
+bindsym $mod+Mod1+space exec --no-startup-id rofi -show run
+bindsym $mod+g exec --no-startup-id rofi -show window
+bindsym $mod+Shift+g exec --no-startup-id rofi -show windowcd
+bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
+
+set $mode_open "open: (x)dg, (t)erminal, (s)earch, (b)ookmark, (w)eb bookmark/search"
+mode $mode_open {
+    bindsym x exec --no-startup-id $openscript xdg, mode "default"
+    bindsym t exec --no-startup-id $openscript term, mode "default"
+    bindsym s exec --no-startup-id $webscript search, mode "default"
+    bindsym b exec --no-startup-id $webscript bookmark, mode "default"
+    bindsym w exec --no-startup-id $webscript both, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+o mode $mode_open
 
 # change focus
 bindsym $mod+h focus left
@@ -278,7 +299,7 @@ client.unfocused $base01 $base01 $base04 $base01
 client.urgent $base03 $base03 $base07 $base08
 
 bar {
-   font pango:DejaVu Sans Mono 10 
+   font pango:Inconsolata 12
    status_command i3status --config ~/.i3/i3status
    position bottom
    tray_output primary
