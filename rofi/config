@@ -1,7 +1,7 @@
 #include "/usr/share/rofi/themes//android_notification.theme"
 rofi.modi:                           drun,window,run,ssh
 ! set the modi to combine in combi mode
-rofi.combi-modi:                     drun,window,run
+rofi.combi-modi:                     drun,window,run,ssh
 rofi.width:                          60
 rofi.lines:                          12
 ! rofi.bw:                             1
@@ -12,7 +12,7 @@ rofi.padding:                        4
 ! offset relative to "location" (needs to be changed if location changes)
 rofi.yoffset:                        10
 ! rofi.xoffset:                        0
-! "Always show number of lines" Set from: Default
+! always show number of lines
 rofi.fixed-num-lines:                false
 ! terminal to use 
 ! rofi.terminal:                       rofi-sensible-terminal
@@ -25,12 +25,12 @@ rofi.fixed-num-lines:                false
 ! run command to execute that runs in shell
 ! rofi.run-shell-command:              {terminal} -e {cmd}
 ! command executed on accep-entry-custom for window modus
-! rofi.window-command:                 xkill -id {window}
+rofi.window-command:                 xkill -id {window}
 ! disable history in run/ssh
 ! rofi.disable-history:                false
 ! use levenshtein sorting
 ! rofi.levenshtein-sort:               false
-! rofi.case-sensitive:                 false
+rofi.case-sensitive:                 false
 ! cycle through the results list
 rofi.cycle:                          false
 ! enable sidebar-mode
@@ -60,7 +60,6 @@ rofi.hide-scrollbar:                 false
 ! rofi.fake-transparency:              false
 ! threads to use for string matching
 ! rofi.threads:                        0
-! scrollbar width
 rofi.scrollbar-width:                4
 ! scrolling method. (0: Page, 1: Centered)
 rofi.scroll-method:                  1
@@ -105,13 +104,13 @@ rofi.kb-remove-to-eol:               Control+k
 ! delete till the start of line
 rofi.kb-remove-to-sol:               Control+u
 ! accept entry
-! rofi.kb-accept-entry:                Control+j,Control+m,Return,KP_Enter
+rofi.kb-accept-entry:                Control+j,Control+m,Return,KP_Enter
 ! use entered text as command (in ssh/run modi)
-! rofi.kb-accept-custom:               Control+Return
+rofi.kb-accept-custom:               Control+Return
 ! use alternate accept command.
-! rofi.kb-accept-alt:                  Shift+Return
+rofi.kb-accept-alt:                  Shift+Return
 ! delete entry from history
-rofi.kb-delete-entry:                Shift+Delete
+rofi.kb-delete-entry:                Shift+Delete,Control+r
 ! switch to the next mode.
 rofi.kb-mode-next:                   Shift+Right,Control+Tab
 ! switch to the previous mode.
@@ -121,9 +120,9 @@ rofi.kb-mode-previous:               Shift+Left,Control+Shift+Tab
 ! go to the next column
 ! rofi.kb-row-right:                   Control+Page_Down
 ! select previous entry
-! rofi.kb-row-up:                      Up,Control+p,Shift+Tab,Shift+ISO_Left_Tab
+rofi.kb-row-up:                      Up,Control+p,Shift+Tab,Shift+ISO_Left_Tab
 ! select next entry
-! rofi.kb-row-down:                    Down,Control+n
+rofi.kb-row-down:                    Down,Control+n
 ! go to next row, if one left, accept it, if no left next mode.
 ! rofi.kb-row-tab:                     Tab
 ! go to the previous page
@@ -139,9 +138,9 @@ rofi.kb-mode-previous:               Shift+Left,Control+Shift+Tab
 ! take a screenshot of the rofi window
 ! rofi.kb-screenshot:                  Alt+S
 ! toggle case sensitivity
-! rofi.kb-toggle-case-sensitivity:     grave,dead_grave
+rofi.kb-toggle-case-sensitivity:     grave,dead_grave,Control+i
 ! toggle sort
-! rofi.kb-toggle-sort:                 Alt+grave
+rofi.kb-toggle-sort:                 Alt+grave,Control+s
 ! quit rofi
 rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
 ! custom commands
@@ -164,11 +163,11 @@ rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
 ! rofi.kb-custom-17:                   Alt+ampersand
 ! rofi.kb-custom-18:                   Alt+asterisk
 ! rofi.kb-custom-19:                   Alt+parenleft
-! rofi.display-ssh:                    
-! rofi.display-run:                    
+rofi.display-ssh:                    ssh
+rofi.display-run:                    run
 rofi.display-drun:                   app
 rofi.display-window:                 win
-! rofi.display-windowcd:               
+rofi.display-windowcd:               wcd
 rofi.display-combi:                  com
 ! color scheme for normal row
 ! rofi.color-normal:                   #fdf6e3,#002b36,#eee8d5,#586e75,#eee8d5
