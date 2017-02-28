@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# alias for youtube
+
+surfraw youtube "$@"

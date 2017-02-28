@@ -1,0 +1,47 @@
+#!/bin/sh
+. surfraw || exit 1
+
+w3_config_hook () {
+def   SURFRAW_wiktionary_languages	"en"
+}
+
+w3_usage_hook () {
+    cat <<EOF
+Usage: $w3_argv0 [options] [search-string]
+Description:
+  Search wiktionary
+Local options:
+  -l=...  Two letter language code
+Examples:
+  $w3_argv0 -l=de hallo
+EOF
+    w3_global_usage
+}
+
+w3_parse_option_hook () {
+    opt="$1"
+    optarg="$2"
+    case "$opt" in
+	-l=*)	setopt	 SURFRAW_wiktionary_languages		$optarg	;;
+	*) return 1 ;;
+    esac
+    return 0
+}
+
+w3_config
+w3_parse_args "$@"
+
+if [ -z "$SURFRAW_wiktionary_languages" ]; then
+    SURFRAW_wiktionary_languages="ende"
+fi
+
+prefix="https://${SURFRAW_wiktionary_languages}.wiktionary.org/w/index.php?search="
+
+if null "$w3_args"; then
+    w3_browse_url "http://${SURFRAW_wiktionary_languages}.dict.cc"
+else
+    escaped_args=`w3_url_of_arg $w3_args`
+
+    w3_browse_url "${prefix}${escaped_args}"
+fi
+
