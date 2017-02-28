@@ -55,6 +55,7 @@ killapps() {
             -b 'Reboot' "$0 reboot_force" &
     fi
     while [ "$(countclients)" -gt 0 ]; do sleep '0.1'; done
+    ~/.i3/kill.sh
     return 0
 }
 
