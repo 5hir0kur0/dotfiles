@@ -1,0 +1,54 @@
+#!/bin/sh
+. surfraw || exit 1
+
+w3_config_hook () {
+def   SURFRAW_tatoeba_from	"und"
+def   SURFRAW_tatoeba_to	"und"
+}
+
+w3_usage_hook () {
+    cat <<EOF
+Usage: $w3_argv0 [options] [search-string]
+Description:
+  Search tatoeba.org
+Local options:
+  -f=... from ... (three letter language code)
+  -t=... to ... (three letter language code)
+Examples:
+  $w3_argv0 -f=de -t=en hallo
+EOF
+    w3_global_usage
+}
+
+w3_parse_option_hook () {
+    opt="$1"
+    optarg="$2"
+    case "$opt" in
+	-f=*)	setopt	 SURFRAW_tatoeba_from		$optarg	;;
+	-t=*)	setopt	 SURFRAW_tatoeba_to		$optarg	;;
+	*) return 1 ;;
+    esac
+    return 0
+}
+
+w3_config
+w3_parse_args "$@"
+
+if [ -z "$SURFRAW_tatoeba_from" ]; then
+    SURFRAW_tatoeba_from="und"
+fi
+
+if [ -z "$SURFRAW_tatoeba_to" ]; then
+    SURFRAW_tatoeba_to="und"
+fi
+
+prefix="http://tatoeba.org/sentences/search?from=${SURFRAW_tatoeba_from}&to=${SURFRAW_tatoeba_to}&query="
+
+if null "$w3_args"; then
+    w3_browse_url "http://tatoeba.org"
+else
+    escaped_args=`w3_url_of_arg $w3_args`
+
+    w3_browse_url "${prefix}${escaped_args}"
+fi
+

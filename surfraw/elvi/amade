@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# alias for amazon DE
+
+surfraw amazon -country=de "$@"

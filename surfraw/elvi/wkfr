@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# alias for German wikipedia
+
+surfraw wikipedia -language=fr "$@"

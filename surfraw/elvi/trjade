@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# alias for translate
+
+surfraw translate -from=ja -to=de "$@"
