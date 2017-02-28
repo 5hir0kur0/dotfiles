@@ -23,6 +23,9 @@ set pastetoggle=<F10>
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swp//
 
+" encryption method
+set cryptmethod=blowfish2
+
 " use :help insted of !man to look up word below cursor with K
 set keywordprg=:help
 
