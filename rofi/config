@@ -32,7 +32,7 @@ rofi.window-command:                 xkill -id {window}
 ! rofi.levenshtein-sort:               false
 rofi.case-sensitive:                 false
 ! cycle through the results list
-rofi.cycle:                          false
+rofi.cycle:                          true
 ! enable sidebar-mode
 rofi.sidebar-mode:                   true
 ! row height (in chars)
