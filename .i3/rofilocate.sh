@@ -16,9 +16,17 @@ case "$1" in
         ;;
     term)
         if tmux list-sessions >& /dev/null; then
-            tmux neww -n "${FILENAME##*/}" "rifle '""$FILENAME""'"
+            if [ -d "$FILENAME" ]; then
+                tmux neww -n "${FILENAME##*/}" -c "$FILENAME"
+            else
+                tmux neww -n "${FILENAME##*/}" "rifle '""$FILENAME""'"
+            fi
         else
-            rofi-sensible-terminal -e rifle "$FILENAME"
+            if [ -d "$FILENAME" ]; then
+                urxvt -cd "$FILENAME"
+            else
+                rofi-sensible-terminal -e rifle "$FILENAME"
+            fi
         fi
         ;;
     *)
