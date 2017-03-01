@@ -126,15 +126,15 @@ rofi.kb-row-down:                    Down,Control+n
 ! go to next row, if one left, accept it, if no left next mode.
 ! rofi.kb-row-tab:                     Tab
 ! go to the previous page
-! rofi.kb-page-prev:                   Page_Up
+rofi.kb-page-prev:                   Page_Up,Alt+v,Control+B
 ! go to the next page
-! rofi.kb-page-next:                   Page_Down
+rofi.kb-page-next:                   Page_Down,Alt+V,Control+F
 ! go to the first entry
-! rofi.kb-row-first:                   Home,KP_Home
+rofi.kb-row-first:                   Home,KP_Home,Control+A
 ! go to the last entry
-! rofi.kb-row-last:                    End,KP_End
+rofi.kb-row-last:                    End,KP_End,Control+E
 ! set selected item as input text
-! rofi.kb-row-select:                  Control+space
+rofi.kb-row-select:                  Control+space
 ! take a screenshot of the rofi window
 ! rofi.kb-screenshot:                  Alt+S
 ! toggle case sensitivity
