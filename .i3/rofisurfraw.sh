@@ -7,6 +7,7 @@
 ELVI_DIRECTORIES=("/usr/lib/surfraw/" "$HOME/.config/surfraw/elvi/")
 BOOKMARKS="$HOME/.config/surfraw/bookmarks"
 OPENSCRIPT="$HOME/.i3/openbrowser.sh"
+DEFAULT_ELVI='google'
 
 set -eu
 
@@ -34,8 +35,22 @@ ROFI_ARGS=" -kb-row-select Tab -kb-row-tab Control+space -dmenu -i \
 get_surfraw_url() {
     PRM='web:'
     # lack of double quotes intentional
-    ARG="$("$1" | rofi $ROFI_ARGS -p "$PRM" -mesg "$MSG")"
-    [ -n "$ARG" ] && SURFRAW_print=yes surfraw $ARG
+    LIST="$($1)"
+    ARG="$(rofi $ROFI_ARGS -p "$PRM" -mesg "$MSG" <<< "$LIST")"
+    if [ -n "$ARG" ]; then
+        FIRST_ELEM="$(sed 's/\s\+.*$//' <<< "$ARG")"
+        if grep -q "^$FIRST_ELEM\$" <<< "$LIST"; then
+            SURFRAW_print=yes surfraw $ARG
+        else # does not start with an elvi
+            if grep -q '\.' <<< "$ARG"; then # it's probably an url
+                echo "$ARG"
+            else
+                SURFRAW_print=yes surfraw "$DEFAULT_ELVI" $ARG
+            fi
+        fi
+    else
+        return 1
+    fi
 }
 
 get_bookmark() {
