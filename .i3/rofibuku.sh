@@ -82,12 +82,20 @@ prompt_bookmark() {
         ARG="$(print_pretty | rofi -dmenu $ROFI_PARAMS -p "$PRM" -mesg "$ROFI_MESG")"
     fi
     VAR=$?
-    cut -f 1 -d ' ' <<< "$ARG"
+    if ! grep -qE '^[[:digit:]]+[[:space:]]+' <<< "$ARG"; then
+        echo "$ARG"
+    else
+        cut -f 1 -d ' ' <<< "$ARG"
+    fi
     return $VAR
 }
 
 get_buku_url() {
     if [ -n "$1" ]; then
+        if ! grep -qE '^[[:digit:]]+$' <<< "$1"; then
+            echo "$1"
+            return 0
+        fi
         ECHO="$(echo | buku --print "$1" --format 1 2>&1)"
         if [ $? -ne 0 ]; then
             rofi -markup -e "<span color='red'>$ECHO</span>"
