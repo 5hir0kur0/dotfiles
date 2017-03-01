@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BROWSER="firefox"
-BROWSER_CLASSES="chromium|firefox"
+BROWSER='firefox'
+BROWSER_CLASSES='chromium|firefox'
 
 # call with id property_name
 get_property() {
@@ -40,8 +40,10 @@ open_in_default_browser_or_current_window() {
         fi
     else
         B="$(running_browser)"
-        BROWSER="${B-$BROWSER}"
-        "$BROWSER" "$@"
+        echo $B
+        BROWSER="${B:-$BROWSER}"
+        echo $BROWSER
+        $BROWSER "$@"
     fi
 }
 
