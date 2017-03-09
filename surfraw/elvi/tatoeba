@@ -42,10 +42,10 @@ if [ -z "$SURFRAW_tatoeba_to" ]; then
     SURFRAW_tatoeba_to="und"
 fi
 
-prefix="http://tatoeba.org/sentences/search?from=${SURFRAW_tatoeba_from}&to=${SURFRAW_tatoeba_to}&query="
+prefix="https://tatoeba.org/sentences/search?from=${SURFRAW_tatoeba_from}&to=${SURFRAW_tatoeba_to}&query="
 
 if null "$w3_args"; then
-    w3_browse_url "http://tatoeba.org"
+    w3_browse_url "https://tatoeba.org"
 else
     escaped_args=`w3_url_of_arg $w3_args`
 

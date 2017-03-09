@@ -36,10 +36,10 @@ if [ -z "$SURFRAW_dict_languages" ]; then
     SURFRAW_dict_languages="ende"
 fi
 
-prefix="http://${SURFRAW_dict_languages}.dict.cc/?s="
+prefix="https://${SURFRAW_dict_languages}.dict.cc/?s="
 
 if null "$w3_args"; then
-    w3_browse_url "http://${SURFRAW_dict_languages}.dict.cc"
+    w3_browse_url "https://${SURFRAW_dict_languages}.dict.cc"
 else
     escaped_args=`w3_url_of_arg $w3_args`
 
