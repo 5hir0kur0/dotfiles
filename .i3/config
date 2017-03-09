@@ -10,6 +10,7 @@ set $openscript ~/.i3/rofilocate.sh
 set $surfrawscript ~/.i3/rofisurfraw.sh
 set $bukuscript ~/.i3/rofibuku.sh
 set $manscript ~/.i3/rofiman.sh
+set $entiresplitscript ~/.i3/splitentire.sh
 
 set $mod Mod4
 
@@ -85,14 +86,33 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-#bindsym $mod+b split h
 bindsym $mod+Ctrl+l split h
 bindsym $mod+Ctrl+h split h
 
 # split in vertical orientation
-#bindsym $mod+v split v
 bindsym $mod+Ctrl+j split v
 bindsym $mod+Ctrl+k split v
+
+
+# maybe remap to Mod1+{hjklHJKL}
+set $mode_entire "entire split: (l/h) horizontal, (j/k) vertical, caps -> terminal"
+mode $mode_entire {
+    bindsym j exec --no-startup-id $entiresplitscript vertical, mode "default"
+    bindsym k exec --no-startup-id $entiresplitscript vertical, mode "default"
+    bindsym l exec --no-startup-id $entiresplitscript horizontal, mode "default"
+    bindsym h exec --no-startup-id $entiresplitscript horizontal, mode "default"
+
+    bindsym Shift+J exec --no-startup-id $entiresplitscript vertical i3-sensible-terminal, mode "default"
+    bindsym Shift+K exec --no-startup-id $entiresplitscript vertical i3-sensible-terminal, mode "default"
+    bindsym Shift+L exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
+    bindsym Shift+H exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+e mode $mode_entire
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
