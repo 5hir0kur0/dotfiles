@@ -16,7 +16,7 @@ list_elvi() {
     for DIR in "${ELVI_DIRECTORIES[@]}"; do
         ARRAY+=( ${DIR}* )
     done
-    printf "%s\n" "${ARRAY[@]##*/}" | sort -n
+    printf "%s \n" "${ARRAY[@]##*/}" | sort -n
 }
 
 list_bookmarks() {
@@ -39,7 +39,7 @@ get_surfraw_url() {
     ARG="$(rofi $ROFI_ARGS -p "$PRM" -mesg "$MSG" <<< "$LIST")"
     if [ -n "$ARG" ]; then
         FIRST_ELEM="$(sed 's/\s\+.*$//' <<< "$ARG")"
-        if grep -q "^$FIRST_ELEM\$" <<< "$LIST"; then
+        if grep -q "^$FIRST_ELEM\s*\$" <<< "$LIST"; then
             SURFRAW_print=yes surfraw $ARG
         else # does not start with an elvi
             if grep -q '\.' <<< "$ARG"; then # it's probably an url
@@ -59,7 +59,7 @@ get_bookmark() {
     [ -n "$ARG" ] && tr -s ' ' <<< "$ARG" | cut -f 2 -d ' '
 }
 
-case "$1" in
+case "${1:-}" in
     bookmark)
         ARG="$(get_bookmark)"
         [ -n "$ARG" ] && $OPENSCRIPT "$ARG"
