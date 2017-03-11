@@ -5,6 +5,7 @@ set $mousescript ~/.i3/mouse_action.sh
 set $comptonscript ~/.i3/compton.sh
 set $centerscript ~/.i3/center_cursor.sh
 set $workspacescript ~/.i3/workspace.sh
+set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
 set $surfrawscript ~/.i3/rofisurfraw.sh
@@ -156,6 +157,9 @@ bindsym $mod+d exec --no-startup-id $workspacescript
 bindsym $mod+Shift+d exec --no-startup-id $workspacescript move
 bindsym $mod+c exec --no-startup-id $newworkspacescript
 bindsym $mod+Shift+c exec --no-startup-id $newworkspacescript move
+
+# rename workspace
+bindsym $mod+Mod1+r exec --no-startup-id $renameworkspacescript
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
