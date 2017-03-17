@@ -4,13 +4,21 @@
 from os.path import expanduser
 from bs4 import BeautifulSoup
 from sys import stderr
+import re
 import urllib.request
+
+# currently, BeautifulSoup is used to fetch the website titles,
+# but this is also possible without additional libraries
+# (see the commented out parts of the file)
+# the reason I didn't do it is because I was too lazy to fix an exception
+# that occurred everytime on FindTitleParser.feed
 
 BOOKMAKRS_FILE = expanduser("~/.config/surfraw/bookmarks")
 MAX_LENGTH_NAME = 42
 MAX_LENGTH_TITLE = 42
 MAX_LENGTH_TAGS = 42
 MAX_LENGTH_URL = 42
+SHORT_URL = True
 
 # class FindTitleParser(HTMLParser):
 #     def __init__(self):
@@ -34,10 +42,12 @@ MAX_LENGTH_URL = 42
 # expected format for bookmarks
 # <name> <url> ;; <tags seperated by commas> ;; <page title>
 # if there are no tags or no title, use special value:
-NO_VALUE = "NONE"
+NO_VALUE = "@@NONE@@"
 class Bookmark():
+    tags_regex = re.compile("^\w+(?:,\w+)*$")
+    name_regex = re.compile("^\w+$")
+    http_regex = re.compile("^https?://(?:www\d*\.)?")
     def __init__(self, s):
-        import re
         split = s.split(None, 1)
         if not len(split) == 2:
             raise ValueError("not a valid bookmark: " + str(s))
@@ -51,9 +61,8 @@ class Bookmark():
         else:
             self.tags = [ t.strip() for t in split2[1].strip().split(",") ]
             self.tags.sort()
-        self.title = None if split2[2].strip() == NO_VALUE else split2[2].strip()
-        self.tags_regex = re.compile("^\w+(?:,\w+)*$")
-        self.name_regex = re.compile("^\w+$")
+        tmp_title = split2[2].split()
+        self.title = None if tmp_title == NO_VALUE else tmp_title
     def set_title(self, title):
         if title == NO_VALUE:
             self.title = None
@@ -61,8 +70,8 @@ class Bookmark():
             old = self.title
             self.title = title.strip() or None
             if old != self.title:
-                print("updating title of {}; change from {} to {}".format(self.url,
-                    old, self.title))
+                print("updating title of {}; change from {} to {}".format(
+                    self.url, old, self.title))
     def set_url(self, url):
         if not url: raise ValueError("invalid url")
         try:
@@ -78,7 +87,7 @@ class Bookmark():
         if tags == NO_VALUE:
             self.tags = []
         else:
-            if tags is not None and not self.tags_regex.match(tags):
+            if tags is not None and not Bookmark.tags_regex.match(tags):
                 raise ValueError("invalid tags: {}".format(tags))
             old = self.tags
             self.tags = tags.strip().split(",")
@@ -87,7 +96,7 @@ class Bookmark():
                 print("updating tags of {} from {} to {}".format(self.name, old,
                     self.tags))
     def set_name(self, new_name):
-        if not new_name or not self.name_regex.match(new_name):
+        if not new_name or not Bookmark.name_regex.match(new_name):
             raise ValueError("invalid name: {}".format(new_name))
         self.name = new_name
     def get_surfraw_format(self):
@@ -101,13 +110,19 @@ class Bookmark():
     def get_tags_string(self):
         if not self.tags: return ""
         else: return ",".join(self.tags)
-
+    def get_formatted_url(self):
+        return Bookmark.http_regex.sub("", self.url).rstrip("/") if SHORT_URL \
+                else self.url
 
 
 def read_bookmarks(path):
     bookmarks = []
     with open(path, "r") as marks:
-        for line in marks: bookmarks.append(Bookmark(line.strip()))
+        for line in marks:
+            if not line.strip().startswith("#"):
+                # uncomment if you need comments that only span part of a line
+                # bookmarks.append(Bookmark(line.split("#", 1)[0].strip()))
+                bookmarks.append(Bookmark(line.strip()))
     return bookmarks
 
 def update_titles(bookmarks):
@@ -156,7 +171,7 @@ def truncate(s, max_len):
 def print_pretty(bookmarks, form, max_name, max_url, max_tag, max_title):
     for bookmark in bookmarks:
         print(form.replace("%n", truncate(bookmark.name, max_name))
-                .replace("%u", truncate(bookmark.url, max_url))
+                .replace("%u", truncate(bookmark.get_formatted_url(), max_url))
                 .replace("%t", truncate(bookmark.get_tags_string(), max_tag))
                 .replace("%T", truncate(bookmark.title, max_title)))
 
@@ -237,6 +252,9 @@ if __name__ == "__main__":
                 changed = True
                 args = []
                 break
+            if args[0] == "--long-urls":
+                SHORT_URL = False
+                args = args[1:]
             elif args[0] == "--max-name":
                 if not len(args) >= 2:
                     raise ValueError("expected an argument for " + args[0])
@@ -273,7 +291,7 @@ if __name__ == "__main__":
                         args[0], val))
                 MAX_LENGTH_TITLE = val
                 args = args[2:]
-            elif args[0] == "--print-pretty":
+            elif args[0] == "--print":
                 if not len(args) >= 2:
                     raise ValueError("print needs a format string; see --help")
                 form = args[1]
@@ -293,26 +311,29 @@ if __name__ == "__main__":
                     "add a new bookmark (must be the last parameter)\n\t"
                     "<tags> and <title> are optional\n\t"
                     "<tags> have to be seperated by commas\n\t"
-                    "if you want to specify a title but not tags, use " +
-                    NO_VALUE + " as value for <tags>\n\t"
+                    "if you want to specify a title but not tags, use '" +
+                    NO_VALUE + "' as value for <tags>\n\t"
                     "if no title was specified, it is fetched automatically\n"
+                    "--long-urls\n\t"
+                    "don't abbreviate urls (i.e. keep the 'http(s)://www.')\n\t"
+                    "must be specified before --print\n"
                     "--max-{name,url,tags,title} <value>\n\t"
                     "set the max length used by print\n\t"
                     "values must be positive\n\t"
-                    "must be specified before --print-pretty\n\t"
-                    "--print-pretty <format>\n\t"
+                    "must be specified before --print\n"
+                    "--print <format>\n\t"
                     "you need to specify a format string\n\t"
                     "you can use the following special sequences\n\t"
                     "%n for name\n\t"
                     "%u for url\n\t"
                     "%t for tags\n\t"
-                    "%T for title\n\t")
+                    "%T for title")
                 args = args[1:]
             else:
                 print("usage: " + prog_name +
                         " --update-titles|--update-{tags,name,title,url}"
                         " <name> <new_value>|--add <name> <url> [<tags>"
-                        " [<title>]]|--print-pretty|"
+                        " [<title>]]|--print|--long-urls|"
                         "--max-{name,tags,title,url} <value>|--help",
                         file=stderr)
                 exit(1)
