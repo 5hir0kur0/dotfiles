@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BROWSER='firefox'
-BROWSER_CLASSES='chromium|firefox'
+BROWSER_CLASSES='chromium|firefox|tor browser|navigator'
 
 # call with id property_name
 get_property() {
