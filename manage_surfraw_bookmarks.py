@@ -61,7 +61,7 @@ class Bookmark():
         else:
             self.tags = [ t.strip() for t in split2[1].strip().split(",") ]
             self.tags.sort()
-        tmp_title = split2[2].split()
+        tmp_title = split2[2].strip()
         self.title = None if tmp_title == NO_VALUE else tmp_title
     def set_title(self, title):
         if title == NO_VALUE:
@@ -140,7 +140,8 @@ def update_title(bookmark):
     # except Exception as e:
     #     print("an exception occurred while updating the title: " + str(e), file=stderr)
     # print("        new title: {}".format(bookmark.title))
-    soup = BeautifulSoup(urllib.request.urlopen(bookmark.url), "html.parser")
+    url = bookmark.url.replace("%s", "") # set search query to empty if any
+    soup = BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     bookmark.set_title(soup.title.string)
 
 def write_bookmarks(bookmarks):
@@ -252,7 +253,7 @@ if __name__ == "__main__":
                 changed = True
                 args = []
                 break
-            if args[0] == "--long-urls":
+            elif args[0] == "--long-urls":
                 SHORT_URL = False
                 args = args[1:]
             elif args[0] == "--max-name":
