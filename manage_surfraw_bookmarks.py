@@ -176,6 +176,18 @@ def print_pretty(bookmarks, form, max_name, max_url, max_tag, max_title):
                 .replace("%t", truncate(bookmark.get_tags_string(), max_tag))
                 .replace("%T", truncate(bookmark.title, max_title)))
 
+def print_index(bookmarks, bookmark):
+    bookmarks.sort(key=lambda b: b.name)
+    print("index:", bookmarks.index(bookmark))
+
+def list_tags(bookmarks):
+    tags = set()
+    for bookmark in bookmarks:
+        for tag in bookmark.tags:
+            tags.add(tag)
+    for tag in tags:
+        print(tag)
+
 
 def find_bookmark(bookmarks, name):
     for bookmark in bookmarks:
@@ -184,16 +196,30 @@ def find_bookmark(bookmarks, name):
     raise ValueError("invalid bookmark name: {}".format(name))
 
 def set_title(bookmarks, name, title):
-    find_bookmark(bookmarks, name).set_title(title)
+    bookmark = find_bookmark(bookmarks, name)
+    bookmark.set_title(title)
+    print_index(bookmarks, bookmark)
 
 def set_tags(bookmarks, name, tags):
-    find_bookmark(bookmarks, name).set_tags(tags)
+    bookmark = find_bookmark(bookmarks, name)
+    bookmark.set_tags(tags)
+    print_index(bookmarks, bookmark)
 
 def set_name(bookmarks, name, new_name):
-    find_bookmark(bookmarks, name).set_name(new_name)
+    bookmark = find_bookmark(bookmarks, name)
+    bookmark.set_name(new_name)
+    print_index(bookmarks, bookmark)
 
 def set_url(bookmarks, name, url):
-    find_bookmark(bookmarks, name).set_url(url)
+    bookmark = find_bookmark(bookmarks, name)
+    bookmark.set_url(url)
+    print_index(bookmarks, bookmark)
+
+def remove_bookmark(bookmarks, name):
+    bookmark = find_bookmark(bookmarks, name)
+    print("removing bookmark:", bookmark.get_surfraw_format())
+    print_index(bookmarks, bookmark)
+    bookmarks.remove(bookmark)
 
 if __name__ == "__main__":
     from sys import argv
@@ -233,6 +259,12 @@ if __name__ == "__main__":
                 set_url(bookmarks, args[1], args[2])
                 changed = True
                 args = args[3:]
+            elif args[0] == "--remove":
+                if not len(args) >= 2:
+                    raise ValueError("expected more arguments")
+                remove_bookmark(bookmarks, args[1])
+                changed = True
+                args = args[2:]
             elif args[0] == "--add":
                 if not len(args) >= 3 and len(args) <= 5:
                     raise ValueError("--add takes at least two arguments and"
@@ -250,6 +282,7 @@ if __name__ == "__main__":
                 if not title: update_title(bookmark)
                 print("adding bookmark: {}".format(
                     bookmark.get_surfraw_format()))
+                print_index(bookmarks, bookmark)
                 changed = True
                 args = []
                 break
@@ -299,6 +332,23 @@ if __name__ == "__main__":
                 print_pretty(bookmarks, form, MAX_LENGTH_NAME, MAX_LENGTH_URL,
                         MAX_LENGTH_TAGS, MAX_LENGTH_TITLE)
                 args = args[2:]
+            elif args[0] == "--find":
+                if not len(args) >= 3:
+                    raise ValueError("find needs a name and a format string;"
+                            "see --help")
+                name = args[1]
+                form = args[2]
+                try:
+                    mark = next(b for b in bookmarks if b.name == name)
+                    print_pretty([mark], form, MAX_LENGTH_NAME,
+                            MAX_LENGTH_URL, MAX_LENGTH_TAGS,
+                            MAX_LENGTH_TITLE)
+                except StopIteration:
+                    raise ValueError("invalid name: {}".format(name))
+                args = args[3:]
+            elif args[0] == "--list-tags":
+                list_tags(bookmarks)
+                args = args[1:]
             elif args[0] == "--help" or args[0] == "-h":
                 print("help for " + prog_name + "\n"
                     "--help|-h\n\t"
@@ -328,14 +378,19 @@ if __name__ == "__main__":
                     "%n for name\n\t"
                     "%u for url\n\t"
                     "%t for tags\n\t"
-                    "%T for title")
+                    "%T for title\n"
+                    "--list-tags\n\t"
+                    "list of all tags\n"
+                    "--find <name> <format>\n\t"
+                    "like print but only print bookmark matching <name>")
                 args = args[1:]
             else:
                 print("usage: " + prog_name +
-                        " --update-titles|--update-{tags,name,title,url}"
-                        " <name> <new_value>|--add <name> <url> [<tags>"
-                        " [<title>]]|--print|--long-urls|"
-                        "--max-{name,tags,title,url} <value>|--help",
+                        " --update-titles | --update-{tags,name,title,url}"
+                        " <name> <new_value> | --add <name> <url> [<tags>"
+                        " [<title>]] | --print <format> | --long-urls | "
+                        "--list-tags | --find <name> <format> | "
+                        "--max-{name,tags,title,url} <value> | --help",
                         file=stderr)
                 exit(1)
         if changed:
