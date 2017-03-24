@@ -1,0 +1,277 @@
+#!/bin/bash
+
+set -u +e
+
+SCRIPT_LOCATION="/home/nerd/code/dots/manage_surfraw_bookmarks.py"
+OPENSCRIPT="$HOME/.i3/openbrowser.sh"
+MAX_NAME_WIDTH=10
+MAX_URL_WIDTH=32
+MAX_TAG_WIDTH=42
+MAX_TITLE_WIDTH=80
+ADD_CMD="alt+a"
+ADD_CLIP_CMD="alt+c"
+REMOVE_CMD="alt+r"
+EDIT_TAG_CMD="alt+t"
+EDIT_URL_CMD="alt+u"
+EDIT_NAME_CMD="alt+n"
+EDIT_TITLE_CMD="alt+w"
+ROFI_PARAMS="-matching normal -i -kb-custom-1 $ADD_CMD -kb-custom-2 $ADD_CLIP_CMD -kb-custom-3 $REMOVE_CMD -kb-custom-4 $EDIT_URL_CMD -kb-custom-5 $EDIT_TAG_CMD -kb-custom-6 $EDIT_NAME_CMD -kb-custom-7 $EDIT_TITLE_CMD"
+HL="<b>"
+END_HL="</b>"
+ROFI_MESG="use $HL$ADD_CMD$END_HL to add a bookmark ($HL$ADD_CLIP_CMD$END_HL \
+to add from clipboard)
+use $HL$EDIT_URL_CMD$END_HL, $HL$EDIT_TAG_CMD$END_HL, $HL$EDIT_NAME_CMD$END_HL \
+or $HL$EDIT_TITLE_CMD$END_HL to edit the url, tags, name or title of a bookmark
+use $HL$REMOVE_CMD$END_HL to remove bookmark"
+
+print_pretty() {
+    $SCRIPT_LOCATION  --max-url "$MAX_URL_WIDTH" --max-tags "$MAX_TAG_WIDTH" \
+        --max-title "$MAX_TITLE_WIDTH" --print $'%n\t%u\t%t\t%T' \
+        | column -s $'\t' -t
+}
+
+prompt_bookmark() {
+    PRM='bkm:'
+    if [ -n "${ROW-}" ]; then
+        PRINTED="$(print_pretty)"
+        NUM_LINES="$(wc -l <<< "$PRINTED")"
+        if [ "$ROW" -eq $NUM_LINES ]; then
+            ROW="$((ROW-1))"
+        fi
+        ARG="$(print_pretty | rofi -dmenu -selected-row "$ROW" $ROFI_PARAMS -p "$PRM" -mesg "$ROFI_MESG")"
+    else
+        ARG="$(print_pretty | rofi -dmenu $ROFI_PARAMS -p "$PRM" -mesg "$ROFI_MESG")"
+    fi
+    VAR=$?
+    if ! grep -qE '^.+[[:space:]]+' <<< "$ARG"; then
+        echo "$ARG"
+    else
+        cut -f 1 -d ' ' <<< "$ARG"
+    fi
+    return $VAR
+}
+
+get_bookmark_url() {
+    if [ -n "$1" ]; then
+        ECHO="$($SCRIPT_LOCATION --long-urls --find "$1" '%u' 2>&1)"
+        if [ $? -ne 0 ]; then
+            rofi -markup -e "<span color='red'>$ECHO</span>"
+            return 1
+        else
+            echo "$ECHO"
+        fi
+    fi
+}
+
+get_bookmark_name() {
+    if [ -n "$1" ]; then
+        ECHO="$($SCRIPT_LOCATION --find "$1" '%n' 2>&1)"
+        if [ $? -ne 0 ]; then
+            rofi -markup -e "<span color='red'>$ECHO</span>"
+            return 1
+        else
+            echo "$ECHO"
+        fi
+    fi
+}
+
+get_bookmark_title() {
+    if [ -n "$1" ]; then
+        ECHO="$($SCRIPT_LOCATION --find "$1" '%T' 2>&1)"
+        if [ $? -ne 0 ]; then
+            rofi -markup -e "<span color='red'>$ECHO</span>"
+            return 1
+        else
+            echo "$ECHO"
+        fi
+    fi
+}
+
+get_bookmark_tags() {
+    if [ -n "$1" ]; then
+        ECHO="$($SCRIPT_LOCATION --find "$1" '%t' 2>&1)"
+        if [ $? -ne 0 ]; then
+            rofi -markup -e "<span color='red'>$ECHO</span>"
+            return 1
+        else
+            echo "$ECHO"
+        fi
+    fi
+}
+
+list_tags() {
+    ECHO="$($SCRIPT_LOCATION --list-tags 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    else
+        echo "$ECHO"
+    fi
+}
+
+join_by() {
+    local IFS=","
+    echo "$*"
+}
+
+add_bookmark() {
+    CLIP="${1-}"
+    URL=""
+    if [ -n "$CLIP" ]; then
+        URL="$(rofi -dmenu -filter "$CLIP" -p 'add bookmark (url):' < /dev/null)"
+    else
+        URL="$(rofi -dmenu -p 'add bookmark (url):' < /dev/null)"
+    fi
+    if [ -z "$URL" -o $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>abort adding url $URL
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    N_SUG="$(sed -r 's|^https?://(ww.+\.)?(.+)\..*|\2|' <<< "$URL")"
+    NAME="$(rofi -dmenu -filter "$N_SUG" -p 'add bookmark (name):' < /dev/null)"
+    if [ -z "$NAME" -o $? -ne 0 ] \
+        || $SCRIPT_LOCATION --print '%n' | grep -q "$NAME"; then
+        rofi -markup -e "<span color='red'>abort adding url $URL with name $NAME
+        (no name given or name exists)
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    TAG="$(list_tags | rofi -dmenu -multi-select -p 'add tags:')"
+    ECHO=""
+    if [ -n "$TAG" ]; then
+        TAGS="$(join_by ${TAG[*]})"
+        ECHO="$ECHO""$($SCRIPT_LOCATION --add "$NAME" "$URL" "$TAGS" 2>&1)"
+    else
+        ECHO="$ECHO""$($SCRIPT_LOCATION --add "$NAME" "$URL" 2>&1)"
+    fi
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    else
+        rofi -e "$ECHO"
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+edit_url() {
+    URL="$(get_bookmark_url "$1")"
+    [ -z "$URL" ] && return 1
+    NEW_URL="$(rofi -dmenu -filter "$URL" -p 'edit url:' < /dev/null)"
+    if [ -z "$NEW_URL" -o $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>abort changing url $URL
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    ECHO="$($SCRIPT_LOCATION --update-url "$1" "$NEW_URL" 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+edit_tags() {
+    TAGS="$(get_bookmark_tags "$1")"
+    NEW_TAGS="$(rofi -dmenu -filter "$TAGS" -p 'edit tags:' < /dev/null)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>abort changing tags $TAGS
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    ECHO="$($SCRIPT_LOCATION --update-tags "$1" "$NEW_TAGS" 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    else
+        rofi -e "$ECHO"
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+edit_name() {
+    NAME="$(get_bookmark_name "$1")"
+    [ -z "$NAME" ] && return 1
+    NEW_NAME="$(rofi -dmenu -filter "$NAME" -p 'edit name:' < /dev/null)"
+    if [ -z "$NEW_NAME" -o $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>abort changing name $NAME
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    ECHO="$($SCRIPT_LOCATION --update-name "$1" "$NEW_NAME" 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+edit_title() {
+    TITLE="$(get_bookmark_title "$1")"
+    NEW_TITLE="$(rofi -dmenu -filter "$TITLE" -p 'edit title:' < /dev/null)"
+    if [ -z "$NEW_TITLE" -o $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>abort changing name $TITLE
+        exit code of rofi: $?</span>"
+        return 1
+    fi
+    ECHO="$($SCRIPT_LOCATION --update-title "$1" "$NEW_TITLE" 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+remove_bookmark() {
+    ECHO="$($SCRIPT_LOCATION --remove "$1" 2>&1)"
+    if [ $? -ne 0 ]; then
+        rofi -markup -e "<span color='red'>$ECHO</span>"
+        return 1
+    fi
+    ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
+    export ROW #TODO does this work (row correct?)
+}
+
+ARG="$(prompt_bookmark)"
+RET=$?
+if [ "$RET" -ne 0 ]; then
+    case "$RET" in
+        10)
+            add_bookmark && $0
+            ;;
+        11)
+            CLIP="$(xsel -b)"
+            if [ -n "$CLIP" ]; then
+                add_bookmark "$CLIP" && $0
+            else
+                add_bookmark && $0
+            fi
+            ;;
+        12)
+            [ -n "$ARG" ] && remove_bookmark "$ARG" && $0
+            ;;
+        13)
+            [ -n "$ARG" ] && edit_url "$ARG" && $0
+            ;;
+        14)
+            [ -n "$ARG" ] && edit_tags "$ARG" && $0
+            ;;
+        15)
+            [ -n "$ARG" ] && edit_name "$ARG" && $0
+            ;;
+        16)
+            [ -n "$ARG" ] && edit_title "$ARG" && $0
+            ;;
+        *)
+            exit
+            ;;
+    esac
+
+else
+    URL="$(get_bookmark_url "$ARG")"
+    [ -n "$URL" ] && $OPENSCRIPT "$URL"
+fi
