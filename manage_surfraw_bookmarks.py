@@ -14,11 +14,12 @@ import urllib.request
 # that occurred everytime on FindTitleParser.feed
 
 BOOKMAKRS_FILE = expanduser("~/.config/surfraw/bookmarks")
-MAX_LENGTH_NAME = 42
-MAX_LENGTH_TITLE = 42
-MAX_LENGTH_TAGS = 42
-MAX_LENGTH_URL = 42
+MAX_LENGTH_NAME = 0
+MAX_LENGTH_TITLE = 0
+MAX_LENGTH_TAGS = 0
+MAX_LENGTH_URL = 0
 SHORT_URL = True
+WHITESPACE = re.compile("\s+")
 
 # class FindTitleParser(HTMLParser):
 #     def __init__(self):
@@ -44,7 +45,7 @@ SHORT_URL = True
 # if there are no tags or no title, use special value:
 NO_VALUE = "@@NONE@@"
 class Bookmark():
-    tags_regex = re.compile("^\w+(?:,\w+)*$")
+    tags_regex = re.compile("^\s*$|^\w+(?:,\w+)*$")
     name_regex = re.compile("^\w+$")
     http_regex = re.compile("^https?://(?:www\d*\.)?")
     def __init__(self, s):
@@ -56,7 +57,7 @@ class Bookmark():
         if not len(split2) == 3:
             raise ValueError("not a valid bookmark: " + str(s))
         self.url = split2[0].strip()
-        if split2[1].strip() == NO_VALUE:
+        if split2[1].strip() == NO_VALUE or not split2[1].strip():
             self.tags = []
         else:
             self.tags = [ t.strip() for t in split2[1].strip().split(",") ]
@@ -90,7 +91,10 @@ class Bookmark():
             if tags is not None and not Bookmark.tags_regex.match(tags):
                 raise ValueError("invalid tags: {}".format(tags))
             old = self.tags
-            self.tags = tags.strip().split(",")
+            if not tags.strip():
+                self.tags = []
+            else:
+                self.tags = tags.strip().split(",")
             self.tags.sort()
             if old != self.tags:
                 print("updating tags of {} from {} to {}".format(self.name, old,
@@ -128,7 +132,9 @@ def read_bookmarks(path):
 def update_titles(bookmarks):
     # parser = FindTitleParser()
     for bookmark in bookmarks:
-        update_title(bookmark)
+        e = update_title(bookmark)
+        if e:
+            print(e, file=stderr)
 
 def update_title(bookmark):
     # from sys import stderr
@@ -141,8 +147,14 @@ def update_title(bookmark):
     #     print("an exception occurred while updating the title: " + str(e), file=stderr)
     # print("        new title: {}".format(bookmark.title))
     url = bookmark.url.replace("%s", "") # set search query to empty if any
-    soup = BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    bookmark.set_title(soup.title.string)
+    try:
+        soup = BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+        title = soup.title.string.replace("\n", " ").strip()
+        title = WHITESPACE.sub(" ", title)
+        bookmark.set_title(title)
+    except Exception as e:
+        return "title couldn't be updated: {}".format(e)
+    return ""
 
 def write_bookmarks(bookmarks):
     from shutil import copyfile
@@ -162,7 +174,7 @@ def write_bookmarks(bookmarks):
 
 def truncate(s, max_len):
     s = str(s) if s else ""
-    return (s[:max_len] + '…') if len(s) > max_len else s
+    return (s[:max_len] + '…') if len(s) > max_len > 0 else s
 
 # format
 # %n for name
@@ -185,7 +197,7 @@ def list_tags(bookmarks):
     for bookmark in bookmarks:
         for tag in bookmark.tags:
             tags.add(tag)
-    for tag in tags:
+    for tag in sorted(tags):
         print(tag)
 
 
@@ -236,11 +248,20 @@ if __name__ == "__main__":
                 changed = True
                 args = args[1:]
             elif args[0] == "--update-title":
-                if not len(args) >= 3:
+                if not len(args) >= 2:
                     raise ValueError("expected more arguments")
-                set_title(bookmarks, args[1], args[2])
+                name = args[1]
+                title = None
+                if len(args) >= 3:
+                    title = args[2].replace("\n", "").strip()
+                if title:
+                    set_title(bookmarks, name, title)
+                else:
+                    bookmark = find_bookmark(bookmarks, name)
+                    update_title(bookmark)
+                    print_index(bookmarks, bookmark)
                 changed = True
-                args = args[3:]
+                args = args[3:] if len(args) >= 3 else args[2:]
             elif args[0] == "--update-tags":
                 if not len(args) >= 3:
                     raise ValueError("expected more arguments")
@@ -269,20 +290,31 @@ if __name__ == "__main__":
                 if not len(args) >= 3 and len(args) <= 5:
                     raise ValueError("--add takes at least two arguments and"
                             " must be the last parameter")
-                name = args[1]
-                url = args[2]
+                name = args[1].replace("\n", "").strip()
+                name = WHITESPACE.sub("", name)
+                url = args[2].replace("\n", "").strip()
+                url = WHITESPACE.sub("", url)
                 tags = None
                 title = None
-                if len(args) >= 4: tags = args[3]
-                if len(args) == 5: title = args[4]
+                if len(args) >= 4: tags = args[3].replace("\n", "").strip()
+                if len(args) >= 5: title = args[4].replace("\n", "").strip()
+                if tags:
+                    tags = WHITESPACE.sub(" ", tags)
+                if title:
+                    title = WHITESPACE.sub(" ", title)
+                if ";;" in url or ";;" in name or tags and ";;" in tags:
+                    raise ValueError("name, url and tags must not contain ';;'")
                 bm_string = "{} {} ;; {} ;; {}".format(name, url,
                         tags or NO_VALUE, title or NO_VALUE)
                 bookmark = Bookmark(bm_string)
                 bookmarks.append(bookmark)
-                if not title: update_title(bookmark)
+                e = None
+                if not title:
+                    e = update_title(bookmark)
                 print("adding bookmark: {}".format(
                     bookmark.get_surfraw_format()))
                 print_index(bookmarks, bookmark)
+                if e: print(e, file=stderr)
                 changed = True
                 args = []
                 break
