@@ -4,10 +4,9 @@ set -u +e
 
 SCRIPT_LOCATION="/home/nerd/code/dots/manage_surfraw_bookmarks.py"
 OPENSCRIPT="$HOME/.i3/openbrowser.sh"
-MAX_NAME_WIDTH=10
 MAX_URL_WIDTH=32
-MAX_TAG_WIDTH=42
-MAX_TITLE_WIDTH=80
+MAX_TAG_WIDTH=64
+MAX_TITLE_WIDTH=128
 ADD_CMD="alt+a"
 ADD_CLIP_CMD="alt+c"
 REMOVE_CMD="alt+r"
@@ -212,15 +211,24 @@ edit_name() {
 edit_title() {
     TITLE="$(get_bookmark_title "$1")"
     NEW_TITLE="$(rofi -dmenu -filter "$TITLE" -p 'edit title:' < /dev/null)"
-    if [ -z "$NEW_TITLE" -o $? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort changing name $TITLE
         exit code of rofi: $?</span>"
         return 1
     fi
-    ECHO="$($SCRIPT_LOCATION --update-title "$1" "$NEW_TITLE" 2>&1)"
+    ECHO=""
+    FETCH=0
+    if [ -n "$NEW_TITLE" ]; then
+        ECHO="$($SCRIPT_LOCATION --update-title "$1" "$NEW_TITLE" 2>&1)"
+    else
+        FETCH=1
+        ECHO="$($SCRIPT_LOCATION --update-title "$1" 2>&1)"
+    fi
     if [ $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>$ECHO</span>"
         return 1
+    elif [ "$FETCH" -eq 1 ]; then
+        rofi -e "$ECHO"
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
     export ROW #TODO does this work (row correct?)
@@ -244,7 +252,7 @@ if [ "$RET" -ne 0 ]; then
             add_bookmark && $0
             ;;
         11)
-            CLIP="$(xsel -b)"
+            CLIP="$(xsel -bo)"
             if [ -n "$CLIP" ]; then
                 add_bookmark "$CLIP" && $0
             else
