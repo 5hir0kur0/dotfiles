@@ -9,7 +9,7 @@ set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
 set $surfrawscript ~/.i3/rofisurfraw.sh
-set $bukuscript ~/.i3/rofibuku.sh
+set $bookmarkscript ~/.i3/rofibookmarks.sh
 set $manscript ~/.i3/rofiman.sh
 set $entiresplitscript ~/.i3/splitentire.sh
 
@@ -43,12 +43,12 @@ bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
 
 bindsym $mod+q exec --no-startup-id $surfrawscript search
 
-set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)uku, (m)anpage"
+set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage"
 mode $mode_open {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
     bindsym s exec --no-startup-id $surfrawscript both, mode "default"
-    bindsym b exec --no-startup-id $bukuscript, mode "default"
+    bindsym b exec --no-startup-id $bookmarkscript, mode "default"
     bindsym m exec --no-startup-id $manscript, mode "default"
 
     # back to normal: Enter or Escape
