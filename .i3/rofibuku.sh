@@ -146,10 +146,10 @@ add_bookmark() {
         exit code of rofi: $?</span>"
         return 1
     fi
-    TAG=( $(list_tags | rofi -dmenu -multi-select -p 'add tags:') )
+    TAG="$(list_tags | rofi -dmenu -multi-select -p 'add tags:')"
     ECHO=""
     if [ -n "$TAG" ]; then
-        TAGS="$(join_by "${TAG[@]}")"
+        TAGS="$(join_by ${TAG[*]})"
         ECHO="$ECHO""$(echo | buku --nc --add "$URL" --tag "$TAGS" 2>&1)"
     else
         ECHO="$ECHO""$(echo | buku --nc --add "$URL" 2>&1)"
