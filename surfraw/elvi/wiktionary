@@ -1,4 +1,7 @@
 #!/bin/sh
+# $Id$
+# elvis: wiktionary		-- search wiktionary.org
+
 . surfraw || exit 1
 
 w3_config_hook () {

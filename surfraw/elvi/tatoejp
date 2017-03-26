@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for translate
+# $Id$
+# elvis: tatoebajp		-- search tatoeba.org for japanese sentences
 
 surfraw tatoeba -f=und -t=jpn "$@"

@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: timer		-- start a timer on e.ggtimer.com
 
 . surfraw || exit 1
 

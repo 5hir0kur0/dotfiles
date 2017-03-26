@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for youtube
+# $Id$
+# elvis: yt		-- shortcut for youtube
 
 surfraw youtube "$@"

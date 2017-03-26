@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: gimag		-- search images.google.com
 
 . surfraw || exit 1
 

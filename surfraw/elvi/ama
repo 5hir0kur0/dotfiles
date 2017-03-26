@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for amazon
+# $Id$
+# elvis: ama		-- shortcut for amazon
 
 surfraw amazon "$@"

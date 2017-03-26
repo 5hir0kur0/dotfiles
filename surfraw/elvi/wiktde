@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for German wiktionary
+# $Id$
+# elvis: wiktde		-- shortcut for wiktionary -l=de
 
 surfraw wiktionary -l=de "$@"

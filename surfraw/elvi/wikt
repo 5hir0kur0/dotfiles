@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for wiktionary
+# $Id$
+# elvis: wikt		-- shortcut for wiktionary
 
 surfraw wiktionary "$@"

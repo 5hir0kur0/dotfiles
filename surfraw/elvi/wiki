@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for wikipedia
+# $Id$
+# elvis: wiki		-- shortcut for wikipedia
 
 surfraw wikipedia "$@"

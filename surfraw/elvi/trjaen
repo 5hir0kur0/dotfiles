@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for translate
+# $Id$
+# elvis: translate		-- shortcut for translate -from=ja -to=en
 
 surfraw translate -from=ja -to=en "$@"
