@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: duden		-- search duden.de
 
 . surfraw || exit 1
 

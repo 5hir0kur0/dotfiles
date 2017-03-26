@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for English-German dictionary lookup
+# $Id$
+# elvis: ende		-- shortcut for dict -l=ende
 
 surfraw dict -l=ende "$@"

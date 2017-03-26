@@ -1,22 +1,21 @@
 #!/bin/sh
 # $Id$
-# elvis: dict		-- search dict.cc
-
+# elvis: leo		-- search leo.org
 . surfraw || exit 1
 
 w3_config_hook () {
-def   SURFRAW_dict_languages	"ende"
+def   SURFRAW_dict_languages	"german-english"
 }
 
 w3_usage_hook () {
     cat <<EOF
 Usage: $w3_argv0 [options] [search-string]
 Description:
-  Search dict.cc
+  Search leo.org
 Local options:
-  -l=...  Two two letter language codes
+  -l=...  languages
 Examples:
-  $w3_argv0 -l=ende hello
+  $w3_argv0 -l=german-english hello
 EOF
     w3_global_usage
 }
@@ -36,13 +35,13 @@ w3_config
 w3_parse_args "$@"
 
 if [ -z "$SURFRAW_dict_languages" ]; then
-    SURFRAW_dict_languages="ende"
+    SURFRAW_dict_languages="german-english"
 fi
 
-prefix="https://${SURFRAW_dict_languages}.dict.cc/?s="
+prefix="https://dict.leo.org/${SURFRAW_dict_languages}/"
 
 if null "$w3_args"; then
-    w3_browse_url "https://${SURFRAW_dict_languages}.dict.cc"
+    w3_browse_url "https://www.leo.org/"
 else
     escaped_args=`w3_url_of_arg $w3_args`
 

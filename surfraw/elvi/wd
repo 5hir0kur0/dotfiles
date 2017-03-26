@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for wadoku
+# $Id$
+# elvis: wd		-- shortcut for wadoku
 
 surfraw wadoku "$@"

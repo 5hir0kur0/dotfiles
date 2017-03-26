@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: tatoeba		-- search tatoeba.org
 . surfraw || exit 1
 
 w3_config_hook () {

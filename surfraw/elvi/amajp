@@ -1,5 +1,5 @@
 #!/bin/sh
-
-# alias for amazon JP
+# $Id$
+# elvis: amajp		-- shortcut for amazon.jp
 
 surfraw amazon -country=jp "$@"

@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: oxford		-- search en.oxforddictionaries.com
 
 . surfraw || exit 1
 

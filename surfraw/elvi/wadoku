@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: wadoku		-- search wadoku.de
 
 . surfraw || exit 1
 

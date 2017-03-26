@@ -1,4 +1,6 @@
 #!/bin/sh
+# $Id$
+# elvis: jisho		-- search jisho.org
 
 . surfraw || exit 1
 
