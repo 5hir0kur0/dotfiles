@@ -12,6 +12,7 @@ set $surfrawscript ~/.i3/rofisurfraw.sh
 set $bookmarkscript ~/.i3/rofibookmarks.sh
 set $manscript ~/.i3/rofiman.sh
 set $entiresplitscript ~/.i3/splitentire.sh
+set $rofipythonscript ~/.i3/rofipython.sh
 
 set $mod Mod4
 
@@ -43,13 +44,15 @@ bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
 
 bindsym $mod+q exec --no-startup-id $surfrawscript search
 
-set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage"
+set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage, (c)alculator, (p)ython"
 mode $mode_open {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
     bindsym s exec --no-startup-id $surfrawscript both, mode "default"
     bindsym b exec --no-startup-id $bookmarkscript, mode "default"
     bindsym m exec --no-startup-id $manscript, mode "default"
+    bindsym c exec --no-startup-id rofi -no-sidebar-mode -show qalc -modi "qalc:qalc +u8", mode "default"
+    bindsym p exec --no-startup-id rofi -no-sidebar-mode -show py -modi "py:$rofipythonscript", mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -337,6 +340,7 @@ bar {
 
 #rules
 for_window [class="$scratchclass"] move scratchpad, scratchpad show
+assign [class="mpv"] mpv
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
