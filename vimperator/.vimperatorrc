@@ -8,9 +8,13 @@ set tabnumbers
 set noscrollbars
 colorscheme darkness_custom
 
-set hintchars=hjklasdfgzuiopqwertnmyxcvb
+" set hintchars=hjklasdfgzuiopqwertnmyxcvb
+set hintchars=sadfjklewcmpgh
 " maximum number of items to display at once in a listing
 set maxitems=12
+
+" fix reddit
+set hinttags+='| //div[contains(@class, "expando-button")]'
 
 " zoom shortcuts
 noremap <C-+> zI
@@ -28,7 +32,7 @@ noremap J gT
 noremap K gt
 " duplicate current tab
 noremap <silent> gd :tabduplicate<CR>
-" move current tab
+" move current tab to a certain position
 noremap <silent> gm0 :tabmove 0<CR>
 noremap <silent> gm1 :tabmove 1<CR>
 noremap <silent> gm2 :tabmove 2<CR>
@@ -39,8 +43,13 @@ noremap <silent> gm6 :tabmove 6<CR>
 noremap <silent> gm7 :tabmove 7<CR>
 noremap <silent> gm8 :tabmove 8<CR>
 noremap <silent> gm9 :tabmove 9<CR>
+" move current tab to the end
 noremap <silent> gm$ :tabmove<CR>
 noremap <silent> gmm :tabmove<CR>
+" move current tab to the left/right
+noremap <silent> gmp :tabmove -1<CR>
+noremap <silent> gmN :tabmove +1<CR>
+noremap <silent> gmn :tabmove +1<CR>
 " make c-p and c-n behave like arrow keys in command mode
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
@@ -102,5 +111,5 @@ function open_yt_embedded(open_arg_where) {
 }
 EOF
 
-ignorekeys add -except=:,d,D,x,f,t,T,o,O,w,W,g,z,H,L,0,1,2,3,4,5,6,7,8,9 '^https?://www.youtube.com/embed/.+'
-ignorekeys add -except=:,d,D,x,t,T,o,O,w,W,g,z,H,L,0,1,2,3,4,5,6,7,8,9 '^https?://www.youtube.com/watch.+'
+ignorekeys add -except=:,d,D,x,f,t,T,o,O,w,W,g,G,z,H,L,r,0,1,2,3,4,5,6,7,8,9 '^https?://www.youtube.com/embed/.+'
+ignorekeys add -except=:,d,D,h,x,t,T,o,O,w,W,g,G,z,H,L,r,0,1,2,3,4,5,6,7,8,9,<c-s-n>,<c-n>,<c-p>,<c-d>,<c-u>,<c-f>,<c-b> '^https?://www.youtube.com/watch.+'
