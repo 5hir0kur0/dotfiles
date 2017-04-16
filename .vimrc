@@ -3,11 +3,11 @@ set ruler laststatus=2 hlsearch number showcmd title
 set autoindent backup writebackup history=1337
 set incsearch ignorecase smartcase
 set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=4 softtabstop=4
-set colorcolumn=81
 set wildmode=longest,list,full
 set wildmenu
 set list
-set listchars=tab:▸\ ,eol:¬,trail:\ ,precedes:↤,extends:↦
+set listchars=tab:▸\ ,eol:¬,trail:\ ,precedes:◀,extends:▶
+set sidescrolloff=10
 
 " highlight the line the cursor is on
 set cursorline
@@ -42,7 +42,7 @@ filetype indent plugin on
 syntax on
 
 " <C-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:GitGutter<cr><c-l>
 
 " <C-n> and <C-p> scroll without moving the relative position of the cursor
 nnoremap <silent> <C-n> <C-e>j
@@ -56,8 +56,11 @@ cnoremap <C-p> <Up>
 let mapleader = "\<Space>"
 
 " delete trailing whitespace
-nnoremap <Leader>W m`:s/\s*$//<CR>:noh<CR>``
-nnoremap <Leader>w m`g_ld$``
+nnoremap <silent> <Leader>W m`:s/\s*$//<CR>:noh<CR>``
+nnoremap <silent> <Leader>w m`g_ld$``
+
+" toggle wrapping
+nnoremap <silent> <Leader>tw :set wrap! wrap?<CR>
 
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
@@ -68,6 +71,7 @@ noremap <Esc> <Esc><Esc>
 " force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
+set colorcolumn=81
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 
 " enable spell checking for certain file types
@@ -90,6 +94,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 
@@ -100,6 +105,11 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme = 'tomorrow'
 
-" ale settings
+" ale bindings
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" gitgutter bindings
+nnoremap <silent> <Leader>gj :GitGutterNextHunk<CR>
+nnoremap <silent> <Leader>gk :GitGutterPrevHunk<CR>
+nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
