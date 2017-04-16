@@ -19,7 +19,7 @@ class j(Command):
 
 class jc(Command):
     """
-    :j <directory>
+    :jc <directory>
 
     Uses autojump to set the current directory.
     """
