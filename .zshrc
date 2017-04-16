@@ -1,7 +1,11 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=4200
-SAVEHIST=4200
+HISTSIZE=42000
+SAVEHIST=42000
+# no duplicate entries in history
+setopt histignoredups
+setopt histsavenodups
+
 bindkey -e #emacs mode
 #make backwards search work like in emacs mode
 bindkey '^r' history-incremental-search-backward 
@@ -20,6 +24,7 @@ export AUTOJUMP_IGNORE_CASE=1
 
 autoload -Uz compinit
 compinit
+
 
 # use case-insensitive completion
 #zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -49,13 +54,7 @@ alias update='sudo pacmatic -Syu'
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
 
-function rmbackups() {
-    rm ./*~;
-}
-
-function rmbackups_hidden() {
-    rm ./.*~;
-}
+alias view="vim -R -c 'set nomodifiable'"
 
 function f() {
     find . -maxdepth 1 -iname "*$1*";
@@ -150,6 +149,8 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 setopt autocd
 # automatically push directories onto the "dirs" stack on cd
 setopt autopushd
+# don't push duplicate directories
+setopt pushdignoredups
 # delete rprompt when accepting a command (when enter is pressed)
 setopt transientrprompt
 # remove rprompt indent
