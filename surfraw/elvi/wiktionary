@@ -41,7 +41,7 @@ fi
 prefix="https://${SURFRAW_wiktionary_languages}.wiktionary.org/w/index.php?search="
 
 if null "$w3_args"; then
-    w3_browse_url "https://${SURFRAW_wiktionary_languages}.dict.cc"
+    w3_browse_url "https://${SURFRAW_wiktionary_languages}.wiktionary.org"
 else
     escaped_args=`w3_url_of_arg $w3_args`
 
