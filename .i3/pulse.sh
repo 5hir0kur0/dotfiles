@@ -39,16 +39,16 @@ pretty_name() {
 
 # there has to be a better way for this, but I don't know it...
 get_volume() {
-    SINK="${1-`default_sink`}"
+    SINK="${1-$(default_sink)}"
     pactl list sinks\
         | pcregrep -Mi "Name:\s+$SINK\s*?\n(?:^\s*\S+.*?\n)+?\s*Volume:"\
         | tail -1 | tr -s ' ' | cut -d' ' -f5 | tr -d '%'
 }
 
 increase_volume() {
-    DEFAULT_SINK="`default_sink`"
+    DEFAULT_SINK="$(default_sink)"
     unmute_sinks "$DEFAULT_SINK"
-    NEW_VOLUME="`get_volume`"
+    NEW_VOLUME="$(get_volume)"
     NEW_VOLUME=$((NEW_VOLUME + $1))
     if [ "$NEW_VOLUME" -le "$UPPER_VOLUME_LIMIT" ]; then
         pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
@@ -57,16 +57,32 @@ increase_volume() {
     fi
 }
 
-decrease_volume() {
-    DEFAULT_SINK="`default_sink`"
+increase_volume_force() {
+    DEFAULT_SINK="$(default_sink)"
     unmute_sinks "$DEFAULT_SINK"
-    NEW_VOLUME="`get_volume`"
+    NEW_VOLUME="$(get_volume)"
+    NEW_VOLUME=$((NEW_VOLUME + $1))
+    pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
+}
+
+decrease_volume() {
+    DEFAULT_SINK="$(default_sink)"
+    unmute_sinks "$DEFAULT_SINK"
+    NEW_VOLUME="$(get_volume)"
     NEW_VOLUME=$((NEW_VOLUME - $1))
     if [ "$NEW_VOLUME" -ge "$LOWER_VOLUME_LIMIT" ]; then
         pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
     else
         pactl set-sink-volume "$DEFAULT_SINK" "$LOWER_VOLUME_LIMIT%"
     fi
+}
+
+decrease_volume_force() {
+    DEFAULT_SINK="$(default_sink)"
+    unmute_sinks "$DEFAULT_SINK"
+    NEW_VOLUME="$(get_volume)"
+    NEW_VOLUME=$((NEW_VOLUME - $1))
+    pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
 }
 
 index_of() { # $1: element, $2...: array
@@ -84,14 +100,14 @@ index_of() { # $1: element, $2...: array
 }
 
 toggle_default_sink_and_move_inputs() {
-    SINKS=(`sink_names`)
-    DEFAULT_SINK=`default_sink`
-    DEFAULT_SINK_INDEX=`index_of $DEFAULT_SINK ${SINKS[@]}`
+    SINKS=( $(sink_names) )
+    DEFAULT_SINK=$(default_sink)
+    DEFAULT_SINK_INDEX=$(index_of "$DEFAULT_SINK" "${SINKS[@]}")
     NUMBER_OF_SINKS=${#SINKS[@]}
     TARGET_SINK=${SINKS[$(((DEFAULT_SINK_INDEX + 1) % NUMBER_OF_SINKS))]}
-    TARGET_SINK_INDEX=`index_of $TARGET_SINK ${SINKS[@]}`
-    pactl set-default-sink $TARGET_SINK
-    unmute_sinks $TARGET_SINK
+    TARGET_SINK_INDEX=$(index_of "$TARGET_SINK" "${SINKS[@]}")
+    pactl set-default-sink "$TARGET_SINK"
+    unmute_sinks "$TARGET_SINK"
 
     # remove target sink and mute the others (just to make sure the other sinks
     # can't produce any sounds)
@@ -101,26 +117,32 @@ toggle_default_sink_and_move_inputs() {
 
     move_inputs_to_default
 
-    notify-send "Switch audio output to “`pretty_name $TARGET_SINK`”"\
+    notify-send "Switch audio output to “$(pretty_name "$TARGET_SINK")”"\
         -i audio-card
 }
 
 move_inputs_to_default() {
-    SINK_INPUTS=(`sink_input_ids`)
+    SINK_INPUTS=( $(sink_input_ids) )
     for i in "${SINK_INPUTS[@]}"; do
-        pactl move-sink-input "$i" "`default_sink`"
+        pactl move-sink-input "$i" "$(default_sink)"
     done
 }
 
 case "$1" in
     up)
-        increase_volume ${2-5}
+        increase_volume "${2-5}"
         ;;
     down)
-        decrease_volume ${2-5}
+        decrease_volume "${2-5}"
+        ;;
+    force_up)
+        increase_volume_force "${2-5}"
+        ;;
+    force_down)
+        decrease_volume_force "${2-5}"
         ;;
     mute)
-        pactl set-sink-mute "`default_sink`" toggle
+        pactl set-sink-mute "$(default_sink)" toggle
         ;;
     toggle)
         toggle_default_sink_and_move_inputs
@@ -129,6 +151,6 @@ case "$1" in
         move_inputs_to_default
         ;;
     *)
-        echo "Usage: $0 {up|down|mute|toggle|move}"
+        echo "Usage: $0 {up|down|force_up|force_down|mute|toggle|move}"
         exit 2
 esac
