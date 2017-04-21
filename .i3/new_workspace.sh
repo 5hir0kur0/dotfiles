@@ -1,29 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
-set -eu
+set -euo pipefail
 
 list_workspaces() {
-    i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")\d+?(?=")' \
-        | sort --numeric-sort
+    i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")\d+?(?=")'
 }
 
-last_workspace() {
-    list_workspaces | tail -1
-}
+WORKSPACES="$(list_workspaces)"
 
-first_workspace() {
-    list_workspaces | head -1
-}
-
-LAST="$(last_workspace)"
-FIRST="$(first_workspace)"
-
-if [ -n "$LAST" ]; then # if LAST exists, FIRST also exists
-    if [ "$FIRST" -ge 2 ]; then
-        i3-msg "${1-}" workspace "$((FIRST-1))"
-    else
-        i3-msg "${1-}" workspace "$((LAST+1))"
+for (( num=1; num >= 0; ++num )); do
+    if ! grep -q "^$num\$" <<< "$WORKSPACES"; then
+        i3-msg workspace "$num"
+        exit
     fi
-else
-    i3-msg "${1-}" workspace "1"
-fi
+done
