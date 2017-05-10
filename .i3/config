@@ -1,18 +1,24 @@
+# if $scratchclass is changed, it needs to be changed in scratchpad.sh too
 set $scratchclass scratchpad-terminal
-set $exitscript ~/.i3/exit.sh
-set $pulsescript ~/.i3/pulse.sh
-set $mousescript ~/.i3/mouse_action.sh
-set $comptonscript ~/.i3/compton.sh
+
+# scripts
+set $bookmarkscript ~/.i3/rofibookmarks.sh
 set $centerscript ~/.i3/center_cursor.sh
-set $workspacescript ~/.i3/workspace.sh
-set $renameworkspacescript ~/.i3/rename_workspace.sh
+set $comptonscript ~/.i3/compton.sh
+set $entiresplitscript ~/.i3/splitentire.sh
+set $exitscript ~/.i3/exit.sh
+set $manscript ~/.i3/rofiman.sh
+set $mousescript ~/.i3/mouse_action.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
-set $surfrawscript ~/.i3/rofisurfraw.sh
-set $bookmarkscript ~/.i3/rofibookmarks.sh
-set $manscript ~/.i3/rofiman.sh
-set $entiresplitscript ~/.i3/splitentire.sh
+set $pulsescript ~/.i3/pulse.sh
+set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $rofipythonscript ~/.i3/rofipython.sh
+set $scratchscript ~/.i3/scratchpad.sh
+set $surfrawscript ~/.i3/rofisurfraw.sh
+set $wallpaperscript ~/.i3/set_wallpaper.sh
+set $workspacescript ~/.i3/workspace.sh
+set $initscript ~/.i3/init.sh
 
 set $mod Mod4
 
@@ -60,6 +66,28 @@ mode $mode_open {
 }
 
 bindsym $mod+o mode $mode_open
+
+set $mode_focus "FOCUS"
+mode $mode_focus {
+    bindsym $mod+e fullscreen disable, bar mode dock, mode "default"
+    # focus
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
+    # switch workspace
+    bindsym $mod+Tab workspace back_and_forth
+}
+
+set $mode_extended "extended: (f)ocus"
+mode $mode_extended {
+    bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+x mode $mode_extended
 
 # change focus
 bindsym $mod+h focus left
@@ -208,11 +236,12 @@ bindsym $mod+Shift+r restart
 bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # choose a different random wallpaper
-bindsym $mod+Shift+w exec --no-startup-id ~/.i3/set_wallpaper.sh
+bindsym $mod+Shift+w exec --no-startup-id $wallpaperscript
 
-#scratchpad
+# scratchpad
 bindsym $mod+Shift+i move scratchpad
-bindsym $mod+i scratchpad show
+#bindsym $mod+i scratchpad show
+bindsym $mod+i exec --no-startup-id $scratchscript
 bindsym $mod+u [instance="urxvt"] scratchpad show
 
 # resize window (you can also use the mouse for that)
@@ -354,5 +383,5 @@ bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
 #bindsym XF86AudioNext exec playerctl next
 #bindsym XF86AudioPrev exec playerctl previous
 
-exec --no-startup-id ~/.i3/init.sh
+exec --no-startup-id $initscript
 # vi: ft=conf
