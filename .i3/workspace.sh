@@ -2,7 +2,7 @@
 
 # usage: $ ./workspace.sh [move]
 
-set -euo pipefail
+set -u
 
 list_non_numeric_workspaces() {
     i3-msg -t get_workspaces | grep --color=never -oP '(?<="name":")(?:\D+?|1[1-9]|[^1]\d+|\d\d\d+)(?=")' \
