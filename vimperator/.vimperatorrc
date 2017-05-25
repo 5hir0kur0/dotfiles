@@ -54,7 +54,7 @@ noremap <silent> gmn :tabmove +1<CR>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 " new tab
-noremap <silent> gn :tabnew<CR>
+noremap <silent> gN :tabnew<CR>
 " close tab
 noremap <silent> gc :tabclose<CR>
 " move current tab to new window
