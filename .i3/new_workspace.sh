@@ -10,7 +10,7 @@ WORKSPACES="$(list_workspaces)"
 
 for (( num=1; num >= 0; ++num )); do
     if ! grep -q "^$num\$" <<< "$WORKSPACES"; then
-        i3-msg workspace "$num"
+        i3-msg "${1-}" workspace "$num"
         exit
     fi
 done
