@@ -79,9 +79,21 @@ mode $mode_focus {
     bindsym $mod+Tab workspace back_and_forth
 }
 
-set $mode_extended "extended: (f)ocus"
+set $mode_compton "compton: (i) invert, (k) kill, (s) start"
+mode $mode_compton {
+    bindsym i exec --no-startup-id $comptonscript invert, mode "default"
+    bindsym k exec --no-startup-id $comptonscript kill, mode "default"
+    bindsym s exec --no-startup-id $comptonscript start, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_extended "extended: (f)ocus, (c)ompton"
 mode $mode_extended {
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
+    bindsym c mode $mode_compton
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -282,19 +294,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 bindsym $mod+Ctrl+b border toggle
-
-set $mode_compton "compton: (i) invert, (k) kill, (s) start"
-mode $mode_compton {
-    bindsym i exec --no-startup-id $comptonscript invert, mode "default"
-    bindsym k exec --no-startup-id $comptonscript kill, mode "default"
-    bindsym s exec --no-startup-id $comptonscript start, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-bindsym $mod+Mod1+c mode $mode_compton
 
 set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep"
 mode $mode_system {
