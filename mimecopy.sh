@@ -22,7 +22,7 @@ if [[ "$MIMETYPE" =~  ^text/.+$ ]]; then
     xclip -selection clipboard "$1"
 elif [[ "$MIMETYPE" =~ ^image/.+$ && "$MIMETYPE" != 'image/png' && $CONVERT ]]
 then
-    TMPPATH="/tmp/mimecpy-$$.png"
+    TMPPATH="/tmp/.mimecpy-$$.png"
     [ "$VERBOSE" ] && echo "converting image ($1) to png ($TMPPATH)"
     if hash ffmpeg >& /dev/null; then
         ffmpeg -i "$1" "$TMPPATH" >& /dev/null
