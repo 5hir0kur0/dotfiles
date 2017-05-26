@@ -7,6 +7,7 @@ set $centerscript ~/.i3/center_cursor.sh
 set $comptonscript ~/.i3/compton.sh
 set $entiresplitscript ~/.i3/splitentire.sh
 set $exitscript ~/.i3/exit.sh
+set $initscript ~/.i3/init.sh
 set $manscript ~/.i3/rofiman.sh
 set $mousescript ~/.i3/mouse_action.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
@@ -15,10 +16,10 @@ set $pulsescript ~/.i3/pulse.sh
 set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $rofipythonscript ~/.i3/rofipython.sh
 set $scratchscript ~/.i3/scratchpad.sh
+set $scrotscript ~/.i3/screenshot.sh
 set $surfrawscript ~/.i3/rofisurfraw.sh
 set $wallpaperscript ~/.i3/set_wallpaper.sh
 set $workspacescript ~/.i3/workspace.sh
-set $initscript ~/.i3/init.sh
 
 set $mod Mod4
 
@@ -42,13 +43,41 @@ bindsym $mod+Ctrl+Return exec "st -c $scratchclass"
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# rofi
 bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Mod1+space exec --no-startup-id rofi -show run
 bindsym $mod+g exec --no-startup-id rofi -show window
 bindsym $mod+Shift+g exec --no-startup-id rofi -show windowcd
 bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
 
+# start a websearch
 bindsym $mod+q exec --no-startup-id $surfrawscript search
+
+# screenshots
+bindsym Print exec --no-startup-id $scrotscript --action=whole
+# does not work without the sleep command; fails to grab pointer
+bindsym Ctrl+Print exec --no-startup-id "sleep 0.2; $scrotscript --action=select"
+bindsym Shift+Print exec --no-startup-id $scrotscript --action=window
+
+# screenshot mode
+set $mode_scrot "scrot: (w)indow, (e)verything, (s)election; shift -> 3s delay; ctrl -> copy to clipboard (nosave)"
+mode $mode_scrot {
+    bindsym w exec --no-startup-id $scrotscript --action=window --show, mode "default"
+    bindsym e exec --no-startup-id $scrotscript --action=whole --show, mode "default"
+    bindsym s exec --no-startup-id "sleep 0.2; $scrotscript --action=select --show", mode "default"
+    bindsym Shift+w exec --no-startup-id $scrotscript --action=window --show --delay=3, mode "default"
+    bindsym Shift+e exec --no-startup-id $scrotscript --action=whole --show --delay=3, mode "default"
+    bindsym Shift+s exec --no-startup-id "sleep 3; $scrotscript --action=select --show", mode "default"
+    bindsym Ctrl+w exec --no-startup-id $scrotscript --action=window --clip --no-save, mode "default"
+    bindsym Ctrl+e exec --no-startup-id $scrotscript --action=whole --clip --no-save, mode "default"
+    bindsym Ctrl+s exec --no-startup-id "sleep 0.2; $scrotscript --action=select --clip --no-save", mode "default"
+    bindsym Ctrl+Shift+w exec --no-startup-id $scrotscript --action=window --clip --delay=3 --no-save, mode "default"
+    bindsym Ctrl+Shift+e exec --no-startup-id $scrotscript --action=whole --clip --delay=3 --no-save, mode "default"
+    bindsym Ctrl+Shift+s exec --no-startup-id "sleep 3; $scrotscript --action=select --clip --no-save", mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage, (c)alculator, (p)ython"
 mode $mode_open {
@@ -90,10 +119,11 @@ mode $mode_compton {
     bindsym Escape mode "default"
 }
 
-set $mode_extended "extended: (f)ocus, (c)ompton"
+set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot"
 mode $mode_extended {
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
     bindsym c mode $mode_compton
+    bindsym s mode $mode_scrot
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -174,7 +204,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Ctrl+s sticky toggle
 
 # toggle bar mode
-bindsym $mod+b bar mode toggle
+bindsym $mod+Shift+b bar mode toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+ctrl+space focus mode_toggle
