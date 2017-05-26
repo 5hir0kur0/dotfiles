@@ -1,0 +1,90 @@
+# The 'start' command alone is handled specially, in that any key sequence
+# mapped to 'start' will be grabbed when keynav starts up so you can invoke it
+# to activate keynav. The remaining keys are only recognized while keynav is
+# active
+#
+# Project page; http://www.semicomplete.com/projects/keynav
+
+# erase all previous keybindings
+clear
+
+# start keynav
+super+v start
+
+# exit out of keynav
+Escape end
+ctrl+bracketleft end
+ctrl+c end
+
+# cut the search space in half
+h cut-left
+j cut-down
+k cut-up
+l cut-right
+
+# go to corner
+a cut-left,cut-up
+s cut-right,cut-up
+d cut-left,cut-down
+f cut-right,cut-down
+
+# same as above, but with half the percentage (default value is 0.5)
+ctrl+a cut-left 0.25,cut-up 0.25
+ctrl+s cut-right 0.25,cut-up 0.25
+ctrl+d cut-left 0.25,cut-down 0.25
+ctrl+f cut-right 0.25,cut-down 0.25
+
+# same as above, but with half the percentage (default value is 0.5)
+ctrl+h cut-left 0.25
+ctrl+j cut-down 0.25
+ctrl+k cut-up 0.25
+ctrl+l cut-right 0.25
+
+# fast movement
+ctrl+shift+h move-left,move-left
+ctrl+shift+j move-down,move-down
+ctrl+shift+k move-up,move-up
+ctrl+shift+l move-right,move-right
+
+# normal movement
+shift+h move-left
+shift+j move-down
+shift+k move-up
+shift+l move-right
+
+# clicking
+space warp,click 1,end
+ctrl+space warp,doubleclick 1,end
+super+space warp,click 2,end
+shift+space warp,click 3,end
+r warp,click 3,end
+
+# click without exiting keynav
+o warp,click 1
+ctrl+o warp,doubleclick 1
+super+o warp,click 2
+shift+o warp,click 3
+
+# just move cursor and exit
+semicolon warp,end
+m warp,end
+
+# zoom to the current window
+w windowzoom
+
+# zoom to the cursor location with a given height and width
+c cursorzoom 200 200
+
+# record keynav actions (saving to file doesn't seem to work)
+q record /tmp/.keynav_macros
+
+# dragging
+ctrl+d warp,drag 1
+z warp,drag 1
+ctrl+z warp,drag 1 ctrl
+shift+z warp,drag 1 shift
+ctrl+shift+z warp,drag 1 ctrl+shift
+alt+z warp,drag 1 alt
+
+# undo
+u history-back
