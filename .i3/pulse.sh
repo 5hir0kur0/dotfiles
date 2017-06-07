@@ -116,9 +116,6 @@ toggle_default_sink_and_move_inputs() {
     mute_sinks "${SINKS[@]}"
 
     move_inputs_to_default
-
-    notify-send "Switch audio output to “$(pretty_name "$TARGET_SINK")”"\
-        -i audio-card
 }
 
 move_inputs_to_default() {
@@ -128,24 +125,39 @@ move_inputs_to_default() {
     done
 }
 
+volume_notification() {
+    notify-send -u low -h "int:value:$(get_volume)" volume
+}
+
+toggle_notification() {
+    SINK=$(default_sink)
+    notify-send -u low 'switch default sink to:' "$(pretty_name "$SINK")" \
+        -i audio-card
+}
+
 case "$1" in
     up)
         increase_volume "${2-5}"
+        volume_notification
         ;;
     down)
         decrease_volume "${2-5}"
+        volume_notification
         ;;
     force_up)
         increase_volume_force "${2-5}"
+        volume_notification
         ;;
     force_down)
         decrease_volume_force "${2-5}"
+        volume_notification
         ;;
     mute)
         pactl set-sink-mute "$(default_sink)" toggle
         ;;
     toggle)
         toggle_default_sink_and_move_inputs
+        toggle_notification
         ;;
     move)
         move_inputs_to_default
