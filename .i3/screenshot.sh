@@ -52,7 +52,7 @@ done
 
 WHOLE_ARGS="--delay $DELAY --multidisp --quality $QUALITY"
 WINDOW_ARGS="--delay $DELAY --focused --border --quality $QUALITY"
-WINDOW_BORDERLESS_ARGS="--delay $DELAY --quality $QUALITY"
+WINDOW_BORDERLESS_ARGS="--delay $DELAY --quality $QUALITY --focused"
 SELECT_ARGS="--delay $DELAY --select --quality $QUALITY"
 
 case "$ACTION" in
