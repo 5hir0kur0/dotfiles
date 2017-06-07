@@ -79,7 +79,6 @@ c cursorzoom 200 200
 q record /tmp/.keynav_macros
 
 # dragging
-ctrl+d warp,drag 1
 z warp,drag 1
 ctrl+z warp,drag 1 ctrl
 shift+z warp,drag 1 shift
