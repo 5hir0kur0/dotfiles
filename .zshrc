@@ -74,6 +74,29 @@ function output() {
     tail -f "/proc/$PID/fd/1" "/proc/$PID/fd/2"
 }
 
+# stolen from https://stackoverflow.com/a/3854444
+function memusage() {
+    if [ -z "${1:-}" ]; then
+        echo "usage: memusage <process_name> [<type>]"
+        cat << EOF
+    values for <type>:
+        Rss: resident memory usage, all memory the process uses,
+             including all memory this process shares with other processes.
+             It does not include swap;
+        Shared: memory that this process shares with other processes;
+        Private: private memory used by this process, 
+             you can look for memory leaks here;
+        Swap: swap memory used by the process;
+        Pss: Proportional Set Size, a good overall memory indicator.
+             It is the Rss adjusted for sharing: 
+             if a process has 1MiB private and 20MiB shared between other 10
+             processes, Pss is 1 + 20/10 = 3MiB
+EOF
+        return 1
+    fi
+    echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" /proc/`pidof $1`/smaps) | bc
+}
+
 function fancy_unixtime() {
     OLDF=""
      while true; do
