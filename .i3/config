@@ -68,9 +68,9 @@ mode $mode_scrot {
     bindsym Shift+w exec --no-startup-id $scrotscript --action=window --show --delay=3, mode "default"
     bindsym Shift+e exec --no-startup-id $scrotscript --action=whole --show --delay=3, mode "default"
     bindsym Shift+s exec --no-startup-id "sleep 3; $scrotscript --action=select --show", mode "default"
-    bindsym Ctrl+w exec --no-startup-id $scrotscript --action=window --clip --no-save, mode "default"
-    bindsym Ctrl+e exec --no-startup-id $scrotscript --action=whole --clip --no-save, mode "default"
-    bindsym Ctrl+s exec --no-startup-id "sleep 0.2; $scrotscript --action=select --clip --no-save", mode "default"
+    bindsym Ctrl+w exec --no-startup-id $scrotscript --action=window --clip --no-save --show, mode "default"
+    bindsym Ctrl+e exec --no-startup-id $scrotscript --action=whole --clip --no-save --show, mode "default"
+    bindsym Ctrl+s exec --no-startup-id "sleep 0.2; $scrotscript --action=select --clip --no-save --show", mode "default"
     bindsym Ctrl+Shift+w exec --no-startup-id $scrotscript --action=window --clip --delay=3 --no-save, mode "default"
     bindsym Ctrl+Shift+e exec --no-startup-id $scrotscript --action=whole --clip --delay=3 --no-save, mode "default"
     bindsym Ctrl+Shift+s exec --no-startup-id "sleep 3; $scrotscript --action=select --clip --no-save", mode "default"
@@ -284,38 +284,37 @@ bindsym $mod+Shift+w exec --no-startup-id $wallpaperscript
 bindsym $mod+Shift+i move scratchpad
 #bindsym $mod+i scratchpad show
 bindsym $mod+i exec --no-startup-id $scratchscript
-bindsym $mod+u [instance="urxvt"] scratchpad show
+bindsym $mod+ctrl+i [class="^(?!$scratchclass)"] scratchpad show
+bindsym $mod+u scratchpad show
+bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
+    bindsym ctrl+h resize shrink width  1 px
+    bindsym ctrl+j resize grow   height 1 px
+    bindsym ctrl+k resize shrink height 1 px
+    # grow width not working for some reason
+    bindsym ctrl+l resize grow right    1 px 
 
-    # Pressing left will shrink the window’s width.
-    # Pressing right will grow the window’s width.
-    # Pressing up will shrink the window’s height.
-    # Pressing down will grow the window’s height.
-    bindsym h resize shrink width 10 px
-    bindsym j resize grow height 10 px
-    bindsym k resize shrink height 10 px
-    bindsym l resize grow width 10 px
+    bindsym h resize shrink width  20 px
+    bindsym j resize grow   height 20 px
+    bindsym k resize shrink height 20 px
+    bindsym l resize grow   width  20 px
 
-    # same bindings, but for the arrow keys
-    bindsym Left resize shrink width 10 px
-    bindsym Down resize grow height 10 px
-    bindsym Up resize shrink height 10 px
-    bindsym Right resize grow width 10 px
+    bindsym shift+h resize shrink width  80 px
+    bindsym shift+j resize grow   height 80 px
+    bindsym shift+k resize shrink height 80 px
+    bindsym shift+l resize grow   width  80 px
 
-    #own bindings for resizing in smaller steps (arrow keys)
-    bindsym Shift+Left resize shrink width 4 px 
-    bindsym Shift+Down resize grow height 4 px
-    bindsym Shift+Up resize shrink height 4 px
-    bindsym Shift+Right resize grow width 4 px
+    bindsym Mod1+h resize shrink right  50 px
+    bindsym Mod1+j resize shrink up     50 px
+    bindsym Mod1+k resize shrink down   50 px
+    bindsym Mod1+l resize shrink left 50 px
 
-    #own bindings for resizing in smaller steps (arrow keys)
-    bindsym Shift+h resize shrink width 1 px
-    bindsym Shift+j resize grow height 1 px
-    bindsym Shift+k resize shrink height 1 px
-    bindsym Shift+l resize grow width 1 px
+    bindsym ctrl+mod1+h resize grow left  50 px
+    bindsym ctrl+mod1+j resize grow down  50 px
+    bindsym ctrl+mod1+k resize grow up    50 px
+    bindsym ctrl+mod1+l resize grow right 50 px
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -405,6 +404,10 @@ assign [class="mpv"] mpv
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
 bindsym XF86AudioLowerVolume exec --no-startup-id $pulsescript down
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id $pulsescript force_up 10
+bindsym Shift+XF86AudioLowerVolume exec --no-startup-id $pulsescript force_down 10
+bindsym ctrl+XF86AudioRaiseVolume exec --no-startup-id $pulsescript up 1
+bindsym ctrl+XF86AudioLowerVolume exec --no-startup-id $pulsescript down 1
 bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
 #does not really work...
 #bindsym XF86AudioPlay exec playerctl play
