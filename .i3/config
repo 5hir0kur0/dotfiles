@@ -14,6 +14,7 @@ set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
 set $pulsescript ~/.i3/pulse.sh
 set $renameworkspacescript ~/.i3/rename_workspace.sh
+set $rofiinteractivescript ~/.i3/rofiinteractive.sh
 set $rofipythonscript ~/.i3/rofipython.sh
 set $scratchscript ~/.i3/scratchpad.sh
 set $scrotscript ~/.i3/screenshot.sh
@@ -79,7 +80,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage, (c)alculator, (p)ython"
+set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage, (c/C)alculator, (p/P)ython, (B)ash"
 mode $mode_open {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
@@ -87,7 +88,10 @@ mode $mode_open {
     bindsym b exec --no-startup-id $bookmarkscript, mode "default"
     bindsym m exec --no-startup-id $manscript, mode "default"
     bindsym c exec --no-startup-id rofi -no-sidebar-mode -show qalc -modi "qalc:qalc +u8", mode "default"
+    bindsym Shift+c exec --no-startup-id $rofiinteractivescript qalc, mode "default"
     bindsym p exec --no-startup-id rofi -no-sidebar-mode -show py -modi "py:$rofipythonscript", mode "default"
+    bindsym Shift+p exec --no-startup-id $rofiinteractivescript python, mode "default"
+    bindsym Shift+B exec --no-startup-id $rofiinteractivescript bash, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -130,6 +134,104 @@ mode $mode_extended {
 }
 
 bindsym $mod+x mode $mode_extended
+
+set $mode_mark "mark"
+mode $mode_mark {
+    bindsym a mark --toggle a, mode "default"
+    bindsym b mark --toggle b, mode "default"
+    bindsym c mark --toggle c, mode "default"
+    bindsym d mark --toggle d, mode "default"
+    bindsym e mark --toggle e, mode "default"
+    bindsym f mark --toggle f, mode "default"
+    bindsym g mark --toggle g, mode "default"
+    bindsym h mark --toggle h, mode "default"
+    bindsym i mark --toggle i, mode "default"
+    bindsym j mark --toggle j, mode "default"
+    bindsym k mark --toggle k, mode "default"
+    bindsym l mark --toggle l, mode "default"
+    bindsym m mark --toggle m, mode "default"
+    bindsym n mark --toggle n, mode "default"
+    bindsym o mark --toggle o, mode "default"
+    bindsym p mark --toggle p, mode "default"
+    bindsym q mark --toggle q, mode "default"
+    bindsym r mark --toggle r, mode "default"
+    bindsym s mark --toggle s, mode "default"
+    bindsym t mark --toggle t, mode "default"
+    bindsym u mark --toggle u, mode "default"
+    bindsym v mark --toggle v, mode "default"
+    bindsym w mark --toggle w, mode "default"
+    bindsym x mark --toggle x, mode "default"
+    bindsym y mark --toggle y, mode "default"
+    bindsym z mark --toggle z, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return unmark, mode "default"
+    bindsym Escape unmark, mode "default"
+}
+
+bindsym $mod+Shift+y mode $mode_mark
+
+set $mode_goto_mark "go to mark / move to mark"
+mode $mode_goto_mark {
+    bindsym a [con_mark="a"] focus, mode "default"
+    bindsym b [con_mark="b"] focus, mode "default"
+    bindsym c [con_mark="c"] focus, mode "default"
+    bindsym d [con_mark="d"] focus, mode "default"
+    bindsym e [con_mark="e"] focus, mode "default"
+    bindsym f [con_mark="f"] focus, mode "default"
+    bindsym g [con_mark="g"] focus, mode "default"
+    bindsym h [con_mark="h"] focus, mode "default"
+    bindsym i [con_mark="i"] focus, mode "default"
+    bindsym j [con_mark="j"] focus, mode "default"
+    bindsym k [con_mark="k"] focus, mode "default"
+    bindsym l [con_mark="l"] focus, mode "default"
+    bindsym m [con_mark="m"] focus, mode "default"
+    bindsym n [con_mark="n"] focus, mode "default"
+    bindsym o [con_mark="o"] focus, mode "default"
+    bindsym p [con_mark="p"] focus, mode "default"
+    bindsym q [con_mark="q"] focus, mode "default"
+    bindsym r [con_mark="r"] focus, mode "default"
+    bindsym s [con_mark="s"] focus, mode "default"
+    bindsym t [con_mark="t"] focus, mode "default"
+    bindsym u [con_mark="u"] focus, mode "default"
+    bindsym v [con_mark="v"] focus, mode "default"
+    bindsym w [con_mark="w"] focus, mode "default"
+    bindsym x [con_mark="x"] focus, mode "default"
+    bindsym y [con_mark="y"] focus, mode "default"
+    bindsym z [con_mark="z"] focus, mode "default"
+
+    bindsym Shift+a move window to mark a, mode "default"
+    bindsym Shift+b move window to mark b, mode "default"
+    bindsym Shift+c move window to mark c, mode "default"
+    bindsym Shift+d move window to mark d, mode "default"
+    bindsym Shift+e move window to mark e, mode "default"
+    bindsym Shift+f move window to mark f, mode "default"
+    bindsym Shift+g move window to mark g, mode "default"
+    bindsym Shift+h move window to mark h, mode "default"
+    bindsym Shift+i move window to mark i, mode "default"
+    bindsym Shift+j move window to mark j, mode "default"
+    bindsym Shift+k move window to mark k, mode "default"
+    bindsym Shift+l move window to mark l, mode "default"
+    bindsym Shift+m move window to mark m, mode "default"
+    bindsym Shift+n move window to mark n, mode "default"
+    bindsym Shift+o move window to mark o, mode "default"
+    bindsym Shift+p move window to mark p, mode "default"
+    bindsym Shift+q move window to mark q, mode "default"
+    bindsym Shift+r move window to mark r, mode "default"
+    bindsym Shift+s move window to mark s, mode "default"
+    bindsym Shift+t move window to mark t, mode "default"
+    bindsym Shift+u move window to mark u, mode "default"
+    bindsym Shift+v move window to mark v, mode "default"
+    bindsym Shift+w move window to mark w, mode "default"
+    bindsym Shift+x move window to mark x, mode "default"
+    bindsym Shift+y move window to mark y, mode "default"
+    bindsym Shift+z move window to mark z, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+y mode $mode_goto_mark
 
 # change focus
 bindsym $mod+h focus left
