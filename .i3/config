@@ -1,5 +1,6 @@
 # if $scratchclass is changed, it needs to be changed in scratchpad.sh too
 set $scratchclass scratchpad-terminal
+set $floatingclass floating-terminal
 
 # scripts
 set $bookmarkscript ~/.i3/rofibookmarks.sh
@@ -36,10 +37,10 @@ floating_modifier $mod
 bindsym $mod+Return exec urxvtc
 
 # start a floating terminal with tmux
-bindsym $mod+Shift+Return exec "st -c $scratchclass -e tmux new-session -As0"
+bindsym $mod+Shift+Return exec "urxvt -name $scratchclass -e tmux new-session -As0"
 
 # start a floating terminal with zsh
-bindsym $mod+Ctrl+Return exec "st -c $scratchclass"
+bindsym $mod+Ctrl+Return exec "urxvt -name $floatingclass"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -386,7 +387,7 @@ bindsym $mod+Shift+w exec --no-startup-id $wallpaperscript
 bindsym $mod+Shift+i move scratchpad
 #bindsym $mod+i scratchpad show
 bindsym $mod+i exec --no-startup-id $scratchscript
-bindsym $mod+ctrl+i [class="^(?!$scratchclass)"] scratchpad show
+bindsym $mod+ctrl+i [instance="^(?!$scratchclass)"] scratchpad show
 bindsym $mod+u scratchpad show
 bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
 
@@ -500,8 +501,12 @@ bar {
 }
 
 #rules
+for_window [instance="$scratchclass"] move scratchpad, scratchpad show
+for_window [instance="$floatingclass"] floating enable
 for_window [class="$scratchclass"] move scratchpad, scratchpad show
+for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
+for_window [class="mpv"] workspace mpv
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
