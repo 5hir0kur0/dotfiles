@@ -1,7 +1,7 @@
 #include "/usr/share/rofi/themes//android_notification.theme"
 rofi.modi:                           drun,window,run,ssh,qlc:qalc +u8
 ! set the modi to combine in combi mode
-rofi.combi-modi:                     drun,window,run,ssh,qlc
+rofi.combi-modi:                     drun,window,run,ssh
 rofi.width:                          60
 rofi.lines:                          12
 ! rofi.bw:                             1
