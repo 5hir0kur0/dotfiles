@@ -349,6 +349,7 @@ bindsym $mod+Shift+$mod1+m move workspace prev
 
 # switch to last workspace
 bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Shift+Tab move workspace back_and_forth
 
 # move workspace (Mod1 is alt)
 bindsym $mod+Mod1+l move workspace to output right
@@ -381,7 +382,7 @@ bindsym $mod+Shift+r restart
 bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # choose a different random wallpaper
-bindsym $mod+Shift+w exec --no-startup-id $wallpaperscript
+bindsym $mod+Ctrl+w exec --no-startup-id $wallpaperscript
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
