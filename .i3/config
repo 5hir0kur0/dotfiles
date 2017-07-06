@@ -14,6 +14,7 @@ set $mousescript ~/.i3/mouse_action.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
 set $pulsescript ~/.i3/pulse.sh
+set $setvolumescript ~/.i3/pulse.sh set
 set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $rofiinteractivescript ~/.i3/rofiinteractive.sh
 set $rofipythonscript ~/.i3/rofipython.sh
@@ -124,12 +125,173 @@ mode $mode_compton {
     bindsym Escape mode "default"
 }
 
-set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot"
+set $volume_0 "volume: 0X"
+mode $volume_0 {
+    bindsym 0, exec --no-startup-id $setvolumescript 00, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 01, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 02, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 03, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 04, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 05, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 06, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 07, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 08, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 09, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_1 "volume: 1X"
+mode $volume_1 {
+    bindsym 0, exec --no-startup-id $setvolumescript 10, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 11, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 12, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 13, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 14, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 15, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 16, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 17, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 18, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 19, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_2 "volume: 2X"
+mode $volume_2 {
+    bindsym 0, exec --no-startup-id $setvolumescript 20, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 21, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 22, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 23, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 24, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 25, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 26, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 27, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 28, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 29, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_3 "volume: 3X"
+mode $volume_3 {
+    bindsym 0, exec --no-startup-id $setvolumescript 30, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 31, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 32, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 33, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 34, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 35, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 36, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 37, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 38, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 39, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_4 "volume: 4X"
+mode $volume_4 {
+    bindsym 0, exec --no-startup-id $setvolumescript 40, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 41, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 42, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 43, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 44, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 45, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 46, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 47, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 48, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 49, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_5 "volume: 5X"
+mode $volume_5 {
+    bindsym 0, exec --no-startup-id $setvolumescript 50, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 51, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 52, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 53, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 54, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 55, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 56, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 57, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 58, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 59, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_6 "volume: 6X"
+mode $volume_6 {
+    bindsym 0, exec --no-startup-id $setvolumescript 60, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 61, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 62, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 63, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 64, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 65, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 66, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 67, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 68, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 69, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_7 "volume: 7X"
+mode $volume_7 {
+    bindsym 0, exec --no-startup-id $setvolumescript 70, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 71, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 72, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 73, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 74, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 75, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 76, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 77, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 78, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 79, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_8 "volume: 8X"
+mode $volume_8 {
+    bindsym 0, exec --no-startup-id $setvolumescript 80, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 81, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 82, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 83, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 84, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 85, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 86, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 87, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 88, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 89, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+set $volume_9 "volume: 9X"
+mode $volume_9 {
+    bindsym 0, exec --no-startup-id $setvolumescript 90, mode "default"
+    bindsym 1, exec --no-startup-id $setvolumescript 91, mode "default"
+    bindsym 2, exec --no-startup-id $setvolumescript 92, mode "default"
+    bindsym 3, exec --no-startup-id $setvolumescript 93, mode "default"
+    bindsym 4, exec --no-startup-id $setvolumescript 94, mode "default"
+    bindsym 5, exec --no-startup-id $setvolumescript 95, mode "default"
+    bindsym 6, exec --no-startup-id $setvolumescript 96, mode "default"
+    bindsym 7, exec --no-startup-id $setvolumescript 97, mode "default"
+    bindsym 8, exec --no-startup-id $setvolumescript 98, mode "default"
+    bindsym 9, exec --no-startup-id $setvolumescript 99, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot, (v)olume"
 mode $mode_extended {
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
     bindsym c mode $mode_compton
     bindsym s mode $mode_scrot
-    # back to normal: Enter or Escape
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -425,7 +587,7 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r exec --no-startup-id $centerscript, mode "resize"
 bindsym $mod+Ctrl+b border toggle
 
 set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep"
@@ -443,18 +605,29 @@ mode $mode_system {
 }
 bindsym $mod+Pause mode $mode_system
 
-set $mode_command "command: (t)oggle default sink, (m)ove inputs to default sink, (p)ause dunst, (r)esume dunst, (u) volume++, (d) volume--, (U/D) force volume up/down, (T)oggle mouse"
+set $mode_command "command: (t)oggle def. sink, (m)ove inputs to def. sink, (p)ause dunst, (r)esume dunst, (T)oggle mouse, (u) volume++ / (d) volume-- [shift => force], (0-9) set volume"
 mode $mode_command {
     bindsym t exec --no-startup-id $pulsescript toggle, mode "default"
     bindsym m exec --no-startup-id $pulsescript move, mode "default"
     bindsym p exec --no-startup-id killall -SIGUSR1 dunst, mode "default"
     bindsym r exec --no-startup-id killall -SIGUSR2 dunst, mode "default"
-    # the following to commands do NOT switch back to default mode
+    bindsym Shift+t exec --no-startup-id $mousescript toggle, mode "default"
+    
+    bindsym 0, mode $volume_0
+    bindsym 1, mode $volume_1
+    bindsym 2, mode $volume_2
+    bindsym 3, mode $volume_3
+    bindsym 4, mode $volume_4
+    bindsym 5, mode $volume_5
+    bindsym 6, mode $volume_6
+    bindsym 7, mode $volume_7
+    bindsym 8, mode $volume_8
+    bindsym 9, mode $volume_9
+
     bindsym u exec --no-startup-id $pulsescript up 1
     bindsym d exec --no-startup-id $pulsescript down 1
     bindsym Shift+u exec --no-startup-id $pulsescript force_up
     bindsym Shift+d exec --no-startup-id $pulsescript force_down
-    bindsym Shift+t exec --no-startup-id $mousescript toggle, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -507,7 +680,7 @@ for_window [instance="$floatingclass"] floating enable
 for_window [class="$scratchclass"] move scratchpad, scratchpad show
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
-for_window [class="mpv"] workspace mpv
+#for_window [class="mpv"] workspace mpv
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up

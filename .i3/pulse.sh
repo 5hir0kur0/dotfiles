@@ -45,6 +45,18 @@ get_volume() {
         | tail -1 | tr -s ' ' | cut -d' ' -f5 | tr -d '%'
 }
 
+set_volume() {
+    DEFAULT_SINK="$(default_sink)"
+    unmute_sinks "$DEFAULT_SINK"
+    NEW_VOLUME="$(get_volume)"
+    NEW_VOLUME=$1
+    if [ "$NEW_VOLUME" -le "$UPPER_VOLUME_LIMIT" ]; then
+        pactl set-sink-volume "$DEFAULT_SINK" "$NEW_VOLUME%"
+    else
+        pactl set-sink-volume "$DEFAULT_SINK" "$UPPER_VOLUME_LIMIT%"
+    fi
+}
+
 increase_volume() {
     DEFAULT_SINK="$(default_sink)"
     unmute_sinks "$DEFAULT_SINK"
@@ -136,6 +148,10 @@ toggle_notification() {
 }
 
 case "$1" in
+    set)
+        set_volume "$2"
+        volume_notification
+        ;;
     up)
         increase_volume "${2-5}"
         volume_notification
@@ -153,6 +169,7 @@ case "$1" in
         volume_notification
         ;;
     mute)
+        # TODO: add mute notification
         pactl set-sink-mute "$(default_sink)" toggle
         ;;
     toggle)
@@ -163,6 +180,6 @@ case "$1" in
         move_inputs_to_default
         ;;
     *)
-        echo "Usage: $0 {up|down|force_up|force_down|mute|toggle|move}"
+        echo "Usage: $0 {set|up|down|force_up|force_down|mute|toggle|move}"
         exit 2
 esac
