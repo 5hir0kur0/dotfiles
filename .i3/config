@@ -545,6 +545,7 @@ bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # choose a different random wallpaper
 bindsym $mod+Ctrl+w exec --no-startup-id $wallpaperscript
+bindsym $mod+Shift+Ctrl+w exec --no-startup-id $wallpaperscript pop
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
