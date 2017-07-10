@@ -15,6 +15,11 @@ set relativenumber
 
 set cursorline
 
+set pastetoggle=<F10>
+
+" substitution preview
+set inccommand=split
+
 " create backups and swap files in the .vim directory (the double slashes
 " mean, VIM uses the full path)
 set backupdir=~/.vim/backup//
@@ -24,7 +29,7 @@ set directory=~/.vim/swp//
 set keywordprg=:help
 
 " <C-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:GitGutter<cr><c-l>
 
 " <C-n> and <C-p> scroll without moving the relative position of the cursor
 nnoremap <C-n> <C-e>j
