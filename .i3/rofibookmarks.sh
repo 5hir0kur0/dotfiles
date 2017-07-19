@@ -14,18 +14,26 @@ EDIT_TAG_CMD="alt+t"
 EDIT_URL_CMD="alt+u"
 EDIT_NAME_CMD="alt+n"
 EDIT_TITLE_CMD="alt+w"
-ROFI_PARAMS="-matching normal -i -kb-custom-1 $ADD_CMD -kb-custom-2 $ADD_CLIP_CMD -kb-custom-3 $REMOVE_CMD -kb-custom-4 $EDIT_URL_CMD -kb-custom-5 $EDIT_TAG_CMD -kb-custom-6 $EDIT_NAME_CMD -kb-custom-7 $EDIT_TITLE_CMD"
+FILTER_BY_TAGS_CMD="alt+s"
+ROFI_PARAMS="-matching normal -i -kb-custom-1 $ADD_CMD -kb-custom-2 $ADD_CLIP_CMD -kb-custom-3 $REMOVE_CMD -kb-custom-4 $EDIT_URL_CMD -kb-custom-5 $EDIT_TAG_CMD -kb-custom-6 $EDIT_NAME_CMD -kb-custom-7 $EDIT_TITLE_CMD -kb-custom-8 $FILTER_BY_TAGS_CMD"
 HL="<b>"
 END_HL="</b>"
 ROFI_MESG="use $HL$ADD_CMD$END_HL to add a bookmark ($HL$ADD_CLIP_CMD$END_HL \
 to add from clipboard)
 use $HL$EDIT_URL_CMD$END_HL, $HL$EDIT_TAG_CMD$END_HL, $HL$EDIT_NAME_CMD$END_HL \
 or $HL$EDIT_TITLE_CMD$END_HL to edit the url, tags, name or title of a bookmark
-use $HL$REMOVE_CMD$END_HL to remove bookmark"
+use $HL$REMOVE_CMD$END_HL to remove bookmark or $HL$FILTER_BY_TAGS_CMD$END_HL to search by tags"
 
 print_pretty() {
     $SCRIPT_LOCATION  --max-url "$MAX_URL_WIDTH" --max-tags "$MAX_TAG_WIDTH" \
         --max-title "$MAX_TITLE_WIDTH" --print $'%n\t%u\t%t\t%T' \
+        | column -s $'\t' -t
+}
+
+print_pretty_tags() {
+    $SCRIPT_LOCATION  --max-url "$MAX_URL_WIDTH" --max-tags "$MAX_TAG_WIDTH" \
+        --max-title "$MAX_TITLE_WIDTH" --filter-by-tags $'%n\t%u\t%t\t%T' \
+        ${1?no tags specified} \
         | column -s $'\t' -t
 }
 
@@ -150,7 +158,26 @@ add_bookmark() {
         rofi -e "$ECHO"
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
+}
+
+filter_by_tags() {
+    TAG="$(list_tags | rofi -dmenu -multi-select -p 'filter by tags:')"
+    ECHO=""
+    if [ -n "$TAG" ]; then
+        TAGS="$(join_by ${TAG[*]})"
+        ARG="$(print_pretty_tags "$TAGS" | rofi -dmenu $ROFI_PARAMS -p "bkm [$TAGS]:" -mesg "$ROFI_MESG")"
+    else
+        rofi -markup -e "no tags selected; aborting"
+        exit 1
+    fi
+    VAR=$?
+    if ! grep -qE '^.+[[:space:]]+' <<< "$ARG"; then
+        echo "$ARG"
+    else
+        cut -f 1 -d ' ' <<< "$ARG"
+    fi
+    return $VAR
 }
 
 edit_url() {
@@ -168,7 +195,7 @@ edit_url() {
         return 1
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
 }
 
 edit_tags() {
@@ -187,7 +214,7 @@ edit_tags() {
         rofi -e "$ECHO"
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
 }
 
 edit_name() {
@@ -205,7 +232,7 @@ edit_name() {
         return 1
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
 }
 
 edit_title() {
@@ -231,7 +258,7 @@ edit_title() {
         rofi -e "$ECHO"
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
 }
 
 remove_bookmark() {
@@ -241,15 +268,17 @@ remove_bookmark() {
         return 1
     fi
     ROW="$(grep 'index:' <<< "$ECHO" | cut -f 2 -d ' ')"
-    export ROW #TODO does this work (row correct?)
+    export ROW
 }
 
 ARG="$(prompt_bookmark)"
 RET=$?
+while true; do
 if [ "$RET" -ne 0 ]; then
     case "$RET" in
         10)
             add_bookmark && $0
+            break
             ;;
         11)
             CLIP="$(xsel -bo)"
@@ -258,28 +287,40 @@ if [ "$RET" -ne 0 ]; then
             else
                 add_bookmark && $0
             fi
+            break
             ;;
         12)
             [ -n "$ARG" ] && remove_bookmark "$ARG" && $0
+            break
             ;;
         13)
             [ -n "$ARG" ] && edit_url "$ARG" && $0
+            break
             ;;
         14)
             [ -n "$ARG" ] && edit_tags "$ARG" && $0
+            break
             ;;
         15)
             [ -n "$ARG" ] && edit_name "$ARG" && $0
+            break
             ;;
         16)
             [ -n "$ARG" ] && edit_title "$ARG" && $0
+            break
+            ;;
+        17)
+            ARG="$(filter_by_tags)"
+            RET=$?
             ;;
         *)
-            exit
+            exit $RET
             ;;
     esac
 
 else
     URL="$(get_bookmark_url "$ARG")"
     [ -n "$URL" ] && $OPENSCRIPT "$URL"
+    break
 fi
+done
