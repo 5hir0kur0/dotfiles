@@ -2,61 +2,96 @@
 
 set -u
 
+# requires: wmctrl, xdotool
+
 # X clients that should be ignored (treated as regex)
-WHITELIST=(ibus-x11 ibus-ui-gtk3 unity-settings-daemon notify-osd \
-    gnome-screensaver mozc_renderer redshift-gtk pasystray nm-applet \
-    ^.*kwalletd$ kded4 kdeinit4 ^.*knotify4$ udiskie)
-HOSTNAME="$(hostname)"
+LOCK_SCRIPT=~/.i3/pixel_screenshot_lock.sh
+KILL_SCRIPT=~/.i3/kill.sh
+LC_ALL=C
 
 lock() {
-    ~/.i3/pixel_screenshot_lock.sh
+    $LOCK_SCRIPT
 }
 
-# the ugliest implementation of join you have ever seen...
-join_comma() {
-    local IFS=','
-    echo "${*//,/, /g}"
+determine_wm() {
+    wmctrl -m | grep 'Name:' | cut -d' ' -f2- 
 }
 
-listclients() {
-    declare -ag CLIENTS
-    CLIENTS=()
-    local INDEX=0
-    while read -r LINE; do
-        local CLIENT
-        CLIENT="$(sed <<< "$LINE" -rn 's/^\S+\s+(.+)$/\1/p')"
-        if [ -n "$CLIENT" ]; then
-            for IGNORED in "${WHITELIST[@]}"; do
-                if [[ "$CLIENT" =~ $IGNORED ]]; then continue 2; fi
-            done
-            CLIENTS[$INDEX]="$CLIENT"
-            INDEX=$((INDEX + 1))
-        fi
-    # the loop somehow can't modify the variables
-    # if I just pipe this in...
-    done < <(xlsclients | tail -n +2) # output of xlsclient without first line
-    # TODO stop using xlsclients, because it doesn't list all windows
-    join_comma "${CLIENTS[@]}"
+WINDOW_MANAGER=$(determine_wm)
+
+print_pretty() {
+    RES=
+    for S in "$@"; do
+        RES="$RES"", “$(xargs <<< "$S")”" # xargs trims whitespace here...
+    done
+    echo "${RES#, }"
 }
 
-countclients() {
-    listclients >& /dev/null
-    echo ${#CLIENTS[@]}
+list_windows() {
+    wmctrl -l | tr -s ' ' | cut -d' ' -f4-
 }
 
-killapps() {
-    i3-msg '[class=".*"] kill' # close all windows
-    while pgrep -f '/usr/bin/anki'; do sleep '0.1'; done # wait for anki to sync
-    if [ "$(countclients)" -gt 0 ]; then # there are clients that refuse to die
+pretty_windows() {
+    readarray WINDOWS < <(list_windows)
+    print_pretty "${WINDOWS[@]}"
+}
+
+list_all_client_ids() {
+    xdotool search --any --class --name --classname ''
+}
+
+kill_all_clients() {
+    CLIENTS=( $(list_all_client_ids) )
+    for CLIENT in "${CLIENTS[@]}"; do
+        kill_client "$CLIENT"
+    done
+}
+
+kill_client() {
+    wmctrl -i -c "${1:?}"
+}
+
+count_windows() {
+    list_windows | wc -l
+}
+
+kill_apps() {
+    kill_all_clients
+    if [[ "$(count_windows)" -gt 0 ]]; then # there are clients that refuse to die
         i3-nagbar -t warning \
-            -m "The following clients refused to close: $(listclients)" \
-            -b 'Logout' 'i3-msg exit' \
+            -m "Some clients refus to close: $(pretty_windows)" \
+            -b 'Logout' "$0 logout_force" \
             -b 'Shutdown' "$0 shutdown_force" \
             -b 'Reboot' "$0 reboot_force" &
     fi
-    while [ "$(countclients)" -gt 0 ]; do sleep '0.1'; done
-    ~/.i3/kill.sh
+    while [ "$(count_windows)" -gt 0 ]; do sleep '0.2'; done
+    $KILL_SCRIPT
     return 0
+}
+
+my_logout() {
+    case "$WINDOW_MANAGER" in
+        i3)
+            if hash i3-msg; then
+                i3-msg exit
+            else
+                echo 'i3-msg not available' >&2
+                exit 1
+            fi
+            ;;
+        bspwm)
+            if hash bspc; then
+                bspc quit
+            else
+                echo 'bspc not available' >&2
+                exit 1
+
+            fi
+            ;;
+        *)
+            echo 'unknown window manager:' "$WINDOW_MANAGER" >&2
+            exit 1
+    esac
 }
 
 my_shutdown() {
@@ -67,20 +102,12 @@ my_shutdown() {
     fi
 }
 
-my_shutdown_force() {
-    systemctl poweroff -i
-}
-
 my_reboot() {
     ERROR="$(systemctl reboot)"
     if [ "$?" -ne 0 ]; then
         i3-nagbar -t warning -m "Could not reboot: $ERROR" \
             -b 'Force Reboot' "$0 reboot_force"
     fi
-}
-
-my_reboot_force() {
-    systemctl reboot -i
 }
 
 my_suspend() {
@@ -102,10 +129,10 @@ case "$1" in
         lock
         ;;
     logout)
-        killapps; i3-msg exit
+        kill_apps; my_logout
         ;;
     logout_force)
-        i3-msg exit
+        my_logout
         ;;
     suspend)
         lock; my_suspend
@@ -114,22 +141,19 @@ case "$1" in
         lock; my_hybrid_sleep
         ;;
     reboot)
-        killapps; my_reboot
+        kill_apps; my_reboot
         ;;
     reboot_force)
-        my_reboot_force
+        my_reboot
         ;;
     shutdown)
-        killapps; my_shutdown
+        kill_apps; my_shutdown
         ;;
     shutdown_force)
-        my_shutdown_force
+        my_shutdown
         ;;
-    listclients)
-        listclients
-        ;;
-    countclients)
-        countclients
+    list_windows)
+        list_windows
         ;;
     *)
         echo "Usage: $0 {lock|logout|suspend|reboot|shutdown}"
