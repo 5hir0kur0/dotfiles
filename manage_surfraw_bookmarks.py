@@ -94,7 +94,7 @@ class Bookmark():
             if not tags.strip():
                 self.tags = []
             else:
-                self.tags = tags.strip().split(",")
+                self.tags = list({t.strip() for t in tags.strip().split(",")})
             self.tags.sort()
             if old != self.tags:
                 print("updating tags of {} from {} to {}".format(self.name, old,
@@ -202,10 +202,16 @@ def list_tags(bookmarks):
 
 
 def find_bookmark(bookmarks, name):
+    name = name.strip()
     for bookmark in bookmarks:
         if bookmark.name == name:
             return bookmark
     raise ValueError("invalid bookmark name: {}".format(name))
+
+def filter_by_tags(bookmarks, tags):
+    res = []
+    tset = set(tags)
+    return filter(lambda bm: tset.issubset(set(bm.tags)), bookmarks)
 
 def set_title(bookmarks, name, title):
     bookmark = find_bookmark(bookmarks, name)
@@ -381,6 +387,15 @@ if __name__ == "__main__":
             elif args[0] == "--list-tags":
                 list_tags(bookmarks)
                 args = args[1:]
+            elif args[0] == "--filter-by-tags":
+                if not len(args) >= 3:
+                    raise ValueError("filter-by-tag needs format and tags")
+                form = args[1]
+                tags = [ t.strip() for t in args[2].strip().split(",") ]
+                print_pretty(filter_by_tags(bookmarks, tags), form, 
+                        MAX_LENGTH_NAME, MAX_LENGTH_URL, MAX_LENGTH_TAGS,
+                        MAX_LENGTH_TITLE)
+                args = []
             elif args[0] == "--help" or args[0] == "-h":
                 print("help for " + prog_name + "\n"
                     "--help|-h\n\t"
@@ -413,6 +428,8 @@ if __name__ == "__main__":
                     "%T for title\n"
                     "--list-tags\n\t"
                     "list of all tags\n"
+                    "--filter-by-tags <format> <tags>\n\t"
+                    "only print bookmarks that have all tags\n"
                     "--find <name> <format>\n\t"
                     "like print but only print bookmark matching <name>")
                 args = args[1:]
