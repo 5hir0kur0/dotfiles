@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=42000
-SAVEHIST=42000
+HISTSIZE=420000
+SAVEHIST=420000
 # no duplicate entries in history
 setopt histignoredups
 setopt histsavenodups
@@ -41,6 +41,7 @@ alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 alias mv='mv -iv'
 alias rm='rm -Iv --one-file-system'
+alias vim=nvim
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
@@ -57,28 +58,41 @@ alias gcc="gcc -Wall -Wextra -std=c99"
 alias view="vim -R -c 'set nomodifiable'"
 
 function f() {
-    find . -maxdepth 1 -iname "*$1*";
+    find . -maxdepth 1 -iname "*${1:?}*";
 }
 
 function ff() {
-    find . -iname "*$1*";
+    find . -iname "*${1:?}*";
+}
+
+function fl() {
+    find . -type f -exec grep -q "${1:?}" {} \; -print
+}
+
+function gf() {
+    grep "${1:?}" -R .
 }
 
 # launch quietly and disown
 function lqd() {
+    ( ${@:?} ) > /dev/null & disown
+}
+
+function lqqd() {
     ( $@ ) >& /dev/null & disown
 }
 
+# TODO: make this work with multiple pids
 function output() {
-    PID=`pgrep "$1"`
-    tail -f "/proc/$PID/fd/1" "/proc/$PID/fd/2"
+    PID=`pgrep "${1:?}"`
+    tail -f "/proc/${PID:?not found}/fd/1" "/proc/$PID/fd/2"
 }
 
 # stolen from https://stackoverflow.com/a/3854444
 function memusage() {
     if [ -z "${1:-}" ]; then
-        echo "usage: memusage <process_name> [<type>]"
-        cat << EOF
+        echo "usage: memusage <process_name> [<type>]" 1>&2
+        cat 1>&2 << EOF
     values for <type>:
         Rss: resident memory usage, all memory the process uses,
              including all memory this process shares with other processes.
@@ -94,7 +108,14 @@ function memusage() {
 EOF
         return 1
     fi
-    echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" /proc/`pidof $1`/smaps) | bc
+    PIDS=( $(pgrep $1) )
+    for PID in "${PIDS[@]}"; do
+        echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" "/proc/$PID/smaps") | bc
+    done
+}
+
+function memusage_total() {
+    memusage "$@" | paste -sd+ | bc
 }
 
 function fancy_unixtime() {
@@ -102,7 +123,7 @@ function fancy_unixtime() {
      while true; do
          SECS=`date +%s`
          BASE="${1-16}"
-         NEWF="$(figlet -tc $(echo "obase=$BASE; $SECS" | bc))"
+         NEWF="$(figlet -W -f banner -tc $(echo "obase=$BASE; $SECS" | bc))"
          if [ ! "$OLDF" = "$NEWF" ]; then
              echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
              echo "$NEWF"
@@ -115,8 +136,15 @@ function fancy_unixtime() {
 # go up n directories
 # stolen from: https://www.reddit.com/r/ProgrammerHumor/comments/4f2o6l/typical_entrepreneurs/d25o3wu
 function up() {
-    cd $(eval printf '../'%.0s {1.."$1"})
+    cd $(eval printf '../'%.0s {1.."${1:?}"})
 }
+
+function weather() {
+    LOC=${1:-$(head -1 ~/.local/share/.location)}
+    curl "http://wttr.in/$LOC"
+}
+
+alias wttr=weather
 
 ##set prompt, colors
 autoload -U colors && colors
