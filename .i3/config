@@ -1,6 +1,19 @@
+# classes
 # if $scratchclass is changed, it needs to be changed in scratchpad.sh too
-set $scratchclass scratchpad-terminal
-set $floatingclass floating-terminal
+set $ac (?i)^anki$
+set $at (?i)^Anki -
+set $chromeclass (?i)^(?:chromium|chrome)$
+set $dolphinclass (?)^dolphin$
+set $emacsclass (?)^emacs$
+set $firefoxclass (?i)^firefox$
+set $floatingclass ^floating-terminal$
+set $gimpclass (?i)^gimp.*$
+set $jetbrainsclass (?i)^jetbrains.*$
+set $scratchclass ^scratchpad-terminal$
+set $imgviewerclass (?i)^sxiv$
+set $urxvtclass (?i)^urxvt$
+set $writerclass (?i)^libreoffice-writer$
+set $zathuraclass (?i)^zathura$
 
 # scripts
 set $bookmarkscript ~/.i3/rofibookmarks.sh
@@ -10,16 +23,17 @@ set $entiresplitscript ~/.i3/splitentire.sh
 set $exitscript ~/.i3/exit.sh
 set $initscript ~/.i3/init.sh
 set $manscript ~/.i3/rofiman.sh
+set $markscript ~/.i3/mark.sh
 set $mousescript ~/.i3/mouse_action.sh
 set $newworkspacescript ~/.i3/new_workspace.sh
 set $openscript ~/.i3/rofilocate.sh
 set $pulsescript ~/.i3/pulse.sh
-set $setvolumescript ~/.i3/pulse.sh set
 set $renameworkspacescript ~/.i3/rename_workspace.sh
 set $rofiinteractivescript ~/.i3/rofiinteractive.sh
 set $rofipythonscript ~/.i3/rofipython.sh
 set $scratchscript ~/.i3/scratchpad.sh
 set $scrotscript ~/.i3/screenshot.sh
+set $setvolumescript ~/.i3/pulse.sh set
 set $surfrawscript ~/.i3/rofisurfraw.sh
 set $wallpaperscript ~/.i3/set_wallpaper.sh
 set $workspacescript ~/.i3/workspace.sh
@@ -29,7 +43,6 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 font pango:Inconsolata 12
-# font pango:Inconsolata 13px
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -38,10 +51,10 @@ floating_modifier $mod
 bindsym $mod+Return exec urxvtc
 
 # start a floating terminal with tmux
-bindsym $mod+Shift+Return exec "urxvt -name $scratchclass -e tmux new-session -As0"
+bindsym $mod+Shift+Return exec "urxvtc -name $scratchclass -e tmux new-session -As0"
 
-# start a floating terminal with zsh
-bindsym $mod+Ctrl+Return exec "urxvt -name $floatingclass"
+# start a floating terminal
+bindsym $mod+Ctrl+Return exec "urxvtc -name $floatingclass"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -77,7 +90,7 @@ mode $mode_scrot {
     bindsym Ctrl+Shift+w exec --no-startup-id $scrotscript --action=window --clip --delay=3 --no-save, mode "default"
     bindsym Ctrl+Shift+e exec --no-startup-id $scrotscript --action=whole --clip --delay=3 --no-save, mode "default"
     bindsym Ctrl+Shift+s exec --no-startup-id "sleep 3; $scrotscript --action=select --clip --no-save", mode "default"
-    # back to normal: Enter or Escape
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -95,11 +108,9 @@ mode $mode_open {
     bindsym Shift+p exec --no-startup-id $rofiinteractivescript python, mode "default"
     bindsym Shift+B exec --no-startup-id $rofiinteractivescript bash, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
 bindsym $mod+o mode $mode_open
 
 set $mode_focus "FOCUS"
@@ -120,10 +131,20 @@ mode $mode_compton {
     bindsym k exec --no-startup-id $comptonscript kill, mode "default"
     bindsym s exec --no-startup-id $comptonscript start, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+set $mode_wallaper "wallpaper: (n)ext random wallpaper, (p)revious wallpaper"
+mode $mode_wallaper {
+    bindsym n exec --no-startup-id $wallpaperscript
+    bindsym p exec --no-startup-id $wallpaperscript pop
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# volume submodes incoming, brace yourself!
 
 set $volume_0 "volume: 0X"
 mode $volume_0 {
@@ -137,10 +158,10 @@ mode $volume_0 {
     bindsym 7, exec --no-startup-id $setvolumescript 07, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 08, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 09, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_1 "volume: 1X"
 mode $volume_1 {
     bindsym 0, exec --no-startup-id $setvolumescript 10, mode "default"
@@ -153,10 +174,10 @@ mode $volume_1 {
     bindsym 7, exec --no-startup-id $setvolumescript 17, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 18, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 19, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_2 "volume: 2X"
 mode $volume_2 {
     bindsym 0, exec --no-startup-id $setvolumescript 20, mode "default"
@@ -169,10 +190,10 @@ mode $volume_2 {
     bindsym 7, exec --no-startup-id $setvolumescript 27, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 28, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 29, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_3 "volume: 3X"
 mode $volume_3 {
     bindsym 0, exec --no-startup-id $setvolumescript 30, mode "default"
@@ -185,10 +206,10 @@ mode $volume_3 {
     bindsym 7, exec --no-startup-id $setvolumescript 37, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 38, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 39, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_4 "volume: 4X"
 mode $volume_4 {
     bindsym 0, exec --no-startup-id $setvolumescript 40, mode "default"
@@ -201,10 +222,10 @@ mode $volume_4 {
     bindsym 7, exec --no-startup-id $setvolumescript 47, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 48, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 49, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_5 "volume: 5X"
 mode $volume_5 {
     bindsym 0, exec --no-startup-id $setvolumescript 50, mode "default"
@@ -217,10 +238,10 @@ mode $volume_5 {
     bindsym 7, exec --no-startup-id $setvolumescript 57, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 58, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 59, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_6 "volume: 6X"
 mode $volume_6 {
     bindsym 0, exec --no-startup-id $setvolumescript 60, mode "default"
@@ -233,10 +254,10 @@ mode $volume_6 {
     bindsym 7, exec --no-startup-id $setvolumescript 67, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 68, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 69, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_7 "volume: 7X"
 mode $volume_7 {
     bindsym 0, exec --no-startup-id $setvolumescript 70, mode "default"
@@ -249,10 +270,10 @@ mode $volume_7 {
     bindsym 7, exec --no-startup-id $setvolumescript 77, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 78, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 79, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_8 "volume: 8X"
 mode $volume_8 {
     bindsym 0, exec --no-startup-id $setvolumescript 80, mode "default"
@@ -265,10 +286,10 @@ mode $volume_8 {
     bindsym 7, exec --no-startup-id $setvolumescript 87, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 88, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 89, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
 set $volume_9 "volume: 9X"
 mode $volume_9 {
     bindsym 0, exec --no-startup-id $setvolumescript 90, mode "default"
@@ -281,59 +302,58 @@ mode $volume_9 {
     bindsym 7, exec --no-startup-id $setvolumescript 97, mode "default"
     bindsym 8, exec --no-startup-id $setvolumescript 98, mode "default"
     bindsym 9, exec --no-startup-id $setvolumescript 99, mode "default"
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
-set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot, (v)olume"
+
+set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot, (v)olume, (w)allpaper"
 mode $mode_extended {
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
     bindsym c mode $mode_compton
     bindsym s mode $mode_scrot
+    bindsym w mode $mode_wallaper
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
 bindsym $mod+x mode $mode_extended
 
 set $mode_mark "mark"
 mode $mode_mark {
-    bindsym a mark --toggle a, mode "default"
-    bindsym b mark --toggle b, mode "default"
-    bindsym c mark --toggle c, mode "default"
-    bindsym d mark --toggle d, mode "default"
-    bindsym e mark --toggle e, mode "default"
-    bindsym f mark --toggle f, mode "default"
-    bindsym g mark --toggle g, mode "default"
-    bindsym h mark --toggle h, mode "default"
-    bindsym i mark --toggle i, mode "default"
-    bindsym j mark --toggle j, mode "default"
-    bindsym k mark --toggle k, mode "default"
-    bindsym l mark --toggle l, mode "default"
-    bindsym m mark --toggle m, mode "default"
-    bindsym n mark --toggle n, mode "default"
-    bindsym o mark --toggle o, mode "default"
-    bindsym p mark --toggle p, mode "default"
-    bindsym q mark --toggle q, mode "default"
-    bindsym r mark --toggle r, mode "default"
-    bindsym s mark --toggle s, mode "default"
-    bindsym t mark --toggle t, mode "default"
-    bindsym u mark --toggle u, mode "default"
-    bindsym v mark --toggle v, mode "default"
-    bindsym w mark --toggle w, mode "default"
-    bindsym x mark --toggle x, mode "default"
-    bindsym y mark --toggle y, mode "default"
-    bindsym z mark --toggle z, mode "default"
-    # back to normal: Enter or Escape
-    bindsym Return unmark, mode "default"
-    bindsym Escape unmark, mode "default"
+    bindsym a mark --add --toggle a, mode "default"
+    bindsym b mark --add --toggle b, mode "default"
+    bindsym c mark --add --toggle c, mode "default"
+    bindsym d mark --add --toggle d, mode "default"
+    bindsym e mark --add --toggle e, mode "default"
+    bindsym f mark --add --toggle f, mode "default"
+    bindsym g mark --add --toggle g, mode "default"
+    bindsym h mark --add --toggle h, mode "default"
+    bindsym i mark --add --toggle i, mode "default"
+    bindsym j mark --add --toggle j, mode "default"
+    bindsym k mark --add --toggle k, mode "default"
+    bindsym l mark --add --toggle l, mode "default"
+    bindsym m mark --add --toggle m, mode "default"
+    bindsym n mark --add --toggle n, mode "default"
+    bindsym o mark --add --toggle o, mode "default"
+    bindsym p mark --add --toggle p, mode "default"
+    bindsym q mark --add --toggle q, mode "default"
+    bindsym r mark --add --toggle r, mode "default"
+    bindsym s mark --add --toggle s, mode "default"
+    bindsym t mark --add --toggle t, mode "default"
+    bindsym u mark --add --toggle u, mode "default"
+    bindsym v mark --add --toggle v, mode "default"
+    bindsym w mark --add --toggle w, mode "default"
+    bindsym x mark --add --toggle x, mode "default"
+    bindsym y mark --add --toggle y, mode "default"
+    bindsym z mark --add --toggle z, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
+bindsym $mod+Shift+t mode $mode_mark
 
-bindsym $mod+Shift+y mode $mode_mark
-
-set $mode_goto_mark "go to mark / move to mark"
+set $mode_goto_mark "goto mark: shift -> move to mark, ctrl -> fetch mark"
 mode $mode_goto_mark {
     bindsym a [con_mark="a"] focus, mode "default"
     bindsym b [con_mark="b"] focus, mode "default"
@@ -362,6 +382,33 @@ mode $mode_goto_mark {
     bindsym y [con_mark="y"] focus, mode "default"
     bindsym z [con_mark="z"] focus, mode "default"
 
+    bindsym Ctrl+a [con_mark="a"] move to workspace current, mode "default"
+    bindsym Ctrl+b [con_mark="b"] move to workspace current, mode "default"
+    bindsym Ctrl+c [con_mark="c"] move to workspace current, mode "default"
+    bindsym Ctrl+d [con_mark="d"] move to workspace current, mode "default"
+    bindsym Ctrl+e [con_mark="e"] move to workspace current, mode "default"
+    bindsym Ctrl+f [con_mark="f"] move to workspace current, mode "default"
+    bindsym Ctrl+g [con_mark="g"] move to workspace current, mode "default"
+    bindsym Ctrl+h [con_mark="h"] move to workspace current, mode "default"
+    bindsym Ctrl+i [con_mark="i"] move to workspace current, mode "default"
+    bindsym Ctrl+j [con_mark="j"] move to workspace current, mode "default"
+    bindsym Ctrl+k [con_mark="k"] move to workspace current, mode "default"
+    bindsym Ctrl+l [con_mark="l"] move to workspace current, mode "default"
+    bindsym Ctrl+m [con_mark="m"] move to workspace current, mode "default"
+    bindsym Ctrl+n [con_mark="n"] move to workspace current, mode "default"
+    bindsym Ctrl+o [con_mark="o"] move to workspace current, mode "default"
+    bindsym Ctrl+p [con_mark="p"] move to workspace current, mode "default"
+    bindsym Ctrl+q [con_mark="q"] move to workspace current, mode "default"
+    bindsym Ctrl+r [con_mark="r"] move to workspace current, mode "default"
+    bindsym Ctrl+s [con_mark="s"] move to workspace current, mode "default"
+    bindsym Ctrl+t [con_mark="t"] move to workspace current, mode "default"
+    bindsym Ctrl+u [con_mark="u"] move to workspace current, mode "default"
+    bindsym Ctrl+v [con_mark="v"] move to workspace current, mode "default"
+    bindsym Ctrl+w [con_mark="w"] move to workspace current, mode "default"
+    bindsym Ctrl+x [con_mark="x"] move to workspace current, mode "default"
+    bindsym Ctrl+y [con_mark="y"] move to workspace current, mode "default"
+    bindsym Ctrl+z [con_mark="z"] move to workspace current, mode "default"
+
     bindsym Shift+a move window to mark a, mode "default"
     bindsym Shift+b move window to mark b, mode "default"
     bindsym Shift+c move window to mark c, mode "default"
@@ -389,12 +436,10 @@ mode $mode_goto_mark {
     bindsym Shift+y move window to mark y, mode "default"
     bindsym Shift+z move window to mark z, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-bindsym $mod+y mode $mode_goto_mark
+bindsym $mod+t mode $mode_goto_mark
 
 # change focus
 bindsym $mod+h focus left
@@ -432,7 +477,6 @@ bindsym $mod+Ctrl+h split h
 bindsym $mod+Ctrl+j split v
 bindsym $mod+Ctrl+k split v
 
-
 # maybe remap to Mod1+{hjklHJKL}
 set $mode_entire "entire split: (l/h) horizontal, (j/k) vertical, caps -> terminal"
 mode $mode_entire {
@@ -446,11 +490,9 @@ mode $mode_entire {
     bindsym Shift+L exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
     bindsym Shift+H exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
 bindsym $mod+e mode $mode_entire
 
 # enter fullscreen mode for the focused container
@@ -458,15 +500,16 @@ bindsym $mod+f fullscreen
 bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+t layout toggle split
+bindsym $mod+Ctrl+s layout stacking
+bindsym $mod+Ctrl+w layout tabbed
+bindsym $mod+Ctrl+t layout toggle split
+bindsym $mod+w layout toggle
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # toggle sticky
-bindsym $mod+Ctrl+s sticky toggle
+bindsym $mod+Shift+s sticky toggle
 
 # toggle bar mode
 bindsym $mod+Shift+b bar mode toggle
@@ -537,15 +580,12 @@ bindsym $mod+Mod1+Shift+p move container to workspace prev
 
 # reload the configuration file
 bindsym $mod+Ctrl+r reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-#bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut.' -b 'Exit i3' 'i3-msg exit' -b 'Suspend' '/bin/bash $exitscript suspend' -b 'Shutdown' '/bin/bash $exitscript shutdown' -b 'Reboot' '/bin/bash $exitscript reboot'"
+
 #lock screen (Mod1 ist Alt)
 bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
-
-# choose a different random wallpaper
-bindsym $mod+Ctrl+w exec --no-startup-id $wallpaperscript
-bindsym $mod+Shift+Ctrl+w exec --no-startup-id $wallpaperscript pop
 
 # scratchpad
 bindsym $mod+Shift+i move scratchpad
@@ -560,7 +600,7 @@ mode "resize" {
     bindsym ctrl+h resize shrink width  1 px
     bindsym ctrl+j resize grow   height 1 px
     bindsym ctrl+k resize shrink height 1 px
-    # grow width not working for some reason
+    # "grow width" not working for some reason
     bindsym ctrl+l resize grow right    1 px 
 
     bindsym h resize shrink width  20 px
@@ -583,12 +623,12 @@ mode "resize" {
     bindsym ctrl+mod1+k resize grow up    50 px
     bindsym ctrl+mod1+l resize grow right 50 px
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
 bindsym $mod+r exec --no-startup-id $centerscript, mode "resize"
+
+# turn borders on/off/1pixel
 bindsym $mod+Ctrl+b border toggle
 
 set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep"
@@ -600,7 +640,6 @@ mode $mode_system {
     bindsym Shift+s exec --no-startup-id $exitscript shutdown, mode "default"
     bindsym Ctrl+s exec --no-startup-id  $exitscript hybrid_sleep, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -636,7 +675,6 @@ mode $mode_command {
 bindsym $mod+Shift+x mode $mode_command
 
 # colors
-
 set $base00 #101010
 set $base01 #252525
 set $base02 #464646
@@ -675,13 +713,30 @@ bar {
     }
 }
 
-#rules
+# rules
 for_window [instance="$scratchclass"] move scratchpad, scratchpad show
 for_window [instance="$floatingclass"] floating enable
 for_window [class="$scratchclass"] move scratchpad, scratchpad show
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
 #for_window [class="mpv"] workspace mpv
+
+# mark rules
+# the anki one doesn't work with $markscript; if the title is omitted, then the add window is matched
+for_window [class="$ac" tiling title="$at"]                        mark --add a
+#for_window [class="$ankiclass" type="dialog"] unmark a
+for_window [class="$chromeclass"]            exec --no-startup-id $markscript c
+for_window [class="$dolphinclass"]           exec --no-startup-id $markscript d
+for_window [instance="$emacsclass"]          exec --no-startup-id $markscript e
+for_window [class="$firefoxclass" tiling]    exec --no-startup-id $markscript f
+for_window [class="$gimpclass" tiling]       exec --no-startup-id $markscript g
+for_window [class="$imgviewerclass"]         exec --no-startup-id $markscript i
+for_window [class="$jetbrainsclass" tiling]  exec --no-startup-id $markscript j
+for_window [instance="$scratchclass"]        exec --no-startup-id $markscript s
+for_window [class="$writerclass" tiling]     exec --no-startup-id $markscript w
+# when "class" is used instead of "instance" it also matches the scratchpad
+for_window [instance="$urxvtclass"]          exec --no-startup-id $markscript u
+for_window [class="$zathuraclass"]           exec --no-startup-id $markscript z
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
