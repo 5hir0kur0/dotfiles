@@ -39,19 +39,24 @@
 !URxvt*background: base00
 !URxvt*foreground: base05
 
-! (uncomment for transparent background)
-!URxvt*inheritPixmap: true
-!URxvt*transparent: true
+! URxvt is intentionally spelled in lower case in the following paragraph
+! so it does not apply to scratchpad-terminal
+urxvt*inheritPixmap: true
+urxvt*transparent: true
 ! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
-!URxvt*.shading: 12
+urxvt*.shading: 21
 ! Fade the text by the given percentage when focus is lost
-!URxvt*fading: 15
+!urxvt*fading: 15
 ! Fade to this colour, when fading is used (see fading:)
-!URxvt*fadeColor: S_base02
+!urxvt*fadeColor: S_base02
+! true transparency for floating terminal
+floating-terminal*.depth: 32
+floating-terminal*foreground: #B0B0B0
+floating-terminal*background: rgba:2000/2000/2000/cccc
 
 ! Select the fonts to be used. This is a comma separated list of font names
-URxvt*font: xft:xos4 Terminus:pixelsize=14
-! URxvt*font: xft:Inconsolata:pixelsize=16,xft:Monaco:pixelsize=16,xft:Noto Mono:pixelsize=16,xft:Noto Sans:pixelsize=16
+scratchpad-terminal*font: xft:Gohu GohuFont:pixelsize=14,xft:xos4 Terminus:pixelsize=14,xft:Inconsolata:pixelsize=14,xft:InconsolataForPowerline Nerd Font:pixelsize=14,xft:Monaco:pixelsize=14,xft:Noto Mono:pixelsize=14,xft:Noto Sans:pixelsize=14
+URxvt*font: xft:InconsolataForPowerline Nerd Font:size=15,xft:Inconsolata:size=15,xft:Monaco:size=15,xft:Noto Mono:size=15,xft:Noto Sans:size=15
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false
@@ -66,5 +71,6 @@ URxvt*resize-font.bigger: C-plus
 URxvt*perl-ext-common: resize-font
 URxvt*iso14755: false
 URxvt*iso14755_52: false
-! URxvt*letterSpace: -1
-URxvt*letterSpace: 0
+scratchpad-terminal*letterSpace: 0
+URxvt*letterSpace: -1
+URxvt*lineSpace: 1
