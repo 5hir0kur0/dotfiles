@@ -1,53 +1,55 @@
 #!/usr/bin/env bash
 
-DIR="$(pwd)"
+set -euo pipefail
 
-[ -f "$HOME/.vimrc" ]             || ln -s "$DIR/.vimrc" "$HOME/.vimrc"
-[ -d "$HOME/.vim" ]               || mkdir "$HOME/.vim"
-[ -d "$HOME/.vim/backup" ]        || mkdir "$HOME/.vim/backup"
-[ -d "$HOME/.vim/swp" ]           || mkdir "$HOME/.vim/swp"
+STOW_DIRECTORY=$( cd "$(dirname "$0")"; pwd -P )
+STOW_TARGET=$HOME
 
-[ -f "$HOME/.bashrc" ]            || ln -s "$DIR/.bashrc" "$HOME/.bashrc" 
-[ -f "$HOME/.zshrc" ]             || ln -s "$DIR/.zshrc" "$HOME/.zshrc"
-[ -f "$HOME/.tmux.conf" ]         || ln -s "$DIR/.tmux.conf" "$HOME/.tmux.conf"
-[ -d "$HOME/.i3" ]                || ln -s "$DIR/.i3" "$HOME"
-[ -f "$HOME/.vimperatorrc" ]      || ln -s "$DIR/vimperator/.vimperatorrc" "$HOME"
-[ -d "$HOME/.config" ]            || mkdir "$HOME/.config"
-[ -d "$HOME/.config/dunst" ]      || ln -s "$DIR/dunst" "$HOME/.config/dunst"
-[ -d "$HOME/.vimperator" ]        || mkdir "$HOME/.vimperator"
-[ -d "$HOME/.vimperator/colors" ] || mkdir "$HOME/.vimperator/colors"
+function install_pkg() {
+    echo 'stow is missing; trying to install it...' 1>&2
+    if hash apt; then
+        sudo apt install "${1:?pkg name missing}"
+    elif hash pacman; then
+        sudo pacman -Sy "${1:?pkg name missing}"
+    fi
+}
 
+function my_stow() {
+    if ! hash stow; then
+        install_pkg stow
+    fi
+    stow --target="$STOW_TARGET" --dir="$STOW_DIRECTORY" --verbose \
+            --no-folding "$@"
+}
 
-if [ ! -f "$HOME/.vimperator/colors/darkness.vimp" ]; then
-  cp "$DIR/vimperator/darkness.vimp" "$HOME/.vimperator/colors/"
+if [ -z "${1:-}" ]; then
+    echo "usage: $0 [--stow|--delete|--restow] <dirname>" 1>&2
+    echo "  (use --no to simulate)" 1>&2
+    exit 1
 fi
 
+if [ "${1:-}" = git ]; then
+    GIT=1
+    if ! hash git; then
+        install_pkg git
+    fi
+    if git config --global --list &> /dev/null; then
+        GIT=0
+    fi
 
-if [ ! -f "$HOME/.config/redshift.conf" ]; then
-  cp "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
-  echo -n "latitude:  " && read LAT
-  echo -n "longitude: " && read LON
-  echo "lat=$LAT" >> "$HOME/.config/redshift.conf"
-  echo "lon=$LON" >> "$HOME/.config/redshift.conf"
-fi
-
-GIT='false'
-which git &> /dev/null && GIT='true'
-if $GIT; then
-  git config --global --list &> /dev/null
-  [ "$?" -eq 0 ] && GIT='false'
-fi
-
-if $GIT; then
-  echo 'configuring git...'
-  echo -n 'username: ' && read USERNAME
-  git config --global user.name "$USERNAME"
-  echo -n 'email: ' && read EMAIL
-  git config --global user.email "$EMAIL"
-  git config --global core.editor vim
-  git config --global push.default simple
-  git config --global merge.tool vimdiff
-  git config --global alias.pull 'git pull --ff --only-ff'
+    if [ "$GIT" -eq 1 ]; then
+        echo 'configuring git...'
+        echo -n 'username: ' && read USERNAME
+        git config --global user.name "$USERNAME"
+        echo -n 'email: ' && read EMAIL
+        git config --global user.email "$EMAIL"
+        git config --global core.editor nvim
+        git config --global push.default simple
+        git config --global merge.tool vimdiff
+        git config --global alias.pull 'git pull --ff --only-ff'
+    else
+        echo 'git is already configured' 1>&2
+    fi
 else
-  echo 'git is not installed or already configured'
+    my_stow "$@"
 fi
