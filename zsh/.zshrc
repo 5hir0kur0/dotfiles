@@ -108,7 +108,7 @@ function memusage() {
 EOF
         return 1
     fi
-    PIDS=( $(pgrep $1) )
+    PIDS=( $(pgrep -x $1) )
     for PID in "${PIDS[@]}"; do
         echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" "/proc/$PID/smaps") | bc
     done
@@ -131,6 +131,17 @@ function fancy_unixtime() {
          fi
          sleep 0.1
     done
+}
+
+function status() {
+    echo '    failed system services:'
+    systemctl --failed
+    echo '    high priority log erros:'
+    journalctl -p3 -xb
+    echo '    smart status of /dev/sda or $1:'
+    sudo smartctl --health "${1:-/dev/sda}"
+    echo '    modified or missing files of installed packages:'
+    pacman -Qkk 1>/dev/null
 }
 
 # go up n directories
