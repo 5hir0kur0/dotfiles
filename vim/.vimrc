@@ -12,6 +12,8 @@ set sidescrolloff=10
 " highlight the line the cursor is on
 set cursorline
 
+colorscheme default
+
 set background=dark
 
 set relativenumber
@@ -59,9 +61,6 @@ let mapleader = "\<Space>"
 nnoremap <silent> <Leader>W m`:s/\s*$//<CR>:noh<CR>``
 nnoremap <silent> <Leader>w m`g_ld$``
 
-" toggle wrapping
-nnoremap <silent> <Leader>tw :set wrap! wrap?<CR>
-
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
 inoremap <C-c> <Esc><Esc>
@@ -71,15 +70,13 @@ noremap <Esc> <Esc><Esc>
 " force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
-set colorcolumn=81
+"set colorcolumn=81
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 
 " enable spell checking for certain file types
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown setlocal spell
 autocmd FileType sh setlocal keywordprg=man\ -s
-
-colorscheme solarized
 
 "" Vundle
 " from https://github.com/VundleVim/Vundle.vim/blob/master/README.md#quick-start
@@ -90,6 +87,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
@@ -103,7 +101,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_exclude_preview = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'lucius'
+let g:airline_symbols_ascii = 1
 
 " ale bindings
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
