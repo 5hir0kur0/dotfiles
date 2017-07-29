@@ -3,7 +3,7 @@
 set -u +e
 
 SCRIPT_LOCATION="/home/nerd/code/dots/manage_surfraw_bookmarks.py"
-OPENSCRIPT="$HOME/.i3/openbrowser.sh"
+OPENSCRIPT="$HOME/.config/i3/openbrowser.sh"
 MAX_URL_WIDTH=32
 MAX_TAG_WIDTH=64
 MAX_TITLE_WIDTH=128

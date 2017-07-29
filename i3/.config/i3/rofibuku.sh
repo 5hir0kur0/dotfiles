@@ -27,7 +27,7 @@ use $COL$ADD_CLIP_CMD$E_COL to add a bookmark from clipboard
 use $COL$REMOVE_CMD$E_COL to remove bookmark
 use $COL$EDIT_URL_CMD$E_COL to edit the url of a bookmark
 use $COL$EDIT_TAG_CMD$E_COL to edit the tags of a bookmark"
-OPENSCRIPT="$HOME/.i3/openbrowser.sh"
+OPENSCRIPT="$HOME/.config/i3/openbrowser.sh"
 # not sure if I could have done it in an uglier way...
 AWK="BEGIN { OFS=\"\"; } { printf \"%s\t\", \$1; "
 AWK="$AWK""if(length(\$2) > $MAX_URL_WIDTH) printf \"%s%s\", substr("
