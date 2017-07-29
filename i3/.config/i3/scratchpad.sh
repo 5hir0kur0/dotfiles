@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# if SCRATCHCLASS is changed, you need to change $scratchclass in .i3/config too
+# if SCRATCHCLASS is changed, $scratchclass in .config/i3/config
+# needs to be changed too
 SCRATCHCLASS='scratchpad-terminal'
 
 if xdotool search --class --classname "$SCRATCHCLASS" > /dev/null 2>&1; then

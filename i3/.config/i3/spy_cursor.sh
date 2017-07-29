@@ -9,5 +9,5 @@ xprop -spy -root _NET_ACTIVE_WINDOW | while read; do
     if ! xprop -id "`xdotool getwindowfocus`" | grep -q '^WM_NAME'; then
         continue
     fi
-    ~/.i3/center_cursor.sh
+    ~/.config/i3/center_cursor.sh
 done

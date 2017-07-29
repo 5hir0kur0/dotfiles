@@ -4,9 +4,8 @@ set -u
 
 # requires: wmctrl, xdotool
 
-# X clients that should be ignored (treated as regex)
-LOCK_SCRIPT=~/.i3/pixel_screenshot_lock.sh
-KILL_SCRIPT=~/.i3/kill.sh
+LOCK_SCRIPT=~/.config/i3/pixel_screenshot_lock.sh
+KILL_SCRIPT=~/.config/i3/kill.sh
 LC_ALL=C
 
 lock() {
@@ -36,6 +35,17 @@ pretty_windows() {
     print_pretty "${WINDOWS[@]}"
 }
 
+list_window_ids() {
+    wmctrl -l | cut -f1 -d' '
+}
+
+kill_all_windows() {
+    WINDOWS=( $(list_window_ids) )
+    for WINDOW in "${WINDOWS[@]}"; do
+        kill_client "$WINDOW"
+    done
+}
+
 list_all_client_ids() {
     xdotool search --any --class --name --classname ''
 }
@@ -56,6 +66,8 @@ count_windows() {
 }
 
 kill_apps() {
+    kill_all_windows
+    sleep 0.2 # arbitrary value...
     kill_all_clients
     if [[ "$(count_windows)" -gt 0 ]]; then # there are clients that refuse to die
         i3-nagbar -t warning \
@@ -64,7 +76,7 @@ kill_apps() {
             -b 'Shutdown' "$0 shutdown_force" \
             -b 'Reboot' "$0 reboot_force" &
     fi
-    while [ "$(count_windows)" -gt 0 ]; do sleep '0.2'; done
+    while [ "$(count_windows)" -gt 0 ]; do sleep 0.2; done
     $KILL_SCRIPT
     return 0
 }

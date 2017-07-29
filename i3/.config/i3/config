@@ -6,37 +6,39 @@ set $chromeclass (?i)^(?:chromium|chrome)$
 set $dolphinclass (?)^dolphin$
 set $emacsclass (?)^emacs$
 set $firefoxclass (?i)^firefox$
-set $floatingclass ^floating-terminal$
+set $floatingclass floating-terminal
 set $gimpclass (?i)^gimp.*$
 set $jetbrainsclass (?i)^jetbrains.*$
-set $scratchclass ^scratchpad-terminal$
+set $scratchclass scratchpad-terminal
 set $imgviewerclass (?i)^sxiv$
+set $mediaplayerclass (?i)^(?:mpv|mplayer)$
 set $urxvtclass (?i)^urxvt$
+set $vlcclass (?i)^vlc$
 set $writerclass (?i)^libreoffice-writer$
 set $zathuraclass (?i)^zathura$
 
 # scripts
-set $bookmarkscript ~/.i3/rofibookmarks.sh
-set $centerscript ~/.i3/center_cursor.sh
-set $comptonscript ~/.i3/compton.sh
-set $entiresplitscript ~/.i3/splitentire.sh
-set $exitscript ~/.i3/exit.sh
-set $initscript ~/.i3/init.sh
-set $manscript ~/.i3/rofiman.sh
-set $markscript ~/.i3/mark.sh
-set $mousescript ~/.i3/mouse_action.sh
-set $newworkspacescript ~/.i3/new_workspace.sh
-set $openscript ~/.i3/rofilocate.sh
-set $pulsescript ~/.i3/pulse.sh
-set $renameworkspacescript ~/.i3/rename_workspace.sh
-set $rofiinteractivescript ~/.i3/rofiinteractive.sh
-set $rofipythonscript ~/.i3/rofipython.sh
-set $scratchscript ~/.i3/scratchpad.sh
-set $scrotscript ~/.i3/screenshot.sh
-set $setvolumescript ~/.i3/pulse.sh set
-set $surfrawscript ~/.i3/rofisurfraw.sh
-set $wallpaperscript ~/.i3/set_wallpaper.sh
-set $workspacescript ~/.i3/workspace.sh
+set $bookmarkscript ~/.config/i3/rofibookmarks.sh
+set $centerscript ~/.config/i3/center_cursor.sh
+set $comptonscript ~/.config/i3/compton.sh
+set $entiresplitscript ~/.config/i3/splitentire.sh
+set $exitscript ~/.config/i3/exit.sh
+set $initscript ~/.config/i3/init.sh
+set $manscript ~/.config/i3/rofiman.sh
+set $markscript ~/.config/i3/mark.sh
+set $mousescript ~/.config/i3/mouse_action.sh
+set $newworkspacescript ~/.config/i3/new_workspace.sh
+set $openscript ~/.config/i3/rofilocate.sh
+set $pulsescript ~/.config/i3/pulse.sh
+set $renameworkspacescript ~/.config/i3/rename_workspace.sh
+set $rofiinteractivescript ~/.config/i3/rofiinteractive.sh
+set $rofipythonscript ~/.config/i3/rofipython.sh
+set $scratchscript ~/.config/i3/scratchpad.sh
+set $scrotscript ~/.config/i3/screenshot.sh
+set $setvolumescript ~/.config/i3/pulse.sh set
+set $surfrawscript ~/.config/i3/rofisurfraw.sh
+set $wallpaperscript ~/.config/i3/set_wallpaper.sh
+set $workspacescript ~/.config/i3/workspace.sh
 
 set $mod Mod4
 
@@ -699,7 +701,7 @@ client.urgent $base03 $base03 $base07 $base08
 
 bar {
    font pango:Inconsolata 12
-   status_command i3status --config ~/.i3/i3status
+   status_command i3status --config ~/.config/i3/i3status
    position bottom
    tray_output primary
    colors {
@@ -732,10 +734,12 @@ for_window [class="$firefoxclass" tiling]    exec --no-startup-id $markscript f
 for_window [class="$gimpclass" tiling]       exec --no-startup-id $markscript g
 for_window [class="$imgviewerclass"]         exec --no-startup-id $markscript i
 for_window [class="$jetbrainsclass" tiling]  exec --no-startup-id $markscript j
+for_window [class="$mediaplayerclass"]                             mark --add m
 for_window [instance="$scratchclass"]        exec --no-startup-id $markscript s
 for_window [class="$writerclass" tiling]     exec --no-startup-id $markscript w
 # when "class" is used instead of "instance" it also matches the scratchpad
 for_window [instance="$urxvtclass"]          exec --no-startup-id $markscript u
+for_window [class="$vlcclass" tiling]        exec --no-startup-id $markscript v
 for_window [class="$zathuraclass"]           exec --no-startup-id $markscript z
 
 #enable multimedia keys
