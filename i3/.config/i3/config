@@ -18,27 +18,27 @@ set $writerclass (?i)^libreoffice-writer$
 set $zathuraclass (?i)^zathura$
 
 # scripts
-set $bookmarkscript ~/.config/i3/rofibookmarks.sh
-set $centerscript ~/.config/i3/center_cursor.sh
-set $comptonscript ~/.config/i3/compton.sh
-set $entiresplitscript ~/.config/i3/splitentire.sh
-set $exitscript ~/.config/i3/exit.sh
-set $initscript ~/.config/i3/init.sh
-set $manscript ~/.config/i3/rofiman.sh
-set $markscript ~/.config/i3/mark.sh
-set $mousescript ~/.config/i3/mouse_action.sh
-set $newworkspacescript ~/.config/i3/new_workspace.sh
-set $openscript ~/.config/i3/rofilocate.sh
-set $pulsescript ~/.config/i3/pulse.sh
-set $renameworkspacescript ~/.config/i3/rename_workspace.sh
-set $rofiinteractivescript ~/.config/i3/rofiinteractive.sh
-set $rofipythonscript ~/.config/i3/rofipython.sh
-set $scratchscript ~/.config/i3/scratchpad.sh
-set $scrotscript ~/.config/i3/screenshot.sh
-set $setvolumescript ~/.config/i3/pulse.sh set
-set $surfrawscript ~/.config/i3/rofisurfraw.sh
-set $wallpaperscript ~/.config/i3/set_wallpaper.sh
-set $workspacescript ~/.config/i3/workspace.sh
+set $bookmarkscript ~/.local/share/scripts/rofibookmarks.sh
+set $centerscript ~/.local/share/scripts/center_cursor.sh
+set $comptonscript ~/.local/share/scripts/compton.sh
+set $entiresplitscript ~/.local/share/scripts/i3_splitentire.sh
+set $exitscript ~/.local/share/scripts/exit.sh
+set $initscript ~/.local/share/scripts/init.sh
+set $manscript ~/.local/share/scripts/rofiman.sh
+set $markscript ~/.local/share/scripts/mark.sh
+set $mousescript ~/.local/share/scripts/mouse_action.sh
+set $newworkspacescript ~/.local/share/scripts/i3_new_workspace.sh
+set $openscript ~/.local/share/scripts/rofilocate.sh
+set $pulsescript ~/.local/share/scripts/pulse.sh
+set $renameworkspacescript ~/.local/share/scripts/i3_rename_workspace.sh
+set $rofiinteractivescript ~/.local/share/scripts/rofiinteractive.sh
+set $rofipythonscript ~/.local/share/scripts/rofipython.sh
+set $scratchscript ~/.local/share/scripts/i3_scratchpad.sh
+set $scrotscript ~/.local/share/scripts/screenshot.sh
+set $setvolumescript ~/.local/share/scripts/pulse.sh set
+set $surfrawscript ~/.local/share/scripts/rofisurfraw.sh
+set $wallpaperscript ~/.local/share/scripts/set_wallpaper.sh
+set $workspacescript ~/.local/share/scripts/i3_workspace.sh
 
 set $mod Mod4
 

@@ -4,8 +4,8 @@ set -u
 
 # requires: wmctrl, xdotool
 
-LOCK_SCRIPT=~/.config/i3/pixel_screenshot_lock.sh
-KILL_SCRIPT=~/.config/i3/kill.sh
+LOCK_SCRIPT=~/.local/share/scripts/pixel_screenshot_lock.sh
+KILL_SCRIPT=~/.local/share/scripts/kill.sh
 LC_ALL=C
 
 lock() {

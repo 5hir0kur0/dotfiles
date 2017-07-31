@@ -6,7 +6,7 @@
 
 ELVI_DIRECTORIES=("/usr/lib/surfraw/" "$HOME/.config/surfraw/elvi/")
 BOOKMARKS="$HOME/.config/surfraw/bookmarks"
-OPENSCRIPT="$HOME/.config/i3/openbrowser.sh"
+OPENSCRIPT="$HOME/.local/share/scripts/openbrowser.sh"
 DEFAULT_ELVI='google'
 
 set -eu

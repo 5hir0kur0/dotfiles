@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
+[ -f "$HOME/.profile-$(hostname)" ] && source "$HOME/.profile-$(hostname)"
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+export GTK2_RC_FILES=~/.gtkrc-2.0
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+export DISPLAY=:0
+
+setxkbmap -option caps:swapescape
