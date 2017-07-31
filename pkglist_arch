@@ -144,6 +144,7 @@ xorg-xinit
 xorg-xinput
 xorg-xkill
 xorg-xlsclients
+xorg-xprop
 xorg-xwininfo
 xsel
 xsensors
