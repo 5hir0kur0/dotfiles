@@ -104,6 +104,8 @@
     # Maximum amount of notifications kept in history
     history_length = 42
 
+    # TODO: use history_ignore to exclude volume notifications from history
+
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
 

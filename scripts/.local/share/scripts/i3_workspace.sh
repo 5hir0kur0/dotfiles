@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# usage: $ ./workspace.sh [move]
-
 set -u
 
 list_non_numeric_workspaces() {

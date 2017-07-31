@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# usage: $ ./workspace.sh [move]
-
 set -eu -o pipefail
 
 WORKSPACE="$(rofi -dmenu -p 'rename workspace:' < /dev/null)"
