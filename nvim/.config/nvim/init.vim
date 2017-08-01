@@ -88,7 +88,7 @@ set guicursor&
 " column itself
 "set colorcolumn=81
 "highlight ColorColumn ctermbg=lightblue guibg=lightblue
-let g:m2=matchadd('NonText', '\%>80v.\+', -1)
+let g:m2=matchadd('SpellBad', '\%>80v.\+', -1)
 
 " create backups and swap files in the .local directory (the double slashes
 " mean, VIM uses the full path [not sure if true, no mention of this in the
