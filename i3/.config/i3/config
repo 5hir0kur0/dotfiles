@@ -721,7 +721,7 @@ for_window [instance="$floatingclass"] floating enable
 for_window [class="$scratchclass"] move scratchpad, scratchpad show
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
-#for_window [class="mpv"] workspace mpv
+for_window [class="mpv"] fullscreen
 
 # mark rules
 # the anki one doesn't work with $markscript; if the title is omitted, then the add window is matched
