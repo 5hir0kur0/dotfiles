@@ -1,0 +1,19 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/mapper/volgr-root LABEL=root
+UUID=90af650e-8f41-427e-995d-8c08618112dc	/         	btrfs     	rw,relatime,ssd,space_cache,subvol=/snaps/1,subvol=snaps/1	0 0
+
+# /dev/mapper/volgr-home LABEL=home
+UUID=3854f40b-880e-43ef-9cba-f3f38a9b1d1d	/home     	ext4      	rw,relatime,data=ordered	0 2
+
+# /dev/sda2 LABEL=archboot
+UUID=89f0ca17-e88c-4c20-8a03-02bf73f200b6	/boot     	ext4      	rw,relatime,data=ordered	0 2
+
+# /dev/sda1 LABEL=efisys
+UUID=CB93-DC9B      	/boot/efi 	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
+
+# /dev/mapper/volgr-swap LABEL=swap
+UUID=d52090ad-bde8-4dc9-9330-ff79811c8942	none      	swap      	defaults  	0 0
+
