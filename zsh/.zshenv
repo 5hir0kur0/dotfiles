@@ -18,7 +18,7 @@ alias less='less -FX'
 
 alias hcat="highlight --force -O ansi"
 
-alias update='sudo pacmatic -Syu'
+alias update='update.sh'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
