@@ -126,3 +126,17 @@ function weather() {
 }
 
 alias wttr=weather
+
+function counttypes() {
+    find ${*:-.} -type f -print0 | xargs -0 file --brief --mime | awk '
+    {
+        t[$0]++;
+    }
+    END {
+        for (i in t) printf("%d\t%s\n", t[i], i);
+    }' | sort -n
+}
+
+function brokenlinks() {
+    find ${*:-.} -type l -print | perl -nle '-e || print'
+}
