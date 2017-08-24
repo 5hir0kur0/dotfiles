@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Removing old uninstalled packages...
+When = PostTransaction
+Exec = /usr/bin/paccache -rvuk1
