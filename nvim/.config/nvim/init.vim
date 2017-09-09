@@ -83,6 +83,9 @@ set guicursor&
 
 "set termguicolors
 
+" don't redraw during macros, etc.
+set lazyredraw
+
 " highlight column 81 (so you can avoid typing text longer than 80 cols)
 " TODO change this so text beyond column 80 gets highlighted instead of the
 " column itself
@@ -90,11 +93,16 @@ set guicursor&
 "highlight ColorColumn ctermbg=lightblue guibg=lightblue
 let g:m2=matchadd('SpellBad', '\%>80v.\+', -1)
 
-" create backups and swap files in the .local directory (the double slashes
-" mean, VIM uses the full path [not sure if true, no mention of this in the
-" documentation as far as I can tell, but it doesn't hurt...])
+" create backups, swap files and undo files in the .local directory 
+" (the double slashes mean, VIM uses the full path [not sure if true,
+" no mention of this in the documentation as far as I can tell,
+" but it doesn't hurt...])
 set backupdir=~/.local/share/nvim/backup//
 set directory=~/.local/share/nvim/swap//
+set undodir=~/.local/share/nvim/undo//
+
+" save undo history to a file
+set undofile
 
 " use :help insted of !man to look up word below cursor with K
 set keywordprg=:help
