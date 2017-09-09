@@ -519,6 +519,9 @@ bindsym $mod+Shift+b bar mode toggle
 # change focus between tiling / floating windows
 bindsym $mod+ctrl+space focus mode_toggle
 
+# switch between floating windows like a desktop environment
+bindsym Mod1+Tab focus floating, focus right
+
 # focus the parent container
 bindsym $mod+a focus parent
 
