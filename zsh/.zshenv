@@ -3,6 +3,7 @@ alias ll='ls -lh'
 alias la='ls -A'
 alias lla='la -Alh'
 alias l='ls -C'
+alias lsd='ls -ld'
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias '....'='cd ../../..'
@@ -122,7 +123,8 @@ function up() {
 
 function weather() {
     LOC=${1:-$(head -1 ~/.local/share/.location)}
-    curl "http://wttr.in/$LOC"
+    curl --insecure --silent "https://wttr.in/$LOC?q" \
+	| grep -E '^\s*┌|│|└' --color=never
 }
 
 alias wttr=weather
