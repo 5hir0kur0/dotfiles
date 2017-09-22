@@ -69,7 +69,7 @@ bindsym $mod+Shift+g exec --no-startup-id rofi -show windowcd
 bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
 
 # start a websearch
-bindsym $mod+q exec --no-startup-id $surfrawscript search
+bindsym $mod+q exec --no-startup-id $surfrawscript both
 
 # screenshots
 bindsym Print exec --no-startup-id $scrotscript --action=whole
