@@ -3,7 +3,7 @@
 set -eu
 
 list() {
-    locate ~ | grep -v "^$HOME.*/\\..\\|^$HOME/misc"
+    locate ~ #| grep -v "^$HOME.*/\\..\\|^$HOME/misc"
 }
 
 FILENAME="$(list | rofi -levenshtein-sort -dmenu -p 'xdg:' -i)"
