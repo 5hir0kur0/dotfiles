@@ -73,4 +73,4 @@ URxvt*iso14755: false
 URxvt*iso14755_52: false
 scratchpad-terminal*letterSpace: 0
 URxvt*letterSpace: -1
-URxvt*lineSpace: 1
+URxvt*lineSpace: 0
