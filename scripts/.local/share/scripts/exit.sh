@@ -6,6 +6,7 @@ set -u
 
 LOCK_SCRIPT=~/.local/share/scripts/pixel_screenshot_lock.sh
 KILL_SCRIPT=~/.local/share/scripts/kill.sh
+NAGSCRIPT=~/.local/share/scripts/rofinag.sh
 LC_ALL=C
 
 lock() {
@@ -69,12 +70,24 @@ kill_apps() {
     kill_all_windows
     sleep 0.2 # arbitrary value...
     kill_all_clients
-    if [[ "$(count_windows)" -gt 0 ]]; then # there are clients that refuse to die
-        i3-nagbar -t warning \
-            -m "Some clients refus to close: $(pretty_windows)" \
-            -b 'Logout' "$0 logout_force" \
-            -b 'Shutdown' "$0 shutdown_force" \
-            -b 'Reboot' "$0 reboot_force" &
+    # are there clients that refuse to die?
+    if [ "$(count_windows)" -gt 0 ]; then 
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t warning \
+                    -m "Some clients refused to close: $(pretty_windows)" \
+                    -b 'Logout' "$0 logout_force" \
+                    -b 'Shutdown' "$0 shutdown_force" \
+                    -b 'Reboot' "$0 reboot_force" &
+                ;;
+            *)
+                ( echo -e 'logout\nshutdown\nreboot' | $NAGSCRIPT \
+                     "Some clients refused to close: $(pretty_windows)" \
+                     "$0 logout_force" \
+                     "$0 shutdown_force" \
+                     "$0 reboot_force" ) &
+                ;;
+        esac
     fi
     while [ "$(count_windows)" -gt 0 ]; do sleep 0.2; done
     $KILL_SCRIPT
@@ -109,30 +122,66 @@ my_logout() {
 my_shutdown() {
     ERROR="$(systemctl poweroff)"
     if [ "$?" -ne 0 ]; then
-        i3-nagbar -t warning -m "Could not shut down: $ERROR" \
-            -b 'Force Shutdown' "$0 shutdown_force"
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t warning -m "Could not shut down: $ERROR" \
+                    -b 'Force shutdown' "$0 shutdown_force"
+                ;;
+            *)
+                pkill -x rofi
+                ( echo -e 'force shutdown' | $NAGSCRIPT \
+                    "Could not shut down: $ERROR" \
+                    "$0 shutdown_force" ) &
+                ;;
+        esac
     fi
 }
 
 my_reboot() {
     ERROR="$(systemctl reboot)"
     if [ "$?" -ne 0 ]; then
-        i3-nagbar -t warning -m "Could not reboot: $ERROR" \
-            -b 'Force Reboot' "$0 reboot_force"
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t warning -m "Could not reboot: $ERROR" \
+                    -b 'Force reboot' "$0 reboot_force"
+                ;;
+            *)
+                pkill -x rofi
+                ( echo -e 'force reboot' | $NAGSCRIPT \
+                    "Could not reboot: $ERROR" \
+                    "$0 reboot_force" ) &
+                ;;
+        esac
     fi
 }
 
 my_suspend() {
     ERROR="$(systemctl suspend)"
     if [ "$?" -ne 0 ]; then
-        i3-nagbar -t error -m "Could not suspend: $ERROR"
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t error -m "Could not suspend: $ERROR"
+                ;;
+            *)
+                pkill -x rofi
+                rofi -e "Could not suspend: $ERROR"
+                ;;
+        esac
     fi
 }
 
 my_hybrid_sleep() {
     ERROR="$(systemctl hybrid-sleep)"
     if [ "$?" -ne 0 ]; then
-        i3-nagbar -t error -m "Could not enter hybrid sleep: $ERROR"
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t error -m "Could not enter hybrid sleep: $ERROR"
+                ;;
+            *)
+                pkill -x rofi
+                rofi -e "Could not enter hybrid sleep: $ERROR"
+                ;;
+        esac
     fi
 }
 
