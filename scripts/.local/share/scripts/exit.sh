@@ -129,7 +129,7 @@ my_shutdown() {
                 ;;
             *)
                 pkill -x rofi
-                ( echo -e 'force shutdown' | $NAGSCRIPT \
+                ( echo 'force shutdown' | $NAGSCRIPT \
                     "Could not shut down: $ERROR" \
                     "$0 shutdown_force" ) &
                 ;;
@@ -147,7 +147,7 @@ my_reboot() {
                 ;;
             *)
                 pkill -x rofi
-                ( echo -e 'force reboot' | $NAGSCRIPT \
+                ( echo 'force reboot' | $NAGSCRIPT \
                     "Could not reboot: $ERROR" \
                     "$0 reboot_force" ) &
                 ;;

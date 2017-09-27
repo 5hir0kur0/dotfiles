@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 # function stolen from https://stackoverflow.com/a/17841619
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
