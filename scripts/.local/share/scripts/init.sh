@@ -13,7 +13,6 @@ udiskie --use-udisks2 --no-automount --smart-tray &
 # i3 behaves buggy without noevents
 unclutter -noevents -root -idle 8 &
 keynav &
-sleep 60 && syncthing &
 
 [ ! -s ~/.config/mpd/pid ] && mpd &
 

@@ -10,7 +10,6 @@ NAMES=('urxvtd'
        'udiskie'
        'unclutter'
        'keynav'
-       'syncthing'
 )
 
 for NAME in "${NAMES[@]}"; do
