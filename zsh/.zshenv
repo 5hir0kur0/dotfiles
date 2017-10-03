@@ -13,6 +13,7 @@ alias '.....'='cd ../../../..'
 alias mv='mv -iv'
 alias rm='rm -Iv --one-file-system'
 alias vim=nvim
+alias v=nvim
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
