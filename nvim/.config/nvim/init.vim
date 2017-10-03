@@ -131,8 +131,6 @@ noremap <S-Tab> gT
 " use :w!! to force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
-colorscheme gruvbox
-
 " enable spell checking for certain file types
 autocmd FileType gitcommit setlocal spell spelllang=en
 autocmd FileType markdown setlocal spell spelllang=en
@@ -150,22 +148,21 @@ augroup AutoSaveFolds
     autocmd BufWinEnter * if index(blacklist, &ft) < 0 && @% != '' | silent! loadview
 augroup END
 
-set runtimepath+=~/.vim/bundle/neobundle.vim
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'w0rp/ale'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'vim-scripts/ReplaceWithRegister'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'lifepillar/vim-solarized8'
-call neobundle#end()
-NeoBundleCheck
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'Shougo/neobundle.vim'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-commentary'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'airblade/vim-gitgutter'
+Plug 'jiangmiao/auto-pairs'
+Plug 'lifepillar/vim-solarized8'
+Plug 'morhetz/gruvbox'
+call plug#end()
 
 " enable filetype detection, enable file-type specific plugin loading, enable
 " file-type specific indentation
@@ -173,6 +170,8 @@ filetype plugin indent on
 
 " enable syntax highlighting
 syntax enable
+
+colorscheme gruvbox
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
