@@ -33,17 +33,19 @@ bspc config remove_unplugged_monitors true
 
 # init
 
+set_wallpaper.sh &
+
 setxkbmap -option caps:swapescape &
 
-pgrep -x redshift-gtk || sleep 1 & redshift-gtk &
-pgrep -x keynav || sleep 2 && keynav &
+pgrep -x redshift || (sleep 1; redshift) &
+pgrep -x keynav || (sleep 2; keynav) &
 pgrep -x dunst || dunst &
 
 xrdb -merge ~/.Xresources &
 
 polybar example &
 
-sleep 0.5 && nm-applet &
+(sleep 0.5; nm-applet) &
 
 # rules
 bspc rule -a scratchpad-terminal sticky=on state=floating hidden=on
