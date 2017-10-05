@@ -13,3 +13,4 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 export DISPLAY=:0
 
 setxkbmap -option caps:swapescape
+numlockx on
