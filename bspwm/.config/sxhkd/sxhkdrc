@@ -80,6 +80,16 @@ super + shift + F2
         nmcli networking | grep enabled && nmcli networking off \
         || nmcli networking on 
 
+# brightness
+super + {plus,minus}
+        light -Sc 0.5 && light -{A,U} 10
+
+super + {F6,F5}
+        light -Sc 0.5 && light -{A,U} 10
+
+super + shift + {button4,button5}
+        light -Sc 0.5 && light -{A,U} 5
+
 #
 # bspwm hotkeys
 #
