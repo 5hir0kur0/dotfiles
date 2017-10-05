@@ -41,6 +41,45 @@ super + u
 super + shift + u
         bspwm_scratchpad.sh hide_floating
 
+# volume
+XF86AudioRaiseVolume
+        pulse.sh up
+
+XF86AudioLowerVolume
+        pulse.sh down
+
+XF86AudioMute
+        pulse.sh mute
+
+super + F12
+        pulse.sh up
+
+super + F11
+        pulse.sh down
+
+super + F10
+        pulse.sh mute
+
+# disable display
+super + F9
+        xset dpms force off
+
+# power management
+super + F4
+        exit.sh shutdown
+
+super + F1
+        exit.sh suspend
+
+# network management
+super + F2
+        nmcli radio wifi | grep enabled && nmcli radio wifi off \
+        || nmcli radio wifi on 
+
+super + shift + F2
+        nmcli networking | grep enabled && nmcli networking off \
+        || nmcli networking on 
+
 #
 # bspwm hotkeys
 #
@@ -72,8 +111,19 @@ super + shift + b
         bspc node -s biggest.tiled.local
 
 # toggle border
-super + ctrl + b
+super + ctrl + shift + b
         bspc config border_width $(( ( $(bspc config border_width) + 1 ) % 6))
+
+super + ctrl + {button4,button5}
+        bspc config border_width $(( $(bspc config border_width) {+,-} 1 ))
+
+super + {button4,button5}
+        GAP=$(( $(bspc config window_gap) {+,-} 1 )); \
+        if [ "$GAP" -le 0 ]; then \
+            bspc config window_gap  0; \
+        else; \
+            bspc config window_gap "$GAP"; \
+        fi
 
 # TODO toggle bar (in some mode)
 
@@ -220,3 +270,11 @@ super + ctrl + f
 super + ctrl + r
         bspc query -N -n .leaf.focused.local && bspc node @/ --rotate 90 || \
         bspc node --rotate 90
+
+super + ctrl + e
+        bspc query -N -n .leaf.focused.local && bspc node @/ --equalize || \
+        bspc node --equalize 
+
+super + ctrl + b
+        bspc query -N -n .leaf.focused.local && bspc node @/ --balance || \
+        bspc node --balance 
