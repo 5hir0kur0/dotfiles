@@ -168,6 +168,8 @@ call plug#end()
 " file-type specific indentation
 filetype plugin indent on
 
+set termguicolors
+
 " enable syntax highlighting
 syntax enable
 
