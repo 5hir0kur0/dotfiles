@@ -12,8 +12,6 @@ set sidescrolloff=10
 " highlight the line the cursor is on
 set cursorline
 
-colorscheme default
-
 set background=dark
 
 set relativenumber
@@ -93,8 +91,11 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'morhetz/gruvbox'
 
 call vundle#end()
+
+colorscheme gruvbox
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
