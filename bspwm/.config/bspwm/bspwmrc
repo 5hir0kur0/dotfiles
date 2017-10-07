@@ -40,6 +40,8 @@ setxkbmap -option caps:swapescape &
 pgrep -x redshift || (sleep 1; redshift) &
 pgrep -x keynav || (sleep 2; keynav) &
 pgrep -x dunst || dunst &
+pgrep -x xautolock || (sleep 10; xautolock -time 42 -locker "$HOME/.local/share/scripts/exit.sh lock") &
+pgrep -x udiskie || (sleep 3 && udiskie --use-udisks2 --no-automount --smart-tray) &
 
 xrdb -merge ~/.Xresources &
 
