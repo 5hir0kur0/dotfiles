@@ -479,24 +479,6 @@ bindsym $mod+Ctrl+h split h
 bindsym $mod+Ctrl+j split v
 bindsym $mod+Ctrl+k split v
 
-# maybe remap to Mod1+{hjklHJKL}
-set $mode_entire "entire split: (l/h) horizontal, (j/k) vertical, caps -> terminal"
-mode $mode_entire {
-    bindsym j exec --no-startup-id $entiresplitscript vertical, mode "default"
-    bindsym k exec --no-startup-id $entiresplitscript vertical, mode "default"
-    bindsym l exec --no-startup-id $entiresplitscript horizontal, mode "default"
-    bindsym h exec --no-startup-id $entiresplitscript horizontal, mode "default"
-
-    bindsym Shift+J exec --no-startup-id $entiresplitscript vertical i3-sensible-terminal, mode "default"
-    bindsym Shift+K exec --no-startup-id $entiresplitscript vertical i3-sensible-terminal, mode "default"
-    bindsym Shift+L exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
-    bindsym Shift+H exec --no-startup-id $entiresplitscript horizontal i3-sensible-terminal, mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+e mode $mode_entire
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+f fullscreen toggle global
@@ -509,6 +491,7 @@ bindsym $mod+w layout toggle
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym $mod+s floating toggle
 
 # toggle sticky
 bindsym $mod+Shift+s sticky toggle
@@ -593,10 +576,10 @@ bindsym $mod+Shift+r restart
 bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
 
 # scratchpad
-bindsym $mod+Shift+i move scratchpad
-#bindsym $mod+i scratchpad show
-bindsym $mod+i exec --no-startup-id $scratchscript
-bindsym $mod+ctrl+i [instance="^(?!$scratchclass)"] scratchpad show
+bindsym $mod+Shift+e move scratchpad
+#bindsym $mod+e scratchpad show
+bindsym $mod+e exec --no-startup-id $scratchscript
+bindsym $mod+ctrl+e [instance="^(?!$scratchclass)"] scratchpad show
 bindsym $mod+u scratchpad show
 bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
 
