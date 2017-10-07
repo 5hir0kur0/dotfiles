@@ -87,8 +87,12 @@ super + {plus,minus}
 super + {F6,F5}
         light -Sc 0.5 && light -{A,U} 10
 
-super + shift + {button4,button5}
+super + {button4,button5}
         light -Sc 0.5 && light -{A,U} 5
+
+# surfraw
+super + q
+        rofisurfraw.sh both
 
 #
 # bspwm hotkeys
@@ -125,9 +129,14 @@ super + ctrl + shift + b
         bspc config border_width $(( ( $(bspc config border_width) + 1 ) % 6))
 
 super + ctrl + {button4,button5}
-        bspc config border_width $(( $(bspc config border_width) {+,-} 1 ))
+        BORDER=$(( $(bspc config border_width) {+,-} 1 )); \
+        if [ "$BORDER" -le 0 ]; then \
+            bspc config border_width  0; \
+        else; \
+            bspc config border_width "$BORDER"; \
+        fi
 
-super + {button4,button5}
+super + shift + {button4,button5}
         GAP=$(( $(bspc config window_gap) {+,-} 1 )); \
         if [ "$GAP" -le 0 ]; then \
             bspc config window_gap  0; \
@@ -170,6 +179,9 @@ super + shift + {h,j,k,l}
         bspc query -N -n .floating.focused.local.leaf && \
         bspc node -v $\{ACTIONS11[$INDEX]\} $\{ACTIONS12[$INDEX]\} || \
         bspc node -s "$\{ACTIONS2[$INDEX]\}"
+
+# super + t; {h,j,k,l}
+#         node -n {west,south,north,east}
 
 # focus the node for the given path jump
 # a -> "ancestor" -> parent
