@@ -12,6 +12,11 @@ super + shift + Return
 super + ctrl + Return
         urxvt
 
+# lock screen
+ctrl + alt + l
+        exit.sh lock; xset dpms force off
+
+
 # fcitx
 ~ctrl + alt + space
         pgrep -x fcitx || fcitx -d
@@ -57,8 +62,24 @@ super + F12
 super + F11
         pulse.sh down
 
+super + ctrl + F12
+        pulse.sh up 1
+
+super + ctrl + F11
+        pulse.sh down 1
+
+super + shift + F12
+        pulse.sh force_up
+
+super + shift + F11
+        pulse.sh force_down
+
 super + F10
         pulse.sh mute
+
+# center cursor
+super + z
+        center_cursor.sh
 
 # disable display
 super + F9
@@ -180,8 +201,9 @@ super + shift + {h,j,k,l}
         bspc node -v $\{ACTIONS11[$INDEX]\} $\{ACTIONS12[$INDEX]\} || \
         bspc node -s "$\{ACTIONS2[$INDEX]\}"
 
-# super + t; {h,j,k,l}
-#         node -n {west,south,north,east}
+# transplant node
+super + shift + z; {h,j,k,l}
+        bspc node -n {west,south,north,east}
 
 # focus the node for the given path jump
 # a -> "ancestor" -> parent
