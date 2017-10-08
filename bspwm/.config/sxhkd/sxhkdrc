@@ -49,6 +49,11 @@ super + u
 super + shift + u
         bspwm_scratchpad.sh hide_floating
 
+# exit.sh
+# MODE: exit: (l)ock, (e) logout, (s)uspend, (r)eboot, (shift + s)hutdown, (h)ibernate, (ctrl + s) hybrid sleep
+super + Pause; {l,e,s,r,shift + s,h,ctrl + s}
+        exit.sh {lock,logout,suspend,reboot,shutdown,hibernate,hybrid_sleep}
+
 # volume
 XF86AudioRaiseVolume
         pulse.sh up
@@ -199,7 +204,7 @@ super + shift + {h,j,k,l}
         ACTIONS11=(-20 0 0 20); \
         ACTIONS12=(0 20 -20 0); \
         ACTIONS2=(west south north east); \
-        INDEX={1,2,3,4}; \
+        INDEX={0,1,2,3}; \
         bspc query -N -n .floating.focused.local.leaf && \
         bspc node -v $\{ACTIONS11[$INDEX]\} $\{ACTIONS12[$INDEX]\} || \
         bspc node -s "$\{ACTIONS2[$INDEX]\}"
@@ -290,9 +295,13 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# expand a window by moving one of its side outward
+# expand a window by moving one of its side outward or make it smaller if 
+# this isn't possible
 super + alt + {h,j,k,l}
-        bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+        ACTION=('left -20 0' 'bottom 0 20' 'top 0 -20' 'right 20 0'); \
+        ALTERNATIVE=('right -20 0' 'top 0 20' 'bottom 0 -20' 'left 20 0'); \
+        INDEX={0,1,2,3}; \
+        bspc node -z $\{ACTION[$INDEX]\} || bspc node -z $\{ALTERNATIVE[$INDEX]\}
 
 # contract a window by moving one of its side inward
 super + alt + shift + {h,j,k,l}
