@@ -3,8 +3,6 @@
 [ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
 pgrep -x sxhkd || sxhkd -s /tmp/.sxhkd &
 
-st &
-
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 # config
@@ -37,17 +35,17 @@ set_wallpaper.sh &
 
 setxkbmap -option caps:swapescape &
 
-pgrep -x redshift || (sleep 1; redshift) &
-pgrep -x keynav || (sleep 2; keynav) &
+pgrep -x polybar || polybar bspwm &
+pgrep -x nm-applet || (sleep 0.1; nm-applet) &
+pgrep -x redshift || (sleep 0.1; redshift) &
+pgrep -x keynav || (sleep 0.9; keynav) &
 pgrep -x dunst || dunst &
 pgrep -x xautolock || (sleep 10; xautolock -time 42 -locker "$HOME/.local/share/scripts/exit.sh lock") &
-pgrep -x udiskie || (sleep 3 && udiskie --use-udisks2 --no-automount --smart-tray) &
+pgrep -x udiskie || (sleep 1 && udiskie --use-udisks2 --no-automount --smart-tray) &
 
 xrdb -merge ~/.Xresources &
 
-polybar example &
 
-(sleep 0.5; nm-applet) &
 
 # rules
 bspc rule -a scratchpad-terminal sticky=on state=floating hidden=on
