@@ -16,6 +16,9 @@ super + ctrl + Return
 ctrl + alt + l
         exit.sh lock; xset dpms force off
 
+# center focused floating window on screen
+super + shift + z
+        center_window.sh
 
 # fcitx
 ~ctrl + alt + space
@@ -78,7 +81,7 @@ super + F10
         pulse.sh mute
 
 # center cursor
-super + z
+super + ctrl + z
         center_cursor.sh
 
 # disable display
@@ -202,7 +205,7 @@ super + shift + {h,j,k,l}
         bspc node -s "$\{ACTIONS2[$INDEX]\}"
 
 # transplant node
-super + shift + z; {h,j,k,l}
+super + z; {h,j,k,l}
         bspc node -n {west,south,north,east}
 
 # focus the node for the given path jump
