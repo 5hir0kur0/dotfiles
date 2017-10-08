@@ -185,6 +185,21 @@ my_hybrid_sleep() {
     fi
 }
 
+my_hibernate() {
+    ERROR="$(systemctl hibernate)"
+    if [ "$?" -ne 0 ]; then
+        case "$WINDOW_MANAGER" in
+            i3)
+                i3-nagbar -t error -m "Could not enter hybrid sleep: $ERROR"
+                ;;
+            *)
+                pkill -x rofi
+                rofi -e "Could not enter hybrid sleep: $ERROR"
+                ;;
+        esac
+    fi
+}
+
 case "$1" in
     lock)
         lock
@@ -200,6 +215,9 @@ case "$1" in
         ;;
     hybrid_sleep)
         lock; my_hybrid_sleep
+        ;;
+    hibernate)
+        lock; my_hibernate
         ;;
     reboot)
         kill_apps; my_reboot
@@ -217,7 +235,7 @@ case "$1" in
         list_windows
         ;;
     *)
-        echo "Usage: $0 {lock|logout|suspend|reboot|shutdown}"
+        echo "Usage: $0 {lock|logout|suspend|reboot|shutdown|hybrid_sleep|hibernate}"
         exit 2
 esac
 
