@@ -1,7 +1,9 @@
 #! /bin/sh
 
 [ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
-pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd &
+pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
+
+bspc subscribe monitor >> /tmp/monitorinfo &
 
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
@@ -26,6 +28,8 @@ bspc config center_pseudo_tiled       true
 bspc config honor_size_hints          false
 bspc config remove_disabled_monitors  false #?
 bspc config remove_unplugged_monitors true
+bspc config directional_focus_tightness low # test
+bspc config initial_polarity first_child
 
 
 

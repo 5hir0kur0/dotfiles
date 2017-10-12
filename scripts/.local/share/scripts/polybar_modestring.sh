@@ -15,6 +15,8 @@ while read -r LINE; do
         MODE=
     elif [[ "$LINE" =~ ^BBegin\ chain ]]; then
         find_docstring "${PREV#H}"
+    elif [[ "$LINE" =~ ^H[^\;]+\;[^\;0-9]+$ ]]; then
+        find_docstring "${LINE#H}"
     fi
     if [[ "$MODE" != "$MODE_PREV" ]]; then
         echo "$MODE"

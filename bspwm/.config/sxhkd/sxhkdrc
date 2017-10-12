@@ -16,6 +16,52 @@ super + ctrl + Return
 ctrl + alt + l
         exit.sh lock; xset dpms force off
 
+# hack for "nested" modes
+# MODE: extended: (w)allpaper, (b)ookmark, (s)crot, num + num -> set volume
+# super + x
+
+# note that this doesn't seem to work when using {n,p}
+# MODE: wallpaper: (n)ext, (p)revious
+super + x ; w : n
+        set_wallpaper.sh
+super + x ; w : p
+        set_wallpaper.sh pop
+
+# bookmarks
+super + x ; b
+        rofibookmarks.sh
+
+# set volume to specific value
+super + x ; {0-9} ; {0-9}
+        pulse.sh set {0-9}{0-9}
+
+# scrot
+# MODE: scrot: (w)indow, (e)verything, (s)election; shift -> 3s delay; ctrl -> copy to clipboard (nosave)
+super + x ; s ; w
+        screenshot.sh --action=window --show
+super + x ; s ; e
+        screenshot.sh --action=whole --show
+super + x ; s ; s
+        sleep 0.2; screenshot.sh --action=select --show
+super + x ; s ; shift + w
+        screenshot.sh --action=window --show --delay=3
+super + x ; s ; shift + e
+        screenshot.sh --action=whole --show --delay=3
+super + x ; s ; shift + s
+        sleep 3; screenshot.sh --action=select --show
+super + x ; s ; ctrl + w
+        screenshot.sh --action=window --clip --no-save --show
+super + x ; s ; ctrl + e
+        screenshot.sh --action=whole --clip --no-save --show
+super + x ; s ; ctrl + s
+        sleep 0.2; screenshot.sh --action=select --clip --no-save --show
+super + x ; s ; ctrl + shift + w
+        screenshot.sh --action=window --clip --delay=3 --no-save
+super + x ; s ; ctrl + shift + e
+        screenshot.sh --action=whole --clip --delay=3 --no-save
+super + x ; s ; ctrl + shift + s
+        sleep 3; screenshot.sh --action=select --clip --no-save
+
 # center focused floating window on screen
 super + shift + z
         center_window.sh
@@ -209,7 +255,7 @@ super + shift + {h,j,k,l}
         bspc node -v $\{ACTIONS11[$INDEX]\} $\{ACTIONS12[$INDEX]\} || \
         bspc node -s "$\{ACTIONS2[$INDEX]\}"
 
-# transplant node
+# MODE: transplant node: h,j,k,l
 super + z; {h,j,k,l}
         bspc node -n {west,south,north,east}
 
