@@ -3,7 +3,7 @@
 set -u -o pipefail
 shopt -s nocasematch
 
-BROWSER='firefox'
+BROWSER='chromium'
 BROWSER_CLASSES='chromium|firefox|tor browser|navigator'
 
 # call with id property_name
