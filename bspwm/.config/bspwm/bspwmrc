@@ -41,7 +41,7 @@ setxkbmap -option caps:swapescape &
 
 pgrep -x polybar || polybar bspwm &
 pgrep -x nm-applet || (sleep 0.1; nm-applet) &
-pgrep -x redshift || (sleep 0.1; redshift) &
+pgrep -x redshift-gtk || (sleep 0.1; redshift-gtk) &
 pgrep -x keynav || (sleep 0.9; keynav) &
 pgrep -x dunst || dunst &
 pgrep -x xautolock || (sleep 10; xautolock -time 42 -locker "$HOME/.local/share/scripts/exit.sh lock") &

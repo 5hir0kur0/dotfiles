@@ -317,6 +317,10 @@ super + shift + {o,i}
 super + {_,shift + }{1-9,0}
         bspc {desktop -f,node -d} '^{1-9,10}'
 
+# focus or send to last desktop
+super + {_, shift + } Tab
+        bspc {desktop -f,node -d} last
+
 #
 # preselect
 #
