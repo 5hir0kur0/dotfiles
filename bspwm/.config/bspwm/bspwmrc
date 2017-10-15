@@ -20,7 +20,7 @@ bspc config borderless_monocle        false
 bspc config gapless_monocle           false
 bspc config paddingless_monocle       false
 bspc config focus_follows_pointer     true
-bspc config pointer_follows_focus     true
+bspc config pointer_follows_focus     false # makes the cursor appear all the time even when unclutter is running
 bspc config pointer_modifier          mod4 # super
 bspc config pointer_action1           move
 bspc config pointer_action2           resize_side
@@ -49,8 +49,9 @@ pgrep -x nm-applet || (sleep 0.1; nm-applet) &
 pgrep -x redshift-gtk || (sleep 0.1; redshift-gtk) &
 pgrep -x keynav || (sleep 0.9; keynav) &
 pgrep -x dunst || dunst &
-pgrep -x xautolock || (sleep 10; xautolock -time 42 -locker "$HOME/.local/share/scripts/exit.sh lock") &
-pgrep -x udiskie || (sleep 1 && udiskie --use-udisks2 --no-automount --smart-tray) &
+pgrep -x xautolock || (sleep 10; xautolock -time 10 -locker "$HOME/.local/share/scripts/exit.sh lock") &
+pgrep -x udiskie || (sleep 1; udiskie --use-udisks2 --no-automount --smart-tray) &
+pgrep -x unclutter || (sleep 5; unclutter -noevents -root -idle 8) &
 
 xrdb -merge ~/.Xresources &
 
