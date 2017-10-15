@@ -287,7 +287,7 @@ super + ctrl + space
 
 # focus the next/previous desktop on the current monitor
 super + {p,n}
-        bspc desktop -f {prev,next}.local
+        bspc desktop -f {prev,next}.local && bspwm_workspace.sh reset
 
 # move node to the next/previous desktop on the current monitor
 super + shift + {p,n}
@@ -295,7 +295,7 @@ super + shift + {p,n}
 
 # focus next/previous desktop on any monitor
 super + {_,ctrl} + m
-        bspc desktop -f {next,prev}
+        bspc desktop -f {next,prev} && bspwm_workspace.sh reset
 
 # move node to next/previous desktop
 super + shift + {_,ctrl} + m
@@ -315,7 +315,10 @@ super + shift + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-        bspc {desktop -f,node -d} '^{1-9,10}'
+        bspwm_workspace.sh {switch,move} '{1-9,10}'
+
+super + {_, shift + }c
+        bspwm_workspace.sh {switch,move}_new
 
 # focus or send to last desktop
 super + {_, shift + } Tab
