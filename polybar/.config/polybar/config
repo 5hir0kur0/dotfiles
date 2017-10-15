@@ -45,13 +45,13 @@ module-margin-right = 1
 font-0 = gohu gohufont:pixelsize=13;1
 font-1 = unifont:fontformat=truetype:size=11:antialias=false;1
 font-2 = wuncon siji:pixelsize=13;1
-font-3 = InconsolataGo Nerd Font:fontformat=truetype;pixelsize=13;1
+font-3 = InconsolataGo Nerd Font:fontformat=truetype;pixelsize=13;3
 font-4 = Sans:pixelsize=13:fontformat=truetype;4
 
 modules-left = showmode bspwm
 modules-center = title
 ;modules-right = filesystem xbacklight volume xkeyboard memory cpu battery temperature date
-modules-right = filesystem backlight-acpi volume xkeyboard memory cpu battery temperature date
+modules-right = filesystem backlight-acpi volume memory cpu battery temperature date
 
 tray-position = right
 tray-padding = 1
