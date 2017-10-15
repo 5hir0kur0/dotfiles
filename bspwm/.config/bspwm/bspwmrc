@@ -1,11 +1,15 @@
-#! /bin/sh
+#!/bin/bash
 
 [ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
 pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
 
-bspc subscribe monitor >> /tmp/monitorinfo &
+bspc monitor -d 0
 
-bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+(
+    bspc subscribe monitor | while read -r LINE; do 
+        grep '^monitor_geometry' <<< "$LINE" && bspwm_workspace.sh switch_new
+    done
+)&
 
 # config
 
@@ -32,12 +36,13 @@ bspc config directional_focus_tightness low # test
 bspc config initial_polarity first_child
 
 
-
 # init
 
 set_wallpaper.sh &
 
 setxkbmap -option caps:swapescape &
+
+xsetroot -cursor_name left_ptr &
 
 pgrep -x polybar || polybar bspwm &
 pgrep -x nm-applet || (sleep 0.1; nm-applet) &
