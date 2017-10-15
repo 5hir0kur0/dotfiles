@@ -17,8 +17,10 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (w)allpaper, (b)ookmark, (s)crot, num + num -> set volume
+# MODE: extended: (B)ash, (b)ookmark, (m)an, (p)ython, (q)alc, (s)crot, (t)erm-open, (w)allpaper, (x)dg-open, num + num -> set volume
 # super + x
+# MODE: toggles: (b)ar, (m)ouse
+# super + shift + x
 
 # note that this doesn't seem to work when using {n,p}
 # MODE: wallpaper: (n)ext, (p)revious
@@ -34,6 +36,30 @@ super + x ; b
 # set volume to specific value
 super + x ; {0-9} ; {0-9}
         pulse.sh set {0-9}{0-9}
+
+# xdg-open
+super + x ; x
+        rofilocate.sh xdg
+
+# open in terminal
+super + x ; t
+        rofilocate.sh term
+
+# man page
+super + x ; m
+        rofiman.sh
+
+# calculator
+super + x ; q
+        rofiinteractive.sh qalc
+
+# python
+super + x ; p
+        rofiinteractive.sh python
+
+# bash
+super + x ; shift + b
+        rofiinteractive.sh bash
 
 # scrot
 # MODE: scrot: (w)indow, (e)verything, (s)election; shift -> 3s delay; ctrl -> copy to clipboard (nosave)
@@ -61,6 +87,28 @@ super + x ; s ; ctrl + shift + e
         screenshot.sh --action=whole --clip --delay=3 --no-save
 super + x ; s ; ctrl + shift + s
         sleep 3; screenshot.sh --action=select --clip --no-save
+
+Print
+        screenshot.sh --action=whole
+
+ctrl + Print
+        sleep 0.2; screenshot.sh --action=select
+
+shift + Print
+        screenshot.sh --action=window
+
+# fetch window
+super + shift + f
+        rofifetch.sh
+
+# toggle polybar
+super + shift + x ; b
+        pgrep -x polybar && killall polybar && bspc config top_padding 0 \
+        && bspc config bottom_padding 0 || polybar bspwm
+
+# toggle mouse
+super + shift + x ; m
+        mouse_action.sh toggle
 
 # center focused floating window on screen
 super + shift + z
@@ -109,6 +157,12 @@ XF86AudioLowerVolume
 
 XF86AudioMute
         pulse.sh mute
+
+ctrl + XF86AudioRaiseVolume
+        pulse.sh up 1
+
+ctrl + XF86AudioLowerVolume
+        pulse.sh down 1
 
 super + F12
         pulse.sh up
@@ -173,10 +227,6 @@ super + q
 # bspwm hotkeys
 #
 
-# quit bspwm normally TODO
-super + alt + Escape
-        bspc quit
-
 # close and kill
 super + {shift,ctrl} + q
         bspc node -{c,k}
@@ -203,23 +253,23 @@ super + shift + b
 super + ctrl + shift + b
         bspc config border_width $(( ( $(bspc config border_width) + 1 ) % 6))
 
+# change border width
 super + ctrl + {button4,button5}
         BORDER=$(( $(bspc config border_width) {+,-} 1 )); \
         if [ "$BORDER" -le 0 ]; then \
             bspc config border_width  0; \
-        else; \
+        else \
             bspc config border_width "$BORDER"; \
         fi
 
+# change window gap
 super + shift + {button4,button5}
         GAP=$(( $(bspc config window_gap) {+,-} 1 )); \
         if [ "$GAP" -le 0 ]; then \
             bspc config window_gap  0; \
-        else; \
+        else \
             bspc config window_gap "$GAP"; \
         fi
-
-# TODO toggle bar (in some mode)
 
 #
 # state/flags
@@ -317,8 +367,18 @@ super + shift + {o,i}
 super + {_,shift + }{1-9,0}
         bspwm_workspace.sh {switch,move} '{1-9,10}'
 
+# create new numeric workspace / move node to new numeric workspace
 super + {_, shift + }c
         bspwm_workspace.sh {switch,move}_new
+
+# non-numeric workspaces
+super {_,shift +} d
+        bspwm_workspace.sh {switch,move}_rofi
+
+# rename workspace
+super + alt + r
+        bspc desktop -n "$(rofi -p 'rename:' -dmenu < /dev/null)"; \
+        bspwm_workspace.sh reset
 
 # focus or send to last desktop
 super + {_, shift + } Tab
@@ -362,7 +422,7 @@ super + alt + shift + {h,j,k,l}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-        bspc node -v {-20 0,0 20,0 -20,20 0}
+        bspc node -v {-50 0,0 50,0 -50,50 0}
 
 
 #
