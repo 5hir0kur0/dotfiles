@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # add your mouse regexes here
-MOUSE_DEVICES=(^.*laser[[:space:]]*mouse.*$)
+MOUSE_DEVICES=(^.*laser[[:space:]]*mouse.*$ touchpad)
 
 # comment this out if you want case-sensitive matching
 shopt -s nocasematch
