@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO remove this later
+set -x
+exec 1>/tmp/debllog 2>&1
+
 [ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
 pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
 
@@ -7,7 +11,9 @@ bspc monitor -d 0
 
 (
     bspc subscribe monitor | while read -r LINE; do 
-        grep '^monitor_geometry' <<< "$LINE" && bspwm_workspace.sh switch_new
+    grep '^monitor_geometry' <<< "$LINE" \
+        && bspc monitor -f "$(tr s ' ' <<< "$LINE" | cut -f2 -d' ')" \
+        && bspwm_workspace.sh switch_new
     done
 )&
 

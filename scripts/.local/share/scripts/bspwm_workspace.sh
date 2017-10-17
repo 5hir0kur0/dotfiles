@@ -42,7 +42,7 @@ move_to() {
 }
 
 reorder() {
-    readarray -t DESKTOPS < <(bspc query --names -D -d -m focused | sort)
+    readarray -t DESKTOPS < <(bspc query --names -D -m focused | sort -fV)
     bspc monitor -o "${DESKTOPS[@]}"
 }
 
