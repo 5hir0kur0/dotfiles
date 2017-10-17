@@ -99,7 +99,7 @@ shift + Print
 
 # fetch window
 super + shift + f
-        rofifetch.sh
+        rofifetch.sh; bspwm_workspace.sh reset
 
 # toggle polybar
 super + shift + x ; b
@@ -380,7 +380,7 @@ super + alt + r
         bspc desktop -n "$(rofi -p 'rename:' -dmenu < /dev/null)"; \
         bspwm_workspace.sh reset
 
-# focus or send to last desktop
+# focus or send to last focused desktop
 super + {_, shift + } Tab
         bspc {desktop -f,node -d} last
 
@@ -399,10 +399,6 @@ super + ctrl + {1-9}
 # cancel the preselection for the focused node
 super + ctrl + c
         bspc node -p cancel
-
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-        bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
 # move/resize
