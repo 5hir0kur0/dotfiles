@@ -10,7 +10,6 @@ function run_rofi {
         rofi -dmenu -no-custom -no-click-to-exit -sync -$2auto-select \
              -case-sensitive -lines 1 -no-show-match -filter ':' \
              -p 'type a letter or escape' -columns "${#LINES[@]}" \
-             -color-normal '#282828, #ebdbb2, #282828, #282828, #ebdbb2' \
              -hide-scrollbar -mesg "$1"
 }
 
