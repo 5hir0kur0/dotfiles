@@ -126,8 +126,8 @@ function up() {
 
 function weather() {
     LOC=${1:-$(head -1 ~/.local/share/.location)}
-    curl --insecure --silent "https://wttr.in/$LOC?q" \
-	| grep -E '^\s*┌|│|└' --color=never
+    curl --insecure --silent "https://wttr.in/$LOC?q" #\
+	# | grep -E '^\s*┌|│|└' --color=never
 }
 
 alias wttr=weather
