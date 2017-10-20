@@ -17,6 +17,13 @@ foreground-alt = #a89984
 primary = #ffb52a
 secondary = #e60053
 alert = #cc241d
+red = #cc241d
+green = #98971a
+yellow = #d79921
+blue = #458588
+purple = #b16286
+aqua = #689d6a
+gray = #a89984
 
 [bar/bspwm]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -39,7 +46,7 @@ border-color = #00000000
 padding-left = 0
 padding-right = 1
 
-module-margin-left = 1
+module-margin-left = 0
 module-margin-right = 1
 
 font-0 = gohu gohufont:pixelsize=13;1
@@ -48,7 +55,7 @@ font-2 = wuncon siji:pixelsize=13;1
 font-3 = InconsolataGo Nerd Font:fontformat=truetype;pixelsize=13;3
 font-4 = Sans:pixelsize=13:fontformat=truetype;4
 
-modules-left = showmode bspwm
+modules-left = showmode bspwm bspwmmode
 modules-center = title
 ;modules-right = filesystem xbacklight volume xkeyboard memory cpu battery temperature date
 modules-right = filesystem backlight-acpi volume memory cpu battery temperature date
@@ -106,8 +113,27 @@ label-mounted = %{F#0a81f5}~%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
+[module/bspwmmode]
+type = internal/bspwm
+format = [<label-mode>]
+label-monocle = O
+label-monocle-foreground = ${colors.purple}
+label-tiled =
+label-fullscreen = F
+label-fullscreen-background = ${colors.alert}
+label-floating = ^
+label-pseudotiled = ~
+label-locked = ?
+label-locked-foreground = ${colors.red}
+label-sticky = $
+label-private = %
+label-private-foreground = ${colors.yellow}
+margin = 0
+
 [module/bspwm]
 type = internal/bspwm
+
+format = <label-state>
 
 label-focused = %name%
 label-focused-background = ${colors.background-alt}
