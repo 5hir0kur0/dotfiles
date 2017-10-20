@@ -98,7 +98,7 @@ shift + Print
         screenshot.sh --action=window
 
 # fetch window
-super + shift + f
+super + shift + v
         rofifetch.sh; bspwm_workspace.sh reset
 
 # toggle polybar
@@ -435,6 +435,10 @@ super + ctrl + f
 super + ctrl + r
         bspc query -N -n .leaf.focused.local && bspc node @/ --rotate 90 || \
         bspc node --rotate 90
+
+super + shift + ctrl + r
+        bspc query -N -n .leaf.focused.local && bspc node @/ --rotate 270 || \
+        bspc node --rotate 270
 
 super + ctrl + e
         bspc query -N -n .leaf.focused.local && bspc node @/ --equalize || \
