@@ -8,6 +8,9 @@
 UPPER_VOLUME_LIMIT=100 # the volume won't go above this limit
 LOWER_VOLUME_LIMIT=0   # the volume won't go below this limit; has to be >= 0
 
+# no idea if this works
+export LC_ALL=C
+
 default_sink() {
     pactl info | grep 'Default Sink:' | cut -f3 -d' '
 }
@@ -147,6 +150,11 @@ toggle_notification() {
         -i audio-card
 }
 
+mute_state() {
+    pactl list sinks | grep -FA10 "$(default_sink)" \
+        | grep -F 'Mute:' | rev | cut -d' ' -f1 | rev
+}
+
 case "$1" in
     set)
         set_volume "$2"
@@ -169,8 +177,12 @@ case "$1" in
         volume_notification
         ;;
     mute)
-        # TODO: add mute notification
-        pactl set-sink-mute "$(default_sink)" toggle
+        BEFORE_STATE="$(mute_state)"
+        pactl set-sink-mute "$(default_sink)" ${2:-toggle}
+        AFTER_STATE="$(mute_state)"
+        if [[ "$BEFORE_STATE" != "$AFTER_STATE" ]]; then
+            notify-send -u low "Mute: $AFTER_STATE"
+        fi
         ;;
     toggle)
         toggle_default_sink_and_move_inputs
