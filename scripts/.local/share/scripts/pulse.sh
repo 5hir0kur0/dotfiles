@@ -141,7 +141,7 @@ move_inputs_to_default() {
 }
 
 volume_notification() {
-    notify-send -u low -h "int:value:$(get_volume)" volume
+    notify-send -u low -i stock_volume -h "int:value:$(get_volume)" 'volume: %n%'
 }
 
 toggle_notification() {
@@ -181,7 +181,11 @@ case "$1" in
         pactl set-sink-mute "$(default_sink)" ${2:-toggle}
         AFTER_STATE="$(mute_state)"
         if [[ "$BEFORE_STATE" != "$AFTER_STATE" ]]; then
-            notify-send -u low "Mute: $AFTER_STATE"
+            if [[ "$AFTER_STATE" == "no" ]]; then
+                notify-send -u low -i stock_volume "mute: $AFTER_STATE"
+            else
+                notify-send -u low -i stock_volume-mute "mute: $AFTER_STATE"
+            fi
         fi
         ;;
     toggle)
