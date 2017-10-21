@@ -1,6 +1,10 @@
 [global]
     font = "Inconsolata 10"
 
+    # frame
+    frame_width = 2
+    frame_color = "#504945"
+
     # Allow a small subset of html markup:
     #   <b>bold</b>
     #   <i>italic</i>
@@ -11,7 +15,7 @@
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the
     # message.
-    allow_markup = yes
+    markup = full
 
     # The format of the message.  Possible variables are:
     #   %a  appname
@@ -65,7 +69,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300-10+10"
+    geometry = "300-10+40"
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -74,7 +78,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 0
+    transparency = 12
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -103,8 +107,6 @@
 
     # Maximum amount of notifications kept in history
     history_length = 42
-
-    # TODO: use history_ignore to exclude volume notifications from history
 
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
@@ -148,7 +150,8 @@
     icon_position = left
 
     # Paths to default icons.
-    icon_paths = /usr/share/icons/breeze-dark/devices/16/:/usr/share/icons/breeze-dark/apps/16/:/usr/share/icons/breeze-dark/status/16/:/usr/share/icons/breeze-dark/categories/16/:/usr/share/icons/breeze-dark/places/16/
+    #icon_folders = /usr/share/icons/breeze-dark/devices/16/:/usr/share/icons/breeze-dark/apps/16/:/usr/share/icons/breeze-dark/status/16/:/usr/share/icons/breeze-dark/categories/16/:/usr/share/icons/breeze-dark/places/16/
+    icon_folders = "/usr/share/icons/Arc/panel/22/:/usr/share/icons/Arc/actions/22/:/usr/share/icons/Arc/apps/22/:/usr/share/icons/Arc/devices/22/:/usr/share/icons/Arc/status/22/:/usr/share/icons/Arc/emblems/22/:/usr/share/icons/Arc/places/22/:/usr/share/icons/Arc/categories/22/"
 
 [shortcuts]
 
@@ -173,23 +176,20 @@
 
 ## Theme
 
-[frame]
-    width = 1
-    color = "#525252"
-
 [urgency_low]
-    background = "#252525"
-    foreground = "#E3C7AF"
+    background = "#282828"
+    foreground = "#d5c4a1"
     timeout = 5
 
 [urgency_normal]
-    background = "#252525"
-    foreground = "#B9B9B9"
+    background = "#282828"
+    foreground = "#ebdbb2"
     timeout = 20
 
 [urgency_critical]
-    background = "#252525"
-    foreground = "#C38418"
+    background = "#1d2021"
+    foreground = "#fbf1c7"
+    frame_color = "#cc241d"
     timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to
@@ -243,5 +243,20 @@
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
-#
+
+[notifysend]
+    appname = notify-send
+    format = "<b>%s %p</b>\n%b"
+
+[volume]
+    appname = notify-send
+    summary = *volume*
+    format = "<b>%s</b>\n%b"
+    history_ignore = yes
+
+[volume-mute]
+    appname = notify-send
+    summary = *mute*
+    history_ignore = yes
+
 # vim: ft=cfg
