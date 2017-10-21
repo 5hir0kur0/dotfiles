@@ -16,7 +16,7 @@ if [ ! -d "$TMPD/$PROG" ]; then
     mkdir "$TMPD/$PROG"
     touch "$TMPD/$PROG/in"
     # please, someone forgive me for this...
-    tail -f "$INPUT" | script --quiet --return --command "$PROG 1>> $OUTPUT 2>&1" "$TMPD/script" &
+    tail -f --pid=$$ "$INPUT" | script --quiet --return --command "$PROG 1>> $OUTPUT 2>&1" "$TMPD/script" &
     PID=$!
     echo "$PID" > "$TMPD/$PROG/pid"
     echo "STARTED: $PID"
