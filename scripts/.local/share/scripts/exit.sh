@@ -7,6 +7,7 @@ set -u
 LOCK_SCRIPT=~/.local/share/scripts/pixel_screenshot_lock.sh
 KILL_SCRIPT=~/.local/share/scripts/kill.sh
 NAGSCRIPT=~/.local/share/scripts/rofinag.sh
+PULSESCRIPT=~/.local/share/scripts/pulse.sh
 LC_ALL=C
 
 lock() {
@@ -211,25 +212,33 @@ case "$1" in
         my_logout
         ;;
     suspend)
+        $PULSESCRIPT mute 1
         lock; my_suspend
         ;;
     hybrid_sleep)
+        $PULSESCRIPT mute 1
         lock; my_hybrid_sleep
         ;;
     hibernate)
+        $PULSESCRIPT mute 1
         lock; my_hibernate
         ;;
+# in the following cases the audio should only be muted, if the operatoin fails
     reboot)
         kill_apps; my_reboot
+        $PULSESCRIPT mute 1
         ;;
     reboot_force)
         my_reboot
+        $PULSESCRIPT mute 1
         ;;
     shutdown)
         kill_apps; my_shutdown
+        $PULSESCRIPT mute 1
         ;;
     shutdown_force)
         my_shutdown
+        $PULSESCRIPT mute 1
         ;;
     list_windows)
         list_windows
