@@ -17,7 +17,7 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (B)ash, (b)ookmark, (m)an, (p)ython, (q)alc, (s)crot, (t)erm-open, (w)allpaper, (x)dg-open, num + num -> set volume
+# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (s)crot, (t)erm-open, (w)allp., (x)dg-open, num + num -> set volume
 # super + x
 # MODE: toggles: (b)ar, (m)ouse
 # super + shift + x
@@ -50,7 +50,7 @@ super + x ; m
         rofiman.sh
 
 # calculator
-super + x ; q
+super + x ; c
         rofiinteractive.sh qalc
 
 # python
@@ -119,7 +119,7 @@ super + shift + z
         pgrep -x fcitx || fcitx -d
 
 # program launcher (rofi)
-super + {_,alt +} @space
+super + {_,alt +} space
         rofi -show {drun,run}
 
 # window list (rofi)
@@ -195,7 +195,7 @@ super + F9
 
 # power management
 super + F4
-        exit.sh shutdown
+        exit.sh hibernate
 
 super + F1
         exit.sh suspend
