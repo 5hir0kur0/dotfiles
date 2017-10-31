@@ -12,6 +12,7 @@ alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
 alias mv='mv -iv'
 alias rm='rm -Iv --one-file-system'
+alias cp='cp --reflink=auto -iv'
 alias vim=nvim
 alias v=nvim
 
@@ -52,6 +53,18 @@ function lqd() {
 
 function lqqd() {
     ( $@ ) >& /dev/null & disown
+}
+
+function qo() {
+    for FILE in $@; do
+        lqd xdg-open $FILE
+    done
+}
+
+function qqo() {
+    for FILE in $@; do
+        lqqd xdg-open $FILE
+    done
 }
 
 # TODO: make this work with multiple pids
@@ -144,4 +157,9 @@ function counttypes() {
 
 function brokenlinks() {
     find ${*:-.} -type l -print | perl -nle '-e || print'
+}
+
+function lpdf() {
+    latexmk -pdf ${1:?missing file name}
+    latexmk -c
 }
