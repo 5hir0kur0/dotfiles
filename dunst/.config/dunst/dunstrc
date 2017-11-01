@@ -149,6 +149,9 @@
     # Align icons left/right/off
     icon_position = left
 
+    # Scale larger icons down to this size, set to 0 to disable
+    max_icon_size = 32
+
     # Paths to default icons.
     #icon_folders = /usr/share/icons/breeze-dark/devices/16/:/usr/share/icons/breeze-dark/apps/16/:/usr/share/icons/breeze-dark/status/16/:/usr/share/icons/breeze-dark/categories/16/:/usr/share/icons/breeze-dark/places/16/
     icon_folders = "/usr/share/icons/Arc/panel/22/:/usr/share/icons/Arc/actions/22/:/usr/share/icons/Arc/apps/22/:/usr/share/icons/Arc/devices/22/:/usr/share/icons/Arc/status/22/:/usr/share/icons/Arc/emblems/22/:/usr/share/icons/Arc/places/22/:/usr/share/icons/Arc/categories/22/"
