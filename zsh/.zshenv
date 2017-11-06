@@ -163,3 +163,8 @@ function lpdf() {
     latexmk -pdf ${1:?missing file name}
     latexmk -c
 }
+
+function llpdf() {
+    latexmk -lualatex ${1:?missing file name}
+    latexmk -c
+}
