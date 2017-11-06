@@ -1,16 +1,15 @@
-#include "/usr/share/rofi/themes//android_notification.theme"
-rofi.modi:                           drun,window,run,ssh,qlc:qalc +u8
+rofi.modi:                           drun,window,run,ssh
 ! set the modi to combine in combi mode
 rofi.combi-modi:                     drun,window,run,ssh
 rofi.width:                          60
 rofi.lines:                          12
 ! rofi.bw:                             1
 ! rofi.columns:                        1
-rofi.font:                           inconsolata 12
+rofi.font:                           gohu gohufont 10
 rofi.location:                       2
 rofi.padding:                        4
 ! offset relative to "location" (needs to be changed if location changes)
-rofi.yoffset:                        10
+rofi.yoffset:                        40
 ! rofi.xoffset:                        0
 ! always show number of lines
 rofi.fixed-num-lines:                false
@@ -178,3 +177,4 @@ rofi.display-combi:                  com
 ! color scheme window
 ! rofi.color-window:                   #fdf6e3,#002b36
 ! vi: ft=xdefaults
+rofi.theme: /usr/share/rofi/themes/gruvbox-dark.rasi
