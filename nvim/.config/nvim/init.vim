@@ -122,11 +122,15 @@ nnoremap <silent> <C-p> <C-y>k
 inoremap <silent> <C-c> <Esc><Esc>
 
 " avoid <esc> delay
-noremap <Esc> <Esc><Esc>
+noremap <silent> <Esc> <Esc><Esc>
 
 " switch tabs faster
-noremap <Tab> gt
-noremap <S-Tab> gT
+noremap <silent> <Tab> gt
+noremap <silent> <S-Tab> gT
+
+" save from insert mode
+inoremap <silent> <C-s> <Esc>:update<CR>a
+nnoremap <silent> <C-s> :update<CR>
 
 " use :w!! to force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
@@ -138,6 +142,9 @@ autocmd FileType markdown setlocal spell spelllang=en
 " use man to look up the word below the cursor when K is pressed while editing
 " a shell script
 autocmd FileType sh setlocal keywordprg=man\ -s
+
+" latex files
+autocmd FileType tex setlocal spell
 
 " automatically save the view (cursor position, folds, etc.)
 " (except for the files in blacklist)
@@ -162,12 +169,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
+Plug 'xuhdev/vim-latex-live-preview'
 call plug#end()
 
 " enable filetype detection, enable file-type specific plugin loading, enable
 " file-type specific indentation
 filetype plugin indent on
 
+" use true colors in terminal
 set termguicolors
 
 " enable syntax highlighting
@@ -196,3 +205,6 @@ nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
 
 " gruvbox options
 let g:gruvbox_contrast_dark = 'soft'
+
+" latex-live-preview options
+let g:livepreview_previewer = 'zathura'
