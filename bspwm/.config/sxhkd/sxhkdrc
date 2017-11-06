@@ -17,9 +17,9 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (s)crot, (t)erm-open, (w)allp., (x)dg-open, num + num -> set volume
+# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp., (x)dg-open, num + num -> set volume
 # super + x
-# MODE: toggles: (b)ar, (m)ouse
+# MODE: toggles: (b)ar, (m)ouse, (g)aps
 # super + shift + x
 
 # note that this doesn't seem to work when using {n,p}
@@ -52,6 +52,10 @@ super + x ; m
 # calculator
 super + x ; c
         rofiinteractive.sh qalc
+
+# ranger (using this because w3m images don't seem to work in stterm)
+super + x ; r
+        urxvt -e tmux new-session -A -s ranger ranger
 
 # python
 super + x ; p
@@ -105,6 +109,12 @@ super + shift + v
 super + shift + x ; b
         pgrep -x polybar && killall polybar && bspc config top_padding 0 \
         && bspc config bottom_padding 0 || polybar bspwm
+
+# toggle gaps
+super + shift + x ; g
+        GAP=$(bspc config window_gap); \
+        [ "$GAP" -ne 0 ] && GAP=0 || GAP=16; \
+        bspc config window_gap "$GAP"
 
 # toggle mouse
 super + shift + x ; m
