@@ -76,7 +76,7 @@ fi
 [[ -f ~/.profile ]] && . ~/.profile
 
 # use syntax highlighting (needs community/zsh-syntax-highlighting)
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+{source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh} 2>/dev/null
 
 # cd automatically when typing just the directory name (e.g. "$ /tmp<CR>"
 setopt autocd
