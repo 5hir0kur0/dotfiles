@@ -23,6 +23,7 @@ cmatrix
 compton
 coreutils
 create_ap
+curl
 dhcpcd
 diffutils
 dosfstools
