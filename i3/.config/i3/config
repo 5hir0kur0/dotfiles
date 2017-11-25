@@ -460,7 +460,7 @@ bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-bindsym $mod+Ctrl+c move position center
+bindsym $mod+shift+z move position center
 
 # center cursor in focused window
 bindsym $mod+z exec --no-startup-id $centerscript
