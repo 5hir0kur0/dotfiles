@@ -20,6 +20,7 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
 alias less='less -FX'
+alias c='less'
 
 alias hcat="highlight --force -O ansi"
 
