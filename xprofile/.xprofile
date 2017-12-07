@@ -10,6 +10,9 @@ export XMODIFIERS=@im=fcitx
 export GTK2_RC_FILES=~/.gtkrc-2.0
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+# fix java in bspwm
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 export DISPLAY=:0
 
 setxkbmap -option caps:swapescape
