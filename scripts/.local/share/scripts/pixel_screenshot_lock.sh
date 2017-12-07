@@ -17,4 +17,4 @@ mogrify -scale 10% -scale 1000% \
 
 i3lock -i /tmp/.screen_locked.png -e --radius 210 --datestr='%F' -k \
     --datesize=21 --timesize=42 --timefont=Inconsolata --datefont=Inconsolata \
-    --indicator "${colors[@]}"
+    --indicator --refresh-rate=1 --veriftext="..." --wrongtext="-_-" "${colors[@]}"
