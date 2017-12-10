@@ -23,6 +23,7 @@ set $centerscript ~/.local/share/scripts/center_cursor.sh
 set $comptonscript ~/.local/share/scripts/compton.sh
 set $entiresplitscript ~/.local/share/scripts/i3_splitentire.sh
 set $exitscript ~/.local/share/scripts/exit.sh
+set $fetchscript ~/.local/share/scripts/rofifetch.sh
 set $initscript ~/.local/share/scripts/init.sh
 set $manscript ~/.local/share/scripts/rofiman.sh
 set $markscript ~/.local/share/scripts/mark.sh
@@ -461,6 +462,9 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 bindsym $mod+shift+z move position center
+
+# fetch window
+bindsym $mod+shift+v exec --no-startup-id $fetchscript
 
 # center cursor in focused window
 bindsym $mod+z exec --no-startup-id $centerscript
