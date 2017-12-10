@@ -26,5 +26,5 @@ if [[ "$(wm_name)" == bspwm ]]; then
     bspc node "$WINDOW" -d focused
     bspwm_workspace.sh reset
 else
-    wmctrl -R "$WINDOW"
+    wmctrl -i -R "$WINDOW"
 fi
