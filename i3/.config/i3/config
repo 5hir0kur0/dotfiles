@@ -98,11 +98,10 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_open "open: (x)dg, (t)erminal, (s)urfraw, (b)ookmark, (m)anpage, (c/C)alculator, (p/P)ython, (B)ash"
-mode $mode_open {
+set $mode_extended "xtended: (b)ookm., (B)ash, (c/C)alc., (f)ocus, (k) compton, (m)an, (p/P)ython, (s)crot, (t)erm, (w)allp., (x)dg"
+mode $mode_extended {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
-    bindsym s exec --no-startup-id $surfrawscript both, mode "default"
     bindsym b exec --no-startup-id $bookmarkscript, mode "default"
     bindsym m exec --no-startup-id $manscript, mode "default"
     bindsym c exec --no-startup-id rofi -no-sidebar-mode -show qalc -modi "qalc:qalc +u8", mode "default"
@@ -111,10 +110,15 @@ mode $mode_open {
     bindsym Shift+p exec --no-startup-id $rofiinteractivescript python, mode "default"
     bindsym Shift+B exec --no-startup-id $rofiinteractivescript bash, mode "default"
 
+    bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
+    bindsym k mode $mode_compton
+    bindsym s mode $mode_scrot
+    bindsym w mode $mode_wallaper
+
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+o mode $mode_open
+bindsym $mod+x mode $mode_extended
 
 set $mode_focus "FOCUS"
 mode $mode_focus {
@@ -308,19 +312,6 @@ mode $volume_9 {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-
-set $mode_extended "extended: (f)ocus, (c)ompton, (s)crot, (v)olume, (w)allpaper"
-mode $mode_extended {
-    bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
-    bindsym c mode $mode_compton
-    bindsym s mode $mode_scrot
-    bindsym w mode $mode_wallaper
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+x mode $mode_extended
 
 set $mode_mark "mark"
 mode $mode_mark {
