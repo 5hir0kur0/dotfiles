@@ -18,9 +18,10 @@ alias v=nvim
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
+alias -g g='grep'
 
 alias less='less -FX'
-alias c='less'
+alias -g c='less'
 
 alias hcat="highlight --force -O ansi"
 
