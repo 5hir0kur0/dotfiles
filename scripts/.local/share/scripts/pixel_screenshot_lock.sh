@@ -6,7 +6,7 @@ colors=("--textcolor=ebdbb2ff" "--timecolor=ebdbb2ff" "--insidecolor=1d202142" \
         "--ringcolor=665c54aa" "--linecolor=50494542" "--keyhlcolor=a89984aa" \
         "--ringvercolor=bdae93aa" "--separatorcolor=665c54aa" \
         "--insidevercolor=1d2021aa" "--ringwrongcolor=cc241dbb" \
-        "--insidewrongcolor=1d2021aa")
+        "--insidewrongcolor=1d2021aa" "--datecolor=ebdbb2ff")
 
 scrot -q 100 /tmp/.screen_locked.png
 
