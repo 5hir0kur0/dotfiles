@@ -12,7 +12,12 @@ if [ "${1:-}" = 'pop' ] && [ -f $HISTORY ] && \
     WALLPAPER=$(tail -1 $HISTORY)
 else
     WALLPAPERS=(~/pics/wall/*)
-    WALLPAPER=${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}
+    readarray -t WITHOUT_HISTORY < <(printf '%s\n' "${WALLPAPERS[@]}" | cat "$HISTORY" - | sort | uniq -u)
+    if [ "${#WITHOUT_HISTORY[@]}" -ne 0 ]; then
+        WALLPAPER=${WITHOUT_HISTORY[RANDOM % ${#WITHOUT_HISTORY[@]}]}
+    else
+        WALLPAPER=${WALLPAPERS[RANDOM % ${#WALLPAPERS[@]}]}
+    fi
     echo "$WALLPAPER" >> $HISTORY
 fi
 
