@@ -23,7 +23,7 @@ WINDOW_MANAGER=$(determine_wm)
 print_pretty() {
     RES=
     for S in "$@"; do
-        RES="$RES"", “$(xargs <<< "$S")”" # xargs trims whitespace here...
+        RES="$RES"", “$S”"
     done
     echo "${RES#, }"
 }
@@ -33,7 +33,7 @@ list_windows() {
 }
 
 pretty_windows() {
-    readarray WINDOWS < <(list_windows)
+    readarray -t WINDOWS < <(list_windows)
     print_pretty "${WINDOWS[@]}"
 }
 
