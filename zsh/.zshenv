@@ -18,6 +18,8 @@ alias v=nvim
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
+alias wdiff='\dwdiff --color'
+alias dwdiff='wdiff'
 alias -g g='grep'
 
 alias less='less -FX'

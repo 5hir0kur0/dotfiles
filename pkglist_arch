@@ -28,6 +28,7 @@ dhcpcd
 diffutils
 dosfstools
 dunst
+dwdiff
 e2fsprogs
 easytag
 efibootmgr
@@ -61,9 +62,9 @@ hdparm
 highlight
 hostapd
 htop
-i3-wm
 i3lock
 i3status
+i3-wm
 id3
 inetutils
 inkscape
@@ -91,8 +92,8 @@ mtr
 nano
 ncmpcpp
 neovim
-network-manager-applet
 networkmanager
+network-manager-applet
 networkmanager-vpnc
 nmap
 noto-fonts
