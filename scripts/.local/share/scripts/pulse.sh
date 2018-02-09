@@ -141,7 +141,7 @@ move_inputs_to_default() {
 }
 
 volume_notification() {
-    notify-send -u low -i stock_volume -h "int:value:$(get_volume)" 'volume: %n%'
+    notify-send -u low -i stock_volume -h "int:value:$(get_volume)" 'volume:'
 }
 
 toggle_notification() {
