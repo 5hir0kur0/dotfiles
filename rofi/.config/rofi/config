@@ -1,4 +1,4 @@
-rofi.modi:                           drun,window,run,ssh
+rofi.modi:                           drun,run
 ! set the modi to combine in combi mode
 rofi.combi-modi:                     drun,window,run,ssh
 rofi.width:                          60
@@ -33,7 +33,7 @@ rofi.case-sensitive:                 false
 ! cycle through the results list
 rofi.cycle:                          true
 ! enable sidebar-mode
-rofi.sidebar-mode:                   true
+!rofi.sidebar-mode:                   true
 ! row height (in chars)
 ! rofi.eh:                             1
 ! enable auto select mode
@@ -162,12 +162,12 @@ rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
 ! rofi.kb-custom-17:                   Alt+ampersand
 ! rofi.kb-custom-18:                   Alt+asterisk
 ! rofi.kb-custom-19:                   Alt+parenleft
-rofi.display-ssh:                    ssh
-rofi.display-run:                    run
-rofi.display-drun:                   app
-rofi.display-window:                 win
-rofi.display-windowcd:               wcd
-rofi.display-combi:                  com
+rofi.display-ssh:                    ssh:
+rofi.display-run:                    run:
+rofi.display-drun:                   app:
+rofi.display-window:                 win:
+rofi.display-windowcd:               wcd:
+!rofi.display-combi:                  com:
 ! color scheme for normal row
 ! rofi.color-normal:                   #fdf6e3,#002b36,#eee8d5,#586e75,#eee8d5
 ! color scheme for urgent row
