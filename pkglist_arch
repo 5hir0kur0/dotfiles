@@ -9,6 +9,7 @@ audacity
 autojump
 bash-completion
 bc
+bind-tools
 bluedevil
 bluez
 bluez-utils
@@ -62,9 +63,9 @@ hdparm
 highlight
 hostapd
 htop
+i3-wm
 i3lock
 i3status
-i3-wm
 id3
 inetutils
 inkscape
@@ -92,8 +93,8 @@ mtr
 nano
 ncmpcpp
 neovim
-networkmanager
 network-manager-applet
+networkmanager
 networkmanager-vpnc
 nmap
 noto-fonts
