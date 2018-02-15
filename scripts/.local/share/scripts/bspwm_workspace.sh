@@ -1,13 +1,18 @@
 #!/bin/bash
 
+# this fixed an issue of this script creating a new workspace even though
+# it already existed when called non-interactively (e.g. from sxhkd)
+# (no idea why...)
+exec 1>/dev/null 2>&1
+
 set -uo pipefail
 
 list_workspaces() {
-    bspc query -D --names | sort
+    bspc query -D --names | sort | grep -vP '^\s*$'
 }
 
 list_non_numeric_workspaces() {
-    bspc query -D --names | grep -vP '^\d+$' | sort
+    bspc query -D --names | grep -vP '^\d+$' | sort | grep -vP '^\s*$'
 }
 
 list_numeric_workspaces() {
@@ -26,7 +31,6 @@ create_numeric() {
 
 create_if_nonexistent() {
     list_workspaces | grep "^$1\$" || bspc monitor -a "$1"
-    reorder
 }
 
 switch_to() {
@@ -40,7 +44,7 @@ move_to() {
 }
 
 reorder() {
-    readarray -t DESKTOPS < <(bspc query --names -D -m focused | sort -fV)
+    readarray -t DESKTOPS < <(bspc query --names -D -m focused | sort -fV | grep -vP '^\s*$')
     bspc monitor -o "${DESKTOPS[@]}" # doesn't seem to do anything
 }
 
