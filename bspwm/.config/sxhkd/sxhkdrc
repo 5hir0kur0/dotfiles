@@ -17,7 +17,7 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp., (x)dg-open, num + num -> set volume
+# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp., (x)dg-open, (z) move to corners, num + num -> set volume
 # super + x
 # MODE: toggles: (b)ar, (m)ouse, (g)aps
 # super + shift + x
@@ -64,6 +64,21 @@ super + x ; p
 # bash
 super + x ; shift + b
         rofiinteractive.sh bash
+
+# center_window.sh
+# MODE: move to corners: {h,j,k,l} -> {left,bottom,top,right}, {c,z} -> center
+super + x ; z : h
+        center_window.sh left
+super + x ; z : j
+        center_window.sh bottom
+super + x ; z : k
+        center_window.sh top
+super + x ; z : l
+        center_window.sh right
+super + x ; z : z
+        center_window.sh center
+super + x ; z : c
+        center_window.sh center
 
 # scrot
 # MODE: scrot: (w)indow, (e)verything, (s)election; shift -> 3s delay; ctrl -> copy to clipboard (nosave)
@@ -130,11 +145,11 @@ super + shift + z
 
 # program launcher (rofi)
 super + {_,alt +} space
-        rofi -show {drun,run}
+        rofi -show {drun -show-icons,run}
 
 # window list (rofi)
 super + {_,shift +} g
-        rofi -show {window,windowcd}
+        rofi -show {window,windowcd} -show-icons
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -237,6 +252,8 @@ super + q
 # bspwm hotkeys
 #
 
+# TODO: use super + more / super + less to move desktops between monitors
+
 # close and kill
 super + {shift,ctrl} + q
         bspc node -{c,k}
@@ -303,7 +320,8 @@ super + ctrl + {x,s,p}
 
 # focus the node in the given direction
 super + {h,j,k,l}
-        bspc node -f {west,south,north,east}
+        bspc node -f {west,south,north,east} \
+        || bspc node -f {east,north,south,west} 
 
 # swap the node in the given direction or resize floating node
 super + shift + {h,j,k,l}
@@ -330,7 +348,7 @@ super + shift + a
 
 # focus the next/previous node in the current desktop
 super + {_,shift + }r
-        bspc node -f {next,prev}.local
+        bspc node -{f,s} next.local
 
 # switch between / focus floating nodes
 alt + Tab
@@ -375,7 +393,7 @@ super + shift + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-        bspwm_workspace.sh {switch,move} '{1-9,10}'
+        bspwm_workspace.sh {switch,move} {1-9,10}
 
 # create new numeric workspace / move node to new numeric workspace
 super + {_, shift + }c
@@ -417,8 +435,27 @@ super + ctrl + c
 # expand a window by moving one of its side outward or make it smaller if 
 # this isn't possible
 super + alt + {h,j,k,l}
-        ACTION=('left -20 0' 'bottom 0 20' 'top 0 -20' 'right 20 0'); \
-        ALTERNATIVE=('right -20 0' 'top 0 20' 'bottom 0 -20' 'left 20 0'); \
+        ACTION=('right -20 0' 'bottom 0 20' 'bottom 0 -20' 'right 20 0'); \
+        ALTERNATIVE=('left -20 0' 'top 0 20' 'top 0 -20' 'left 20 0'); \
+        INDEX={0,1,2,3}; \
+        bspc node -z $\{ACTION[$INDEX]\} || bspc node -z $\{ALTERNATIVE[$INDEX]\}
+
+# MODE: resize [shift,ctrl] {h,j,k,l}
+super + shift + s : {h,j,k,l}
+        ACTION=('right -10 0' 'bottom 0 10' 'bottom 0 -10' 'right 10 0'); \
+        ALTERNATIVE=('left -10 0' 'top 0 10' 'top 0 -10' 'left 10 0'); \
+        INDEX={0,1,2,3}; \
+        bspc node -z $\{ACTION[$INDEX]\} || bspc node -z $\{ALTERNATIVE[$INDEX]\}
+
+super + shift + s : shift + {h,j,k,l}
+        ACTION=('right -100 0' 'bottom 0 100' 'bottom 0 -100' 'right 100 0'); \
+        ALTERNATIVE=('left -100 0' 'top 0 100' 'top 0 -100' 'left 100 0'); \
+        INDEX={0,1,2,3}; \
+        bspc node -z $\{ACTION[$INDEX]\} || bspc node -z $\{ALTERNATIVE[$INDEX]\}
+
+super + shift + s : ctrl + {h,j,k,l}
+        ACTION=('right -1 0' 'bottom 0 1' 'bottom 0 -1' 'right 1 0'); \
+        ALTERNATIVE=('left -1 0' 'top 0 1' 'top 0 -1' 'left 1 0'); \
         INDEX={0,1,2,3}; \
         bspc node -z $\{ACTION[$INDEX]\} || bspc node -z $\{ALTERNATIVE[$INDEX]\}
 
