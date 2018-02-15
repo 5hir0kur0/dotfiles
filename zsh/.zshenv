@@ -141,6 +141,15 @@ function up() {
     cd $(eval printf '../'%.0s {1.."${1:?}"})
 }
 
+# follow symbolic link
+function lcd() {
+    if [ -f "$1" ]; then
+        cd "${$(readlink -f ${1:?symlink unspecified})%/*}"
+    elif [ -d "$1" ]; then
+        cd "$(readlink -f ${1:?symlink unspecified})"
+    fi
+}
+
 function weather() {
     LOC=${1:-$(head -1 ~/.local/share/.location)}
     curl --insecure --silent "https://wttr.in/$LOC?q" #\
