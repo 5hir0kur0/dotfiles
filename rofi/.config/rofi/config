@@ -167,6 +167,7 @@ rofi.display-run:                    run:
 rofi.display-drun:                   app:
 rofi.display-window:                 win:
 rofi.display-windowcd:               wcd:
+rofi.drun-match-fields:              name,exec,generic,categories,comment
 !rofi.display-combi:                  com:
 ! color scheme for normal row
 ! rofi.color-normal:                   #fdf6e3,#002b36,#eee8d5,#586e75,#eee8d5
