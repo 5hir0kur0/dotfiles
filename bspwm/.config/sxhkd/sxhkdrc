@@ -320,8 +320,11 @@ super + ctrl + {x,s,p}
 
 # focus the node in the given direction
 super + {h,j,k,l}
-        bspc node -f {west,south,north,east} \
-        || bspc node -f {east,north,south,west} 
+        DIRECTIONS=( west south north east ); \
+        ALTERNATIVE=( east north south west ); \
+        INDEX={0,1,2,3}; \
+        bspc node -f $\{DIRECTIONS[$INDEX]\} \
+        || bspc node -f $\{ALTERNATIVE[$INDEX]\}
 
 # swap the node in the given direction or resize floating node
 super + shift + {h,j,k,l}
@@ -352,10 +355,10 @@ super + {_,shift + }r
 
 # switch between / focus floating nodes
 alt + Tab
-        bspc node prev.floating -f
+        bspc node prev.floating -f || bspc node -f prev.local
 
 alt + shift + Tab
-        bspc node next.floating -f
+        bspc node next.floating -f || bspc node -f next.local
 
 super + ctrl + space
          bspc query -N -n .floating.focused.local.leaf && \
