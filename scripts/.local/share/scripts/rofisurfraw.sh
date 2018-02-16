@@ -29,7 +29,7 @@ list_both() {
 
 MSG='(swapped tab and c-space)'
 ROFI_ARGS=" -kb-row-select Tab -kb-row-tab Control+space -dmenu -i \
-    -levenshtein-sort -matching fuzzy"
+    -levenshtein-sort"
 
 # call with list function as first argument
 get_surfraw_url() {
