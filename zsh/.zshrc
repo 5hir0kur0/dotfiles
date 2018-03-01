@@ -17,11 +17,6 @@ bindkey -M vicmd '/' history-incremental-search-backward
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
 
-#autojump
-. /usr/share/autojump/autojump.zsh
-export AUTOJUMP_IGNORE_CASE=1
-#/autojump
-
 autoload -Uz compinit
 compinit
 
@@ -107,3 +102,26 @@ prompt_wrapper() {
   fi
 }
 RPROMPT=$'$(prompt_wrapper)'
+
+
+# fzf
+export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
+export FZF_CTRL_T_OPTS='--preview="/usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
+export FZF_CTRL_R_OPTS='-e'
+source /usr/share/fzf/key-bindings.zsh
+fzf-locate-widget() {
+  local selected
+  if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="/usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
+    if [ -z "$LBUFFER" -a -f "$selected" ]; then
+      LBUFFER="rifle ""'$selected'"
+    else
+      LBUFFER="$LBUFFER""'$selected'"
+    fi
+  fi
+  zle redisplay
+}
+zle -N fzf-locate-widget
+bindkey '^J' fzf-cd-widget
+bindkey '\ei' fzf-locate-widget
+# /fzf
+
