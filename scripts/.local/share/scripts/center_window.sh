@@ -15,15 +15,17 @@ case "$1" in
             "$(( (SCREEN_HEIGHT / 2) - (HEIGHT / 2) ))"
         ;;
     left)
-        xdotool windowmove "$WINDOW" 0 "$Y"
+        xdotool windowmove "$WINDOW" $(( $(bspc config left_padding)  + $(bspc config window_gap) )) "$Y"
         ;;
     right)
-        xdotool windowmove "$WINDOW" "$(( SCREEN_WIDTH - WIDTH ))" "$Y"
+        xdotool windowmove "$WINDOW" "$(( SCREEN_WIDTH - WIDTH - $(bspc config right_padding) \
+            - $(bspc config window_gap) - 2 * $(bspc config border_width) ))" "$Y"
         ;;
     top)
-        xdotool windowmove "$WINDOW" "$X" 0
+        xdotool windowmove "$WINDOW" "$X" $(( $(bspc config top_padding) + $(bspc config window_gap) ))
         ;;
     bottom)
-        xdotool windowmove "$WINDOW" "$X" "$(( SCREEN_HEIGHT - HEIGHT ))"
+        xdotool windowmove "$WINDOW" "$X" "$(( SCREEN_HEIGHT - HEIGHT - $(bspc config window_gap) \
+            - $(bspc config bottom_padding) - 2 * $(bspc config border_width) ))"
         ;;
 esac
