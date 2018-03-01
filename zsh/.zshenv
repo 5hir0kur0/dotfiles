@@ -1,3 +1,42 @@
+# fasd
+export _FASD_DATA=$HOME/.config/.fasd
+fasd_cache="$HOME/.cache/.fasd-init"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+    fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install > "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
+# /fasd
+
+unalias s
+unalias sd
+unalias sf
+unalias d
+unalias f
+unalias z
+
+function my_fasd_cd() {
+    RES=$(fasd -dl "$@")
+    if [ "${#RES}" -ge 2 ]; then
+        cd "$( fzf <<< "$RES" )"
+    else
+        cd "$RES"
+    fi
+}
+
+function fasd_vim() {
+    RES=$(fasd -fl "$@")
+    if [ "${#RES}" -ge 2 ]; then
+        nvim "$( fzf <<< "$RES" )"
+    else
+        nvim "$RES"
+    fi
+}
+
+alias j='fasd_cd -d'
+alias k=my_fasd_cd
+alias vv=fasd_vim
+
 alias ls='ls -q --color=auto'
 alias ll='ls -lh'
 alias la='ls -A'
