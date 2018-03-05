@@ -6,7 +6,6 @@ aspell-de
 aspell-en
 atool
 audacity
-autojump
 bash-completion
 bc
 bind-tools
@@ -37,6 +36,7 @@ elinks
 emacs
 ethtool
 fakeroot
+fasd
 fbreader
 fcitx
 fcitx-configtool
@@ -50,6 +50,7 @@ figlet
 file
 findutils
 firefox
+fzf
 gcc
 gdb
 geogebra
