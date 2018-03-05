@@ -697,9 +697,9 @@ bar {
 }
 
 # rules
-for_window [instance="$scratchclass"] move scratchpad, scratchpad show
+for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show
+for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show
 for_window [instance="$floatingclass"] floating enable
-for_window [class="$scratchclass"] move scratchpad, scratchpad show
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
 for_window [class="mpv"] fullscreen
@@ -717,6 +717,7 @@ for_window [class="$imgviewerclass"]         exec --no-startup-id $markscript i
 for_window [class="$jetbrainsclass" tiling]  exec --no-startup-id $markscript j
 for_window [class="$mediaplayerclass"]                             mark --add m
 for_window [instance="$scratchclass"]        exec --no-startup-id $markscript s
+for_window [class="$scratchclass"]        exec --no-startup-id $markscript s
 for_window [class="$writerclass" tiling]     exec --no-startup-id $markscript w
 # when "class" is used instead of "instance" it also matches the scratchpad
 for_window [instance="$urxvtclass"]          exec --no-startup-id $markscript u
