@@ -4,7 +4,7 @@ set -u
 
 # requires: wmctrl, xdotool
 
-LOCK_SCRIPT=~/.local/share/scripts/pixel_screenshot_lock.sh
+LOCK_SCRIPT=~/.local/share/scripts/blured_screenshot_lock.sh
 KILL_SCRIPT=~/.local/share/scripts/kill.sh
 NAGSCRIPT=~/.local/share/scripts/rofinag.sh
 PULSESCRIPT=~/.local/share/scripts/pulse.sh
