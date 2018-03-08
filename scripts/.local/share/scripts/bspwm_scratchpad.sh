@@ -24,7 +24,13 @@ case "$1" in
         fi
 
         ID=$(xdotool search --class --classname $SCRATCHCLASS | head -1)
+        DESKTOP="$(bspc query -D -d '.focused' -m focused)"
 
+        # turning sticky off before moving the node fixes the problem of the
+        # scratchpad not being moved to a different monitor
+        bspc node "$ID" --flag sticky=off
+        bspc node "$ID" -d "$DESKTOP"
+        bspc node "$ID" --flag sticky=on
         bspc node "$ID" --flag hidden
         bspc node -f "$ID"
         ;;
