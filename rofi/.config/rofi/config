@@ -5,7 +5,7 @@ rofi.width:                          60
 rofi.lines:                          12
 ! rofi.bw:                             1
 ! rofi.columns:                        1
-rofi.font:                           gohu gohufont 10
+rofi.font:                           Inconsolata 16
 rofi.location:                       2
 rofi.padding:                        4
 ! offset relative to "location" (needs to be changed if location changes)
