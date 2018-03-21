@@ -21,6 +21,7 @@ set $zathuraclass (?i)^zathura$
 set $bookmarkscript ~/.local/share/scripts/rofibookmarks.sh
 set $centerscript ~/.local/share/scripts/center_cursor.sh
 set $comptonscript ~/.local/share/scripts/compton.sh
+set $emacsscript ~/.local/share/scripts/toemacs.sh
 set $entiresplitscript ~/.local/share/scripts/i3_splitentire.sh
 set $exitscript ~/.local/share/scripts/exit.sh
 set $fetchscript ~/.local/share/scripts/rofifetch.sh
@@ -442,10 +443,6 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -527,13 +524,17 @@ bindsym $mod+Mod1+r exec --no-startup-id $renameworkspacescript
 
 # switch to next/previous workspace
 bindsym $mod+n workspace next_on_output
-bindsym $mod+Shift+n move workspace next_on_output
 bindsym $mod+p workspace prev_on_output
-bindsym $mod+Shift+p move workspace prev_on_output
 bindsym $mod+m workspace next
 bindsym $mod+Shift+m workspace prev
 bindsym $mod+$mod1+m move workspace next # does not work when I use "Mod1" instead of "$mod1"
 bindsym $mod+Shift+$mod1+m move workspace prev
+
+# focus other monitor
+bindsym $mod+Mod1+n focus output right
+bindsym $mod+Mod1+p focus output left
+bindsym $mod+Shift+Mod1+n move output right
+bindsym $mod+Shift+Mod1+p move output left
 
 # switch to last workspace
 bindsym $mod+Tab workspace back_and_forth
@@ -554,12 +555,8 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
-bindsym $mod+Mod1+n  move container to workspace next_on_output
-bindsym $mod+Mod1+Shift+n move container to workspace prev_on_output
-bindsym $mod+Mod1+p move container to workspace prev_on_output
-bindsym $mod+Mod1+m move container to workspace next
-bindsym $mod+Mod1+Shift+m move container to workspace prev
-bindsym $mod+Mod1+Shift+p move container to workspace prev
+bindsym $mod+Shift+n  move container to workspace next_on_output
+bindsym $mod+Shift+p move container to workspace prev_on_output
 
 # reload the configuration file
 bindsym $mod+Ctrl+r reload
@@ -577,6 +574,10 @@ bindsym $mod+e exec --no-startup-id $scratchscript
 bindsym $mod+ctrl+e [instance="^(?!$scratchclass)"] scratchpad show
 bindsym $mod+u scratchpad show
 bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
+
+# emacs
+bindsym $mod+semicolon exec --no-startup-id $emacsscript
+assign [class="Emacs"] e
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -710,7 +711,7 @@ for_window [class="$ac" tiling title="$at"]                        mark --add a
 #for_window [class="$ankiclass" type="dialog"] unmark a
 for_window [class="$chromeclass"]            exec --no-startup-id $markscript c
 for_window [class="$dolphinclass"]           exec --no-startup-id $markscript d
-for_window [instance="$emacsclass"]          exec --no-startup-id $markscript e
+for_window [class="$emacsclass"]          exec --no-startup-id $markscript e
 for_window [class="$firefoxclass" tiling]    exec --no-startup-id $markscript f
 for_window [class="$gimpclass" tiling]       exec --no-startup-id $markscript g
 for_window [class="$imgviewerclass"]         exec --no-startup-id $markscript i
@@ -732,6 +733,12 @@ bindsym Shift+XF86AudioLowerVolume exec --no-startup-id $pulsescript force_down 
 bindsym ctrl+XF86AudioRaiseVolume exec --no-startup-id $pulsescript up 1
 bindsym ctrl+XF86AudioLowerVolume exec --no-startup-id $pulsescript down 1
 bindsym XF86AudioMute exec --no-startup-id $pulsescript mute
+
+bindsym $mod+Up exec --no-startup-id $pulsescript up
+bindsym $mod+Down exec --no-startup-id $pulsescript down
+bindsym $mod+Ctrl+Up exec --no-startup-id $pulsescript force_up 1
+bindsym $mod+Ctrl+Down exec --no-startup-id $pulsescript force_down 1
+bindsym Scroll_Lock exec --no-startup-id $pulsescript mute
 #does not really work...
 #bindsym XF86AudioPlay exec playerctl play
 #bindsym XF86AudioPause exec playerctl pause
