@@ -162,11 +162,11 @@ rofi.kb-cancel:                      Escape,Control+g,Control+bracketleft
 ! rofi.kb-custom-17:                   Alt+ampersand
 ! rofi.kb-custom-18:                   Alt+asterisk
 ! rofi.kb-custom-19:                   Alt+parenleft
-rofi.display-ssh:                    ssh:
-rofi.display-run:                    run:
-rofi.display-drun:                   app:
-rofi.display-window:                 win:
-rofi.display-windowcd:               wcd:
+rofi.display-ssh:                    ssh
+rofi.display-run:                    run
+rofi.display-drun:                   app
+rofi.display-window:                 win
+rofi.display-windowcd:               wcd
 rofi.drun-match-fields:              name,exec,generic,categories,comment
 !rofi.display-combi:                  com:
 ! color scheme for normal row

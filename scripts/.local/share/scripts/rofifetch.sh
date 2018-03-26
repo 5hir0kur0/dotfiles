@@ -20,7 +20,7 @@ list_windows() {
     wmctrl -l #| grep -vP ".+\s+$(current_desktop)\s+"
 }
 
-WINDOW=$(list_windows | rofi -dmenu -i -p 'fetch:' | cut -f1 -d' ')
+WINDOW=$(list_windows | rofi -dmenu -i -p 'fetch' | cut -f1 -d' ')
 
 if [[ "$(wm_name)" == bspwm ]]; then
     bspc node "$WINDOW" -d focused

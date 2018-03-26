@@ -5,7 +5,6 @@ function join_by { local IFS="$1"; shift; echo "$*"; }
 
 
 function run_rofi {
-    # TODO: don't hardcode the colors
     join_by $'\n' "${LINES[@]}" | \
         rofi -dmenu -no-custom -no-click-to-exit -sync -$2auto-select \
              -case-sensitive -lines 1 -no-show-match -filter ':' \

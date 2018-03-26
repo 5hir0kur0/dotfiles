@@ -7,7 +7,7 @@ list_man_pages() {
 }
 
 get_name() {
-    list_man_pages | rofi -dmenu -i -p 'man:' -matching regex -filter '^'
+    list_man_pages | rofi -dmenu -i -p 'man' -matching regex -filter '^'
 }
 
 TEMP="$(get_name)"

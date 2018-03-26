@@ -44,7 +44,7 @@ while true; do
 
     ROWS=$(wc -l $OUTPUT | cut -f1 -d\ )
     # truncating for some reason causes lots of NUL bytes...
-    ARGS=$(sed 's/\x00//g' < $OUTPUT | rofi -selected-row "$((ROWS-1))" -dmenu -p "$PROG:" \
+    ARGS=$(sed 's/\x00//g' < $OUTPUT | rofi -selected-row "$((ROWS-1))" -dmenu -p "$PROG" \
         -kb-accept-custom Return -kb-accept-entry Control+Return) || break
 done
 
