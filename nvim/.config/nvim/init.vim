@@ -117,6 +117,10 @@ nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>
 nnoremap <silent> <C-n> <C-e>j
 nnoremap <silent> <C-p> <C-y>k
 
+" center cursor after jumping to match TODO keep or discard?
+nnoremap n nzz
+nnoremap N Nzz
+
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
 inoremap <silent> <C-c> <Esc><Esc>
