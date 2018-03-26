@@ -408,7 +408,7 @@ super {_,shift +} d
 
 # rename workspace
 super + alt + r
-        bspc desktop -n "$(rofi -i -p 'rename:' -dmenu < /dev/null)"; \
+        bspc desktop -n "$(rofi -i -p 'rename' -dmenu < /dev/null)"; \
         bspwm_workspace.sh reset
 
 # focus or send to last focused desktop

@@ -6,7 +6,7 @@ list() {
     locate ~ | grep -Ev "/\.\w+|/misc/apps/"
 }
 
-FILENAME="$(list | rofi -levenshtein-sort -dmenu -p 'xdg:' -i)"
+FILENAME="$(list | rofi -levenshtein-sort -dmenu -p 'xdg' -i)"
 
 [ -z "$FILENAME" ] && exit
 

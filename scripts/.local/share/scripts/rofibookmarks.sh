@@ -38,7 +38,7 @@ print_pretty_tags() {
 }
 
 prompt_bookmark() {
-    PRM='bkm:'
+    PRM='bkm'
     if [ -n "${ROW-}" ]; then
         PRINTED="$(print_pretty)"
         NUM_LINES="$(wc -l <<< "$PRINTED")"
@@ -125,9 +125,9 @@ add_bookmark() {
     CLIP="${1-}"
     URL=""
     if [ -n "$CLIP" ]; then
-        URL="$(rofi -dmenu -filter "$CLIP" -p 'add bookmark (url):' < /dev/null)"
+        URL="$(rofi -dmenu -filter "$CLIP" -p 'add bookmark (url)' < /dev/null)"
     else
-        URL="$(rofi -dmenu -p 'add bookmark (url):' < /dev/null)"
+        URL="$(rofi -dmenu -p 'add bookmark (url)' < /dev/null)"
     fi
     if [ -z "$URL" -o $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort adding url $URL
@@ -135,7 +135,7 @@ add_bookmark() {
         return 1
     fi
     N_SUG="$(sed -r 's|^https?://(ww.+\.)?(.+)\..*|\2|' <<< "$URL")"
-    NAME="$(rofi -dmenu -filter "$N_SUG" -p 'add bookmark (name):' < /dev/null)"
+    NAME="$(rofi -dmenu -filter "$N_SUG" -p 'add bookmark (name)' < /dev/null)"
     if [ -z "$NAME" -o $? -ne 0 ] \
         || $SCRIPT_LOCATION --print '%n' | grep -q "$NAME"; then
         rofi -markup -e "<span color='red'>abort adding url $URL with name $NAME
@@ -143,7 +143,7 @@ add_bookmark() {
         exit code of rofi: $?</span>"
         return 1
     fi
-    TAG="$(list_tags | rofi -dmenu -multi-select -p 'add tags:')"
+    TAG="$(list_tags | rofi -dmenu -multi-select -p 'add tags')"
     ECHO=""
     if [ -n "$TAG" ]; then
         TAGS="$(join_by ${TAG[*]})"
@@ -162,11 +162,11 @@ add_bookmark() {
 }
 
 filter_by_tags() {
-    TAG="$(list_tags | rofi -dmenu -multi-select -p 'filter by tags:')"
+    TAG="$(list_tags | rofi -dmenu -multi-select -p 'filter by tags')"
     ECHO=""
     if [ -n "$TAG" ]; then
         TAGS="$(join_by ${TAG[*]})"
-        ARG="$(print_pretty_tags "$TAGS" | rofi -dmenu $ROFI_PARAMS -p "bkm [$TAGS]:" -mesg "$ROFI_MESG")"
+        ARG="$(print_pretty_tags "$TAGS" | rofi -dmenu $ROFI_PARAMS -p "bkm [$TAGS]" -mesg "$ROFI_MESG")"
     else
         rofi -markup -e "no tags selected; aborting"
         exit 1
@@ -183,7 +183,7 @@ filter_by_tags() {
 edit_url() {
     URL="$(get_bookmark_url "$1")"
     [ -z "$URL" ] && return 1
-    NEW_URL="$(rofi -dmenu -filter "$URL" -p 'edit url:' < /dev/null)"
+    NEW_URL="$(rofi -dmenu -filter "$URL" -p 'edit url' < /dev/null)"
     if [ -z "$NEW_URL" -o $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort changing url $URL
         exit code of rofi: $?</span>"
@@ -200,7 +200,7 @@ edit_url() {
 
 edit_tags() {
     TAGS="$(get_bookmark_tags "$1")"
-    NEW_TAGS="$(rofi -dmenu -filter "$TAGS" -p 'edit tags:' < /dev/null)"
+    NEW_TAGS="$(rofi -dmenu -filter "$TAGS" -p 'edit tags' < /dev/null)"
     if [ $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort changing tags $TAGS
         exit code of rofi: $?</span>"
@@ -220,7 +220,7 @@ edit_tags() {
 edit_name() {
     NAME="$(get_bookmark_name "$1")"
     [ -z "$NAME" ] && return 1
-    NEW_NAME="$(rofi -dmenu -filter "$NAME" -p 'edit name:' < /dev/null)"
+    NEW_NAME="$(rofi -dmenu -filter "$NAME" -p 'edit name' < /dev/null)"
     if [ -z "$NEW_NAME" -o $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort changing name $NAME
         exit code of rofi: $?</span>"
@@ -237,7 +237,7 @@ edit_name() {
 
 edit_title() {
     TITLE="$(get_bookmark_title "$1")"
-    NEW_TITLE="$(rofi -dmenu -filter "$TITLE" -p 'edit title:' < /dev/null)"
+    NEW_TITLE="$(rofi -dmenu -filter "$TITLE" -p 'edit title' < /dev/null)"
     if [ $? -ne 0 ]; then
         rofi -markup -e "<span color='red'>abort changing name $TITLE
         exit code of rofi: $?</span>"

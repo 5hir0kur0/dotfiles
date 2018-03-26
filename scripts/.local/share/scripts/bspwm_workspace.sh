@@ -74,14 +74,14 @@ case "${1:?}" in
         reset
         ;;
     switch_rofi)
-        WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -i -p 'workspace:')"
+        WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -i -p 'workspace')"
         if [ -n "$WORKSPACE" ]; then
             switch_to "$WORKSPACE"
             reset
         fi
         ;;
     move_rofi)
-        WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -i -p 'move to workspace:')"
+        WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -i -p 'move to workspace')"
         if [ -n "$WORKSPACE" ]; then
             move_to "$WORKSPACE"
             reset

@@ -9,6 +9,6 @@ list_non_numeric_workspaces() {
 
 MOVE=""
 [ -n "${1-}" ] && MOVE="move to "
-WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -p "$MOVE"'workspace:' -i)"
+WORKSPACE="$(list_non_numeric_workspaces | rofi -dmenu -p "$MOVE"'workspace' -i)"
 
 [ -n "$WORKSPACE" ] && i3-msg "${1-}" workspace "$WORKSPACE"
