@@ -1,0 +1,899 @@
+#+STARTUP: overview
+* package management
+** setup melpa
+#+BEGIN_SRC emacs-lisp
+  (setq package-enable-at-startup nil)
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (package-initialize)
+#+END_SRC
+** use-package
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+  (setq use-package-verbose t)
+#+END_SRC
+** trying out packages
+#+BEGIN_SRC emacs-lisp
+  (use-package try
+    :commands try)
+#+END_SRC
+* change defaults
+** custom
+change where customize stores its values
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file "~/.emacs.d/customize.el")
+  (load custom-file 'noerror)
+#+END_SRC
+** backups
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files t
+        vc-make-backup-files t  ; make backups of version-controlled files
+        backup-directory-alist '(("." . "~/.emacs.d/backup"))
+        version-control t       ; use version numbers on backups
+        delete-old-versions t   ; delete excess backup files silently
+        kept-new-versions 20
+        kept-old-versions 5)
+#+END_SRC
+** auto-saves
+#+BEGIN_SRC emacs-lisp
+  (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+        auto-save-interval 200)
+#+END_SRC
+** saving history
+from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs Configuration]]
+#+BEGIN_SRC emacs-lisp
+  (setq savehist-file "~/.emacs.d/savehist")
+  (savehist-mode 1)
+  (setq history-length t
+        history-delete-duplicates t
+        savehist-save-minibuffer-history t
+        savehist-additional-variables
+            '(kill-ring search-ring regexp-search-ring))
+#+END_SRC
+** recentf
+#+BEGIN_SRC emacs-lisp
+  (setq recentf-max-menu-items 100
+        recentf-max-saved-items 100)
+#+END_SRC
+** increase some values
+#+BEGIN_SRC emacs-lisp
+  (setq kill-ring-max 1000
+        max-specpdl-size 10000
+        max-lisp-eval-depth 10000)
+#+END_SRC
+** navigation
+*** scrolling behavior
+don't recenter point while scrolling
+#+BEGIN_SRC emacs-lisp
+  (setq scroll-conservatively 100)
+#+END_SRC
+*** sentence-based naviation
+#+BEGIN_SRC emacs-lisp
+  (setq sentence-end-double-space nil)
+#+END_SRC
+*** buffer listing
+use ibuffer instead of list-buffers
+#+BEGIN_SRC emacs-lisp
+  (defalias #'list-buffers #'ibuffer)
+#+END_SRC
+** indentation
+use spaces instead of tabs for indentation
+#+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+#+END_SRC
+** selection / mark
+*** selecting rectangles
+map C-RET to start a rectangle selection with cua mode
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-<return>") #'cua-rectangle-mark-mode)
+#+END_SRC
+*** delete selection
+delete the active region's contents when something is typed
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
+#+END_SRC
+*** disable mark commands when the region is inactive
+#+BEGIN_SRC emacs-lisp
+  (setq mark-even-if-inactive nil)
+#+END_SRC
+** nicer line wrapping
+#+BEGIN_SRC emacs-lisp
+  (global-visual-line-mode 1)
+  (diminish 'visual-line-mode)
+#+END_SRC
+** show matching parentheses
+#+BEGIN_SRC emacs-lisp
+  ;; disabled because the same is done by show-smartparens-mode
+  ;; (show-paren-mode 1)
+#+END_SRC
+** window management
+*** winner-mode
+enable winner-mode to be able to undo/redo window commands
+#+BEGIN_SRC emacs-lisp
+  (winner-mode 1)
+#+END_SRC
+*** show cursor in non-selected windows
+#+BEGIN_SRC emacs-lisp
+  (setq-default cursor-in-non-selected-windows t)
+#+END_SRC
+** scratch buffer
+remove the initial message shown in the scratch buffer
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "")
+#+END_SRC
+** show whitespace in programming modes
+#+BEGIN_SRC emacs-lisp
+  (setq whitespace-style
+        '(face trailing tabs lines-tail space-after-tab space-before-tab tab-mark newline newline-mark empty)
+        whitespace-line-column 80
+        whitespace-display-mappings '((space-mark 32 [183] [46])  ; "·", "."
+                                      (space-mark 160 [164] [95]) ; "¤", "_"
+                                      (newline-mark 10 [172 10] [36 10]) ; "¬", "$"
+                                      (tab-mark 9 [187 9] [92 9]))) ; "»", "\"
+
+  (custom-set-faces '(whitespace-trailing ((t (:background "orange red" :foreground "gold"))))
+                    '(whitespace-line ((t (:underline t :foreground nil :background nil))))
+                    '(whitespace-newline ((t (:foreground "dim gray" :background nil))))
+                    '(whitespace-empty ((t (:background "black")))))
+
+  (add-hook 'prog-mode-hook (lambda () (whitespace-mode 1) (diminish 'whitespace-mode)))
+#+END_SRC
+** bind useful but unbound commands
+*** revert-buffer
+#+BEGIN_SRC emacs-lisp
+  (defun my/revert-buffer-only-prompt-if-modified ()
+    "Acts like `revert-buffer' but only prompts if the buffer has been modified"
+    (interactive)
+    (if (buffer-modified-p)
+        (revert-buffer)
+      (revert-buffer nil t)
+      (message (concat "Reverted buffer " (buffer-name (current-buffer))))))
+  (global-set-key (kbd "<f5>") #'my/revert-buffer-only-prompt-if-modified)
+#+END_SRC
+*** find-file-at-point 
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-g M-f") #'find-file-at-point)
+#+END_SRC
+*** font-lock-fontify-buffer (refresh syntax highlighting)
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-<f5>") #'font-lock-fontify-buffer)
+#+END_SRC
+*** find-file-at-point
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-g f") #'find-file-at-point)
+#+END_SRC
+** use hippie-expand
+#+BEGIN_SRC emacs-lisp
+  ;; move the line expansion to the very end of the list
+  (delq 'try-expand-line hippie-expand-try-functions-list)
+  (add-to-list 'hippie-expand-try-functions-list #'try-expand-line 'append)
+
+  ;; M-/ normally runs dabbrev-expand
+  (global-set-key (kbd "M-/") #'hippie-expand)
+#+END_SRC
+** use abbrev
+#+BEGIN_SRC emacs-lisp
+  (setq abbrev-file-name
+        "~/.emacs.d/abbrev_definitions"
+        save-abbrevs t)                   ; save abbrevs when files are saved
+  (setq-default abbrev-mode t)
+  (diminish 'abbrev-mode)                 ; hide abbrev mode from mode line
+#+END_SRC
+** backward-kill-sexp
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
+#+END_SRC
+* appearance
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function #'ignore
+        inhibit-startup-screen t)
+
+  ;; disable the startup message
+  (defun display-startup-echo-area-message ())
+#+END_SRC
+** prettify symbols
+#+BEGIN_SRC emacs-lisp
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+*** lisp
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook (lambda () (mapc (lambda (pair) (push pair prettify-symbols-alist))
+                                              '(("nil" . "∅")))))
+#+END_SRC
+** appearance customisations only for graphical sessions
+#+BEGIN_SRC emacs-lisp
+  (when window-system
+    (global-hl-line-mode 1)
+    (tool-bar-mode 0)
+    ;; (tooltip-mode 0)
+    (scroll-bar-mode 0)
+    (blink-cursor-mode 0))
+#+END_SRC
+** mode line
+#+BEGIN_SRC emacs-lisp
+  (column-number-mode 1)
+#+END_SRC
+** input
+insert some dead keys literally
+#+BEGIN_SRC emacs-lisp
+  (define-key key-translation-map [dead-grave] "`")
+  (define-key key-translation-map [dead-acute] "'")
+  (define-key key-translation-map [dead-circumflex] "^")
+  (define-key key-translation-map [dead-diaeresis] "\"")
+  (define-key key-translation-map [dead-tilde] "~")
+#+END_SRC
+** theme
+#+BEGIN_SRC emacs-lisp
+   (load-theme 'gruvbox-dark-hard t)
+#+END_SRC
+** cursor
+#+BEGIN_SRC emacs-lisp
+  ;; make cursor match character width (e.g. for tab characters)
+  (setq x-stretch-cursor t)
+#+END_SRC
+* hydra
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra
+    :defer nil)
+#+END_SRC
+** window management hydra
+functions from hydra_examples.el
+#+BEGIN_SRC emacs-lisp
+  (defun hydra-move-splitter-left (arg)
+    "Move window splitter left."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'right))
+        (shrink-window-horizontally arg)
+      (enlarge-window-horizontally arg)))
+
+  (defun hydra-move-splitter-right (arg)
+    "Move window splitter right."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'right))
+        (enlarge-window-horizontally arg)
+      (shrink-window-horizontally arg)))
+
+  (defun hydra-move-splitter-up (arg)
+    "Move window splitter up."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'up))
+        (enlarge-window arg)
+      (shrink-window arg)))
+
+  (defun hydra-move-splitter-down (arg)
+    "Move window splitter down."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'up))
+        (shrink-window arg)
+      (enlarge-window arg)))
+#+END_SRC
+hydra modified from [[https://github.com/abo-abo/hydra/wiki/Window-Management][Window Management Hydra in the Hydra Wiki]]
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-window (:color red
+                          :hint nil
+                          :idle 0.4)
+    "
+   Split: _M-h_/_M-j_/_M-k_/_M-l_
+  Delete: _o_nly, _dw_in,  _db_buf, _x_: del current win, _i_: ace one
+    Move: _s_wap
+  Resize: [C-]_H_/_J_/_K_/_L_
+  Frames: _f_rame new, _df_rame
+    Misc: _b_uffer, book_m_ark, _u_ndo, _r_edo, _M-M_aximize, _M-m_inimize, _M-b_alance"
+    ("h" windmove-left)
+    ("j" windmove-down)
+    ("k" windmove-up)
+    ("l" windmove-right)
+    ("C-h" hydra-move-splitter-left)
+    ("H" (lambda () (interactive) (hydra-move-splitter-left 5)))
+    ("C-j" hydra-move-splitter-down)
+    ("J" (lambda () (interactive) (hydra-move-splitter-down 5)))
+    ("C-k" hydra-move-splitter-up)
+    ("K" (lambda () (interactive) (hydra-move-splitter-up 5)))
+    ("C-l" hydra-move-splitter-right)
+    ("L" (lambda () (interactive) (hydra-move-splitter-right 5)))
+    ("M-h" (lambda ()
+             (interactive)
+             (split-window-right)
+             (switch-to-buffer (other-buffer))))
+    ("M-j" (lambda ()
+             (interactive)
+             (split-window-below)
+             (windmove-down)
+             (switch-to-buffer (other-buffer))))
+    ("M-k" (lambda ()
+             (interactive)
+             (split-window-below)
+             (switch-to-buffer (other-buffer))))
+    ("M-l" (lambda ()
+             (interactive)
+             (split-window-right)
+             (windmove-right)
+             (switch-to-buffer (other-buffer))))
+    ("x" delete-window)
+    ("X" kill-buffer-and-window)
+    ("u" winner-undo)
+    ("r" winner-redo) ;;Fixme, not working?
+    ("o" delete-other-windows :exit t)
+    ("a" ace-window)
+    ("M-o" ace-window :exit t)
+    ("f" make-frame :exit t)
+    ("s" ace-swap-window)
+    ("db" kill-this-buffer)
+    ("df" delete-frame :exit t)
+    ("dw" ace-delete-window)
+    ("q" nil)
+    ("<escape>" nil)
+    ("<return>" nil)
+    ("i" ace-delete-other-windows :color blue)
+    ("b" ido-switch-buffer)
+    ("m" bookmark-jump)
+    ("M-M" maximize-window)
+    ("M-m" minimize-window)
+    ("M-b" balance-windows))
+
+  (global-set-key (kbd "M-o") #'hydra-window/body)
+#+END_SRC
+** apropos hydra
+taken from hydra-examples.el
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-apropos (:color blue
+                           :hint nil
+                           :idle 0.4)
+    "
+  _a_propos        _c_ommand
+  _d_ocumentation  _l_ibrary
+  _v_ariable       _u_ser-option
+  ^ ^          valu_e_"
+    ("a" apropos)
+    ("d" apropos-documentation)
+    ("v" apropos-variable)
+    ("c" apropos-command)
+    ("l" apropos-library)
+    ("u" apropos-user-option)
+    ("e" apropos-value)
+    ("q" nil)
+    ("<escape>" nil)
+    ("<return>" nil))
+
+  (global-set-key (kbd "C-h C-a") #'hydra-apropos/body)
+#+END_SRC
+* diminish
+hide certain minor modes from the mode line
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish)
+#+END_SRC
+* programming mode customizations
+#+BEGIN_SRC emacs-lisp
+    ;;  (setq linum-format "%4d ")
+    (add-hook 'prog-mode-hook
+              (lambda ()
+                (linum-mode 1)              ; display line numbers
+                (subword-mode 1) ; allows you to jump by words in CamelCase words
+                (diminish 'subword-mode) ;  hide subword mode from modeline
+                (flyspell-prog-mode)))       ; check spelling in comments
+
+    ;; fix linum text-scale-adjust
+    ;; (eval-after-load "linum"
+    ;;   '(set-face-attribute 'linum nil :height 100))
+#+END_SRC
+* text mode customizations
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook
+            (lambda () (flyspell-mode 1) (flyspell-buffer)))
+
+#+END_SRC
+* dwim
+** eval region or last sexp
+#+BEGIN_SRC emacs-lisp
+  (defun my/eval-dwim (arg)
+    "Call either `eval-region' if the region is active or `eval-last-sexp' otherwise.
+  ARG is passed to `eval-last-sexp' and is ignored if the region is active."
+    (interactive "P")
+    (if (region-active-p)
+        (eval-region (region-beginning) (region-end))
+      (eval-last-sexp arg)))
+
+  (global-set-key (kbd "C-x C-e") #'my/eval-dwim)
+#+END_SRC
+** whole line or region mode
+#+BEGIN_SRC emacs-lisp
+  (use-package whole-line-or-region
+    :bind (("C-w" . whole-line-or-region-kill-region)
+           ("M-w" . whole-line-or-region-kill-ring-save)
+           ("C-y" . whole-line-or-region-yank))
+    :diminish whole-line-or-region-mode)
+#+END_SRC
+** change casing
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-casing (:color blue
+                           :hint nil
+                           :idle 0.3)
+    "change casing"
+    ("M-u" upcase-dwim :exit t)
+    ("M-l" downcase-dwim :exit t)
+    ("M-d" downcase-dwim :exit t)
+    ("M-c" capitalize-dwim :exit t)
+    ("u" upcase-dwim "up" :exit nil)
+    ("l" downcase-dwim :exit nil)
+    ("d" downcase-dwim "down" :exit nil)
+    ("c" capitalize-dwim "capitalize" :exit nil)
+    ("q" nil)
+    ("<escape>" nil)
+    ("<return>" nil))
+
+  (global-set-key (kbd "M-c") #'hydra-casing/body)
+#+END_SRC
+*** TODO is this useful??
+#+BEGIN_SRC emacs-lisp
+  ;; maybe useful to upcase the last thing that was typed if I'm too lazy to hold
+  ;; shift or activate caps lock...
+  (global-set-key (kbd "M-u") (lambda (pref) (interactive "p") (upcase-dwim (- pref))))
+#+END_SRC
+** remove whitespace
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-SPC") (lambda (pref) (interactive "p") (cycle-spacing pref nil 'fast)))
+#+END_SRC
+** TODO narrowing/widening dwim
+* crux
+#+BEGIN_SRC emacs-lisp
+  (use-package crux
+    :bind (("C-c e"         . crux-eval-and-replace)
+           ("C-c O"         . crux-open-with)
+           ("C-c C"         . crux-cleanup-buffer-or-region)
+           ("C-x 4 t"       . crux-transpose-windows)
+           ("C-c d"         . crux-duplicate-current-line-or-region)
+           ("C-c i"         . crux-ispell-word-then-abbrev)
+           ("C-<return>"    . crux-smart-open-line)
+           ("C-o"           . crux-smart-open-line-above)
+           ("C-a"           . crux-move-beginning-of-line)
+           ("C-<backspace>" . crux-kill-line-backwards)))
+#+END_SRC
+* ace-window
+#+BEGIN_SRC emacs-lisp
+   (use-package ace-window
+     :commands (ace-window ace-swap-window ace-delete-other-windows ace-delete-window)
+     :bind (("C-x o" . ace-window))
+     :init (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+     :config (progn (custom-set-faces
+                     '(aw-leading-char-face
+                       ((t (:foreground "deep sky blue" :height 3.0)))))))
+#+END_SRC
+* ido
+just a test
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-vertical-mode
+    :ensure nil
+    :commands ido-vertical-mode)
+
+  (use-package flx-ido
+    :ensure nil
+    :commands flx-ido-mode)
+
+  (setq ido-use-virtual-buffers t)
+
+  (defun my/enable-ido-test ()
+    "just a test to see whether i like ido mode more than ivy for some use cases"
+    (interactive)
+    (ido-mode 1)
+    (flx-ido-mode 1)
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
+    (ido-vertical-mode 1)
+    (global-set-key (kbd "M-x") 'smex))
+#+END_SRC
+* ivy and swiper
+#+BEGIN_SRC emacs-lisp
+  (use-package flx)
+  (use-package counsel
+    :defer nil                            ; TODO manually map all things instead of using counsel-mode / ivy-mode
+    :diminish (counsel-mode ivy-mode)
+    :bind (("C-s" . swiper)
+           ("C-c C-r" . ivy-resume)
+           ("C-h C-l" . counsel-find-library)
+           ("C-h C-i" . counsel-info-lookup-symbol)
+           ("C-h C-c" . counsel-colors-web)
+           ("C-h C-u" . counsel-unicode-char)
+           ("M-i" . counsel-semantic-or-imenu) ; TODO rebind??
+           ("M-s l" . counsel-locate)
+           ("M-s a" . counsel-ag)
+           ("M-s f" . counsel-fzf)
+           ("M-s g" . counsel-git)
+           ("M-s c" . counsel-colors-web)
+           ("M-p" . ivy-switch-buffer))
+      :init
+    (setq ivy-use-virtual-buffers t       ; add recent files and bookmarks to buffer list
+          ivy-initial-inputs-alist nil    ; don't prepend "^" by default
+          ivy-count-format "%d/%d "
+          ivy-wrap t                      ; wrap around after first/last match
+          ivy-extra-directories nil       ; don't automatically add "." and ".." when finding a file
+          ;; ignore files that start with a dot
+          ;; (they can still be included in the results if the search string starts with a dot)
+          counsel-find-file-ignore-regexp "\\`\\."
+          counsel-find-file-at-point t    ; add file at point to file listb
+          ivy-format-function 'my/ivy-format-function-arrow ; display an arrow next to current candiate
+          ivy-height 14
+          ivy-re-builders-alist
+          '((counsel-find-file . ivy--regex-plus)
+            (swiper . ivy--regex-plus)
+            (counsel-unicode-char . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+    :config
+    (ivy-mode 1)
+    (counsel-mode 1))
+#+END_SRC
+** custom format function
+#+BEGIN_SRC emacs-lisp
+  ;; modified from ivy.el
+  (defun my/ivy-format-function-arrow (cands)
+    "Transform CANDS into a string for minibuffer."
+    (ivy--format-function-generic
+     (lambda (str)
+       (concat "-> " (ivy--add-face str 'ivy-current-match)))
+     (lambda (str)
+       (concat "   " str))
+     cands
+     "\n"))
+#+END_SRC
+* avy
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :bind (("M-k"   . avy-goto-char)
+           ("M-K"   . avy-goto-char-in-line)
+           ("M-j"   . avy-goto-word-1)
+           ("M-l"   . avy-goto-line)))
+#+END_SRC
+* which-key
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :commands (which-key-mode which-key-show-top-level which-key-show-major-mode)
+    :diminish which-key-mode
+    :bind (("C-h C-t" . which-key-show-top-level)
+           ("C-h C-m" . which-key-show-major-mode))
+    :init
+    (setq which-key-idle-delay 0.3)
+    :hook (emacs-startup . which-key-mode))
+#+END_SRC
+* undo-tree
+use undo-tree to get a navigable tree view of the buffer's history (using hjkl)
+note that it can limit undos to the active region
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :defer nil
+    :diminish undo-tree-mode
+    :init (setq undo-tree-visualizer-diff t ; show diff in undo tree ("d" toggles)
+                undo-tree-visualizer-timestamps t ; show timestamps ("t" toggles)
+                undo-tree-auto-save-history t ; save history to a file
+                undo-tree-history-directory-alist '((".*" . "~/.emacs.d/undo-tree/")))
+    :config
+    (global-undo-tree-mode 1)
+    (define-key undo-tree-visualizer-mode-map (kbd "h") #'undo-tree-visualize-switch-branch-left)
+    (define-key undo-tree-visualizer-mode-map (kbd "j") #'undo-tree-visualize-redo)
+    (define-key undo-tree-visualizer-mode-map (kbd "k") #'undo-tree-visualize-undo)
+    (define-key undo-tree-visualizer-mode-map (kbd "l") #'undo-tree-visualize-switch-branch-right)
+    (define-key undo-tree-visualizer-mode-map (kbd "K") #'undo-tree-visualize-undo-to-x)
+    (define-key undo-tree-visualizer-mode-map (kbd "J") #'undo-tree-visualize-redo-to-x)
+    (define-key undo-tree-visualizer-mode-map (kbd "<return>") #'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-selection-mode-map (kbd "h") #'undo-tree-visualizer-select-left)
+    (define-key undo-tree-visualizer-selection-mode-map (kbd "j") #'undo-tree-visualizer-select-next)
+    (define-key undo-tree-visualizer-selection-mode-map (kbd "k") #'undo-tree-visualizer-select-previous)
+    (define-key undo-tree-visualizer-selection-mode-map (kbd "l") #'undo-tree-visualizer-select-right)
+    (define-key undo-tree-visualizer-selection-mode-map (kbd "<return>") #'undo-tree-visualizer-set)
+    (add-hook 'undo-tree-visualizer-mode-hook (lambda () (setq undo-tree-visualizer-diff t)))) ; does this fix diff disappearing??
+#+END_SRC
+* shackle popup manager
+** shackle configuration
+#+BEGIN_SRC emacs-lisp
+  (use-package shackle
+    :hook (emacs-startup . shackle-mode)
+    :init
+    (setq shackle-default-size 0.4
+          shackle-rules '((undo-tree-visualizer-mode :size 0.25 :align right :select t) ; doesn't seem to work somehow TODO
+                          (help-mode :custom jay/shackle-dynamic-tyling :select t)
+                          (occur-mode :align below :size 0.3 :select t)
+                          (apropos-mode :custom jay/shackle-dynamic-tyling :select t)
+                          (flycheck-error-list-mode :select t :align below :size 0.2)
+                          (compilation-mode :noselect t :align below :size 0.2)
+                          (special-mode :noselect t :align below :size 0.2)
+                          ("*Register Preview*" :noselect t :align above :size 0.2)
+                          ("^\\*Org Src.*" :regexp t :popup nil))
+          shackle-default-rule '(:popup t :select t)))
+#+END_SRC
+** custom window splitting
+custom tiling function to create popups by splitting the current window
+#+BEGIN_SRC emacs-lisp
+  ;; stolen from https://emacs.stackexchange.com/a/37652
+  (defun jay/shackle-dynamic-tyling (buffer alist plist)
+    "Create a new window displaying BUFFER splitting the current window sensibly.
+  If there already is a window displaying BUFFER, do nothing.
+  ALIST is passed to `window--display-buffer'. PLIST is ignored."
+    (or (get-buffer-window buffer)
+        (let
+            ((frame (shackle--splittable-frame))
+             (window (if (> (* 1.4 (window-pixel-height)) (window-pixel-width))
+                         (split-window-below)
+                       (split-window-right (/ (window-width) -3)))))
+          (prog1
+              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+            (when window
+              (shrink-window-if-larger-than-buffer window)
+              (setq shackle-last-window window
+                    shackle-last-buffer buffer))
+            (unless (cdr (assq 'inhibit-switch-frame alist))
+              (window--maybe-raise-frame frame))))))
+#+END_SRC
+* rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :diminish rainbow-delimiters-mode
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+END_SRC
+* rainbow-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-mode
+    :diminish rainbow-mode
+    :hook prog-mode)
+  ;; note: change rainbow-x-colors to nil to disable highlighting of color names
+#+END_SRC
+* expand-region
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :bind (("C-r" . er/expand-region)
+           ("C-S-r" . er/contract-region)
+           ("C-M-r" . er/contract-region)))
+#+END_SRC
+* beacon
+#+BEGIN_SRC emacs-lisp
+  (use-package beacon
+    :defer nil
+    :diminish beacon-mode
+    :config (beacon-mode 1))
+#+END_SRC
+* company (auto-completion)
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :bind (:map company-mode-map
+           ("C-=" . company-complete))
+           ;("TAB" . company-indent-or-complete-common)
+                                          ;("<tab>" . company-indent-or-complete-common))
+    :hook (emacs-startup . global-company-mode)
+    :init
+    (setq company-idle-delay 0.4
+          company-frontends
+          '(company-semantic
+            company-pseudo-tooltip-unless-just-one-frontend
+            company-preview-frontend
+            company-echo-metadata-frontend)
+          company-auto-complete t
+          company-require-match 'never
+          company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
+          company-minimum-prefix-length 3)
+    (with-eval-after-load 'company
+      (define-key company-active-map (kbd "TAB") (lambda () (interactive) (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "<tab>") (lambda () (interactive) (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "S-TAB") (lambda () (interactive) (company-complete-common-or-cycle -1)))
+      (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1)))
+  ;    (define-key company-active-map (kbd "M-n") nil)
+  ;    (define-key company-active-map (kbd "M-p") nil)
+      (define-key company-active-map (kbd "C-c") 'counsel-company)
+      (define-key company-active-map (kbd "C-n") (lambda () (interactive) (company-complete-common-or-cycle 1)))
+      (define-key company-active-map (kbd "C-p") (lambda () (interactive) (company-complete-common-or-cycle -1)))))
+#+END_SRC
+** company quickhelp
+#+BEGIN_SRC emacs-lisp
+  (use-package company-quickhelp
+    :hook (global-company-mode . company-quickhelp-mode))
+#+END_SRC
+* smartparens
+#+BEGIN_SRC emacs-lisp
+  (defun my/sp-kill-sexp-backward (prefix)
+    "Revert the direction of the prefix argument and call `sp-kill-sexp' with it."
+    (interactive "p")
+    (sp-kill-sexp (- prefix)))
+
+  (use-package smartparens
+    :hook (prog-mode . turn-on-smartparens-strict-mode)
+    :bind (:map smartparens-mode-map
+                ("C-M-f"           . sp-forward-sexp)
+                ("C-M-b"           . sp-backward-sexp)
+                ("C-M-d"           . sp-down-sexp)
+                ("C-M-u"           . sp-backward-up-sexp)
+                ("C-M-a"           . sp-beginning-of-sexp)
+                ("C-M-e"           . sp-end-of-sexp)
+                ("C-M-n"           . sp-next-sexp)
+                ("C-M-p"           . sp-previous-sexp)
+                ("C-M-k"           . sp-kill-sexp)
+                ("C-M-<backspace>" . my/sp-kill-sexp-backward)
+                ("C-M-t"           . sp-transpose-sexp)
+                ("M-s M-k"         . sp-kill-hybrid-sexp)
+                ("M-s M-u"         . sp-backward-unwrap-sexp) ; TODO which of these bindings do I like best?
+                ("M-s M-r"         . sp-rewrap-sexp)
+                ("M-U"             . sp-backward-unwrap-sexp)
+                ("M-R"             . sp-rewrap-sexp)
+                ("C-<up>"          . sp-backward-unwrap-sexp)
+                ("C-<down>"        . sp-rewrap-sexp)
+                ("C-<right>"       . sp-forward-slurp-sexp)
+                ("M-]"             . sp-forward-slurp-sexp)
+                ("M-{"             . sp-backward-slurp-sexp)
+                ("C-<left>"        . sp-forward-barf-sexp)
+                ("M-["             . sp-forward-barf-sexp)
+                ("M-}"             . sp-backward-barf-sexp)
+                ("M-s M-s"         . sp-slurp-hybrid-sexp)
+                ("M-s M-t"         . sp-transpose-hybrid-sexp)
+                ("M-s M-p"         . sp-push-hybrid-sexp)
+                ("M-F"             . sp-forward-symbol)
+                ("M-B"             . sp-backward-symbol)
+                ("C-]"             . sp-change-inner))
+    :init
+    (require 'smartparens-config)
+    (require 'smartparens)
+    (show-smartparens-global-mode 1)
+    (smartparens-global-mode 1))
+#+END_SRC
+* spaceline
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :init
+    (require 'spaceline-config)
+    (setq powerline-default-separator 'contour
+          spaceline-line-column-p nil
+          spaceline-line-p nil
+          spaceline-line-column-p t)
+    (spaceline-spacemacs-theme))
+#+END_SRC
+* TODO flycheck
+* TODO dashboard
+* TODO aggressive-indent
+#+BEGIN_SRC emacs-lisp
+  (use-package aggressive-indent
+    :hook (prog-mode . aggressive-indent-mode))
+#+END_SRC
+* hungry-delete
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :diminish hungry-delete-mode
+    :hook (prog-mode . hungry-delete-mode))
+#+END_SRC
+* hl-todo
+#+BEGIN_SRC emacs-lisp
+  (defhydra hl-todo-navigation-hydra (:color pink)
+    "navigate TODO items:"
+    ("n" hl-todo-next "next")
+    ("p" hl-todo-previous "prev")
+    ("o" hl-todo-occur "occur" :exit t))
+
+  (use-package hl-todo
+    :commands (hl-todo-next hl-todo-previous hl-todo-occur)
+    :hook (prog-mode . hl-todo-mode))
+
+  (bind-key "M-s t" #'hl-todo-navigation-hydra/body prog-mode-map)
+#+END_SRC
+* highlight-indentation
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-indent-guides
+    :init (setq highlight-indent-guides-method 'character)
+    :hook (prog-mode . highlight-indent-guides-mode))
+#+END_SRC
+* TODO projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :defer nil
+    :init (setq projectile-completion-system 'ivy)
+    :config (projectile-global-mode 1))   ; TODO 
+#+END_SRC
+* org
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook (lambda ()  (org-indent-mode 1)))
+  (setq org-src-tab-acts-natively t)
+#+END_SRC
+** org-bullets
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :commands org-bullets-mode
+    :init
+    (setq org-src-window-setup 'current-window) ; TODO do I like this behavior?
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+** avoid arrow keys
+#+BEGIN_SRC emacs-lisp
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "M-K") #'org-metaup)
+    (define-key org-mode-map (kbd "M-J") #'org-metadown)
+    (define-key org-mode-map (kbd "M-L") #'org-metaright)
+    (define-key org-mode-map (kbd "M-H") #'org-metaleft))
+#+END_SRC
+* html
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
+#+END_SRC
+* tex / latex
+automatically enable spell checking in latex buffers
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'tex-mode-hook
+            #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1) (flyspell-buffer)))
+#+END_SRC
+* yasnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :hook (after-init . yas-global-mode)
+    :init
+    (with-eval-after-load 'company
+      ;; Add yasnippet support for all company backends
+      ;; https://github.com/syl20bnr/spacemacs/pull/179
+      (defvar company-mode/enable-yas t
+        "Enable yasnippet for all backends.")
+
+      (defun company-mode/backend-with-yas (backend)
+        (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+            backend
+          (append (if (consp backend) backend (list backend))
+                  '(:with company-yasnippet))))
+
+      (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+#+END_SRC
+* misc
+** edit files as root using tramp
+from the book "Mastering Emacs" (commented out since crux provides the same functionality)
+#+BEGIN_SRC emacs-lisp
+  ;; (defun my/sudo ()
+  ;;   "Use TRAMP to `sudo' the current buffer"
+  ;;   (interactive)
+  ;;   (when buffer-file-name
+  ;;     (find-alternate-file
+  ;;      (concat "/sudo:root@localhost:"
+  ;;              buffer-file-name))))
+#+END_SRC
+** join line with next line (similar to J in vim)
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-J") (lambda () (interactive) (delete-indentation 1)))
+#+END_SRC
+** TODO evil
+#+BEGIN_SRC emacs-lisp
+  ;; ;; disabled for now ;-)
+
+  ;; ;; use emacs state instead of evil insert state
+  ;; (defalias 'evil-insert-state 'evil-emacs-state)
+
+  ;; ;; indicate state via cursor
+  ;; (setq evil-normal-state-cursor '(box "firebrick")
+  ;;       evil-emacs-state-cursor '(bar "white")
+  ;;       evil-insert-state-cursor '(bar "red"))
+
+  ;; (evil-mode 1)
+
+  ;; ;; use emacs state by default
+  ;; (add-to-list 'evil-emacs-state-modes 'help-mode) ; somehow this doesn't work
+
+  ;; (define-key evil-normal-state-map (kbd "TAB") nil)
+  ;; (define-key evil-normal-state-map (kbd "<tab>") nil)
+
+  ;; ;; restore some emacs functionality in normal state
+  ;; (define-key evil-normal-state-map (kbd "C-n") 'next-line)
+  ;; (define-key evil-normal-state-map (kbd "C-p") 'previous-line)
+  ;; (define-key evil-normal-state-map (kbd "C-e") 'end-of-line)
+
+  ;; ;; make <escape> return to evil normal state from emacs mode
+  ;; (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
+
+  ;; ;; make <escape><escape><escape> work as expected
+  ;; (defhydra evil-escape-hydra (:color blue
+  ;;                              :idle 0.1)
+  ;;   ("<escape>"  keyboard-escape-quit "keyboard-quit"))
+  ;; (define-key evil-normal-state-map (kbd "<escape>") #'evil-escape-hydra/body)
+#+END_SRC
+** show startup message
+#+BEGIN_SRC emacs-lisp
+  (defun my/show-load-time ()
+    (message (format "Loaded in %.2fs" (time-to-seconds (time-subtract after-init-time before-init-time)))))
+
+  (add-hook 'emacs-startup-hook #'my/show-load-time)
+#+END_SRC
