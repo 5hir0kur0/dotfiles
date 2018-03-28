@@ -1,6 +1,6 @@
 #+STARTUP: overview
 * package management
-** setup melpa
+** set up melpa
 #+BEGIN_SRC emacs-lisp
   (setq package-enable-at-startup nil)
   (require 'package)
@@ -88,9 +88,9 @@ use spaces instead of tabs for indentation
 #+END_SRC
 ** selection / mark
 *** selecting rectangles
-map C-RET to start a rectangle selection with cua mode
+map M-RET to start a rectangle selection with cua mode
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-<return>") #'cua-rectangle-mark-mode)
+  (global-set-key (kbd "M-<return>") #'cua-rectangle-mark-mode)
 #+END_SRC
 *** delete selection
 delete the active region's contents when something is typed
@@ -230,7 +230,10 @@ insert some dead keys literally
 #+END_SRC
 ** theme
 #+BEGIN_SRC emacs-lisp
-   (load-theme 'gruvbox-dark-hard t)
+  (use-package gruvbox-theme
+    :defer nil
+    :init
+    (load-theme 'gruvbox-dark-hard t))
 #+END_SRC
 ** cursor
 #+BEGIN_SRC emacs-lisp
@@ -240,7 +243,8 @@ insert some dead keys literally
 * hydra
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
-    :defer nil)
+    :defer nil
+    :config (require 'hydra))             ; somehow it doesn't work without this
 #+END_SRC
 ** window management hydra
 functions from hydra_examples.el
@@ -454,9 +458,7 @@ hide certain minor modes from the mode line
            ("C-c d"         . crux-duplicate-current-line-or-region)
            ("C-c i"         . crux-ispell-word-then-abbrev)
            ("C-<return>"    . crux-smart-open-line)
-           ("C-o"           . crux-smart-open-line-above)
-           ("C-a"           . crux-move-beginning-of-line)
-           ("C-<backspace>" . crux-kill-line-backwards)))
+           ("C-o"           . crux-smart-open-line-above)))
 #+END_SRC
 * ace-window
 #+BEGIN_SRC emacs-lisp
@@ -543,6 +545,12 @@ just a test
        (concat "   " str))
      cands
      "\n"))
+#+END_SRC
+* imenu-anywhere
+#+BEGIN_SRC emacs-lisp
+  (use-package imenu-anywhere
+    :after ivy
+    :bind (("M-i" . ivy-imenu-anywhere)))
 #+END_SRC
 * avy
 #+BEGIN_SRC emacs-lisp
@@ -662,12 +670,13 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :bind (:map company-mode-map
-           ("C-=" . company-complete))
-           ;("TAB" . company-indent-or-complete-common)
+                ("C-=" . company-complete))
+                                          ;("TAB" . company-indent-or-complete-common)
                                           ;("<tab>" . company-indent-or-complete-common))
     :hook (emacs-startup . global-company-mode)
+    :diminish company-mode
     :init
-    (setq company-idle-delay 0.4
+    (setq company-idle-delay 0.2
           company-frontends
           '(company-semantic
             company-pseudo-tooltip-unless-just-one-frontend
@@ -677,13 +686,14 @@ custom tiling function to create popups by splitting the current window
           company-require-match 'never
           company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
           company-minimum-prefix-length 3)
+    :config
     (with-eval-after-load 'company
       (define-key company-active-map (kbd "TAB") (lambda () (interactive) (company-complete-common-or-cycle 1)))
       (define-key company-active-map (kbd "<tab>") (lambda () (interactive) (company-complete-common-or-cycle 1)))
       (define-key company-active-map (kbd "S-TAB") (lambda () (interactive) (company-complete-common-or-cycle -1)))
       (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1)))
-  ;    (define-key company-active-map (kbd "M-n") nil)
-  ;    (define-key company-active-map (kbd "M-p") nil)
+                                          ;    (define-key company-active-map (kbd "M-n") nil)
+                                          ;    (define-key company-active-map (kbd "M-p") nil)
       (define-key company-active-map (kbd "C-c") 'counsel-company)
       (define-key company-active-map (kbd "C-n") (lambda () (interactive) (company-complete-common-or-cycle 1)))
       (define-key company-active-map (kbd "C-p") (lambda () (interactive) (company-complete-common-or-cycle -1)))))
@@ -754,8 +764,8 @@ custom tiling function to create popups by splitting the current window
 * TODO dashboard
 * TODO aggressive-indent
 #+BEGIN_SRC emacs-lisp
-  (use-package aggressive-indent
-    :hook (prog-mode . aggressive-indent-mode))
+  ;; (use-package aggressive-indent
+  ;;   :hook (prog-mode . aggressive-indent-mode))
 #+END_SRC
 * hungry-delete
 #+BEGIN_SRC emacs-lisp
@@ -788,7 +798,47 @@ custom tiling function to create popups by splitting the current window
   (use-package projectile
     :defer nil
     :init (setq projectile-completion-system 'ivy)
-    :config (projectile-global-mode 1))   ; TODO 
+    :config (projectile-global-mode 1))   ; TODO
+#+END_SRC
+* TODO multiple-cursors
+#+BEGIN_SRC emacs-lisp
+  ;; stolen from https://github.com/abo-abo/hydra/wiki/multiple-cursors
+  (defhydra multiple-cursors-hydra (:hint nil
+                                    ;; if I don't do this it breaks multiple cursors (as of 20180320.747)
+                                    :pre (progn (require 'multiple-cursors)
+                                                (setq my/mark-even-if-inactive-backup mark-even-if-inactive)
+                                                (setq mark-even-if-inactive t))
+                                    :post (setq mark-even-if-inactive my/mark-even-if-inactive-backup))
+    "
+       ^Up^            ^Down^        ^Other^
+  ----------------------------------------------
+  [_p_]   Next    [_n_]   Next    [_l_] Edit lines
+  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+  [_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
+  ^ ^             ^ ^             [_d_] Mark all DWIM
+  ^ ^             ^ ^             [_#_/_L_] Insert numbers/letters
+  ^ ^             ^ ^             [_S_/_R_] Sort/Reverse regions
+  ^ ^             ^ ^             [_q_] Quit
+  "
+    ("l" mc/edit-lines :exit t)
+    ("a" mc/mark-all-symbols-like-this :exit t)
+    ("n" mc/mark-next-like-this-symbol)
+    ("N" mc/skip-to-next-like-this)
+    ("M-n" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this-symbol)
+    ("P" mc/skip-to-previous-like-this-symbol)
+    ("M-p" mc/unmark-previous-like-this)
+    ("r" mc/mark-all-in-region-regexp :exit t)
+    ("d" mc/mark-all-like-this-dwim :exit t)
+    ("#" mc/insert-numbers)
+    ("L" mc/insert-letters)
+    ("S" mc/sort-regions)
+    ("R" mc/reverse-regions)
+    ("q" nil))
+
+  (use-package multiple-cursors
+    :bind (("C-c m" . multiple-cursors-hydra/body))
+    :config (define-key mc/keymap (kbd "<return>") nil))
 #+END_SRC
 * org
 #+BEGIN_SRC emacs-lisp
@@ -825,6 +875,7 @@ automatically enable spell checking in latex buffers
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :hook (after-init . yas-global-mode)
+    :diminish (yas-minor-mode yas/minor-mode)
     :init
     (with-eval-after-load 'company
       ;; Add yasnippet support for all company backends
