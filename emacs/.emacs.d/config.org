@@ -827,8 +827,7 @@ custom tiling function to create popups by splitting the current window
   ;; stolen from https://github.com/abo-abo/hydra/wiki/multiple-cursors
   (defhydra multiple-cursors-hydra (:hint nil
                                     ;; if I don't do this it breaks multiple cursors (as of 20180320.747)
-                                    :pre (progn (require 'multiple-cursors)
-                                                (setq my/mark-even-if-inactive-backup mark-even-if-inactive)
+                                    :pre (progn (setq my/mark-even-if-inactive-backup mark-even-if-inactive)
                                                 (setq mark-even-if-inactive t))
                                     :post (setq mark-even-if-inactive my/mark-even-if-inactive-backup))
     "
@@ -859,8 +858,24 @@ custom tiling function to create popups by splitting the current window
     ("q" nil))
 
   (use-package multiple-cursors
-    :bind (("C-c m" . multiple-cursors-hydra/body))
-    :config (define-key mc/keymap (kbd "<return>") nil))
+    :commands (mc/edit-lines
+               mc/mark-all-symbols-like-this
+               mc/mark-next-like-this-symbol
+               mc/skip-to-next-like-this mc/unmark-next-like-this
+               mc/mark-previous-like-this-symbol
+               mc/skip-to-previous-like-this-symbol
+               mc/unmark-previous-like-this
+               mc/mark-all-in-region-regexp
+               mc/mark-all-like-this-dwim mc/insert-numbers
+               mc/insert-letters mc/sort-regions
+               mc/reverse-regions)
+    :bind (("C-c m" . multiple-cursors-hydra/body)
+           :map mc/keymap ("<return" . nil)))
+#+END_SRC
+* magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :bind (("C-x g" . magit-status)))
 #+END_SRC
 * org
 #+BEGIN_SRC emacs-lisp
