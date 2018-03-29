@@ -193,6 +193,11 @@ remove the initial message shown in the scratch buffer
   (setq require-final-newline t
         mode-require-final-newline t)
 #+END_SRC
+** remap toggle input method
+I use C-\ for company
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-=") #'toggle-input-method)
+#+END_SRC
 * appearance
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function #'ignore
