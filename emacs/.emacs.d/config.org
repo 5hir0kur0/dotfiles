@@ -188,6 +188,11 @@ remove the initial message shown in the scratch buffer
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
 #+END_SRC
+** final newlines
+#+BEGIN_SRC emacs-lisp
+  (setq require-final-newline t
+        mode-require-final-newline t)
+#+END_SRC
 * appearance
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function #'ignore
