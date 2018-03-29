@@ -533,7 +533,7 @@ just a test
           counsel-find-file-ignore-regexp "\\`\\."
           counsel-find-file-at-point t    ; add file at point to file listb
           ivy-format-function 'my/ivy-format-function-arrow ; display an arrow next to current candiate
-          ivy-height 14
+          ivy-height 12
           ivy-re-builders-alist
           '((counsel-find-file . ivy--regex-plus)
             (swiper . ivy--regex-plus)
@@ -665,9 +665,7 @@ custom tiling function to create popups by splitting the current window
 * expand-region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
-    :bind (("C-r" . er/expand-region)
-           ("C-S-r" . er/contract-region)
-           ("C-M-r" . er/contract-region)))
+    :bind (("C-r" . er/expand-region)))
 #+END_SRC
 * beacon
 #+BEGIN_SRC emacs-lisp
@@ -680,7 +678,7 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :bind (:map company-mode-map
-                ("C-=" . company-complete))
+                ("C-\\" . company-complete))
                                           ;("TAB" . company-indent-or-complete-common)
                                           ;("<tab>" . company-indent-or-complete-common))
     :hook (emacs-startup . global-company-mode)
