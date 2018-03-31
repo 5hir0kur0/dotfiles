@@ -53,7 +53,7 @@ from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs Config
         history-delete-duplicates t
         savehist-save-minibuffer-history t
         savehist-additional-variables
-            '(kill-ring search-ring regexp-search-ring))
+            '(kill-ring search-ring regexp-search-ring register-alist))
 #+END_SRC
 ** recentf
 #+BEGIN_SRC emacs-lisp
@@ -72,7 +72,7 @@ don't recenter point while scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 100)
 #+END_SRC
-*** sentence-based naviation
+*** sentence-based navigation
 #+BEGIN_SRC emacs-lisp
   (setq sentence-end-double-space nil)
 #+END_SRC
@@ -80,6 +80,14 @@ don't recenter point while scrolling
 use ibuffer instead of list-buffers
 #+BEGIN_SRC emacs-lisp
   (defalias #'list-buffers #'ibuffer)
+#+END_SRC
+*** back to indentation
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-i") #'back-to-indentation)
+#+END_SRC
+** registers
+#+BEGIN_SRC emacs-lisp
+  (setq register-preview-delay 0.4)
 #+END_SRC
 ** indentation
 use spaces instead of tabs for indentation
@@ -223,7 +231,8 @@ I use C-\ for company
     (tool-bar-mode 0)
     ;; (tooltip-mode 0)
     (scroll-bar-mode 0)
-    (blink-cursor-mode 0))
+    (blink-cursor-mode 0)
+    (setq use-dialog-box nil))
 #+END_SRC
 ** mode line
 #+BEGIN_SRC emacs-lisp
@@ -388,17 +397,17 @@ hide certain minor modes from the mode line
 #+END_SRC
 * programming mode customizations
 #+BEGIN_SRC emacs-lisp
-    ;;  (setq linum-format "%4d ")
-    (add-hook 'prog-mode-hook
-              (lambda ()
-                (linum-mode 1)              ; display line numbers
-                (subword-mode 1) ; allows you to jump by words in CamelCase words
-                (diminish 'subword-mode) ;  hide subword mode from modeline
-                (flyspell-prog-mode)))       ; check spelling in comments
+  ;; (setq linum-format "%5d ")
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (linum-mode 1)              ; display line numbers
+              (subword-mode 1) ; allows you to jump by words in CamelCase words
+              (diminish 'subword-mode) ;  hide subword mode from modeline
+              (flyspell-prog-mode)))       ; check spelling in comments
 
-    ;; fix linum text-scale-adjust
-    ;; (eval-after-load "linum"
-    ;;   '(set-face-attribute 'linum nil :height 100))
+  ;; fix linum text-scale-adjust
+  ;; (eval-after-load "linum"
+  ;;   '(set-face-attribute 'linum nil :height 100))
 #+END_SRC
 * text mode customizations
 #+BEGIN_SRC emacs-lisp
@@ -673,6 +682,7 @@ custom tiling function to create popups by splitting the current window
   (use-package beacon
     :defer nil
     :diminish beacon-mode
+    :init (setq beacon-push-mark 1)       ; this is a test (TODO)
     :config (beacon-mode 1))
 #+END_SRC
 * company (auto-completion)
