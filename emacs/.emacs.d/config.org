@@ -622,6 +622,7 @@ note that it can limit undos to the active region
                           (flycheck-error-list-mode :select t :align below :size 0.2)
                           (compilation-mode :noselect t :align below :size 0.2)
                           (special-mode :noselect t :align below :size 0.2)
+                          (diff-mode :custom jay/shackle-dynamic-tyling :select t)
                           ("*Register Preview*" :noselect t :align above :size 0.2)
                           ("^\\*Org Src.*" :regexp t :popup nil))
           shackle-default-rule '(:popup t :select t)))
@@ -869,6 +870,42 @@ custom tiling function to create popups by splitting the current window
                mc/reverse-regions)
     :bind (("C-c m" . multiple-cursors-hydra/body)
            :map mc/keymap ("<return" . nil)))
+#+END_SRC
+* git-gutter
+#+BEGIN_SRC emacs-lisp
+  ;; stolen from: https://github.com/abo-abo/hydra/wiki/Git-gutter
+  (defhydra git-gutter-hydra (:hint nil)
+    "
+  Git gutter:
+    _j_: next hunk        _s_tage hunk     _q_uit
+    _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+    ^ ^                   _p_opup hunk
+    _h_: first hunk
+    _l_: last hunk        set start _R_evision
+  "
+    ("j" git-gutter:next-hunk)
+    ("k" git-gutter:previous-hunk)
+    ("h" (progn (goto-char (point-min))
+                (git-gutter:next-hunk 1)))
+    ("l" (progn (goto-char (point-min))
+                (git-gutter:previous-hunk 1)))
+    ("s" git-gutter:stage-hunk)
+    ("r" git-gutter:revert-hunk)
+    ("p" git-gutter:popup-hunk)
+    ("R" git-gutter:set-start-revision)
+    ("C-l" reposition-window)
+    ("q" nil :color blue)
+    ("Q" (progn (git-gutter-mode -1)
+                ;; git-gutter-fringe doesn't seem to
+                ;; clear the markup right away
+                (sit-for 0.1)
+                (git-gutter:clear))
+     :color blue))
+
+  (global-set-key (kbd "C-c g") #'git-gutter-hydra/body)
+
+  (use-package git-gutter
+    :config (global-git-gutter-mode 1))
 #+END_SRC
 * magit
 #+BEGIN_SRC emacs-lisp
