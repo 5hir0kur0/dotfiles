@@ -560,15 +560,15 @@ just a test
 #+BEGIN_SRC emacs-lisp
   (use-package imenu-anywhere
     :after ivy
-    :bind (("M-i" . ivy-imenu-anywhere)))
+    :bind (("M-I" . ivy-imenu-anywhere)))
 #+END_SRC
 * avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
-    :bind (("M-k"   . avy-goto-char)
-           ("M-K"   . avy-goto-char-in-line)
-           ("M-j"   . avy-goto-word-1)
-           ("M-l"   . avy-goto-line)))
+    :bind (("M-k" . avy-goto-char)
+           ("M-m" . avy-goto-char-in-line)
+           ("M-j" . avy-goto-word-1)
+           ("M-l" . avy-goto-line)))
 #+END_SRC
 * which-key
 #+BEGIN_SRC emacs-lisp
