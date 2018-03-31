@@ -73,6 +73,22 @@ alias gcc="gcc -Wall -Wextra -std=c99"
 
 alias view="vim -R -c 'set nomodifiable'"
 
+function findoldfiles() {
+    find "${1:-.}" -atime "+${2:-60}"
+}
+
+function findlinks() {
+    find -L "${1:?no start dir}" -samefile "${2:?no file name}" 2>/dev/null
+}
+
+function findsoftlinks() {
+    find -L "${1:?no start dir}" -xtype l -samefile "${2:?no file name}" 2>/dev/null
+}
+
+function findhardlinks() {
+    find "${1:?no start dir}" -samefile "${2:?no file name}" 2>/dev/null
+}
+
 function f() {
     find . -maxdepth 1 -iname "*${1:?}*";
 }
