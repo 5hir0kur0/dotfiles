@@ -163,10 +163,6 @@ remove the initial message shown in the scratch buffer
       (message (concat "Reverted buffer " (buffer-name (current-buffer))))))
   (global-set-key (kbd "<f5>") #'my/revert-buffer-only-prompt-if-modified)
 #+END_SRC
-*** find-file-at-point 
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "M-g M-f") #'find-file-at-point)
-#+END_SRC
 *** font-lock-fontify-buffer (refresh syntax highlighting)
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-<f5>") #'font-lock-fontify-buffer)
@@ -205,59 +201,6 @@ remove the initial message shown in the scratch buffer
 I use C-\ for company
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-=") #'toggle-input-method)
-#+END_SRC
-* appearance
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function #'ignore
-        inhibit-startup-screen t)
-
-  ;; disable the startup message
-  (defun display-startup-echo-area-message ())
-#+END_SRC
-** prettify symbols
-#+BEGIN_SRC emacs-lisp
-  (setq prettify-symbols-unprettify-at-point 'right-edge)
-  (global-prettify-symbols-mode 1)
-#+END_SRC
-*** lisp
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook (lambda () (mapc (lambda (pair) (push pair prettify-symbols-alist))
-                                              '(("nil" . "∅")))))
-#+END_SRC
-** appearance customisations only for graphical sessions
-#+BEGIN_SRC emacs-lisp
-  (when window-system
-    (global-hl-line-mode 1)
-    (tool-bar-mode 0)
-    ;; (tooltip-mode 0)
-    (scroll-bar-mode 0)
-    (blink-cursor-mode 0)
-    (setq use-dialog-box nil))
-#+END_SRC
-** mode line
-#+BEGIN_SRC emacs-lisp
-  (column-number-mode 1)
-#+END_SRC
-** input
-insert some dead keys literally
-#+BEGIN_SRC emacs-lisp
-  (define-key key-translation-map [dead-grave] "`")
-  (define-key key-translation-map [dead-acute] "'")
-  (define-key key-translation-map [dead-circumflex] "^")
-  (define-key key-translation-map [dead-diaeresis] "\"")
-  (define-key key-translation-map [dead-tilde] "~")
-#+END_SRC
-** theme
-#+BEGIN_SRC emacs-lisp
-  (use-package gruvbox-theme
-    :defer nil
-    :init
-    (load-theme 'gruvbox-dark-hard t))
-#+END_SRC
-** cursor
-#+BEGIN_SRC emacs-lisp
-  ;; make cursor match character width (e.g. for tab characters)
-  (setq x-stretch-cursor t)
 #+END_SRC
 * hydra
 #+BEGIN_SRC emacs-lisp
@@ -701,7 +644,7 @@ custom tiling function to create popups by splitting the current window
             company-pseudo-tooltip-unless-just-one-frontend
             company-preview-frontend
             company-echo-metadata-frontend)
-          company-auto-complete t
+          company-auto-complete nil
           company-require-match 'never
           company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
           company-minimum-prefix-length 3)
@@ -779,16 +722,33 @@ custom tiling function to create popups by splitting the current window
           spaceline-line-column-p t)
     (spaceline-spacemacs-theme))
 #+END_SRC
-* TODO flycheck
+* flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :defer nil
+    :bind (("M-g M-n" . flycheck-next-error)
+           ("M-g M-p" . flycheck-previous-error)
+           ("M-g M-f" . flycheck-first-error)
+           ("M-g M-l" . flycheck-list-errors))
+    :hook (after-init . global-flycheck-mode))
+#+END_SRC
+** flycheck-pos-tip
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck-pos-tip
+    :after flycheck
+    :config
+    (with-eval-after-load 'flycheck
+      (flycheck-pos-tip-mode)))
+#+END_SRC
 * dashboard
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
     :diminish page-break-lines-mode
     :init (setq dashboard-startup-banner 'logo
-                dashboard-items '((recents  . 5)
+                dashboard-items '((recents   . 5)
                                   (bookmarks . 5)
-                                  (projects . 5)
-                                  (agenda . 5)
+                                  (projects  . 5)
+                                  (agenda    . 5)
                                   (registers . 5))
                 page-break-lines-char ?-)
     :config (dashboard-setup-startup-hook))
@@ -810,7 +770,10 @@ custom tiling function to create popups by splitting the current window
     "navigate TODO items:"
     ("n" hl-todo-next "next")
     ("p" hl-todo-previous "prev")
-    ("o" hl-todo-occur "occur" :exit t))
+    ("o" hl-todo-occur "occur" :exit t)
+    ("q" nil)
+    ("<escape>" nil)
+    ("<return>" nil))
 
   (use-package hl-todo
     :commands (hl-todo-next hl-todo-previous hl-todo-occur)
@@ -905,6 +868,8 @@ custom tiling function to create popups by splitting the current window
     ("R" git-gutter:set-start-revision)
     ("C-l" reposition-window)
     ("q" nil :color blue)
+    ("<escape>" nil)
+    ("<return>" nil)
     ("Q" (progn (git-gutter-mode -1)
                 ;; git-gutter-fringe doesn't seem to
                 ;; clear the markup right away
@@ -917,6 +882,11 @@ custom tiling function to create popups by splitting the current window
   (use-package git-gutter
     :config (global-git-gutter-mode 1))
 #+END_SRC
+* git-timemachine
+#+BEGIN_SRC emacs-lisp
+  (use-package git-timemachine
+    :bind (("C-x t" . git-timemachine)))
+#+END_SRC
 * magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -924,16 +894,20 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * org
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'org-mode-hook (lambda ()  (org-indent-mode 1)))
-  (setq org-src-tab-acts-natively t)
+  (setq org-src-tab-acts-natively t
+        org-src-fontify-natively t
+        org-startup-indented t
+        org-directory (expand-file-name "~/docs/orgs/")
+        org-special-ctrl-a/e t
+        org-special-ctrl-k t
+        org-special-ctrl-o t
+        org-src-window-setup 'current-window)
 #+END_SRC
 ** org-bullets
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :commands org-bullets-mode
-    :init
-    (setq org-src-window-setup 'current-window) ; TODO do I like this behavior?
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    :hook (org-mode . org-bullets-mode))
 #+END_SRC
 ** avoid arrow keys
 #+BEGIN_SRC emacs-lisp
@@ -972,6 +946,68 @@ automatically enable spell checking in latex buffers
                   '(:with company-yasnippet))))
 
       (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+#+END_SRC
+* appearance
+#+BEGIN_SRC emacs-lisp
+    (setq ring-bell-function #'ignore
+          inhibit-startup-screen t
+          inhibit-x-resources t)
+
+    ;; disable the startup message
+    (defun display-startup-echo-area-message ())
+#+END_SRC
+** prettify symbols
+#+BEGIN_SRC emacs-lisp
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+*** lisp
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook (lambda () (mapc (lambda (pair) (push pair prettify-symbols-alist))
+                                              '(("nil" . "∅")))))
+#+END_SRC
+** appearance customisations only for graphical sessions
+#+BEGIN_SRC emacs-lisp
+  (when window-system
+    (global-hl-line-mode 1)
+    (tool-bar-mode 0)
+    ;; (tooltip-mode 0)
+    (scroll-bar-mode 0)
+    (blink-cursor-mode 0)
+    (setq use-dialog-box nil))
+#+END_SRC
+** mode line
+#+BEGIN_SRC emacs-lisp
+  (column-number-mode 1)
+#+END_SRC
+** input
+insert some dead keys literally
+#+BEGIN_SRC emacs-lisp
+  (define-key key-translation-map [dead-grave] "`")
+  (define-key key-translation-map [dead-acute] "'")
+  (define-key key-translation-map [dead-circumflex] "^")
+  (define-key key-translation-map [dead-diaeresis] "\"")
+  (define-key key-translation-map [dead-tilde] "~")
+#+END_SRC
+** theme
+#+BEGIN_SRC emacs-lisp
+  (setq frame-background-mode 'dark)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package gruvbox-theme
+    :defer nil
+    :init
+    (load-theme 'gruvbox-dark-hard 'noconfirm))
+
+  (use-package solarized-theme
+    :disabled
+    :defer nil
+    :config (load-theme 'solarized-dark 'noconfirm))
+#+END_SRC
+** cursor
+#+BEGIN_SRC emacs-lisp
+  ;; make cursor match character width (e.g. for tab characters)
+  (setq x-stretch-cursor t)
 #+END_SRC
 * misc
 ** edit files as root using tramp
