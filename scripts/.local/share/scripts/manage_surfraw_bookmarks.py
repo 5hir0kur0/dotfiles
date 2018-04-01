@@ -19,7 +19,7 @@ MAX_LENGTH_TITLE = 0
 MAX_LENGTH_TAGS = 0
 MAX_LENGTH_URL = 0
 SHORT_URL = True
-WHITESPACE = re.compile("\s+")
+WHITESPACE = re.compile(r"\s+")
 
 # class FindTitleParser(HTMLParser):
 #     def __init__(self):
@@ -45,9 +45,9 @@ WHITESPACE = re.compile("\s+")
 # if there are no tags or no title, use special value:
 NO_VALUE = "@@NONE@@"
 class Bookmark():
-    tags_regex = re.compile("^\s*$|^\w+(?:,\w+)*$")
-    name_regex = re.compile("^\w+$")
-    http_regex = re.compile("^https?://(?:www\d*\.)?")
+    tags_regex = re.compile(r"^\s*$|^\w+(?:,\w+)*$")
+    name_regex = re.compile(r"^\w+$")
+    http_regex = re.compile(r"^https?://(?:www\d*\.)?")
     def __init__(self, s):
         split = s.split(None, 1)
         if not len(split) == 2:
