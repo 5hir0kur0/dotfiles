@@ -530,6 +530,12 @@ just a test
            ("M-j" . avy-goto-word-1)
            ("M-l" . avy-goto-line)))
 #+END_SRC
+** avy zap
+#+BEGIN_SRC emacs-lisp
+  (use-package avy-zap
+    :bind (("M-z" . avy-zap-to-char)
+           ("C-t" . avy-zap-up-to-char)))
+#+END_SRC
 * which-key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
