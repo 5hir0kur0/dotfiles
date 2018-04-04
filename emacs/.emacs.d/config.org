@@ -171,6 +171,14 @@ remove the initial message shown in the scratch buffer
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-g f") #'find-file-at-point)
 #+END_SRC
+*** toggle truncate lines
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c t t") #'toggle-truncate-lines)
+#+END_SRC
+*** delete trailing whitespace
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c t d") #'delete-trailing-whitespace)
+#+END_SRC
 ** use hippie-expand
 #+BEGIN_SRC emacs-lisp
   ;; move the line expansion to the very end of the list
