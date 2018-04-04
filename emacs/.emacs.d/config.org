@@ -351,7 +351,7 @@ hide certain minor modes from the mode line
   ;; (setq linum-format "%5d ")
   (add-hook 'prog-mode-hook
             (lambda ()
-              (linum-mode 1)              ; display line numbers
+              ;; (linum-mode 1)              ; display line numbers
               (subword-mode 1) ; allows you to jump by words in CamelCase words
               (diminish 'subword-mode) ;  hide subword mode from modeline
               (flyspell-prog-mode)))       ; check spelling in comments
@@ -709,10 +709,10 @@ custom tiling function to create popups by splitting the current window
                 ("C-<down>"        . sp-rewrap-sexp)
                 ("C-<right>"       . sp-forward-slurp-sexp)
                 ("M-]"             . sp-forward-slurp-sexp)
-                ("M-{"             . sp-backward-slurp-sexp)
+                ("M-C-["           . sp-backward-slurp-sexp)
                 ("C-<left>"        . sp-forward-barf-sexp)
                 ("M-["             . sp-forward-barf-sexp)
-                ("M-}"             . sp-backward-barf-sexp)
+                ("M-C-]"           . sp-backward-barf-sexp)
                 ("M-s M-s"         . sp-slurp-hybrid-sexp)
                 ("M-s M-t"         . sp-transpose-hybrid-sexp)
                 ("M-s M-p"         . sp-push-hybrid-sexp)
@@ -1041,37 +1041,55 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
 #+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
-  ;; ;; disabled for now ;-)
+  (defun my/toggle-evil ()
+    "Toggle evil mode."
+    (interactive)
+    (if (bound-and-true-p evil-mode)
+        (evil-mode -1)
+      (evil-mode 1)))
 
-  ;; ;; use emacs state instead of evil insert state
-  ;; (defalias 'evil-insert-state 'evil-emacs-state)
+  (use-package evil
+    :bind*
+    (("C-z" . my/toggle-evil))
 
-  ;; ;; indicate state via cursor
-  ;; (setq evil-normal-state-cursor '(box "firebrick")
-  ;;       evil-emacs-state-cursor '(bar "white")
-  ;;       evil-insert-state-cursor '(bar "red"))
+    :init
+    ;; indicate state via cursors
+    (setq evil-normal-state-cursor '(box "firebrick")
+          evil-emacs-state-cursor '(bar "white")
+          evil-insert-state-cursor '(bar "red"))
 
-  ;; (evil-mode 1)
+    :config
+    ;; use emacs state instead of insert state
+    (defalias 'evil-insert-state 'evil-emacs-state)
 
-  ;; ;; use emacs state by default
-  ;; (add-to-list 'evil-emacs-state-modes 'help-mode) ; somehow this doesn't work
+    ;; make <escape> return to evil normal state from emacs mode
+    (define-key evil-emacs-state-map (kbd "<escape>") #'evil-normal-state)
 
-  ;; (define-key evil-normal-state-map (kbd "TAB") nil)
-  ;; (define-key evil-normal-state-map (kbd "<tab>") nil)
+    (add-to-list 'evil-emacs-state-modes 'help-mode)
+    ;; (add-to-list 'evil-emacs-state-modes 'Info-mode)
 
-  ;; ;; restore some emacs functionality in normal state
-  ;; (define-key evil-normal-state-map (kbd "C-n") 'next-line)
-  ;; (define-key evil-normal-state-map (kbd "C-p") 'previous-line)
-  ;; (define-key evil-normal-state-map (kbd "C-e") 'end-of-line)
+    ;; restore some emacs functionality in normal state
+    (define-key evil-normal-state-map (kbd "C-n") #'next-line)
+    (define-key evil-normal-state-map (kbd "C-p") #'previous-line)
+    (define-key evil-normal-state-map (kbd "C-e") #'end-of-line)
 
-  ;; ;; make <escape> return to evil normal state from emacs mode
-  ;; (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
+    (define-key evil-normal-state-map (kbd "TAB") nil)
+    (define-key evil-normal-state-map (kbd "<tab>") nil)
 
-  ;; ;; make <escape><escape><escape> work as expected
-  ;; (defhydra evil-escape-hydra (:color blue
-  ;;                              :idle 0.1)
-  ;;   ("<escape>"  keyboard-escape-quit "keyboard-quit"))
-  ;; (define-key evil-normal-state-map (kbd "<escape>") #'evil-escape-hydra/body)
+    ;; make SPC in normal state act like C-c
+    ;; stolen from https://emacs.stackexchange.com/a/13432
+    (defun simulate-key-press (key)
+      "Pretend that KEY was pressed.
+  KEY must be given in `kbd' notation."
+      `(lambda () (interactive)
+         (setq prefix-arg current-prefix-arg)
+         (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
+
+    (define-key evil-normal-state-map (kbd "SPC") (simulate-key-press "C-c"))
+    (define-key mode-specific-map (kbd "SPC") #'execute-extended-command)
+
+    (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
+    (define-key evil-operator-state-map (kbd "<escape>") #'evil-force-normal-state))
 #+END_SRC
 ** show startup message
 #+BEGIN_SRC emacs-lisp
