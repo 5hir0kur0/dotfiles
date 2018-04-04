@@ -1,5 +1,5 @@
 [global]
-    font = "Inconsolata 12"
+    font = "Inconsolata 14"
 
     # frame
     frame_width = 2
@@ -176,6 +176,10 @@
 
     # Context menu.
     context = ctrl+minus
+
+[experimental]
+    # TODO
+    per_monitor_dpi = true
 
 ## Theme
 
