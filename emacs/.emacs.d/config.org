@@ -150,6 +150,7 @@ remove the initial message shown in the scratch buffer
                     '(whitespace-empty ((t (:background "black")))))
 
   (add-hook 'prog-mode-hook (lambda () (whitespace-mode 1) (diminish 'whitespace-mode)))
+  (add-hook 'conf-mode-hook (lambda () (whitespace-mode 1) (diminish 'whitespace-mode)))
 #+END_SRC
 ** bind useful but unbound commands
 *** revert-buffer
@@ -469,19 +470,18 @@ just a test
   (use-package counsel
     :defer nil                            ; TODO manually map all things instead of using counsel-mode / ivy-mode
     :diminish (counsel-mode ivy-mode)
-    :bind (("C-s" . swiper)
+    :bind (("C-s"     . swiper)
            ("C-c C-r" . ivy-resume)
            ("C-h C-l" . counsel-find-library)
            ("C-h C-i" . counsel-info-lookup-symbol)
            ("C-h C-c" . counsel-colors-web)
            ("C-h C-u" . counsel-unicode-char)
-           ("M-i" . counsel-semantic-or-imenu) ; TODO rebind??
-           ("M-s l" . counsel-locate)
-           ("M-s a" . counsel-ag)
-           ("M-s f" . counsel-fzf)
-           ("M-s g" . counsel-git)
-           ("M-s c" . counsel-colors-web)
-           ("M-p" . ivy-switch-buffer))
+           ("M-s l"   . counsel-locate)
+           ("M-s a"   . counsel-ag)
+           ("M-s f"   . counsel-fzf)
+           ("M-s g"   . counsel-git)
+           ("M-s c"   . counsel-colors-web)
+           ("M-p"     . ivy-switch-buffer))
       :init
     (setq ivy-use-virtual-buffers t       ; add recent files and bookmarks to buffer list
           ivy-initial-inputs-alist nil    ; don't prepend "^" by default
@@ -495,10 +495,10 @@ just a test
           ivy-format-function 'my/ivy-format-function-arrow ; display an arrow next to current candiate
           ivy-height 12
           ivy-re-builders-alist
-          '((counsel-find-file . ivy--regex-plus)
-            (swiper . ivy--regex-plus)
+          '((counsel-find-file    . ivy--regex-plus)
+            (swiper               . ivy--regex-plus)
             (counsel-unicode-char . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))
+            (t                    . ivy--regex-fuzzy)))
     :config
     (ivy-mode 1)
     (counsel-mode 1))
