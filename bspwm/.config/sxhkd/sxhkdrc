@@ -12,6 +12,10 @@ super + shift + Return
 super + ctrl + Return
         urxvt
 
+# emacs
+super + semicolon
+        toemacs.sh
+
 # lock screen
 ctrl + alt + l
         exit.sh lock; xset dpms force off
@@ -228,11 +232,11 @@ super + F1
 # network management
 super + F2
         nmcli radio wifi | grep enabled && nmcli radio wifi off \
-        || nmcli radio wifi on 
+        || nmcli radio wifi on
 
 super + shift + F2
         nmcli networking | grep enabled && nmcli networking off \
-        || nmcli networking on 
+        || nmcli networking on
 
 # brightness
 super + {plus,minus}
@@ -439,7 +443,7 @@ super + ctrl + c
 # move/resize
 #
 
-# expand a window by moving one of its side outward or make it smaller if 
+# expand a window by moving one of its side outward or make it smaller if
 # this isn't possible
 super + alt + {h,j,k,l}
         ACTION=('right -20 0' 'bottom 0 20' 'bottom 0 -20' 'right 20 0'); \
@@ -496,8 +500,12 @@ super + shift + ctrl + r
 
 super + ctrl + e
         bspc query -N -n .leaf.focused.local && bspc node @/ --equalize || \
-        bspc node --equalize 
+        bspc node --equalize
 
 super + ctrl + b
         bspc query -N -n .leaf.focused.local && bspc node @/ --balance || \
-        bspc node --balance 
+        bspc node --balance
+
+# Local Variables:
+# mode: conf
+# End:

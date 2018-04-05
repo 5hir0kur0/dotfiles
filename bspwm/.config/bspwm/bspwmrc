@@ -76,5 +76,5 @@ pgrep -x unclutter || { sleep 5; unclutter -noevents -root -idle 8; } &
 bspc rule -a scratchpad-terminal sticky=on state=floating hidden=on private=on layer=above
 bspc rule -a Zathura state=tiled
 bspc rule -a '*:libreoffice' state=tiled
-bspc rule -a Emacs state=tiled
+bspc rule -a Emacs state=tiled desktop=e
 bspc rule -a mpv state=floating sticky=on locked=on private=on focus=off rectangle=615x350+1285+710 layer=above
