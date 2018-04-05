@@ -378,6 +378,10 @@ super + shift + {p,n}
 super + {_,ctrl} + m
         bspc desktop -f {next,prev} && bspwm_workspace.sh reset
 
+# focus other monitor
+super + alt + m
+        bspc monitor -f next
+
 # move node to next/previous desktop
 super + shift + {_,ctrl} + m
         bspc node -d {next,prev}

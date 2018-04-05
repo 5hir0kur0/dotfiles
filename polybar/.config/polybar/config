@@ -26,7 +26,7 @@ aqua = #689d6a
 gray = #a89984
 
 [bar/bspwm]
-;monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:eDP-1}
 width = 100%
 height = 23
 ;offset-x = 1%

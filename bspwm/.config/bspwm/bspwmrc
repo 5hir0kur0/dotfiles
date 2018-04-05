@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # TODO remove this later
-#set -x
-#exec 1>/tmp/deblog 2>&1
+set -x
+exec 1>/tmp/deblog 2>&1
 
 (
     bspc monitor -d 0
     bspc subscribe monitor | while read -r LINE; do
+    MONITOR_ID="$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')"
+    MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm &
     grep '^monitor_geometry' <<< "$LINE" \
-        && bspc monitor -f "$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')" \
+        && bspc monitor -f "$MONITOR_ID" \
         && bspwm_workspace.sh switch_new
     done
 ) &
@@ -60,7 +62,6 @@ xsetroot -cursor_name left_ptr &
 xrdb -merge ~/.Xresources &
 
 pgrep -x compton || { sleep 0.05; compton; } &
-pgrep -x polybar || polybar bspwm &
 pgrep -x nm-applet || { sleep 0.2; nm-applet; } &
 pgrep -x redshift-gtk || { sleep 0.2; redshift-gtk; } &
 pgrep -x keynav || { sleep 0.9; keynav; } &

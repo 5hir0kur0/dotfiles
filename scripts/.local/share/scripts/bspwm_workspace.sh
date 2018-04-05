@@ -45,7 +45,7 @@ move_to() {
 
 reorder() {
     readarray -t DESKTOPS < <(bspc query --names -D -m focused | sort -fV | grep -vP '^\s*$')
-    bspc monitor -o "${DESKTOPS[@]}" # doesn't seem to do anything
+    bspc monitor -o "${DESKTOPS[@]}" # doesn't seem to do anything to the currently focused monitor
 }
 
 reset() {
@@ -55,9 +55,9 @@ reset() {
     #     <(bspc query --names -D -d -m focused) | awk '!seen[$0]++')
     # # awk command stolen from: https://unix.stackexchange.com/a/11941
     # bspc monitor -d "${DESKTOPS[@]}"
-    
+
     # remove unoccupied desktops instead of a hard reset
-    IFS=$'\n' DESKTOPS=($(bspc query -D -d '.!occupied.!focused' -m focused))
+    IFS=$'\n' DESKTOPS=("$(bspc query -D -d '.!occupied.!focused' -m focused)")
     for ID in "${DESKTOPS[@]}"; do
         bspc desktop "$ID" -r
     done
