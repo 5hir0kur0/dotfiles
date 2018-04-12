@@ -58,7 +58,7 @@ font-4 = Sans:pixelsize=13:fontformat=truetype;4
 modules-left = showmode bspwm bspwmmode
 modules-center = title
 ;modules-right = filesystem xbacklight volume xkeyboard memory cpu battery temperature date
-modules-right = filesystem backlight-acpi volume memory cpu battery temperature date
+modules-right = filesystem backlight-acpi volume memory cpu battery temperature xkeyboard wlan eth date powermenu
 
 tray-position = right
 tray-padding = 1
@@ -74,11 +74,24 @@ wm-restack = bspwm
 
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
+;
+[bar/bspwm_secondary]
+inherit = bar/bspwm
+monitor = ${env:MONITOR:HDMI-1}
+height = 42
+; TODO is there another way to disable the tray?
+tray-position =
+; TODO: does this work?
+font-0 = Inconsolata:pixelsize=20;1
+; font-1 = unifont:fontformat=truetype:pixelsize=24:antialias=false;1
+; font-2 = wuncon siji:pixelsize=24;1
+; font-3 = InconsolataGo Nerd Font:fontformat=truetype;pixelsize=24;3
+; font-4 = Sans:pixelsize=24:fontformat=truetype;4
 
 [module/showmode]
 type = custom/script
 tail = true
-exec = polybar_modestring.sh
+exec = tail -n 1 -F /tmp/.sxhkd_modestring 2>/dev/null
 format-background = ${colors.background-alt}
 format-padding = 1
 
@@ -251,7 +264,7 @@ label = %percentage_used:2%%
 
 [module/wlan]
 type = internal/network
-interface = 
+interface = wlp1s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
@@ -273,7 +286,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = 
+interface = enp2s0
 interval = 3.0
 
 format-connected-underline = #55aa55
