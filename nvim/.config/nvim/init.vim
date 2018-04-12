@@ -104,6 +104,9 @@ set undodir=~/.local/share/nvim/undo//
 " save undo history to a file
 set undofile
 
+" use escape to exit out of terminal input
+tnoremap <Esc> <C-\><C-n>
+
 " use :help insted of !man to look up word below cursor with K
 set keywordprg=:help
 
