@@ -302,6 +302,10 @@ super + shift + {button4,button5}
             bspc config window_gap "$GAP"; \
         fi
 
+# move desktops between monitors
+super + {greater,less}
+        bspwm_monitor.sh {next,prev}
+
 #
 # state/flags
 #
