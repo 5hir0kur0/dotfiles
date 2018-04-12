@@ -1,17 +1,25 @@
 #!/bin/bash
 
+FIFO_PATH=/tmp/.sxhkd
+SXHKD_PATH=~/.config/sxhkd/sxhkdrc
+
 # TODO remove this later
 set -x
 exec 1>/tmp/deblog 2>&1
 
 (
     bspc monitor -d 0
-    bspc subscribe monitor | while read -r LINE; do
-    MONITOR_ID="$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')"
-    MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm &
-    grep '^monitor_geometry' <<< "$LINE" \
-        && bspc monitor -f "$MONITOR_ID" \
-        && bspwm_workspace.sh switch_new
+    # FIRST_RUN=1
+    bspc subscribe monitor_geometry monitor_add | while read -r LINE; do
+        MONITOR_ID="$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')"
+        bspc monitor -f "$MONITOR_ID" && bspwm_workspace.sh switch_new
+        launch_polybar.sh &
+        # if [ "$FIRST_RUN" = 1 ]; then
+        #     MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm &
+        #     FIRST_RUN=0
+        #  else
+        #     MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm_secondary &
+        # fi
     done
 ) &
 
