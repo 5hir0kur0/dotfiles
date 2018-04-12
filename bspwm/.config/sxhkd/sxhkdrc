@@ -30,6 +30,7 @@ ctrl + alt + l
 # MODE: wallpaper: (n)ext, (p)revious
 super + x ; w : n
         set_wallpaper.sh
+
 super + x ; w : p
         set_wallpaper.sh pop
 
@@ -178,38 +179,29 @@ super + Pause; {l,e,s,r,shift + s,h,ctrl + s}
         exit.sh {lock,logout,suspend,reboot,shutdown,hibernate,hybrid_sleep}
 
 # volume
-XF86AudioRaiseVolume
-        pulse.sh up
-
-XF86AudioLowerVolume
-        pulse.sh down
+{XF86AudioRaiseVolume,XF86AudioLowerVolume}
+        pulse.sh {up,down}
 
 XF86AudioMute
         pulse.sh mute
 
-ctrl + XF86AudioRaiseVolume
-        pulse.sh up 1
+ctrl + {XF86AudioRaiseVolume,XF86AudioLowerVolume}
+        pulse.sh {up,down} 1
 
-ctrl + XF86AudioLowerVolume
-        pulse.sh down 1
+super + {F12,F11}
+        pulse.sh {up,down}
 
-super + F12
-        pulse.sh up
+super + {Up,Down}
+        pulse.sh {up,down}
 
-super + F11
-        pulse.sh down
+super + ctrl + {Up,Down}
+        pulse.sh {up,down} 1
 
-super + ctrl + F12
-        pulse.sh up 1
+super + ctrl + {F12,F11}
+        pulse.sh {up,down} 1
 
-super + ctrl + F11
-        pulse.sh down 1
-
-super + shift + F12
-        pulse.sh force_up
-
-super + shift + F11
-        pulse.sh force_down
+super + shift + {F12,F11}
+        pulse.sh force_{up,down}
 
 super + F10
         pulse.sh mute
@@ -255,8 +247,6 @@ super + q
 #
 # bspwm hotkeys
 #
-
-# TODO: use super + more / super + less to move desktops between monitors
 
 # close and kill
 super + {shift,ctrl} + q
