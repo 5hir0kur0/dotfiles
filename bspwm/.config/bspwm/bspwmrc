@@ -27,6 +27,32 @@ exec 1>/tmp/deblog 2>&1
 [ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
 pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
 
+find_docstring() {
+    MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | cut -d' ' -f3-)
+}
+
+(
+    exec 1>/tmp/.sxhkd_modestring 2>/dev/null
+    MODE=
+    MODE_PREV=
+    PREV=
+
+    while read -r LINE; do
+        if [[ "$LINE" =~ ^EEnd\ chain ]]; then
+            MODE=
+        elif [[ "$LINE" =~ ^BBegin\ chain ]]; then
+            find_docstring "${PREV#H}"
+        elif [[ "$LINE" =~ ^H[^\;]+\;[^\;0-9]+$ ]]; then
+            find_docstring "${LINE#H}"
+        fi
+        if [[ "$MODE" != "$MODE_PREV" ]]; then
+            echo "$MODE"
+        fi
+        PREV=$LINE
+        MODE_PREV=$MODE
+    done < $FIFO_PATH
+) &
+
 
 
 # config
@@ -48,7 +74,7 @@ bspc config pointer_follows_monitor     true
 bspc config ignore_ewmh_focus           false
 bspc config center_pseudo_tiled         true
 bspc config honor_size_hints            false
-bspc config remove_disabled_monitors    false #?
+bspc config remove_disabled_monitors    true #?
 bspc config remove_unplugged_monitors   true
 bspc config directional_focus_tightness low # test
 bspc config initial_polarity            first_child
@@ -69,16 +95,14 @@ xsetroot -cursor_name left_ptr &
 
 xrdb -merge ~/.Xresources &
 
-pgrep -x compton || { sleep 0.05; compton; } &
+# pgrep -x compton || { sleep 0.05; compton; } &
 pgrep -x nm-applet || { sleep 0.2; nm-applet; } &
 pgrep -x redshift-gtk || { sleep 0.2; redshift-gtk; } &
 pgrep -x keynav || { sleep 0.9; keynav; } &
 pgrep -x dunst || { sleep 0.1; dunst; } &
-pgrep -x xautolock || { sleep 10; xautolock -time 10 -locker "$HOME/.local/share/scripts/exit.sh lock"; } &
+pgrep -x xautolock || { sleep 10; xautolock -time 20 -locker "$HOME/.local/share/scripts/exit.sh lock"; } &
 pgrep -x udiskie || { sleep 1; udiskie --use-udisks2 --no-automount --tray; } &
 pgrep -x unclutter || { sleep 5; unclutter -noevents -root -idle 8; } &
-
-
 
 # rules
 bspc rule -a scratchpad-terminal sticky=on state=floating hidden=on private=on layer=above
