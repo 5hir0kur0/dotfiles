@@ -7,7 +7,7 @@ MODE_PREV=
 PREV=
 
 find_docstring() {
-    MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | cut -d' ' -f3-)
+    MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | head -1 | cut -d' ' -f3-)
 }
 
 while read -r LINE; do

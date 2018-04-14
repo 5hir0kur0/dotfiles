@@ -21,7 +21,7 @@ DESKTOP="$(bspc query -D -d '.focused' -m focused)"
 case "$1" in
     terminal)
         if ! xdotool search --class --classname "$SCRATCHCLASS" > /dev/null 2>&1; then
-            st -c "$SCRATCHCLASS" -g 130x60 -e tmux new-session -As0 &
+            st -c "$SCRATCHCLASS" -g 130x42 -e tmux new-session -As0 &
             sleep 0.1
         fi
 

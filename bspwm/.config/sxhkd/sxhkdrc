@@ -128,7 +128,7 @@ super + shift + v
 # toggle polybar
 super + shift + x ; b
         pgrep -x polybar && killall polybar && bspc config top_padding 0 \
-        && bspc config bottom_padding 0 || polybar bspwm
+        && bspc config bottom_padding 0 || launch_polybar.sh
 
 # toggle gaps
 super + shift + x ; g
