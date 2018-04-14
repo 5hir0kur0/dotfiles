@@ -1,5 +1,5 @@
 [global]
-    font = "Inconsolata 14"
+    font = "Inconsolata 10"
 
     # frame
     frame_width = 2
@@ -170,8 +170,6 @@
     close_all = ctrl+shift+space
 
     # Redisplay last message(s).
-    # On the US keyboard layout "grave" is normally above TAB and left
-    # of "1".
     history = ctrl+mod1+period
 
     # Context menu.
@@ -267,3 +265,6 @@
     history_ignore = yes
 
 # vim: ft=cfg
+# Local Variables:
+# mode: conf-unix
+# End:
