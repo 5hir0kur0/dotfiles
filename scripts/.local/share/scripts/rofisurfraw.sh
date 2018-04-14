@@ -33,7 +33,7 @@ ROFI_ARGS=" -kb-row-select Tab -kb-row-tab Control+space -dmenu -i \
 
 # call with list function as first argument
 get_surfraw_url() {
-    PRM='web:'
+    PRM='web'
     # lack of double quotes intentional
     LIST="$($1)"
     ARG="$(rofi $ROFI_ARGS -p "$PRM" -mesg "$MSG" <<< "$LIST")"
@@ -54,7 +54,7 @@ get_surfraw_url() {
 }
 
 get_bookmark() {
-    PRM='bkm:'
+    PRM='bkm'
     ARG="$(list_bookmarks | rofi $ROFI_ARGS -p "$PRM" -mesg "$MSG")"
     [ -n "$ARG" ] && tr -s ' ' <<< "$ARG" | cut -f 2 -d ' '
 }
