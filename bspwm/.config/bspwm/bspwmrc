@@ -28,7 +28,7 @@ exec 1>/tmp/deblog 2>&1
 pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
 
 find_docstring() {
-    MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | cut -d' ' -f3-)
+    MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | head -1 | cut -d' ' -f3-)
 }
 
 (
@@ -57,7 +57,7 @@ find_docstring() {
 
 # config
 
-bspc config border_width                1
+bspc config border_width                2
 bspc config window_gap                  15
 bspc config split_ratio                 0.54
 bspc config borderless_monocle          false
