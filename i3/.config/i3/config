@@ -99,7 +99,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_extended "xtended: (b)ookm., (B)ash, (c/C)alc., (f)ocus, (k) compton, (m)an, (p/P)ython, (s)crot, (t)erm, (w)allp., (x)dg"
+set $mode_extended "xtended: (b)ookm., (B)ash, (c/C)alc., (f)ocus, (k) compton, (m)an, (p/P)ython, (r)anger, (s)crot, (t)erm, (w)allp., (x)dg"
 mode $mode_extended {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
@@ -110,6 +110,7 @@ mode $mode_extended {
     bindsym p exec --no-startup-id rofi -no-sidebar-mode -show py -modi "py:$rofipythonscript", mode "default"
     bindsym Shift+p exec --no-startup-id $rofiinteractivescript python, mode "default"
     bindsym Shift+B exec --no-startup-id $rofiinteractivescript bash, mode "default"
+    bindsym r exec --no-startup-id urxvt -e tmux new-session -A -s ranger ranger, mode "default"
 
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
     bindsym k mode $mode_compton
