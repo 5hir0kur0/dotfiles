@@ -941,6 +941,46 @@ automatically enable spell checking in latex buffers
   (add-hook 'tex-mode-hook
             #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1) (flyspell-buffer)))
 #+END_SRC
+* haskell
+#+BEGIN_SRC emacs-lisp
+  (use-package haskell-mode
+    ;; :hook ((haskell-mode . haskell-doc-mode))
+    ;; (haskell-mode . turn-on-haskell-unicode-input-method))
+    :init
+    ;; fix "unexpected response from haskell process" error
+    ;; TODO remove if this gets fixed
+    (setq haskell-process-args-ghci
+          '("-ferror-spans" "-fshow-loaded-modules")
+          haskell-process-args-cabal-repl
+          '("--ghc-options=-ferror-spans -fshow-loaded-modules")
+          haskell-process-args-stack-ghci
+          '("--ghci-options=-ferror-spans -fshow-loaded-modules"
+            "--no-build" "--no-load")
+          haskell-process-args-cabal-new-repl
+          '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
+    :config
+    ;; stolen from https://haskell.github.io/haskell-mode/manual/latest/Completion-support.html#Completion-support
+    (add-hook 'haskell-mode-hook
+              (lambda ()
+                (set (make-local-variable 'company-backends)
+                     (append '((company-capf company-dabbrev-code)) company-backends))))
+#+END_SRC
+** hindent
+#+BEGIN_SRC emacs-lisp
+  (use-package hindent
+    :after haskell-mode
+    :hook (haskell-mode . hindent-mode))
+#+END_SRC
+** interactive mode
+#+BEGIN_SRC emacs-lisp
+  (defun my/haskell-interactive-keybindings (&rest args)
+      "Set up keybindings for haskell interactive mode. Ignore ARGS."
+    (define-key interactive-haskell-mode-map (kbd "M-.") #'haskell-mode-goto-loc)
+    (define-key interactive-haskell-mode-map (kbd "C-c C-t") #'haskell-mode-show-type-at))
+
+  ;; there doesn't seem to be a hook for interactive mode (?)
+  (advice-add #'interactive-haskell-mode :after #'my/haskell-interactive-keybindings)
+#+END_SRC
 * yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -1014,8 +1054,22 @@ insert some dead keys literally
     (load-theme 'gruvbox-dark-hard 'noconfirm))
 
   (use-package solarized-theme
-    :disabled
     :defer nil
+    :disabled
+    :init (setq solarized-distinct-fringe-background t ; Make the fringe stand out from the background
+                solarized-use-variable-pitch nil ; Don't change the font for some headings and titles
+                solarized-high-contrast-mode-line nil ; Make the mode line high contrast
+                solarized-use-less-bold t ; Use less bolding
+                solarized-use-more-italic t ; Use more italics
+                solarized-emphasize-indicators t
+                solarized-scale-org-headlines t
+                ;; Avoid all font-size changes
+                solarized-height-minus-1 1.0
+                solarized-height-plus-1 1.0
+                solarized-height-plus-2 1.0
+                solarized-height-plus-3 1.0
+                solarized-height-plus-4 1.0
+                x-underline-at-descent-line t)
     :config (load-theme 'solarized-dark 'noconfirm))
 #+END_SRC
 ** cursor
