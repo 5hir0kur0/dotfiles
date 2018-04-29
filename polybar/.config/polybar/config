@@ -58,7 +58,7 @@ font-4 = Sans:pixelsize=13:fontformat=truetype;4
 modules-left = showmode bspwm bspwmmode
 modules-center = title
 ;modules-right = filesystem xbacklight volume xkeyboard memory cpu battery temperature date
-modules-right = filesystem backlight-acpi volume memory cpu battery temperature xkeyboard wlan eth date powermenu
+modules-right = filesystem backlight-acpi volume memory cpu battery temperature xkeyboard wlan eth vpn date powermenu
 
 tray-position = right
 tray-padding = 1
@@ -90,10 +90,22 @@ font-0 = Inconsolata:pixelsize=20;1
 
 [module/showmode]
 type = custom/script
-tail = true
-exec = tail -n 1 -F /tmp/.sxhkd_modestring 2>/dev/null
+; tail = true
+; exec = tail -n 1 -F /tmp/.sxhkd_modestring 2>/dev/null
+exec = tail -n 1 /tmp/.sxhkd_modestring 2>/dev/null
 format-background = ${colors.background-alt}
 format-padding = 1
+interval=0.1
+
+; stolen from https://github.com/jaagr/polybar/wiki/Module:-script
+[module/vpn]
+type = custom/script
+exec = echo vpn
+exec-if = pgrep -x vpnc || pgrep -x openvpn
+interval = 5
+format-underline = #268bd2
+format-prefix = "🖧 "
+format-prefix-foreground = #5b
 
 [module/title]
 type = internal/xwindow
