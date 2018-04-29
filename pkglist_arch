@@ -118,6 +118,7 @@ pulseaudio
 pulseaudio-alsa
 pv
 python-beautifulsoup4
+python-llfuse
 python-numpy
 python-pip
 python-xdg
