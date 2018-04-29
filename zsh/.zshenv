@@ -58,6 +58,7 @@ alias v=nvim
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias wdiff='\dwdiff --color'
+alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias -g g='grep'
 
