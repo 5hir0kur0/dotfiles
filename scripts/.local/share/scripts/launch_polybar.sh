@@ -5,14 +5,14 @@
 old_bars=$(pgrep -x polybar)
 
 primary=$(xrandr --query | grep -P " connected .*primary" | cut -d" " -f1)
-MONITOR=$primary polybar --reload bspwm &
+MONITOR=$primary polybar bspwm &
 
 if type "xrandr"; then
   for m in $(xrandr --query | grep -P " connected \\d+" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload bspwm_secondary &
+    MONITOR=$m polybar bspwm_secondary &
   done
 else
-  polybar --reload bspwm &
+  polybar bspwm &
 fi
 
 for bar in $old_bars; do
