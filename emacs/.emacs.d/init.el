@@ -10,6 +10,13 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; This does not seem to work if I set it from within config.org.
+;; set font
+(add-to-list 'default-frame-alist '(font . "Monaco 13"))
+;; use Noto as fallback font
+(set-fontset-font "fontset-default" 'unicode
+                  (font-spec :name "Noto Sans Mono"))
+
 (defvar my/config-mtime-file-path (expand-file-name "~/.emacs.d/.config-last-compiled-time"))
 (defvar my/config-file-path (file-truename (expand-file-name "~/.emacs.d/config.org")))
 (defvar my/config-file-tangled (expand-file-name "~/.emacs.d/config.el"))
