@@ -16,7 +16,7 @@ start_emacs() {
     else
         i3-msg workspace $EMACS_DESKTOP
     fi
-    emacs
+    XMODIFIERS=@im=none emacs   # fix compose key not working
 }
 
 emacs_running() {
