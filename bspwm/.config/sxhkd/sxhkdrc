@@ -212,7 +212,7 @@ super + ctrl + z
 
 # disable display
 super + F9
-        xset dpms force off
+        sleep 0.5; xset dpms force off
 
 # power management
 super + F4
