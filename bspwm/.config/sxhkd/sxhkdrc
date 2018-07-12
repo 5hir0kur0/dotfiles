@@ -503,3 +503,4 @@ super + ctrl + b
 # Local Variables:
 # mode: conf
 # End:
+# vi: ft=conf
