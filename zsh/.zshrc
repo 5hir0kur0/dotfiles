@@ -125,3 +125,6 @@ bindkey '^J' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
 
+# disable annoying ctrl-s and ctrl-q commands
+stty stop undef
+stty start undef
