@@ -4,4 +4,4 @@ export EDITOR=nvim
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
-export BUILDDIR=/tmp/
+export BUILDDIR=/tmp/.build-$USER
