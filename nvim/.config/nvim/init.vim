@@ -131,10 +131,6 @@ inoremap <silent> <C-c> <Esc><Esc>
 " avoid <esc> delay
 noremap <silent> <Esc> <Esc><Esc>
 
-" switch tabs faster
-noremap <silent> <Tab> gt
-noremap <silent> <S-Tab> gT
-
 " save from insert mode
 inoremap <silent> <C-s> <Esc>:update<CR>a
 nnoremap <silent> <C-s> :update<CR>
@@ -189,15 +185,15 @@ set termguicolors
 " enable syntax highlighting
 syntax enable
 
-colorscheme gruvbox
+colorscheme solarized8_dark
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_exclude_preview = 0
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-" (lucius is also nice)
-let g:airline_theme = 'minimalist'
+" (minimalist is also nice)
+let g:airline_theme = 'lucius'
 " let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 1
 
