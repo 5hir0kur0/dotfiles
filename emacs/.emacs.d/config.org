@@ -72,6 +72,10 @@ don't recenter point while scrolling
 #+BEGIN_SRC emacs-lisp
   (setq scroll-conservatively 100)
 #+END_SRC
+increase scroll context
+#+BEGIN_SRC emacs-lisp
+  (setq next-screen-context-lines 5)
+#+END_SRC
 *** sentence-based navigation
 #+BEGIN_SRC emacs-lisp
   (setq sentence-end-double-space nil)
@@ -111,8 +115,10 @@ delete the active region's contents when something is typed
 #+END_SRC
 ** nicer line wrapping
 #+BEGIN_SRC emacs-lisp
-  (global-visual-line-mode 1)
-  (diminish 'visual-line-mode)
+  ; (global-visual-line-mode 1)
+  ; (diminish 'visual-line-mode)
+  (setq-default truncate-lines :t)        ; truncate lines by default
+
 #+END_SRC
 ** show matching parentheses
 #+BEGIN_SRC emacs-lisp
@@ -687,7 +693,7 @@ custom tiling function to create popups by splitting the current window
     (sp-kill-sexp (- prefix)))
 
   (use-package smartparens
-    :hook (prog-mode . turn-on-smartparens-strict-mode)
+    ;:hook (prog-mode . turn-on-smartparens-strict-mode)
     :bind (:map smartparens-mode-map
                 ("C-M-f"           . sp-forward-sexp)
                 ("C-M-b"           . sp-backward-sexp)
@@ -701,6 +707,8 @@ custom tiling function to create popups by splitting the current window
                 ("C-M-<backspace>" . my/sp-kill-sexp-backward)
                 ("C-M-t"           . sp-transpose-sexp)
                 ("M-s M-k"         . sp-kill-hybrid-sexp)
+                ("C-K"             . sp-kill-hybrid-sexp)
+                ("C-k"             . kill-line)
                 ("M-s M-u"         . sp-backward-unwrap-sexp) ; TODO which of these bindings do I like best?
                 ("M-s M-r"         . sp-rewrap-sexp)
                 ("M-U"             . sp-backward-unwrap-sexp)
@@ -730,7 +738,7 @@ custom tiling function to create popups by splitting the current window
   (use-package spaceline
     :init
     (require 'spaceline-config)
-    (setq powerline-default-separator 'contour
+    (setq powerline-default-separator 'bar
           spaceline-line-column-p nil
           spaceline-line-p nil
           spaceline-line-column-p t)
@@ -798,6 +806,7 @@ custom tiling function to create popups by splitting the current window
 * highlight-indentation
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
+    :disabled
     :init (setq highlight-indent-guides-method 'character)
     :hook (prog-mode . highlight-indent-guides-mode))
 #+END_SRC
@@ -935,6 +944,19 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
 #+END_SRC
+* pdf
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+    :init
+    (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
+    (setq pdf-view-midnight-colors `(,(face-attribute 'default :foreground) .
+                                     ,(face-attribute 'default :background)))
+    (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+    :config
+    (add-hook 'pdf-view-mode-hook (lambda () (pdf-view-midnight-minor-mode)
+                                    (auto-revert-mode)))
+    (pdf-tools-install))
+#+END_SRC
 * tex / latex
 automatically enable spell checking in latex buffers
 #+BEGIN_SRC emacs-lisp
@@ -963,7 +985,7 @@ automatically enable spell checking in latex buffers
     (add-hook 'haskell-mode-hook
               (lambda ()
                 (set (make-local-variable 'company-backends)
-                     (append '((company-capf company-dabbrev-code)) company-backends))))
+                     (append '((company-capf company-dabbrev-code)) company-backends)))))
 #+END_SRC
 ** hindent
 #+BEGIN_SRC emacs-lisp
@@ -975,8 +997,9 @@ automatically enable spell checking in latex buffers
 #+BEGIN_SRC emacs-lisp
   (defun my/haskell-interactive-keybindings (&rest args)
       "Set up keybindings for haskell interactive mode. Ignore ARGS."
-    (define-key interactive-haskell-mode-map (kbd "M-.") #'haskell-mode-goto-loc)
-    (define-key interactive-haskell-mode-map (kbd "C-c C-t") #'haskell-mode-show-type-at))
+      (interactive)
+      (define-key interactive-haskell-mode-map (kbd "M-.") #'haskell-mode-goto-loc)
+      (define-key interactive-haskell-mode-map (kbd "C-c C-t") #'haskell-mode-show-type-at))
 
   ;; there doesn't seem to be a hook for interactive mode (?)
   (advice-add #'interactive-haskell-mode :after #'my/haskell-interactive-keybindings)
@@ -1069,7 +1092,7 @@ insert some dead keys literally
                 solarized-height-plus-2 1.0
                 solarized-height-plus-3 1.0
                 solarized-height-plus-4 1.0
-                x-underline-at-descent-line t)
+                x-underline-at-descent-line nil)
     :config (load-theme 'solarized-dark 'noconfirm))
 #+END_SRC
 ** cursor
@@ -1098,18 +1121,17 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
   (defun my/toggle-evil ()
     "Toggle evil mode."
     (interactive)
-    (if (bound-and-true-p evil-mode)
-        (evil-mode -1)
-      (evil-mode 1)))
+    (call-interactively
+     #'evil-mode))
 
   (use-package evil
     :bind*
-    (("C-z" . my/toggle-evil))
+    (("C-z" . my/toggle-evil))            ; doesn't always work; see below
 
     :init
     ;; indicate state via cursors
     (setq evil-normal-state-cursor '(box "firebrick")
-          evil-emacs-state-cursor '(bar "white")
+          evil-emacs-state-cursor '(box "white")
           evil-insert-state-cursor '(bar "red"))
 
     :config
@@ -1127,6 +1149,18 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     (define-key evil-normal-state-map (kbd "C-p") #'previous-line)
     (define-key evil-normal-state-map (kbd "C-e") #'end-of-line)
 
+    ;; this binding is here because the use-package binding seems to be
+    ;; overwritten by evil
+    (define-key evil-normal-state-map (kbd "C-z") #'my/toggle-evil)
+    ;; those ones don't seem to work...
+    (define-key evil-insert-state-map (kbd "C-z") #'my/toggle-evil)
+    (define-key evil-emacs-state-map (kbd "C-z") #'my/toggle-evil)
+    (define-key evil-operator-state-map (kbd "C-z") #'my/toggle-evil)
+
+
+
+
+
     (define-key evil-normal-state-map (kbd "TAB") nil)
     (define-key evil-normal-state-map (kbd "<tab>") nil)
 
@@ -1142,7 +1176,8 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     (define-key evil-normal-state-map (kbd "SPC") (simulate-key-press "C-c"))
     (define-key mode-specific-map (kbd "SPC") #'execute-extended-command)
 
-    (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
+    ; TODO does anything bad happen if I leave this commented out
+    ;; (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
     (define-key evil-operator-state-map (kbd "<escape>") #'evil-force-normal-state))
 #+END_SRC
 ** show startup message
