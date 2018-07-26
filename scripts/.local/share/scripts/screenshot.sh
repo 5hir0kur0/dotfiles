@@ -12,7 +12,7 @@ MIMECOPY=~/.local/share/scripts/mimecopy.sh
 QUALITY=75 # when using png, this affects the compression rate (100 = uncompressed)
 source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 DIRECTORY="${XDG_PICTURES_DIR:-$HOME/pics}/"
-FILENAME="scrot_%F_%T_\$wx\$h-$$"
+FILENAME="scrot_%F_%H-%M-%S_\$wx\$h-$$"
 SUFFIX=".png"
 TMP_DIR=/tmp/scrots
 SAVE=1
