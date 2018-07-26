@@ -65,6 +65,8 @@ alias -g g='grep'
 alias less='less -FX'
 alias -g c='less'
 
+alias -g wl='wc -l'
+
 alias hcat="highlight --force -O ansi"
 
 alias update='update.sh'
