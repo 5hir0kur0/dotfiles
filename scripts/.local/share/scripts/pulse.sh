@@ -45,7 +45,7 @@ get_volume() {
     SINK="${1-$(default_sink)}"
     pactl list sinks\
         | pcregrep -Mi "Name:\s+$SINK\s*?\n(?:^\s*\S+.*?\n)+?\s*Volume:"\
-        | tail -1 | tr -s ' ' | cut -d' ' -f5 | tr -d '%'
+        | tail -1 | tr -s ' ' | cut -d' ' -f5 | cut -d'%' -f1
 }
 
 set_volume() {

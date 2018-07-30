@@ -140,6 +140,7 @@ sshfs
 stow
 sudo
 surfraw
+swh-plugins
 sxiv
 syncthing
 systemd-ui
