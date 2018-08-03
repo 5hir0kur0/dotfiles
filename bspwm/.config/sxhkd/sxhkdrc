@@ -21,7 +21,7 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (B)ash, (b)ookm., (c)alc., (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp., (x)dg-open, (z) move to corners, num + num -> set volume
+# MODE: extended: (a)dj. ratio, (B)ash, (b)m, (c)alc, (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp, (x)dg-open, (z) corners, num + num -> set volume
 # super + x
 # MODE: toggles: (b)ar, (m)ouse, (g)aps
 # super + shift + x
@@ -84,6 +84,45 @@ super + x ; z : z
         center_window.sh center
 super + x ; z : c
         center_window.sh center
+
+# MODE: adjust ratio: ctrl -> focused, else parent; 1-9
+super + x ; a ; 1
+        bspc node @parent -r 0.1
+super + x ; a ; 2
+        bspc node @parent -r 0.2
+super + x ; a ; 3
+        bspc node @parent -r 0.3
+super + x ; a ; 4
+        bspc node @parent -r 0.4
+super + x ; a ; 5
+        bspc node @parent -r 0.5
+super + x ; a ; 6
+        bspc node @parent -r 0.6
+super + x ; a ; 7
+        bspc node @parent -r 0.7
+super + x ; a ; 8
+        bspc node @parent -r 0.8
+super + x ; a ; 9
+        bspc node @parent -r 0.9
+
+super + x ; a ; ctrl + 1
+        bspc node focused -r 0.1
+super + x ; a ; ctrl + 2
+        bspc node focused -r 0.2
+super + x ; a ; ctrl + 3
+        bspc node focused -r 0.3
+super + x ; a ; ctrl + 4
+        bspc node focused -r 0.4
+super + x ; a ; ctrl + 5
+        bspc node focused -r 0.5
+super + x ; a ; ctrl + 6
+        bspc node focused -r 0.6
+super + x ; a ; ctrl + 7
+        bspc node focused -r 0.7
+super + x ; a ; ctrl + 8
+        bspc node focused -r 0.8
+super + x ; a ; ctrl + 9
+        bspc node focused -r 0.9
 
 # scrot
 # MODE: scrot: (w)indow, (e)verything, (s)election; shift -> 3s delay; ctrl -> copy to clipboard (nosave)
