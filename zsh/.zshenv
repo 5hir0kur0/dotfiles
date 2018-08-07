@@ -105,7 +105,11 @@ function fl() {
 }
 
 function gf() {
-    grep "${1:?}" -R .
+    grep -iP "${1:?}" -R .
+}
+
+function gpdf() {
+    pdfgrep -iP "${1:?}" -R .
 }
 
 # launch quietly and disown

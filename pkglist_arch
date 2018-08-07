@@ -113,6 +113,7 @@ pacutils
 patch
 pavucontrol
 pciutils
+pdfgrep
 perl
 powertop
 pulseaudio
