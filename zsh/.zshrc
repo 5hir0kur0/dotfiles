@@ -24,9 +24,16 @@ compinit
 #zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ##set prompt, colors
-autoload -U colors && colors
+#autoload -U colors && colors
 # TODO: use abbreviated path like in fish, maybe remove username and put it into tmux
-PROMPT="%{$fg[red]%}%(?..[%?])%{$fg[magenta]%}%n%{$fg[white]%}:%{$fg[cyan]%}%~ %# %{$reset_color%}"
+PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
+
+# report how long a command took if it was longer than 5 seconds
+REPORTTIME=10
+# TODO count total time instead and put it in right prompt?
+
+# Time Formatting for `time`
+TIMEFMT=$'%J:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\nmax\t%MKiB'
 
 ##keybindings from archlinux.org
 typeset -A key
@@ -102,6 +109,13 @@ prompt_wrapper() {
   fi
 }
 RPROMPT=$'$(prompt_wrapper)'
+
+
+## Spelling correction
+
+setopt correct
+# spelling correction prompt
+SPROMPT="'%U%R%u' -> '%F{cyan}%B%r%f%b' [nyae]? "
 
 
 # fzf
