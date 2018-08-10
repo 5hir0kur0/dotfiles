@@ -10,7 +10,7 @@ set laststatus=2
 " highlight search matches
 set hlsearch
 
-" show line numbers 
+" show line numbers
 set number
 
 " show (partial) commands on screen (in operator pending or visual mode)
@@ -22,7 +22,7 @@ set title
 set autoindent
 
 " create backup before overwriting the file and don't delete it afterwards
-set writebackup backup 
+set writebackup backup
 
 " keep a history of ":" commands
 set history=10000
@@ -89,11 +89,11 @@ set lazyredraw
 " highlight column 81 (so you can avoid typing text longer than 80 cols)
 " TODO change this so text beyond column 80 gets highlighted instead of the
 " column itself
-"set colorcolumn=81
+set colorcolumn=81
 "highlight ColorColumn ctermbg=lightblue guibg=lightblue
-let g:m2=matchadd('SpellBad', '\%>80v.\+', -1)
+"let g:m2=matchadd('SpellBad', '\%>80v.\+', -1)
 
-" create backups, swap files and undo files in the .local directory 
+" create backups, swap files and undo files in the .local directory
 " (the double slashes mean, VIM uses the full path [not sure if true,
 " no mention of this in the documentation as far as I can tell,
 " but it doesn't hurt...])
@@ -185,7 +185,7 @@ set termguicolors
 " enable syntax highlighting
 syntax enable
 
-colorscheme solarized8_dark
+colorscheme gruvbox
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1
@@ -195,7 +195,7 @@ let g:airline_right_sep = ''
 " (minimalist is also nice)
 let g:airline_theme = 'lucius'
 " let g:airline_powerline_fonts = 1
-let g:airline_symbols_ascii = 1
+"let g:airline_symbols_ascii = 1
 
 " ale bindings
 nmap <silent> <Leader>j <Plug>(ale_next_wrap)
