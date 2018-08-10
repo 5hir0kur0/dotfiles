@@ -2,3 +2,4 @@
 *.bak
 TODO
 *#
+/emacs/.emacs.d/config.el
