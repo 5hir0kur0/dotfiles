@@ -6,6 +6,8 @@
   (require 'package)
   (add-to-list 'package-archives
                '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize)
 #+END_SRC
 ** use-package
@@ -22,7 +24,7 @@
   (use-package try
     :commands try)
 #+END_SRC
-* change defaults
+* change defaults / enable built-in features
 ** custom
 change where customize stores its values
 #+BEGIN_SRC emacs-lisp
@@ -47,6 +49,9 @@ change where customize stores its values
 ** saving history
 from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs Configuration]]
 #+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'savehist))
+
   (setq savehist-file "~/.emacs.d/savehist")
   (savehist-mode 1)
   (setq history-length t
@@ -57,6 +62,9 @@ from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs Config
 #+END_SRC
 ** recentf
 #+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'recentf))
+
   (setq recentf-max-menu-items 100
         recentf-max-saved-items 100)
 #+END_SRC
@@ -122,8 +130,11 @@ delete the active region's contents when something is typed
 #+END_SRC
 ** show matching parentheses
 #+BEGIN_SRC emacs-lisp
-  ;; disabled because the same is done by show-smartparens-mode
-  ;; (show-paren-mode 1)
+  (show-paren-mode 1)
+#+END_SRC
+** automatically close parentheses etc.
+#+BEGIN_SRC emacs-lisp
+;(electric-pair-mode 1)
 #+END_SRC
 ** window management
 *** winner-mode
@@ -142,6 +153,9 @@ remove the initial message shown in the scratch buffer
 #+END_SRC
 ** show whitespace in programming modes
 #+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'whitespace))
+
   (setq whitespace-style
         '(face trailing tabs lines-tail space-after-tab space-before-tab tab-mark newline newline-mark empty)
         whitespace-line-column 80
@@ -215,7 +229,14 @@ remove the initial message shown in the scratch buffer
 ** remap toggle input method
 I use C-\ for company
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-=") #'toggle-input-method)
+  (global-set-key (kbd "<F9>") #'toggle-input-method) ; in case I ever need this...
+#+END_SRC
+** use visually relative line numbers in display-line-numbers-mode
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'display-line-numbers))
+
+  (setq display-line-numbers-type 'visual)
 #+END_SRC
 * hydra
 #+BEGIN_SRC emacs-lisp
@@ -226,6 +247,9 @@ I use C-\ for company
 ** window management hydra
 functions from hydra_examples.el
 #+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'windmove))
+
   (defun hydra-move-splitter-left (arg)
     "Move window splitter left."
     (interactive "p")
@@ -358,10 +382,10 @@ hide certain minor modes from the mode line
   ;; (setq linum-format "%5d ")
   (add-hook 'prog-mode-hook
             (lambda ()
-              ;; (linum-mode 1)              ; display line numbers
+              (display-line-numbers-mode 1)
               (subword-mode 1) ; allows you to jump by words in CamelCase words
-              (diminish 'subword-mode) ;  hide subword mode from modeline
-              (flyspell-prog-mode)))       ; check spelling in comments
+              (diminish 'subword-mode) ; hide subword mode from modeline
+              (flyspell-prog-mode)))   ; check spelling in comments
 
   ;; fix linum text-scale-adjust
   ;; (eval-after-load "linum"
@@ -370,7 +394,7 @@ hide certain minor modes from the mode line
 * text mode customizations
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook
-            (lambda () (flyspell-mode 1) (flyspell-buffer)))
+            (lambda () (flyspell-mode 1)))
 
 #+END_SRC
 * dwim
@@ -446,29 +470,6 @@ hide certain minor modes from the mode line
      :config (progn (custom-set-faces
                      '(aw-leading-char-face
                        ((t (:foreground "deep sky blue" :height 3.0)))))))
-#+END_SRC
-* ido
-just a test
-#+BEGIN_SRC emacs-lisp
-  (use-package ido-vertical-mode
-    :ensure nil
-    :commands ido-vertical-mode)
-
-  (use-package flx-ido
-    :ensure nil
-    :commands flx-ido-mode)
-
-  (setq ido-use-virtual-buffers t)
-
-  (defun my/enable-ido-test ()
-    "just a test to see whether i like ido mode more than ivy for some use cases"
-    (interactive)
-    (ido-mode 1)
-    (flx-ido-mode 1)
-    (setq ido-enable-flex-matching t)
-    (setq ido-everywhere t)
-    (ido-vertical-mode 1)
-    (global-set-key (kbd "M-x") 'smex))
 #+END_SRC
 * ivy and swiper
 #+BEGIN_SRC emacs-lisp
@@ -638,7 +639,7 @@ custom tiling function to create popups by splitting the current window
 * expand-region
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
-    :bind (("C-r" . er/expand-region)))
+    :bind (("C-=" . er/expand-region)))
 #+END_SRC
 * beacon
 #+BEGIN_SRC emacs-lisp
@@ -687,57 +688,61 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * smartparens
 #+BEGIN_SRC emacs-lisp
-  (defun my/sp-kill-sexp-backward (prefix)
-    "Revert the direction of the prefix argument and call `sp-kill-sexp' with it."
-    (interactive "p")
-    (sp-kill-sexp (- prefix)))
+    (defun my/sp-kill-sexp-backward (prefix)
+      "Revert the direction of the prefix argument and call `sp-kill-sexp' with it."
+      (interactive "p")
+      (sp-kill-sexp (- prefix)))
 
-  (use-package smartparens
-    ;:hook (prog-mode . turn-on-smartparens-strict-mode)
-    :bind (:map smartparens-mode-map
-                ("C-M-f"           . sp-forward-sexp)
-                ("C-M-b"           . sp-backward-sexp)
-                ("C-M-d"           . sp-down-sexp)
-                ("C-M-u"           . sp-backward-up-sexp)
-                ("C-M-a"           . sp-beginning-of-sexp)
-                ("C-M-e"           . sp-end-of-sexp)
-                ("C-M-n"           . sp-next-sexp)
-                ("C-M-p"           . sp-previous-sexp)
-                ("C-M-k"           . sp-kill-sexp)
-                ("C-M-<backspace>" . my/sp-kill-sexp-backward)
-                ("C-M-t"           . sp-transpose-sexp)
-                ("M-s M-k"         . sp-kill-hybrid-sexp)
-                ("C-K"             . sp-kill-hybrid-sexp)
-                ("C-k"             . kill-line)
-                ("M-s M-u"         . sp-backward-unwrap-sexp) ; TODO which of these bindings do I like best?
-                ("M-s M-r"         . sp-rewrap-sexp)
-                ("M-U"             . sp-backward-unwrap-sexp)
-                ("M-R"             . sp-rewrap-sexp)
-                ("C-<up>"          . sp-backward-unwrap-sexp)
-                ("C-<down>"        . sp-rewrap-sexp)
-                ("C-<right>"       . sp-forward-slurp-sexp)
-                ("M-]"             . sp-forward-slurp-sexp)
-                ("M-C-["           . sp-backward-slurp-sexp)
-                ("C-<left>"        . sp-forward-barf-sexp)
-                ("M-["             . sp-forward-barf-sexp)
-                ("M-C-]"           . sp-backward-barf-sexp)
-                ("M-s M-s"         . sp-slurp-hybrid-sexp)
-                ("M-s M-t"         . sp-transpose-hybrid-sexp)
-                ("M-s M-p"         . sp-push-hybrid-sexp)
-                ("M-F"             . sp-forward-symbol)
-                ("M-B"             . sp-backward-symbol)
-                ("C-]"             . sp-change-inner))
-    :init
-    (require 'smartparens-config)
-    (require 'smartparens)
-    (show-smartparens-global-mode 1)
-    (smartparens-global-mode 1))
+    (use-package smartparens
+      ;:hook (prog-mode . turn-on-smartparens-strict-mode)
+      :bind (:map smartparens-mode-map
+                  ("C-M-f"           . sp-forward-sexp)
+                  ("C-M-b"           . sp-backward-sexp)
+                  ("C-M-d"           . sp-down-sexp)
+                  ("C-M-u"           . sp-backward-up-sexp)
+                  ("C-M-a"           . sp-beginning-of-sexp)
+                  ("C-M-e"           . sp-end-of-sexp)
+                  ("C-M-n"           . sp-next-sexp)
+                  ("C-M-p"           . sp-previous-sexp)
+                  ("C-M-k"           . sp-kill-sexp)
+                  ("C-M-<backspace>" . my/sp-kill-sexp-backward)
+                  ("C-M-t"           . sp-transpose-sexp)
+                  ("M-s M-k"         . sp-kill-hybrid-sexp)
+                  ("C-K"             . sp-kill-hybrid-sexp)
+                  ("C-k"             . kill-line)
+                  ("M-s M-u"         . sp-backward-unwrap-sexp) ; TODO which of these bindings do I like best?
+                  ("M-s M-r"         . sp-rewrap-sexp)
+                  ("M-U"             . sp-backward-unwrap-sexp)
+                  ("M-R"             . sp-rewrap-sexp)
+                  ("C-<up>"          . sp-backward-unwrap-sexp)
+                  ("C-<down>"        . sp-rewrap-sexp)
+                  ("C-<right>"       . sp-forward-slurp-sexp)
+                  ("M-]"             . sp-forward-slurp-sexp)
+                  ("M-C-["           . sp-backward-slurp-sexp)
+                  ("C-<left>"        . sp-forward-barf-sexp)
+                  ("M-["             . sp-forward-barf-sexp)
+                  ("M-C-]"           . sp-backward-barf-sexp)
+                  ("M-s M-s"         . sp-slurp-hybrid-sexp)
+                  ("M-s M-t"         . sp-transpose-hybrid-sexp)
+                  ("M-s M-p"         . sp-push-hybrid-sexp)
+                  ("M-F"             . sp-forward-symbol)
+                  ("M-B"             . sp-backward-symbol)
+                  ("C-]"             . sp-change-inner))
+      :init
+      (require 'smartparens-config)
+      (require 'smartparens)
+  ;    (show-smartparens-global-mode 1)
+      (smartparens-global-mode 1))
 #+END_SRC
 * spaceline
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
     :init
-    (require 'spaceline-config)
+    (eval-when-compile
+      (require 'powerline)
+      (require 'spaceline-config)
+      (require 'spaceline-segments))
+  
     (setq powerline-default-separator 'bar
           spaceline-line-column-p nil
           spaceline-line-p nil
@@ -815,11 +820,14 @@ custom tiling function to create popups by splitting the current window
   (use-package projectile
     :defer nil
     :init (setq projectile-completion-system 'ivy)
-    :config (projectile-global-mode 1))   ; TODO
+    :config (projectile-mode 1))   ; TODO
 #+END_SRC
 * TODO multiple-cursors
 #+BEGIN_SRC emacs-lisp
   ;; stolen from https://github.com/abo-abo/hydra/wiki/multiple-cursors
+
+  (defvar my/mark-even-if-inactive-backup nil "used by the hydra macro")
+
   (defhydra multiple-cursors-hydra (:hint nil
                                     ;; if I don't do this it breaks multiple cursors (as of 20180320.747)
                                     :pre (progn (setq my/mark-even-if-inactive-backup mark-even-if-inactive)
@@ -960,8 +968,11 @@ custom tiling function to create popups by splitting the current window
 * tex / latex
 automatically enable spell checking in latex buffers
 #+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'ispell))
+
   (add-hook 'tex-mode-hook
-            #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1) (flyspell-buffer)))
+            #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1)))
 #+END_SRC
 * haskell
 #+BEGIN_SRC emacs-lisp
@@ -971,6 +982,8 @@ automatically enable spell checking in latex buffers
     :init
     ;; fix "unexpected response from haskell process" error
     ;; TODO remove if this gets fixed
+    (eval-when-compile
+      (require 'haskell))
     (setq haskell-process-args-ghci
           '("-ferror-spans" "-fshow-loaded-modules")
           haskell-process-args-cabal-repl
@@ -1100,6 +1113,29 @@ insert some dead keys literally
   ;; make cursor match character width (e.g. for tab characters)
   (setq x-stretch-cursor t)
 #+END_SRC
+* ido
+just a test
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-vertical-mode
+    :ensure nil
+    :commands ido-vertical-mode)
+
+  (use-package flx-ido
+    :ensure nil
+    :commands flx-ido-mode)
+
+  (setq ido-use-virtual-buffers t)
+
+  (defun my/enable-ido-test ()
+    "just a test to see whether i like ido mode more than ivy for some use cases"
+    (interactive)
+    (ido-mode 1)
+    (flx-ido-mode 1)
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
+    (ido-vertical-mode 1)
+    (global-set-key (kbd "M-x") 'smex))
+#+END_SRC
 * misc
 ** edit files as root using tramp
 from the book "Mastering Emacs" (commented out since crux provides the same functionality)
@@ -1122,32 +1158,37 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     "Toggle evil mode."
     (interactive)
     (call-interactively
-     #'evil-mode))
+     #'evil-mode)
+    (unless (bound-and-true-p evil-mode)
+      (setq-default cursor-type 'box)
+      (setq cursor-type 'box)
+      (set-cursor-color "#ffffff")))
 
   (use-package evil
     :bind*
     (("C-z" . my/toggle-evil))            ; doesn't always work; see below
 
     :init
+    (eval-when-compile
+      (require 'evil-core)
+      (require 'evil-states))
     ;; indicate state via cursors
     (setq evil-normal-state-cursor '(box "firebrick")
           evil-emacs-state-cursor '(box "white")
-          evil-insert-state-cursor '(bar "red"))
+          evil-insert-state-cursor '(bar "firebrick"))
 
     :config
-    ;; use emacs state instead of insert state
-    (defalias 'evil-insert-state 'evil-emacs-state)
 
     ;; make <escape> return to evil normal state from emacs mode
     (define-key evil-emacs-state-map (kbd "<escape>") #'evil-normal-state)
 
-    (add-to-list 'evil-emacs-state-modes 'help-mode)
-    ;; (add-to-list 'evil-emacs-state-modes 'Info-mode)
-
     ;; restore some emacs functionality in normal state
     (define-key evil-normal-state-map (kbd "C-n") #'next-line)
     (define-key evil-normal-state-map (kbd "C-p") #'previous-line)
-    (define-key evil-normal-state-map (kbd "C-e") #'end-of-line)
+    ;; (define-key evil-normal-state-map (kbd "C-e") #'end-of-line)
+    (define-key evil-normal-state-map (kbd "TAB") nil)
+    (define-key evil-normal-state-map (kbd "<tab>") nil)
+
 
     ;; this binding is here because the use-package binding seems to be
     ;; overwritten by evil
@@ -1157,27 +1198,27 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     (define-key evil-emacs-state-map (kbd "C-z") #'my/toggle-evil)
     (define-key evil-operator-state-map (kbd "C-z") #'my/toggle-evil)
 
-
-
-
-
-    (define-key evil-normal-state-map (kbd "TAB") nil)
-    (define-key evil-normal-state-map (kbd "<tab>") nil)
+    ;; make insert state act more like emacs state (using emacs state
+    ;; instead of insert state like this (defalias 'evil-insert-state
+    ;; 'evil-emacs-state) doesn't work because it seems to break the dot
+    ;; command)
+    (setq evil-insert-state-map (make-sparse-keymap))
+    (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
 
     ;; make SPC in normal state act like C-c
     ;; stolen from https://emacs.stackexchange.com/a/13432
-    (defun simulate-key-press (key)
+    (defun my/simulate-key-press (key)
       "Pretend that KEY was pressed.
   KEY must be given in `kbd' notation."
       `(lambda () (interactive)
          (setq prefix-arg current-prefix-arg)
          (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
 
-    (define-key evil-normal-state-map (kbd "SPC") (simulate-key-press "C-c"))
+    (define-key evil-normal-state-map (kbd "SPC") (my/simulate-key-press "C-c"))
     (define-key mode-specific-map (kbd "SPC") #'execute-extended-command)
 
-    ; TODO does anything bad happen if I leave this commented out
-    ;; (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
+                                          ; TODO does anything bad happen if I leave this commented out
+    (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
     (define-key evil-operator-state-map (kbd "<escape>") #'evil-force-normal-state))
 #+END_SRC
 ** show startup message
