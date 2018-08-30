@@ -120,12 +120,12 @@ SPROMPT="'%U%R%u' -> '%F{cyan}%B%r%f%b' [nyae]? "
 
 # fzf
 export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
-export FZF_CTRL_T_OPTS='--preview="/usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
+export FZF_CTRL_T_OPTS='--preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
 export FZF_CTRL_R_OPTS='-e'
-source /usr/share/fzf/key-bindings.zsh
+{source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
 fzf-locate-widget() {
   local selected
-  if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="/usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
+  if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
     if [ -z "$LBUFFER" -a -f "$selected" ]; then
       LBUFFER="rifle ""'$selected'"
     else
