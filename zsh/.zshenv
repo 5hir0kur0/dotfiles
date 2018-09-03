@@ -14,6 +14,7 @@ unalias sf
 unalias d
 unalias f
 unalias z
+unalias a
 
 function my_fasd_cd() {
     RES=$(fasd -dl "$@")
@@ -61,6 +62,7 @@ alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias -g g='grep'
+alias fd='\fd --follow --full-path --hidden'
 
 alias less='less -FX'
 alias -g c='less'
