@@ -19,6 +19,8 @@ export DISPLAY=:0
 setxkbmap ''
 setxkbmap -option ''
 
+{ pgrep -x xcape && pkill -x xcape; } >/dev/null 2>&1
+
 setxkbmap us altgr-intl nodeadkeys
 
 # make both shift keys together act like caps lock
