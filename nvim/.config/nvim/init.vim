@@ -56,9 +56,17 @@ set wildmenu wildmode=longest:full,full
 set list
 
 " how to display non-printable characters
-" TODO: change trail back to "\ "; in neovim trailing spaces don't show up if
-" you set trail to just a space for some reason
 set listchars=tab:▸\ ,eol:¬,trail:\·,precedes:◀,extends:▶
+
+" display unnecessary whitespace (stolen from
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces)
+highlight ExtraWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=darkred
+
+" match trailing whitespace, except when typing at the end of a line
+match ExtraWhitespace /\s\+\%#\@<!$/
+" match tabs that are not at the start of a line
+match ExtraWhitespace /[^\t]\zs\t\+/
 
 set background=dark
 
@@ -172,6 +180,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
+Plug 'lifepillar/vim-mucomplete'
 Plug 'xuhdev/vim-latex-live-preview'
 call plug#end()
 
@@ -211,3 +220,18 @@ let g:gruvbox_contrast_dark = 'soft'
 
 " latex-live-preview options
 let g:livepreview_previewer = 'zathura'
+
+" vim-mucomplete-related options
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg"
+let g:mucomplete#enable_auto_at_startup = 1 " enable automatic completion
+" let g:mucomplete#delayed_completion = 1
+set wildignorecase " ignore case in filename completions
+
+" fix compatibility with auto-pairs (stolen from mucomplete documentation)
+let g:AutoPairsMapSpace = 0
+imap <silent> <expr> <space> pumvisible()
+        \ ? "<space>"
+        \ : "<c-r>=AutoPairsSpace()<cr>"
