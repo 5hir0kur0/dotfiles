@@ -530,9 +530,11 @@ bindsym $mod+Mod1+r exec --no-startup-id $renameworkspacescript
 bindsym $mod+n workspace next_on_output
 bindsym $mod+p workspace prev_on_output
 bindsym $mod+m workspace next
-bindsym $mod+Shift+m workspace prev
-bindsym $mod+$mod1+m move workspace next # does not work when I use "Mod1" instead of "$mod1"
-bindsym $mod+Shift+$mod1+m move workspace prev
+bindsym $mod+b workspace prev
+
+# focus other monitors
+bindsym $mod+Mod1+m focus output right
+bindsym $mod+Mod1+b focus output left
 
 # focus other monitor
 bindsym $mod+Mod1+n focus output right
