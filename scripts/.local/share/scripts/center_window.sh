@@ -1,8 +1,31 @@
 #!/bin/bash
 
+# currently works with i3 and bspwm; the only thing that needs to be changed to
+# support a new wm is focused_monitor
+
+# TODO: implement borders for i3
+
+# require: jq, wmctrl, xdotool
+
+determine_wm() {
+    wmctrl -m | grep 'Name:' | cut -d' ' -f2- 
+}
+
+WINDOW_MANAGER=$(determine_wm)
+
+focused_monitor() {
+    case "$WINDOW_MANAGER" in
+        i3)
+            i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output'
+            ;;
+        *)
+            bspc query -M -m focused --names
+            ;;
+    esac
+}
 
 monitor_info() {
-    xrandr | grep -F "$(bspc query -M -m focused --names)" | grep -oP '\d+x\d+\+\d+\+\d+'
+    xrandr | grep -F "$(focused_monitor)" | grep -oP '\d+x\d+\+\d+\+\d+'
 }
 
 eval "$(xdotool getwindowfocus getwindowgeometry --shell)"
