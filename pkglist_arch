@@ -119,8 +119,10 @@ powertop
 pulseaudio
 pulseaudio-alsa
 pv
+python2-neovim
 python-beautifulsoup4
 python-llfuse
+python-neovim
 python-numpy
 python-pip
 python-xdg
