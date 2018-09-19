@@ -20,6 +20,7 @@ set $zathuraclass (?i)^zathura$
 # scripts
 set $bookmarkscript ~/.local/share/scripts/rofibookmarks.sh
 set $centerscript ~/.local/share/scripts/center_cursor.sh
+set $centerwindowscript ~/.local/share/scripts/center_window.sh
 set $comptonscript ~/.local/share/scripts/compton.sh
 set $emacsscript ~/.local/share/scripts/toemacs.sh
 set $entiresplitscript ~/.local/share/scripts/i3_splitentire.sh
@@ -46,7 +47,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font pango:Inconsolata 12
+font pango:Inconsolata, monaco, Noto Sans Mono 12
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -102,7 +103,7 @@ mode $mode_scrot {
     bindsym Escape mode "default"
 }
 
-set $mode_extended "xtended: (b)ookm., (B)ash, (c/C)alc., (f)ocus, (k) compton, (m)an, (p/P)ython, (r)anger, (s)crot, (t)erm, (w)allp., (x)dg"
+set $mode_extended "xtended: (b)ookm., (B)ash, (c/C)alc., (f)ocus, (k) compton, (m)an, (p/P)ython, (r)anger, (s)crot, (t)erm, (w)allp., (x)dg, (z) center/edges"
 mode $mode_extended {
     bindsym x exec --no-startup-id $openscript xdg, mode "default"
     bindsym t exec --no-startup-id $openscript term, mode "default"
@@ -117,6 +118,7 @@ mode $mode_extended {
 
     bindsym f fullscreen enable, bar mode invisible, mode $mode_focus
     bindsym k mode $mode_compton
+    bindsym z mode $mode_windowcenter_corner
     bindsym s mode $mode_scrot
     bindsym w mode $mode_wallaper
 
@@ -142,6 +144,19 @@ mode $mode_compton {
     bindsym i exec --no-startup-id $comptonscript invert, mode "default"
     bindsym k exec --no-startup-id $comptonscript kill, mode "default"
     bindsym s exec --no-startup-id $comptonscript start, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_windowcenter_corner "center window or move to edge: (h,j,k,l) vim keys, (z,c)enter"
+mode $mode_windowcenter_corner {
+    bindsym h exec --no-startup-id $centerwindowscript left
+    bindsym j exec --no-startup-id $centerwindowscript bottom
+    bindsym k exec --no-startup-id $centerwindowscript top
+    bindsym l exec --no-startup-id $centerwindowscript right
+    bindsym z exec --no-startup-id $centerwindowscript center
+    bindsym c exec --no-startup-id $centerwindowscript center
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -688,7 +703,8 @@ client.unfocused $base01 $base01 $base04 $base01
 client.urgent $base03 $base03 $base07 $base08
 
 bar {
-   font pango:Inconsolata 12
+   # font pango:InconsolataGo Nerd Font 13
+   font pango:InconsolataGo Nerd Font, InconsolataForPowerline Nerd Font, Inconsolata, Noto Sans Mono, monaco 12
    status_command i3status --config ~/.config/i3/i3status
    position bottom
    tray_output primary
@@ -752,4 +768,8 @@ bindsym Scroll_Lock exec --no-startup-id $pulsescript mute
 #bindsym XF86AudioPrev exec playerctl previous
 
 exec --no-startup-id $initscript
+
 # vi: ft=conf
+# Local Variables:
+# major-mode: conf-unix-mode
+# End:
