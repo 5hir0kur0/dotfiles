@@ -101,9 +101,18 @@ bindkey -e # emacs mode
 #bindkey -M vicmd '/' history-incremental-search-backward
 ##zstyle :compinstall filename '~/.zshrc'
 
-#better c-p, c-n
+# better c-p, c-n
 bindkey "^P" up-line-or-local-search
 bindkey "^N" down-line-or-local-search
+
+# make M-DEL delete up to the last special character (e.g. / in paths)
+# except '*?.~!$' are considered parts of words
+backward-kill-to-special-char () {
+    local WORDCHARS='*?.~!$'
+    zle backward-kill-word
+}
+zle -N backward-kill-to-special-char
+bindkey '^[^?' backward-kill-to-special-char
 
 # keybindings from archlinux.org
 typeset -A key
