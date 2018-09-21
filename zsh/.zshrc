@@ -56,18 +56,21 @@ setopt autocd
 setopt autopushd
 # don't push duplicate directories
 setopt pushdignoredups
-# delete rprompt when accepting a command (when enter is pressed)
-setopt transientrprompt
-# remove rprompt indent
-ZLE_RPROMPT_INDENT=0
 
 # enable correction
 setopt correct
 # spelling correction prompt
 SPROMPT="'%U%R%u' -> '%F{cyan}%B%r%f%b' [nyae]? "
 
+# don't beep
 setopt nobeep
+
+# warn if shell functions create global variables
 setopt warncreateglobal
+# setopt warnnestedvar
+
+# don't run background jobs at a lower priority
+setopt nobgnice
 
 # disable annoying ctrl-s and ctrl-q commands
 stty stop undef
@@ -76,34 +79,66 @@ unsetopt flowcontrol
 
 ## completion
 
-# TODO do i like this?
+# more compact listing of completions
 setopt listpacked
 
 # lay out completion lists horizontally
 setopt listrowsfirst
 
 # insert first match immediately
-# setopt menucomplete
+setopt menucomplete
+
+# complete at cursor position within a word instead of moving the cursor to the
+# end when the tab key is pressed
+setopt completeinword
+
+# completion config (mainy generated using compinstall)
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' auto-description '<%d>'
+zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate
+# enable colored completions using the default colors
+# (for some reason the directory color didn't match ls)
+zstyle ':completion:*' list-colors 'di=1;34'
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+# first try without a matcher, then try with smartcase matching (lowercase
+# matches uppercase), then try substring matching, then try partial-word matching
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+l:|=* r:|=*' '+r:|[._-]=** r:|=**'
+# use the selection (with highlighting and cursorkey navigation) only if there
+# are at least 6 items (useful because otherwise you always have to press enter
+# two times to execute the command)
+zstyle ':completion:*' menu select=6
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+
+# ignore internal zsh functions
+# (stolen from: https://github.com/solnic/dotfiles/blob/master/home/zsh/completion.zsh)
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+# better completion for commands that take pids (e.g. kill)
+zstyle ':completion:*:processes' menu yes select
+zstyle ':completion:*:processes' command 'ps -efm | grep -vE \]\$\|-\$'
+
+# better completion for commands that take process names (e.g. killall)
+# (stolen from: https://github.com/solnic/dotfiles/blob/master/home/zsh/completion.zsh)
+zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*:\1:;s:/[^ ]*/::;/^\[/d'"
 
 autoload -Uz compinit
 compinit
 
-# use case-insensitive completion
-#zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# use c-n and c-p in the completion menu
+# (the reason this doesn't work without those lines is probably that I rebound
+# c-n and c-p)
+zmodload zsh/complist
+bindkey -M menuselect '^N' down-line-or-history
+bindkey -M menuselect '^P' up-line-or-history
+
 
 ## key bindings
 
 bindkey -e # emacs mode
 
-# vi mode settings
-#bindkey '^r' history-incremental-search-backward 
-## enable backwards search by typing / in NORMAL mode
-#bindkey -M vicmd '/' history-incremental-search-backward
-##zstyle :compinstall filename '~/.zshrc'
-
 # better c-p, c-n
-bindkey "^P" up-line-or-local-search
-bindkey "^N" down-line-or-local-search
+bindkey '^P' up-line-or-local-search
+bindkey '^N' down-line-or-local-search
 
 # make M-DEL delete up to the last special character (e.g. / in paths)
 # except '*?.~!$' are considered parts of words
@@ -159,11 +194,17 @@ fi
 
 [[ -f ~/.profile ]] && . ~/.profile
 
+## syntax highlighting
+
 # use syntax highlighting (needs community/zsh-syntax-highlighting)
 {source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh} 2>/dev/null
 
-
 ## prompt
+
+# delete rprompt when accepting a command (when enter is pressed)
+setopt transientrprompt
+# remove rprompt indent
+ZLE_RPROMPT_INDENT=0
 
 # stolen from http://stackoverflow.com/a/1128583
 setopt prompt_subst
@@ -188,7 +229,6 @@ RPROMPT=$'$(prompt_wrapper)'
 #autoload -U colors && colors
 # TODO: use abbreviated path like in fish, maybe remove username and put it into tmux
 PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
-
 
 ## fzf
 export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
