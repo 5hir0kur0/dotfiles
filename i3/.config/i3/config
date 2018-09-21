@@ -129,7 +129,7 @@ bindsym $mod+x mode $mode_extended
 
 set $mode_focus "FOCUS"
 mode $mode_focus {
-    bindsym $mod+e fullscreen disable, bar mode dock, mode "default"
+    bindsym $mod+x fullscreen disable, bar mode dock, mode "default"
     # focus
     bindsym $mod+h focus left
     bindsym $mod+j focus down
