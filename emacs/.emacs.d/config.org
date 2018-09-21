@@ -433,6 +433,39 @@ taken from hydra-examples.el
             (lambda () (flyspell-mode 1)))
 
 #+END_SRC
+** text mode company
+(stolen from [[http://blog.binchen.org/posts/emacs-auto-completion-for-non-programmers.html][here]])
+#+BEGIN_SRC emacs-lisp
+  (defun my/text-mode-hook-setup ()
+    ;; making `company-backends' local is critcal
+    ;; or else, you will have completion in every major mode, that's very annoying!
+    (make-local-variable 'company-backends)
+
+    (setq my/company-ispell-backend 'company-ispell)
+
+    ;; company-ispell is the plugin to complete words
+    (add-to-list 'company-backends my/company-ispell-backend)
+
+    ;; OPTIONAL, if `company-ispell-dictionary' is nil, `ispell-complete-word-dict' is used
+    ;;  but I prefer hard code the dictionary path. That's more portable.
+    (let ((dictionary  "/usr/share/dict/words"))
+      (when (file-exists-p dictionary)
+          (setq ispell-complete-word-dict dictionary)))
+    ;; (setq company-ispell-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
+    )
+
+  (add-hook 'text-mode-hook #'my/text-mode-hook-setup)
+
+  (defun my/toggle-company-ispell ()
+    (interactive)
+    (cond
+     ((memq my/company-ispell-backend company-backends)
+      (setq company-backends (delete my/company-ispell-backend company-backends))
+      (message "company-ispell disabled"))
+     (t
+      (add-to-list 'company-backends my/company-ispell-backend)
+      (message "company-ispell enabled!"))))
+#+END_SRC
 * dwim
 ** eval region or last sexp
 #+BEGIN_SRC emacs-lisp
