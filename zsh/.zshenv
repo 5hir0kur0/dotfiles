@@ -17,6 +17,7 @@ unalias z
 unalias a
 
 function my_fasd_cd() {
+    local RES
     RES=$(fasd -dl "$@")
     if [ "${#RES}" -ge 2 ]; then
         cd "$( fzf <<< "$RES" )"
@@ -26,6 +27,7 @@ function my_fasd_cd() {
 }
 
 function fasd_vim() {
+    local RES
     RES=$(fasd -fl "$@")
     if [ "${#RES}" -ge 2 ]; then
         nvim "$( fzf <<< "$RES" )"
@@ -124,12 +126,14 @@ function lqqd() {
 }
 
 function qo() {
+    local FILE
     for FILE in $@; do
         lqd xdg-open $FILE
     done
 }
 
 function qqo() {
+    local FILE
     for FILE in $@; do
         lqqd xdg-open $FILE
     done
@@ -137,7 +141,7 @@ function qqo() {
 
 # TODO: make this work with multiple pids
 function output() {
-    PID=`pgrep "${1:?}"`
+    local PID=`pgrep "${1:?}"`
     tail -f "/proc/${PID:?not found}/fd/1" "/proc/$PID/fd/2"
 }
 
@@ -161,7 +165,8 @@ function memusage() {
 EOF
         return 1
     fi
-    PIDS=( $(pgrep -x $1) )
+    local PIDS=( $(pgrep -x $1) )
+    local PID
     for PID in "${PIDS[@]}"; do
         echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" "/proc/$PID/smaps") | bc
     done
@@ -172,11 +177,11 @@ function memusage_total() {
 }
 
 function fancy_unixtime() {
-    OLDF=""
+    local OLDF=""
      while true; do
-         SECS=`date +%s`
-         BASE="${1-16}"
-         NEWF="$(figlet -W -f banner -tc $(echo "obase=$BASE; $SECS" | bc))"
+         local SECS=`date +%s`
+         local BASE="${1-16}"
+         local NEWF="$(figlet -W -f banner -tc $(echo "obase=$BASE; $SECS" | bc))"
          if [ ! "$OLDF" = "$NEWF" ]; then
              echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
              echo "$NEWF"
@@ -215,7 +220,7 @@ function lcd() {
 }
 
 function weather() {
-    LOC=${1:-$(head -1 ~/.local/share/.location)}
+    local LOC=${1:-$(head -1 ~/.local/share/.location)}
     curl --insecure --silent "https://wttr.in/$LOC?q" #\
 	# | grep -E '^\s*┌|│|└' --color=never
 }
