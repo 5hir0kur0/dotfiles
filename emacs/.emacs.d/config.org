@@ -1119,6 +1119,18 @@ automatically enable spell checking in latex buffers
   ;; there doesn't seem to be a hook for interactive mode (?)
   (advice-add #'interactive-haskell-mode :after #'my/haskell-interactive-keybindings)
 #+END_SRC
+** rust
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode)
+
+  (use-package racer
+    :diminish racer-mode
+    :hook (rust-mode . racer-mode))
+
+  (use-package cargo
+    :diminish cargo-minor-mode
+    :hook (rust-mode . cargo-minor-mode))
+#+END_SRC
 * yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
