@@ -1294,15 +1294,23 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
 #+END_SRC
 ** kill word when region not active, else kill region
 #+BEGIN_SRC emacs-lisp
-    (defun my/backward-kill-word-or-kill-region (arg)
-      "If the region is active, call `kill-region', else call `backward-kill-word'.
-  ARG is passed to `backward-kill-word' it it's called."
-      (interactive "p")
-      (if (region-active-p)
-          (kill-region :ignore :ignore :use-region-instead)
-        (backward-kill-word arg)))
+  ;;   (defun my/backward-kill-word-or-kill-region (arg)
+  ;;     "If the region is active, call `kill-region', else call `backward-kill-word'.
+  ;; ARG is passed to `backward-kill-word' it it's called."
+  ;;     (interactive "p")
+  ;;     (if (region-active-p)
+  ;;         (kill-region :ignore :ignore :use-region-instead)
+  ;;       (backward-kill-word arg)))
 
-    (global-set-key (kbd "C-w") #'my/backward-kill-word-or-kill-region)
+  (defun my/backward-kill-word-or-kill-region ()
+    "If the region is active, call `kill-region', else call `backward-kill-word'.
+  ARG is passed to `backward-kill-word' it it's called."
+    (interactive)
+    (if (region-active-p)
+        (call-interactively #'kill-region)
+      (call-interactively #'backward-kill-word)))
+
+  (global-set-key (kbd "C-w") 'my/backward-kill-word-or-kill-region)
 #+END_SRC
 ** join line with next line (similar to J in vim)
 #+BEGIN_SRC emacs-lisp
