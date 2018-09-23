@@ -52,9 +52,14 @@ alias '..'='cd ..'
 alias '...'='cd ../..'
 alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
+alias '......'='cd ../../../../..'
+alias '.......'='cd ../../../../../..'
+alias '........'='cd ../../../../../../..'
 alias mv='mv -iv'
+alias md='mkdir -pv'
 alias rm='rm -Iv --one-file-system'
 alias cp='cp --reflink=auto -iv'
+alias d='dirs -v'
 alias vim=nvim
 alias v=nvim
 
@@ -63,7 +68,7 @@ alias diff='diff --color=auto'
 alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
-alias -g g='grep'
+alias -g g='grep -i'
 alias fd='\fd --follow --full-path --hidden'
 
 alias less='less -FX'
