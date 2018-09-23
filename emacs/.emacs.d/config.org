@@ -1173,7 +1173,13 @@ automatically enable spell checking in latex buffers
           (append (if (consp backend) backend (list backend))
                   '(:with company-yasnippet))))
 
-      (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+      ;; (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+      (defun my/add-yas-company-backends ()
+        "Append (:with company-yasnippet) to every backend in company-backends that
+  doesn't already contain it."
+        (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+      (add-hook 'company-mode-hook #'my/add-yas-company-backends)))
 #+END_SRC
 * appearance
 #+BEGIN_SRC emacs-lisp
