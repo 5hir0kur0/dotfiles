@@ -766,34 +766,63 @@ custom tiling function to create popups by splitting the current window
 * company (auto-completion)
 #+BEGIN_SRC emacs-lisp
   (use-package company
+    :defer nil
+    :hook (after-init . global-company-mode)
     :bind (:map company-mode-map
                 ("C-\\" . company-complete))
-                                          ;("TAB" . company-indent-or-complete-common)
-                                          ;("<tab>" . company-indent-or-complete-common))
-    :hook (emacs-startup . global-company-mode)
     :diminish company-mode
     :init
-    (setq company-idle-delay 0.2
+    (setq company-idle-delay 0.1
           company-frontends
           '(company-semantic
             company-pseudo-tooltip-unless-just-one-frontend
             company-preview-frontend
             company-echo-metadata-frontend)
           company-auto-complete nil
+          company-auto-complete-chars " !)+,-./:;<=>?@|}"
           company-require-match 'never
           company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
-          company-minimum-prefix-length 3)
+          company-minimum-prefix-length 3
+          ;; FIXME maybe use a whitelist instead of a blacklist?
+          company-global-modes '(not Info-mode
+                                     dashboard-mode
+                                     xhelp-mode
+                                     racer-help-mode
+                                     intero-help-mode
+                                     help-mode
+                                     eshell-mode
+                                     comint-mode
+                                     erc-mode
+                                     rcirc-mode
+                                     magit-status-mode))
     :config
     (with-eval-after-load 'company
-      (define-key company-active-map (kbd "TAB") (lambda () (interactive) (company-complete-common-or-cycle 1)))
-      (define-key company-active-map (kbd "<tab>") (lambda () (interactive) (company-complete-common-or-cycle 1)))
+      (defun my/yas-expand-or-company-next ()
+        "Try to expand a yas snippet. If not possible, call `company-complete-common-or-cycle'"
+        (interactive)
+        (unless (yas-expand)
+          (company-complete-common-or-cycle 1)))
+
+      (defun my/yas-expand-or-company-indent-or-complete-common ()
+        "Try to expand a yas snippet. If not possible, call `company-indent-or-complete-common'"
+        (interactive)
+        (if (equal major-mode 'org-mode)
+            (call-interactively #'org-cycle)
+          (unless (yas-expand)
+            (company-indent-or-complete-common))))
+
+      (define-key company-active-map (kbd "TAB") #'my/yas-expand-or-company-next)
+      (define-key company-active-map (kbd "<tab>") #'my/yas-expand-or-company-next)
       (define-key company-active-map (kbd "S-TAB") (lambda () (interactive) (company-complete-common-or-cycle -1)))
       (define-key company-active-map (kbd "<backtab>") (lambda () (interactive) (company-complete-common-or-cycle -1)))
                                           ;    (define-key company-active-map (kbd "M-n") nil)
                                           ;    (define-key company-active-map (kbd "M-p") nil)
       (define-key company-active-map (kbd "C-c") 'counsel-company)
       (define-key company-active-map (kbd "C-n") (lambda () (interactive) (company-complete-common-or-cycle 1)))
-      (define-key company-active-map (kbd "C-p") (lambda () (interactive) (company-complete-common-or-cycle -1)))))
+      (define-key company-active-map (kbd "C-p") (lambda () (interactive) (company-complete-common-or-cycle -1)))
+      (define-key company-mode-map (kbd "TAB") #'my/yas-expand-or-company-indent-or-complete-common)
+      (define-key company-mode-map (kbd "<tab>") #'my/yas-expand-or-company-indent-or-complete-common)
+      ))
 #+END_SRC
 ** company quickhelp
 #+BEGIN_SRC emacs-lisp
