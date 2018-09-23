@@ -138,7 +138,31 @@ avoid arrow keys in indent-rigidly
   (define-key indent-rigidly-map (kbd "H") #'indent-rigidly-left)
   (define-key indent-rigidly-map (kbd "L") #'indent-rigidly-right)
   (define-key indent-rigidly-map (kbd "h") #'indent-rigidly-left-to-tab-stop)
+  (define-key indent-rigidly-map (kbd "S-TAB") #'indent-rigidly-left-to-tab-stop)
+  (define-key indent-rigidly-map (kbd "<backtab>") #'indent-rigidly-left-to-tab-stop)
   (define-key indent-rigidly-map (kbd "l") #'indent-rigidly-right-to-tab-stop)
+  (define-key indent-rigidly-map (kbd "TAB") #'indent-rigidly-right-to-tab-stop)
+  (define-key indent-rigidly-map (kbd "<tab>") #'indent-rigidly-right-to-tab-stop)
+#+END_SRC
+dwim wrapper around `indent-rigidly`
+#+BEGIN_SRC emacs-lisp
+  (defun my/indent-rigidly-dwim (arg)
+    "Call `indent-rigidly' on the current region if active,
+  else call it on the current line."
+    (interactive "P")
+    (if (null arg)
+        (if (region-active-p)
+            (call-interactively #'indent-rigidly)
+          (save-excursion
+            (set-mark (point-at-bol))
+            (goto-char (point-at-eol))
+            ;; (activate-mark)
+            (call-interactively #'indent-rigidly)))
+      (if (region-active-p)
+          (indent-rigidly (region-beginning) (region-end) arg)
+        (indent-rigidly (point-at-bol) (point-at-eol) arg))))
+
+  (global-set-key (kbd"C-x TAB") #'my/indent-rigidly-dwim)
 #+END_SRC
 ** selection / mark
 *** selecting rectangles
