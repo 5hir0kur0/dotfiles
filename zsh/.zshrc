@@ -18,25 +18,25 @@ setopt hist_fcntl_lock
 setopt sharehistory
 # don't use the shared history for moving up/down in history
 # (stolen from  https://superuser.com/a/691603)
-up-line-or-local-history() {
+function up-line-or-local-history() {
     zle set-local-history 1
     zle up-line-or-history
     zle set-local-history 0
 }
 zle -N up-line-or-local-history
-down-line-or-local-history() {
+function down-line-or-local-history() {
     zle set-local-history 1
     zle down-line-or-history
     zle set-local-history 0
 }
 zle -N down-line-or-local-history
-up-line-or-local-search() {
+function up-line-or-local-search() {
     zle set-local-history 1
     zle up-line-or-search
     zle set-local-history 0
 }
 zle -N up-line-or-local-search
-down-line-or-local-search() {
+function down-line-or-local-search() {
     zle set-local-history 1
     zle down-line-or-search
     zle set-local-history 0
@@ -44,11 +44,13 @@ down-line-or-local-search() {
 zle -N down-line-or-local-search
 
 # time reporting
-# report how long a command took if it was longer than 5 seconds
-REPORTTIME=10
+# report how long a command took if it was longer than a certain amount of cpu time
+REPORTTIME=20
 # TODO count total time and put it in right prompt?
 # time formatting for `time`
 TIMEFMT=$'%J:\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P\nmax\t%MKiB'
+
+# directory handling
 
 # cd automatically when typing just the directory name (e.g. "$ /tmp<CR>"
 setopt autocd
@@ -71,6 +73,9 @@ setopt warncreateglobal
 
 # don't run background jobs at a lower priority
 setopt nobgnice
+
+# handle multi-byte characters
+setopt multibyte
 
 # disable annoying ctrl-s and ctrl-q commands
 stty stop undef
@@ -130,7 +135,8 @@ compinit
 zmodload zsh/complist
 bindkey -M menuselect '^N' down-line-or-history
 bindkey -M menuselect '^P' up-line-or-history
-
+# make shift-tab go to the previous completion
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 ## key bindings
 
@@ -200,42 +206,198 @@ fi
 {source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh} 2>/dev/null
 
 ## prompt
+setopt prompt_subst
+#autoload -U colors && colors
 
 # delete rprompt when accepting a command (when enter is pressed)
 setopt transientrprompt
 # remove rprompt indent
-ZLE_RPROMPT_INDENT=0
+# (sadly, this seems to cause problems in some environments)
+#ZLE_RPROMPT_INDENT=0
 
 # stolen from http://stackoverflow.com/a/1128583
-setopt prompt_subst
 autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git # svn
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' max-exports 1
+zstyle ':vcs_info:*' stagedstr '%S'
+zstyle ':vcs_info:*' unstagedstr "%B%F{yellow}"
+zstyle ':vcs_info:*' branchformat '%b:%r'
 zstyle ':vcs_info:*' actionformats \
-    '%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f'
+    '%B%m%%b%f %F{blue}[%s%F{cyan}:%F{blue}%r%F{cyan}@%F{green}%c%u%b%f%%b%%s%F{cyan}|%f%B%%S%a%%s%%b%F{blue}]%f'
 zstyle ':vcs_info:*' formats       \
-    '%F{5}[%F{2}%b%F{5}]%f'
+    '%B%m%%b%f %F{blue}[%s%F{cyan}:%F{blue}%r%F{cyan}@%F{green}%c%u%b%f%%b%%s%F{blue}]%f'
 
-zstyle ':vcs_info:*' enable git
+# show the run time of the last command if it exceeds a certain length
+
+export MY_CMD_RUNTIME=0
+export MY_RUNTIME_DISYPAY=''
+
+function preexec() {
+    MY_CMD_RUNTIME=$SECONDS
+}
+
+# stolen from https://unix.stackexchange.com/a/27014
+# parameters:
+# 1: the time in seconds to be displayed in a more readable format
+function displaytime {
+    local T=$1
+    local D=$((T/60/60/24))
+    local H=$((T/60/60%24))
+    local M=$((T/60%60))
+    local S=$((T%60))
+    (( $D > 0 )) && printf '%dd ' $D
+    (( $H > 0 )) && printf '%dh ' $H
+    (( $M > 0 )) && printf '%dm ' $M
+    printf '%ds\n' $S
+}
+
+function precmd() {
+    if [[ -n "$MY_CMD_RUNTIME" ]]; then
+        MY_CMD_RUNTIME=$(( SECONDS - MY_CMD_RUNTIME ))
+        if (( MY_CMD_RUNTIME > 10 )); then
+            MY_RUNTIME_DISYPAY=" %F{cyan}[$(displaytime ${MY_CMD_RUNTIME})]%f"
+        else
+            MY_RUNTIME_DISYPAY=''
+        fi
+    fi
+    MY_CMD_RUNTIME=''
+}
 
 # or use pre_cmd, see man zshcontrib
-prompt_wrapper() {
+function prompt_wrapper() {
   vcs_info
   if [ -n "$vcs_info_msg_0_" ]; then
-    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+    echo "${vcs_info_msg_0_}%f"
   fi
 }
-RPROMPT=$'$(prompt_wrapper)'
 
-##set prompt, colors
-#autoload -U colors && colors
-# TODO: use abbreviated path like in fish, maybe remove username and put it into tmux
-PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
+#RPROMPT='%F{magenta}~%n%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
+RPROMPT='$(print "%{\e[2m%}~%n%{\e[22m%}")%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
+
+# helper function to shorten paths
+
+# # shorten the elements of a path (except the last one) to the specified length
+# # parameters:
+# # 1: [optional] the path to shorten (default: print -P %~)
+# # 2: [optional] the length of the shortened strings (default: 1 character)
+# function _my_shorten_path() {
+#     local path=${1:-$(print -P '%~')}
+#     local elem_length=${2:-1}
+#     local -a path_elements=(${(s./.)path})
+#     local i
+#     # if there are no path elements then we are in the root directory
+#     if [[ -z $path_elements ]]; then
+#         echo $path
+#         return
+#     fi
+#     # append empty element so that a leading slash will be output
+#     if [[ $path_elements[1] != ~* ]]; then
+#         path_elements=('' ${path_elements[@]})
+#     fi
+#     # don't shorten the first and the last element
+#     # (the first one is always going to be '' or '~[...]')
+#     for ((i = 2; i < $#path_elements; i++)); do
+#         path_elements[i]=${path_elements[i]:0:$elem_length}
+#     done
+#     # join elements with slashes
+#     echo ${(j./.)path_elements}
+# }
+
+# # try to fit the given path into the specified length by reducing all elements
+# # except the last one to a specified length (goes from trying longer lengths
+# # to shorter ones)
+# # parameters:
+# # 1: [optional] path (default: print -P %~)
+# # 2: [optional] desired length, default: $((COLUMNS/2))
+# function _my_fit_path() {
+#     local path=${1:-$(print -P '%~')}
+#     local desired_length=${2:-$((COLUMNS/2))}
+#     local length
+#     # the length checking seems to only work for results of substitutions
+#     # so it's easier to just substitute the path by "limiting" the element
+#     # length to 1000 instead of using a separate if
+#     for length in 1000 {10..2}; do
+#         local new_path=$(_my_shorten_path $path $length)
+#         if (( ${#new_path} <= desired_length )); then
+#             echo $new_path
+#             return
+#         fi
+#     done
+#     _my_shorten_path $path
+# }
+
+# try to fit the given path into the specified length by reducing as many
+# elements as necessary to be just one character long
+# parameters:
+# 1: [optional] path (default: print -P %~)
+# 2: [optional] desired length, default: $((COLUMNS/2))
+function _my_fit_path2() {
+    local path=${1:-$(print -P '%~')}
+    local -a path_elements=(${(s./.)path})
+    local desired_length=${2:-$((COLUMNS/2))}
+    local elem_length=1
+    local i
+    # if there are no path elements then we are in the root directory
+    if [[ -z $path_elements ]]; then
+        echo $path
+        return
+    fi
+    # append empty element so that a leading slash will be output
+    if [[ $path_elements[1] != ~* ]]; then
+        path_elements=('' ${path_elements[@]})
+    fi
+    # don't shorten the first and the last element
+    # (the first one is always going to be '' or '~[...]')
+    for ((i = 2; i < $#path_elements; i++)); do
+        local tmp_path=${(j./.)path_elements}
+        # if the path is already shorter, there is no need to shorten the rest
+        if (( $#tmp_path <= desired_length )); then
+            echo $tmp_path
+            return
+        fi
+        local shortened=${path_elements[i]:0:$elem_length}
+        if [[ ${path_elements[i]} != $shortened ]]; then
+            # path_elements[i]=$shortened…
+            # don't indicate shortening after all
+            path_elements[i]=$shortened
+        else
+            path_elements[i]=$shortened
+        fi
+    done
+    # join elements with slashes
+    echo ${(j./.)path_elements}
+}
+
+# PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
+
+# can't pass pwd directly, because otherwise the percent expansion takes
+# place after the command substitution
+# (if the user is displayed in the prompt, maybe subtract ${#USER})
+working_directory="\$(_my_fit_path2 '' \$((COLUMNS * PROMPT_PERCENT_OF_LINE / 100 - 2)))"
+
+# make sure the prompt is never longer than about 50% of the available
+# characters even if the last element of the path is longer than 50% of the line
+# (stolen from https://unix.stackexchange.com/a/370276)
+export PROMPT_PERCENT_OF_LINE=45
+# make a function, so that it can be evaluated repeatedly
+function _my_prompt_width() {
+    echo $(( ${COLUMNS:-80} * PROMPT_PERCENT_OF_LINE / 100  ))
+}
+# for some reason you can't put a function right in PROMPT, so make an
+# intermediary variable
+width_part='$(_my_prompt_width)'
+
+wd_50_percent="%${width_part}<…<$working_directory"
+
+PROMPT="%B%F{red}%(0?..[%?])%b%f%F{cyan}$wd_50_percent %# %f"
 
 ## fzf
 export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
 export FZF_CTRL_T_OPTS='--preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
 export FZF_CTRL_R_OPTS='-e'
 {source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
-fzf-locate-widget() {
+function fzf-locate-widget() {
   local selected
   if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
     if [ -z "$LBUFFER" -a -f "$selected" ]; then
