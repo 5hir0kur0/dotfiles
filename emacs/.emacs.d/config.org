@@ -261,8 +261,12 @@ remove the initial message shown in the scratch buffer
 #+END_SRC
 ** use hippie-expand
 #+BEGIN_SRC emacs-lisp
+  ;; get rid of compiler warnings
+  (eval-when-compile
+    (declare-function try-expand-line "hippie-exp" (old)))
+
   ;; move the line expansion to the very end of the list
-  (delq 'try-expand-line hippie-expand-try-functions-list)
+  (delq #'try-expand-line hippie-expand-try-functions-list)
   (add-to-list 'hippie-expand-try-functions-list #'try-expand-line 'append)
 
   ;; M-/ normally runs dabbrev-expand
@@ -312,8 +316,8 @@ I use C-\ for company
 ** window management hydra
 functions from hydra_examples.el
 #+BEGIN_SRC emacs-lisp
-  (eval-when-compile
-    (require 'windmove))
+  (require 'windmove)
+  (require 'hydra)
 
   (defun hydra-move-splitter-left (arg)
     "Move window splitter left."
@@ -349,6 +353,11 @@ functions from hydra_examples.el
 #+END_SRC
 hydra modified from [[https://github.com/abo-abo/hydra/wiki/Window-Management][Window Management Hydra in the Hydra Wiki]]
 #+BEGIN_SRC emacs-lisp
+  ;; get rid of compiler warnigns
+  (eval-when-compile
+    (declare-function winner-redo "winner" ())
+    (declare-function winner-undo "winner" ()))
+
   (defhydra hydra-window (:color red
                           :hint nil
                           :idle 0.4)
@@ -460,35 +469,42 @@ taken from hydra-examples.el
 ** text mode company
 (stolen from [[http://blog.binchen.org/posts/emacs-auto-completion-for-non-programmers.html][here]])
 #+BEGIN_SRC emacs-lisp
-  (defun my/text-mode-hook-setup ()
-    ;; making `company-backends' local is critcal
-    ;; or else, you will have completion in every major mode, that's very annoying!
-    (make-local-variable 'company-backends)
+  (with-eval-after-load 'company
+    (defvar company-backends)
+    (defvar my/company-ispell-backend)
+    (defun my/text-mode-hook-setup ()
+      ;; making `company-backends' local is critcal
+      ;; or else, you will have completion in every major mode, that's very annoying!
+      (make-local-variable 'company-backends)
 
-    (setq my/company-ispell-backend 'company-ispell)
+      (setq my/company-ispell-backend 'company-ispell)
 
-    ;; company-ispell is the plugin to complete words
-    (add-to-list 'company-backends my/company-ispell-backend)
-
-    ;; OPTIONAL, if `company-ispell-dictionary' is nil, `ispell-complete-word-dict' is used
-    ;;  but I prefer hard code the dictionary path. That's more portable.
-    (let ((dictionary  "/usr/share/dict/words"))
-      (when (file-exists-p dictionary)
-          (setq ispell-complete-word-dict dictionary)))
-    ;; (setq company-ispell-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
-    )
-
-  (add-hook 'text-mode-hook #'my/text-mode-hook-setup)
-
-  (defun my/toggle-company-ispell ()
-    (interactive)
-    (cond
-     ((memq my/company-ispell-backend company-backends)
-      (setq company-backends (delete my/company-ispell-backend company-backends))
-      (message "company-ispell disabled"))
-     (t
+      ;; company-ispell is the plugin to complete words
       (add-to-list 'company-backends my/company-ispell-backend)
-      (message "company-ispell enabled!"))))
+
+      ;; OPTIONAL, if `company-ispell-dictionary' is nil, `ispell-complete-word-dict' is used
+      ;;  but I prefer hard code the dictionary path. That's more portable.
+      (let ((dictionary  "/usr/share/dict/words"))
+        (when (file-exists-p dictionary)
+          (defvar ispell-complete-word-dict dictionary)))
+      ;; (setq company-ispell-dictionary (file-truename "~/.emacs.d/misc/english-words.txt"))
+      )
+
+    ;; get rid of compiler warnings
+    (eval-when-compile
+      (declare-function my/text-mode-hook-setup "config" ()))
+
+    (add-hook 'text-mode-hook #'my/text-mode-hook-setup)
+
+    (defun my/toggle-company-ispell ()
+      (interactive)
+      (cond
+       ((memq my/company-ispell-backend company-backends)
+        (setq company-backends (delete my/company-ispell-backend company-backends))
+        (message "company-ispell disabled"))
+       (t
+        (add-to-list 'company-backends my/company-ispell-backend)
+        (message "company-ispell enabled!")))))
 #+END_SRC
 * dwim
 ** eval region or last sexp
@@ -614,6 +630,7 @@ taken from hydra-examples.el
 ** custom format function
 #+BEGIN_SRC emacs-lisp
   ;; modified from ivy.el
+  (require 'ivy)
   (defun my/ivy-format-function-arrow (cands)
     "Transform CANDS into a string for minibuffer."
     (ivy--format-function-generic
@@ -673,6 +690,21 @@ note that it can limit undos to the active region
                 undo-tree-auto-save-history t ; save history to a file
                 undo-tree-history-directory-alist '((".*" . "~/.emacs.d/undo-tree/")))
     :config
+    ;; get rid of compiler warnings...
+    (require 'undo-tree)
+    (eval-when-compile
+      (declare-function undo-tree-visualize-switch-branch-left "undo-tree" (arg))
+      (declare-function undo-tree-visualize-switch-branch-right "undo-tree" (arg))
+      (declare-function undo-tree-visualize-redo "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualize-undo "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualize-redo-to-x "undo-tree" (&optional x))
+      (declare-function undo-tree-visualize-undo-to-x "undo-tree" (&optional x))
+      (declare-function undo-tree-visualizer-quit "undo-tree" ())
+      (declare-function undo-tree-visualizer-select-left "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualizer-select-right "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualizer-select-next "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualizer-select-previous "undo-tree" (&optional arg))
+      (declare-function undo-tree-visualizer-set "undo-tree" (&optional pos)))
     (global-undo-tree-mode 1)
     (define-key undo-tree-visualizer-mode-map (kbd "h") #'undo-tree-visualize-switch-branch-left)
     (define-key undo-tree-visualizer-mode-map (kbd "j") #'undo-tree-visualize-redo)
@@ -710,25 +742,29 @@ note that it can limit undos to the active region
 ** custom window splitting
 custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
-  ;; stolen from https://emacs.stackexchange.com/a/37652
-  (defun jay/shackle-dynamic-tyling (buffer alist plist)
-    "Create a new window displaying BUFFER splitting the current window sensibly.
+  (with-eval-after-load 'shackle
+    ;; get rid of compiler warnings
+    (eval-when-compile
+      (declare-function shackle--splittable-frame "shackle" ()))
+    ;; stolen from https://emacs.stackexchange.com/a/37652
+    (defun jay/shackle-dynamic-tyling (buffer alist plist)
+      "Create a new window displaying BUFFER splitting the current window sensibly.
   If there already is a window displaying BUFFER, do nothing.
   ALIST is passed to `window--display-buffer'. PLIST is ignored."
-    (or (get-buffer-window buffer)
-        (let
-            ((frame (shackle--splittable-frame))
-             (window (if (> (* 1.4 (window-pixel-height)) (window-pixel-width))
-                         (split-window-below)
-                       (split-window-right (/ (window-width) -3)))))
-          (prog1
-              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
-            (when window
-              (shrink-window-if-larger-than-buffer window)
-              (setq shackle-last-window window
-                    shackle-last-buffer buffer))
-            (unless (cdr (assq 'inhibit-switch-frame alist))
-              (window--maybe-raise-frame frame))))))
+      (or (get-buffer-window buffer)
+          (let
+              ((frame (shackle--splittable-frame))
+               (window (if (> (* 1.4 (window-pixel-height)) (window-pixel-width))
+                           (split-window-below)
+                         (split-window-right (/ (window-width) -3)))))
+            (prog1
+                (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+              (when window
+                (shrink-window-if-larger-than-buffer window)
+                (setq shackle-last-window window
+                      shackle-last-buffer buffer))
+              (unless (cdr (assq 'inhibit-switch-frame alist))
+                (window--maybe-raise-frame frame)))))))
 #+END_SRC
 * rainbow-delimiters
 #+BEGIN_SRC emacs-lisp
@@ -797,6 +833,14 @@ custom tiling function to create popups by splitting the current window
                                      magit-status-mode))
     :config
     (with-eval-after-load 'company
+      ;; get rid of compiler warnings
+      (eval-when-compile
+        (declare-function yas-expand "yasnippet" (&optional field))
+        (declare-function company-complete-common-or-cycle "company" (&optional arg))
+        (declare-function company-indent-or-complete-common "company" ())
+        (declare-function my/yas-expand-or-company-next "config" ())
+        (declare-function my/yas-expand-or-company-indent-or-complete-common "config" ()))
+
       (defun my/yas-expand-or-company-next ()
         "Try to expand a yas snippet. If not possible, call `company-complete-common-or-cycle'"
         (interactive)
@@ -1021,9 +1065,22 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * git-gutter
 #+BEGIN_SRC emacs-lisp
-  ;; stolen from: https://github.com/abo-abo/hydra/wiki/Git-gutter
-  (defhydra git-gutter-hydra (:hint nil)
-    "
+  (use-package git-gutter
+    :config (global-git-gutter-mode 1)
+
+    ;; get rid of compiler warnings
+    (eval-when-compile
+      (declare-function git-gutter:next-hunk "git-gutter" (arg))
+      (declare-function git-gutter:previous-hunk "git-gutter" (arg))
+      (declare-function git-gutter:stage-hunk "git-gutter" ())
+      (declare-function git-gutter:revert-hunk "git-gutter" ())
+      (declare-function git-gutter:popup-hunk "git-gutter" (&optional diffinfo))
+      (declare-function git-gutter:set-start-revision "git-gutter" (start-rev)))
+
+    ;; stolen from: https://github.com/abo-abo/hydra/wiki/Git-gutter
+    (global-set-key (kbd "C-c g")
+                    (defhydra git-gutter-hydra (:hint nil)
+                      "
   Git gutter:
     _j_: next hunk        _s_tage hunk     _q_uit
     _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
@@ -1031,31 +1088,28 @@ custom tiling function to create popups by splitting the current window
     _h_: first hunk
     _l_: last hunk        set start _R_evision
   "
-    ("j" git-gutter:next-hunk)
-    ("k" git-gutter:previous-hunk)
-    ("h" (progn (goto-char (point-min))
-                (git-gutter:next-hunk 1)))
-    ("l" (progn (goto-char (point-min))
-                (git-gutter:previous-hunk 1)))
-    ("s" git-gutter:stage-hunk)
-    ("r" git-gutter:revert-hunk)
-    ("p" git-gutter:popup-hunk)
-    ("R" git-gutter:set-start-revision)
-    ("C-l" reposition-window)
-    ("q" nil :color blue)
-    ("<escape>" nil)
-    ("<return>" nil)
-    ("Q" (progn (git-gutter-mode -1)
-                ;; git-gutter-fringe doesn't seem to
-                ;; clear the markup right away
-                (sit-for 0.1)
-                (git-gutter:clear))
-     :color blue))
-
-  (global-set-key (kbd "C-c g") #'git-gutter-hydra/body)
-
-  (use-package git-gutter
-    :config (global-git-gutter-mode 1))
+                      ("j" git-gutter:next-hunk)
+                      ("k" git-gutter:previous-hunk)
+                      ("h" (progn (goto-char (point-min))
+                                  (git-gutter:next-hunk 1)))
+                      ("l" (progn (goto-char (point-min))
+                                  (git-gutter:previous-hunk 1)))
+                      ("s" git-gutter:stage-hunk)
+                      ("r" git-gutter:revert-hunk)
+                      ("p" git-gutter:popup-hunk)
+                      ("R" git-gutter:set-start-revision)
+                      ("C-l" reposition-window)
+                      ("q" nil :color blue)
+                      ("<escape>" nil)
+                      ("<return>" nil)
+                      ("Q" (progn (git-gutter-mode -1)
+                                  ;; git-gutter-fringe doesn't seem to
+                                  ;; clear the markup right away
+                                  ;; TODO Do I actually need this?
+                                  ;; (sit-for 0.1)
+                                  ;; (git-gutter:clear)
+                                  )
+                       :color blue))))
 #+END_SRC
 * git-timemachine
 #+BEGIN_SRC emacs-lisp
@@ -1104,9 +1158,13 @@ emacs lisp template
 #+END_SRC
 * html
 #+BEGIN_SRC emacs-lisp
+  ;; get rid of compiler warnings
+  (eval-when-compile
+    (declare-function sgml-electric-tag-pair-mode "sgml-mode" (arg)))
+
   (add-hook 'html-mode-hook #'sgml-electric-tag-pair-mode)
 #+END_SRC
-* pdf
+* TODO pdf
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :init
@@ -1115,6 +1173,10 @@ emacs lisp template
                                      ,(face-attribute 'default :background)))
     (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
     :config
+    ;; get rid of compiler warnigns
+    (eval-when-compile
+      (declare-function pdf-view-midnight-minor-mode "pdf-view" (&optional arg)))
+
     (add-hook 'pdf-view-mode-hook (lambda () (pdf-view-midnight-minor-mode)
                                     (auto-revert-mode)))
     (pdf-tools-install))
@@ -1195,6 +1257,11 @@ automatically enable spell checking in latex buffers
       ;; https://github.com/syl20bnr/spacemacs/pull/179
       (defvar company-mode/enable-yas t
         "Enable yasnippet for all backends.")
+
+      ;; get rid of compiler warnings
+      (eval-when-compile
+        (declare-function company-mode/backend-with-yas "config" (backend))
+        (declare-function my/add-yas-company-backends "config" ()))
 
       (defun company-mode/backend-with-yas (backend)
         (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
@@ -1368,6 +1435,12 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
           evil-insert-state-cursor '(bar "firebrick"))
 
     :config
+    ;; get rid of compiler warnigns
+    (eval-when-compile
+      (declare-function evil-normal-state "evil-states" (&optional arg))
+      (declare-function evil-force-normal-state "evil-commands" (&optional arg))
+      (declare-function evil-delay "evil-common" (condition form hook &optional append local name))
+      (declare-function my/simulate-key-press "config" (key)))
 
     ;; make <escape> return to evil normal state from emacs mode
     (define-key evil-emacs-state-map (kbd "<escape>") #'evil-normal-state)
