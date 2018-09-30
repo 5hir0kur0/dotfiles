@@ -808,7 +808,9 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :defer nil
-    :hook (after-init . global-company-mode)
+    :hook ;; (after-init . global-company-mode)
+    ((prog-mode . company-mode)
+     (text-mode . company-mode))
     :bind (:map company-mode-map
                 ("C-\\" . company-complete))
     :diminish company-mode
@@ -824,18 +826,25 @@ custom tiling function to create popups by splitting the current window
           company-require-match 'never
           company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
           company-minimum-prefix-length 3
-          ;; FIXME maybe use a whitelist instead of a blacklist?
-          company-global-modes '(not Info-mode
-                                     dashboard-mode
-                                     xhelp-mode
-                                     racer-help-mode
-                                     intero-help-mode
-                                     help-mode
-                                     eshell-mode
-                                     comint-mode
-                                     erc-mode
-                                     rcirc-mode
-                                     magit-status-mode))
+          ;; attempt at a whitelist for company global-modes
+          ;; (currently not using company-global-mode)
+          ;; company-global-modes
+          ;; '(asm-mode autoconf-mode awk-mode bat-mode bibtex-mode
+          ;; bibtex-style-mode change-log-mode c++-mode c-mode
+          ;; comint-mode common-lisp-mode cperl-mode css-mode
+          ;; emacs-lisp-mode fundamental-mode gdb-script-mode gfm-mode
+          ;; ghci-script-mode git-commit-elisp-text-mode
+          ;; git-commit-major-mode git-rebase-mode haskell-cabal-mode
+          ;; haskell-mode html-mode indented-text-mode java-mode
+          ;; javascript-mode js-mode latex-mode less-css-mode
+          ;; lisp-interaction-mode lisp-mode log-edit-mode mail-mode
+          ;; makefile-mode markdown-mode message-mode mhtml-mode
+          ;; occur-edit-mode org-mode perl-mode plain-tex-mode
+          ;; prog-mode python-mode rst-mode rust-mode scss-mode
+          ;; sgml-mode shell-mode shell-script-mode sh-mode sql-mode
+          ;; term-mode tex-mode text-mode vc-git-log-edit-mode
+          ;; vhdl-mode xml-mode zone-mode)
+          )
     :config
     (with-eval-after-load 'company
       ;; get rid of compiler warnings
@@ -876,7 +885,11 @@ custom tiling function to create popups by splitting the current window
 ** company quickhelp
 #+BEGIN_SRC emacs-lisp
   (use-package company-quickhelp
-    :hook (global-company-mode . company-quickhelp-mode))
+    :hook (company-mode . company-quickhelp-local-mode)
+    :init
+    (setq company-quickhelp-use-propertized-text t
+          ;; this seems to work a little better (at least in i3wm)
+          pos-tip-use-relative-coordinates t))
 #+END_SRC
 * smartparens
 #+BEGIN_SRC emacs-lisp
