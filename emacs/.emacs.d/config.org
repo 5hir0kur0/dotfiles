@@ -150,6 +150,10 @@ dwim wrapper around `indent-rigidly`
     "Call `indent-rigidly' on the current region if active,
   else call it on the current line."
     (interactive "P")
+    ;; `indent-rigidly' seems not to work when the cursor is at the
+    ;; beginning of the line
+    (if (bolp)
+        (forward-char 1))
     (if (null arg)
         (if (region-active-p)
             (call-interactively #'indent-rigidly)
