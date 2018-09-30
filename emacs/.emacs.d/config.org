@@ -1477,10 +1477,15 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
           evil-emacs-state-cursor '(box "white")
           evil-insert-state-cursor '(bar "firebrick"))
 
+    (defvar my/all-evil-states '(normal insert visual replace operator motion emacs)
+      "contains a list of all evil states; useful for keybindings")
+
     :config
     ;; get rid of compiler warnigns
     (eval-when-compile
       (declare-function evil-normal-state "evil-states" (&optional arg))
+      (declare-function evil-motion-state "evil-states" (&optional arg))
+      (declare-function evil-insert-state "evil-states" (&optional arg))
       (declare-function evil-force-normal-state "evil-commands" (&optional arg))
       (declare-function evil-delay "evil-common" (condition form hook &optional append local name))
       (declare-function my/simulate-key-press "config" (key)))
@@ -1492,7 +1497,6 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     (define-key evil-normal-state-map (kbd "C-n") #'next-line)
     (define-key evil-normal-state-map (kbd "C-p") #'previous-line)
     ;; (define-key evil-normal-state-map (kbd "C-e") #'end-of-line)
-    (define-key evil-normal-state-map (kbd "TAB") nil)
     (define-key evil-normal-state-map (kbd "<tab>") nil)
 
     ;; make insert state act more like emacs state (using emacs state
@@ -1516,14 +1520,32 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
                     term-mode))
       (add-to-list 'evil-emacs-state-modes mode))
 
-    ;; fix tab key in help modes (not that this does NOT bread C-i, at
+    ;; fix tab key in help modes (not that this does NOT break C-i, at
     ;; least in GUI emacs)
-    (evil-define-key 'motion xhelp-mode-map       (kbd "<tab>") #'forward-button)
-    (evil-define-key 'motion racer-help-mode-map (kbd "<tab>") #'forward-button)
-    (evil-define-key 'motion intero-help-mode-map (kbd "<tab>") #'forward-button)
-    ;; fix q in racer help
-    (evil-define-key 'normal racer-help-mode-map (kbd "q") #'quit-window)
+    ;; (see below for better fix...)
+    ;; (evil-define-key 'motion xhelp-mode-map       (kbd "<tab>") #'forward-button)
+    ;; (evil-define-key 'motion racer-help-mode-map (kbd "<tab>") #'forward-button)
+    ;; (evil-define-key 'motion intero-help-mode-map (kbd "<tab>") #'forward-button)
+    ;; (evil-define-key 'motion apropos-mode-map (kbd "<tab>") #'forward-button)
 
+    ;; (setq local-function-key-map (delq '(kp-tab . [9]) local-function-key-map))
+
+    ;; in most cases where evil activates `evil-motion-state-map', using
+    ;; `forward-button' for <tab> seems to be the right choice
+    ;; when it's not you can still remap it for that partitular mode using
+    ;; (evil-define-key 'motion your-mode-map (kbd "<tab>") #'my-function)
+    ;; Amazingly, this does NOT break C-i (at least in GUI emacs)
+    (define-key evil-motion-state-map (kbd "<tab>") #'forward-button)
+    (evil-define-key my/all-evil-states org-mode-map (kbd "<tab>") #'org-cycle)
+
+    ;; disable q in motion state (the default functionality seems more
+    ;; useful than recording a _macro_...)
+    (define-key evil-motion-state-map (kbd "q") nil)
+
+    ;; fix racer help mode starting in normal state
+    (add-hook 'racer-help-mode-hook #'evil-motion-state)
+
+    (add-hook 'with-editor-mode-hook #'evil-insert-state)
 
     ;; make SPC in normal state act like C-c
     ;; stolen from https://emacs.stackexchange.com/a/13432
