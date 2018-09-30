@@ -311,6 +311,12 @@ I use C-\ for company
     (interactive (list my-term-shell)))
   (ad-activate 'ansi-term)
 #+END_SRC
+** use regex search by default
+#+BEGIN_SRC emacs-lisp
+  ;; (using swiper for forward search right now)
+  ;; (global-set-key (kbd "C-s") #'isearch-forward-regexp)
+  (global-set-key (kbd "C-r") #'isearch-backward-regexp)
+#+END_SRC
 * hydra
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
@@ -1571,7 +1577,12 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
          (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
 
     (define-key evil-normal-state-map (kbd "SPC") (my/simulate-key-press "C-c"))
+
+    ;; make SPC SPC act like M-x
     (define-key mode-specific-map (kbd "SPC") #'execute-extended-command)
+
+    ;; just a crazy idea... (so that you can type SPC x instead of C-x)
+    (global-set-key (kbd "C-c x") #'Control-X-prefix)
 
     ;; (define-key evil-normal-state-map (kbd "<escape>") #'ESC-prefix)
     (define-key evil-operator-state-map (kbd "<escape>") #'evil-force-normal-state))
