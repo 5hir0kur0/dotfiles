@@ -425,6 +425,7 @@ hydra modified from [[https://github.com/abo-abo/hydra/wiki/Window-Management][W
     ("M-b" balance-windows))
 
   (global-set-key (kbd "M-o") #'hydra-window/body)
+  (global-set-key (kbd "M-O") #'ace-window)
 #+END_SRC
 ** apropos hydra
 taken from hydra-examples.el
