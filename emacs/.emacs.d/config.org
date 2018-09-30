@@ -1416,6 +1416,45 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-J") (lambda () (interactive) (delete-indentation 1)))
 #+END_SRC
+** kill or yank whole line
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c k")
+    (defhydra hydra-kill-line
+      (:body-pre (kill-whole-line current-prefix-arg)
+       :hint nil
+       :idle 2)
+  "
+  _k_ill line
+  "
+      ("k" kill-whole-line)
+      ("q" nil)
+      ("<escape>" nil)
+      ("<return>" nil)))
+
+  ;; stolen from https://www.emacswiki.org/emacs/CopyingWholeLines
+  (defun my/kill-ring-safe-whole-line (arg)
+    "Copy ARG lines in the kill ring."
+        (interactive "p")
+        (kill-ring-save (line-beginning-position)
+                        (line-beginning-position (+ 1 arg))))
+
+
+  (global-set-key (kbd "C-c w")
+    (defhydra hydra-kill-ring-save-line
+      (:body-pre (my/kill-ring-safe-whole-line current-prefix-arg)
+       :hint nil
+       :idle 2)
+  "
+  _w_ yank line
+  "
+  ("w" (lambda ()
+         (interactive)
+         (setq current-prefix-arg (+ 1 current-prefix-arg))
+         (my/kill-ring-safe-whole-line current-prefix-arg)))
+      ("q" nil)
+      ("<escape>" nil)
+      ("<return>" nil)))
+#+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
   (defun my/toggle-evil ()
