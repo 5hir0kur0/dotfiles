@@ -95,7 +95,9 @@ cpu_usage {
 cpu_temperature 0 {
         format = " %degrees °C"
         format_above_threshold = " %degrees °C"
-        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input"
+        # note: to find out which temperature the file refers to
+        # consult the file temp*_label
+        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input"
         max_threshold = 60
 }
 
