@@ -1534,16 +1534,6 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
 #+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
-  (defun my/toggle-evil ()
-    "Toggle evil mode."
-    (interactive)
-    (call-interactively
-     #'evil-mode)
-    (unless (bound-and-true-p evil-mode)
-      (setq-default cursor-type 'box)
-      (setq cursor-type 'box)
-      (set-cursor-color "#ffffff")))
-
   (use-package evil
     :bind*
     (("C-z" . my/toggle-evil))            ; doesn't always work; see below
@@ -1566,6 +1556,16 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
       (declare-function evil-force-normal-state "evil-commands" (&optional arg))
       (declare-function evil-delay "evil-common" (condition form hook &optional append local name))
       (declare-function my/simulate-key-press "config" (key)))
+
+    (defun my/toggle-evil ()
+      "Toggle evil mode."
+      (interactive)
+      (call-interactively
+       #'evil-mode)
+      (unless (bound-and-true-p evil-mode)
+        (setq-default cursor-type 'box)
+        (setq cursor-type 'box)
+        (set-cursor-color "#ffffff")))
 
     ;; make <escape> return to evil normal state from emacs mode
     (define-key evil-emacs-state-map (kbd "<escape>") #'evil-normal-state)
@@ -1619,10 +1619,10 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     ;; useful than recording a _macro_...)
     (define-key evil-motion-state-map (kbd "q") nil)
 
-    ;; fix racer help mode starting in normal state
+    ;; fix modes that start in the "wrong" state
     (add-hook 'racer-help-mode-hook #'evil-motion-state)
-
     (add-hook 'with-editor-mode-hook #'evil-insert-state)
+    (add-hook 'debugger-mode-hook #'evil-motion-state)
 
     ;; make SPC in normal state act like C-c
     ;; stolen from https://emacs.stackexchange.com/a/13432
@@ -1634,6 +1634,8 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
          (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
 
     (define-key evil-normal-state-map (kbd "SPC") (my/simulate-key-press "C-c"))
+    (define-key evil-motion-state-map (kbd "SPC") (my/simulate-key-press "C-c"))
+    (define-key evil-visual-state-map (kbd "SPC") (my/simulate-key-press "C-c"))
 
     ;; make SPC SPC act like M-x
     (define-key mode-specific-map (kbd "SPC") #'execute-extended-command)
