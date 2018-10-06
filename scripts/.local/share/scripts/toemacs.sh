@@ -4,6 +4,7 @@ set -uo pipefail
 
 EMACS_DESKTOP=e
 SCRATCHCLASS=Emacs
+LC_ALL=C
 
 
 current_desktop() {
@@ -25,6 +26,10 @@ emacs_running() {
 
 emacs_focused() {
     xprop WM_CLASS -id "$(xdotool getwindowfocus)" | grep -qF '"Emacs"'
+}
+
+emacs_i3_tiling() {
+    xprop I3_FLOATING_WINDOW -id "$(xdotool getwindowfocus)" | grep -v '='
 }
 
 workspace_back_and_forth() {
@@ -74,7 +79,7 @@ emacs_window_focus() {
 
 if emacs_running; then
     if emacs_focused; then
-        if [ "$(current_desktop)" = "$EMACS_DESKTOP" ]; then
+        if [ "$(current_desktop)" = "$EMACS_DESKTOP" ] || emacs_i3_tiling; then
             workspace_back_and_forth
         else
             emacs_scratchpad_toggle
