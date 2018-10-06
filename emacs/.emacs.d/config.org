@@ -1224,11 +1224,9 @@ emacs lisp template
     (define-key org-mode-map (kbd "M-J") #'org-metadown)
     (define-key org-mode-map (kbd "M-L") #'org-metaright)
     (define-key org-mode-map (kbd "M-H") #'org-metaleft)
-    ;; use for sth. sensible later (I press those too often on accident)
-    (define-key org-mode-map (kbd "M-n") (lambda () (interactive) (message "did it again...")))
-    (define-key org-mode-map (kbd "M-p") (lambda () (interactive) (message "did it again...")))
-    (define-key org-mode-map (kbd "M-N") (lambda () (interactive) (message "did it again...")))
-    (define-key org-mode-map (kbd "M-P") (lambda () (interactive) (message "did it again..."))))
+
+    (define-key org-mode-map (kbd "M-n") #'org-metadown)
+    (define-key org-mode-map (kbd "M-p") #'org-metaup))
 #+END_SRC
 * html
 #+BEGIN_SRC emacs-lisp
