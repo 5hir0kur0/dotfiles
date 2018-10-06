@@ -558,12 +558,6 @@ taken from hydra-examples.el
 
   (global-set-key (kbd "M-c") #'hydra-casing/body)
 #+END_SRC
-*** TODO is this useful??
-#+BEGIN_SRC emacs-lisp
-  ;; maybe useful to upcase the last thing that was typed if I'm too lazy to hold
-  ;; shift or activate caps lock...
-  (global-set-key (kbd "M-u") (lambda (pref) (interactive "p") (upcase-dwim (- pref))))
-#+END_SRC
 ** remove whitespace
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-SPC") (lambda (pref) (interactive "p") (cycle-spacing pref nil 'fast)))
@@ -1139,6 +1133,59 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (use-package git-timemachine
     :bind (("C-x t" . git-timemachine)))
+#+END_SRC
+* TODO origami
+just an experiment for now; resolve key binding conflict!
+#+BEGIN_SRC emacs-lisp
+  (use-package origami
+    :hook (emacs-startup . global-origami-mode)
+    :defer nil
+    :init
+    ;; get rid of compiler warnings
+    (eval-when-compile
+      (declare-function origami-recursively-toggle-node "origami" (buffer point))
+      (declare-function origami-open-node "origami" (buffer point))
+
+      (declare-function origami-open-node-recursively "origami" (buffer point))
+      (declare-function origami-close-node "origami" (buffer point))
+
+      (declare-function origami-close-node-recursively "origami" (buffer point))
+      (declare-function origami-forward-fold-same-level "origami" (buffer point))
+
+      (declare-function origami-backward-fold-same-level "origami" (buffer point))
+      (declare-function origami-next-fold "origami" (buffer point))
+
+      (declare-function origami-previous-fold "origami" (buffer point))
+      (declare-function origami-forward-toggle-node "origami" (buffer point))
+
+      (declare-function origami-toggle-all-nodes "origami" (buffer point))
+      (declare-function origami-show-only-node "origami" (buffer point))
+      (declare-function origami-undo "origami" (buffer point))
+      (declare-function origami-redo "origami" (buffer point)))
+
+    (global-set-key
+     (kbd "M-u")
+     (defhydra hydra-folding (:color red :hint nil :idle 1)
+       "
+    _o_/_O_pen node    _j_ next fold       _t_oggle forward   _u_ndo
+    _c_/_C_lose node   _k_ previous fold   toggle _a_ll       _r_edo
+
+    _M-u_ toggle recursively           _f_ocus on current item
+    "
+       ("M-u" origami-recursively-toggle-node :color blue)
+       ("o" origami-open-node)
+       ("O" origami-open-node-recursively)
+       ("c" origami-close-node)
+       ("C" origami-close-node-recursively)
+       ("j" origami-forward-fold-same-level)
+       ("k" origami-backward-fold-same-level)
+       ("J" origami-next-fold)
+       ("K" origami-previous-fold)
+       ("t" origami-forward-toggle-node)
+       ("a" origami-toggle-all-nodes)
+       ("f" origami-show-only-node :color blue)
+       ("u" origami-undo)
+       ("r" origami-redo))))
 #+END_SRC
 * magit
 #+BEGIN_SRC emacs-lisp
