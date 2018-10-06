@@ -1506,10 +1506,17 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
         (kill-ring-save (line-beginning-position)
                         (line-beginning-position (+ 1 arg))))
 
+  (defvar my/kill-hydra-prefix-arg 1
+    "Used by `hydra-kill-ring-save-line'.")
+
 
   (global-set-key (kbd "C-c w")
     (defhydra hydra-kill-ring-save-line
-      (:body-pre (my/kill-ring-safe-whole-line current-prefix-arg)
+      (:body-pre
+       (progn (if (and current-prefix-arg (numberp current-prefix-arg))
+                  (setq my/kill-hydra-prefix-arg current-prefix-arg)
+                (setq my/kill-hydra-prefix-arg 1))
+              (my/kill-ring-safe-whole-line my/kill-hydra-prefix-arg))
        :hint nil
        :idle 2)
   "
@@ -1517,24 +1524,14 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
   "
   ("w" (lambda ()
          (interactive)
-         (setq current-prefix-arg (+ 1 current-prefix-arg))
-         (my/kill-ring-safe-whole-line current-prefix-arg)))
+         (setq my/kill-hydra-prefix-arg (+ 1 my/kill-hydra-prefix-arg))
+         (my/kill-ring-safe-whole-line my/kill-hydra-prefix-arg)))
       ("q" nil)
       ("<escape>" nil)
       ("<return>" nil)))
 #+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
-  (defun my/toggle-evil ()
-    "Toggle evil mode."
-    (interactive)
-    (call-interactively
-     #'evil-mode)
-    (unless (bound-and-true-p evil-mode)
-      (setq-default cursor-type 'box)
-      (setq cursor-type 'box)
-      (set-cursor-color "#ffffff")))
-
   (use-package evil
     :bind*
     (("C-z" . my/toggle-evil))            ; doesn't always work; see below
