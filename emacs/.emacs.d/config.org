@@ -1051,7 +1051,8 @@ custom tiling function to create popups by splitting the current window
   ^ ^             ^ ^             [_S_/_R_] Sort/Reverse regions
   ^ ^             ^ ^             [_q_] Quit
   "
-    ("l" mc/edit-lines :exit t)
+    ;; calling it directly doesn't seem to work and even this is buggy
+    ("l" (lambda () (interactive) (call-interactively 'mc/edit-lines)) :exit t)
     ("a" mc/mark-all-symbols-like-this :exit t)
     ("n" mc/mark-next-like-this-symbol)
     ("N" mc/skip-to-next-like-this)
@@ -1080,7 +1081,8 @@ custom tiling function to create popups by splitting the current window
                mc/insert-letters mc/sort-regions
                mc/reverse-regions)
     :bind (("C-c m" . multiple-cursors-hydra/body)
-           :map mc/keymap ("<return" . nil)))
+           ("C-c l" . mc/edit-lines) ; see above; the hydra binding doesn't really work
+           :map mc/keymap ("<return>" . nil)))
 #+END_SRC
 * git-gutter
 #+BEGIN_SRC emacs-lisp
@@ -1532,6 +1534,16 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
 #+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
+  (defun my/toggle-evil ()
+    "Toggle evil mode."
+    (interactive)
+    (call-interactively
+     #'evil-mode)
+    (unless (bound-and-true-p evil-mode)
+      (setq-default cursor-type 'box)
+      (setq cursor-type 'box)
+      (set-cursor-color "#ffffff")))
+
   (use-package evil
     :bind*
     (("C-z" . my/toggle-evil))            ; doesn't always work; see below
