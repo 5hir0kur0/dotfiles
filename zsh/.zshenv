@@ -56,7 +56,8 @@ alias '......'='cd ../../../../..'
 alias '.......'='cd ../../../../../..'
 alias '........'='cd ../../../../../../..'
 alias mv='mv -iv'
-alias md='mkdir -pv'
+alias mkdir='mkdir -pv'
+alias md=mkdir
 alias rm='rm -Iv --one-file-system'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
@@ -84,6 +85,9 @@ alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
 
 alias view="vim -R -c 'set nomodifiable'"
+
+alias yt='youtube-dl --add-metadata -ic'
+alias yta='youtube-dl --add-metadata -xic'
 
 function findoldfiles() {
     find "${1:-.}" -atime "+${2:-60}"
