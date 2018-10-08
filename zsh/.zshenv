@@ -39,6 +39,13 @@ function fasd_vim() {
 alias j='fasd_cd -d'
 alias k=my_fasd_cd
 alias vv=fasd_vim
+alias vim=nvim
+alias v=nvim
+alias view="vim -R -c 'set nomodifiable'"
+
+function e {
+    emacsclient "$@" || emacs -nw "$@"
+}
 
 alias ls='ls -q --color=auto'
 alias ll='ls -lh'
@@ -61,8 +68,6 @@ alias md=mkdir
 alias rm='rm -Iv --one-file-system'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
-alias vim=nvim
-alias v=nvim
 
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
@@ -78,13 +83,12 @@ alias -g c='less'
 alias -g wl='wc -l'
 
 alias hcat="highlight --force -O ansi"
+alias cat='cat -v'
 
 alias update='update.sh'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
-
-alias view="vim -R -c 'set nomodifiable'"
 
 alias yt='youtube-dl --add-metadata -ic'
 alias yta='youtube-dl --add-metadata -xic'
