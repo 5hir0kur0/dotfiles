@@ -198,7 +198,9 @@ fi
 
 ## source files
 
-[[ -f ~/.profile ]] && . ~/.profile
+# avoid sourcing .profile multiple times since some computations (might)
+# take place there
+[[ -f ~/.profile ]] && [[ -z "$MY_PROFILE_SOURCED" ]] && source ~/.profile
 
 ## syntax highlighting
 
