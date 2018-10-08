@@ -21,9 +21,9 @@ ctrl + alt + l
         exit.sh lock; xset dpms force off
 
 # hack for "nested" modes
-# MODE: extended: (a)dj. ratio, (B)ash, (b)m, (c)alc, (m)an, (p)y, (r)anger, (s)crot, (t)erm-open, (w)allp, (x)dg-open, (z) corners, num + num -> set volume
+# MODE: xtended: (a)dj. ratio, (B)ash, (b)m, (c)alc, (m)an, (p)y, (r)anger, (s)crot, (t)erm, (w)allp, (x)dg, (z) corners, (n n) set volume, (s+[a-z]) switch [a-z]
 # super + x
-# MODE: toggles: (b)ar, (m)ouse, (g)aps
+# MODE: toggles: (b)ar, (m)ouse, (g)aps, (s+[a-z]) move [a-z]
 # super + shift + x
 
 # note that this doesn't seem to work when using {n,p}
@@ -150,6 +150,14 @@ super + x ; s ; ctrl + shift + e
         screenshot.sh --action=whole --clip --delay=3 --no-save
 super + x ; s ; ctrl + shift + s
         sleep 3; screenshot.sh --action=select --clip --no-save
+
+# access workspaces with one-letter names more quickly
+super + x ; super + {a-z}
+        bspwm_workspace.sh switch {a-z}
+
+super + shift + x ; super + {a-z}
+        bspwm_workspace.sh move {a-z}
+
 
 Print
         screenshot.sh --action=whole
