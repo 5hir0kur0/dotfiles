@@ -8,24 +8,25 @@ set -x
 exec 1>/tmp/deblog 2>&1
 
 (
-    bspc monitor -d 0
-    # FIRST_RUN=1
+    bspc monitor -d 1
     bspc subscribe monitor_geometry monitor_add | while read -r LINE; do
-        MONITOR_ID="$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')"
-        bspc monitor -f "$MONITOR_ID" && bspwm_workspace.sh switch_new
-        launch_polybar.sh &
-        # if [ "$FIRST_RUN" = 1 ]; then
-        #     MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm &
-        #     FIRST_RUN=0
-        #  else
-        #     MONITOR="$(bspc query -M --names -m "$MONITOR_ID")" polybar bspwm_secondary &
-        # fi
+        # assign a new workspace to every monitor if it doesn't already have one
+        MONITOR_ID=$(tr -s ' ' <<< "$LINE" | cut -f2 -d' ')
+        CURRENT_MONITOR=$(bspc query -M -m focused)
+        if ! bspc query --names -D -m "$MONITOR_ID" | grep -qE '^[0-9]+$'; then
+            bspc monitor -f "$MONITOR_ID" && bspwm_workspace.sh switch_new
+        fi
+        # focus the previously focused monitor again
+        bspc monitor -f "$CURRENT_MONITOR"
+        echo "=====> EVENT: $LINE <======" 1>&2 # TODO remove later
     done
 ) &
 
+launch_polybar.sh &
+
 # start sxhkd
-[ -p /tmp/.sxhkd ] || mkfifo /tmp/.sxhkd
-pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s /tmp/.sxhkd -t 10 &
+[ -p $FIFO_PATH ] || mkfifo $FIFO_PATH
+pgrep -x sxhkd || SXHKD_SHELL=bash sxhkd -s $FIFO_PATH -t 10 &
 
 find_docstring() {
     MODE=$(grep -FB2 "$1" $SXHKD_PATH | grep -F '# MODE: ' | head -1 | cut -d' ' -f3-)
