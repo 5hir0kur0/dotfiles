@@ -1546,14 +1546,16 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
       "contains a list of all evil states; useful for keybindings")
 
     :config
-    ;; get rid of compiler warnigns
+    ;; get rid of compiler warnings
     (eval-when-compile
       (declare-function evil-normal-state "evil-states" (&optional arg))
       (declare-function evil-motion-state "evil-states" (&optional arg))
       (declare-function evil-insert-state "evil-states" (&optional arg))
       (declare-function evil-force-normal-state "evil-commands" (&optional arg))
       (declare-function evil-delay "evil-common" (condition form hook &optional append local name))
-      (declare-function my/simulate-key-press "config" (key)))
+      (declare-function my/simulate-key-press "config" (key))
+      (declare-function my/evil-insert-state "config" ())
+      (declare-function my/evil-motion-state "config" ()))
 
     (defun my/toggle-evil ()
       "Toggle evil mode."
@@ -1564,6 +1566,16 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
         (setq-default cursor-type 'box)
         (setq cursor-type 'box)
         (set-cursor-color "#ffffff")))
+
+    (defun my/evil-motion-state ()
+      "Activate motion state if evil mode is active."
+      (when (bound-and-true-p evil-mode)
+        (evil-motion-state)))
+
+    (defun my/evil-insert-state ()
+      "Activate insert state if evil mode is active."
+      (when (bound-and-true-p evil-mode)
+        (evil-insert-state)))
 
     ;; make <escape> return to evil normal state from emacs mode
     (define-key evil-emacs-state-map (kbd "<escape>") #'evil-normal-state)
@@ -1618,9 +1630,10 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     (define-key evil-motion-state-map (kbd "q") nil)
 
     ;; fix modes that start in the "wrong" state
-    (add-hook 'racer-help-mode-hook #'evil-motion-state)
-    (add-hook 'with-editor-mode-hook #'evil-insert-state)
-    (add-hook 'debugger-mode-hook #'evil-motion-state)
+    (add-hook 'racer-help-mode-hook #'my/evil-motion-state)
+    (add-hook 'debugger-mode-hook #'my/evil-motion-state)
+    (add-hook 'diff-mode-hook #'my/evil-motion-state)
+    (add-hook 'with-editor-mode-hook #'my/evil-insert-state)
 
     ;; make SPC in normal state act like C-c
     ;; stolen from https://emacs.stackexchange.com/a/13432
