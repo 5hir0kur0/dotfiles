@@ -110,6 +110,10 @@ increase scroll context
 #+BEGIN_SRC emacs-lisp
   (setq next-screen-context-lines 5)
 #+END_SRC
+make mouse scrolling slower
+#+BEGIN_SRC emacs-lisp
+(setq mouse-wheel-scroll-amount '(1))
+#+END_SRC
 *** sentence-based navigation
 #+BEGIN_SRC emacs-lisp
   (setq sentence-end-double-space nil)
