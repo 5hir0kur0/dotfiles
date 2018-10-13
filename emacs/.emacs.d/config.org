@@ -1543,6 +1543,12 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
       ("<escape>" nil)
       ("<return>" nil)))
 #+END_SRC
+** disable some prompts
+#+BEGIN_SRC emacs-lisp
+  (put 'upcase-region 'disabled nil)
+  ;; don't ask before following symlinks
+  (setq vc-follow-symlinks t)
+#+END_SRC
 ** TODO evil
 #+BEGIN_SRC emacs-lisp
   (use-package evil
