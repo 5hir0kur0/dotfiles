@@ -111,3 +111,4 @@ bspc rule -a Zathura state=tiled
 bspc rule -a '*:libreoffice' state=tiled
 bspc rule -a Emacs state=tiled desktop=e
 bspc rule -a mpv state=floating sticky=on locked=on private=on focus=off rectangle=930x520+975+545 layer=above
+bspc rule -a FULLSCREEN state=fullscreen sticky=on locked=on focus=off layer=above
