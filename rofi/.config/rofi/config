@@ -70,6 +70,7 @@ rofi.scroll-method:                  1
 rofi.click-to-exit:                  true
 ! indicate how it match by underlining it.
 ! rofi.show-match:                     true
+rofi.show-icons:                     true
 ! pidfile location
 ! rofi.pid:                            /run/user/1000/rofi.pid
 ! paste primary selection
