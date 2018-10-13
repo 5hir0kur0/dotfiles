@@ -49,11 +49,13 @@ change where customize stores its values
 #+BEGIN_SRC emacs-lisp
   (setq make-backup-files t
         vc-make-backup-files t  ; make backups of version-controlled files
-        backup-directory-alist '(("." . "~/.emacs.d/backup"))
+        backup-directory-alist `(("." . ,(expand-file-name
+                                          (concat user-emacs-directory "backups"))))
         version-control t       ; use version numbers on backups
         delete-old-versions t   ; delete excess backup files silently
         kept-new-versions 20
-        kept-old-versions 5)
+        kept-old-versions 5
+        vc-make-backup-files t) ; also backup vc-controlled files
 #+END_SRC
 ** auto-saves
 #+BEGIN_SRC emacs-lisp
