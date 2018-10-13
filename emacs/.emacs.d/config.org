@@ -788,6 +788,7 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * rainbow-mode
 #+BEGIN_SRC emacs-lisp
+  ;; TODO use a whitelist or a blacklist? (E.g. #def in C mode shouldn't be highlighted)
   (use-package rainbow-mode
     :diminish rainbow-mode
     :hook prog-mode)
@@ -819,7 +820,8 @@ custom tiling function to create popups by splitting the current window
     :defer nil
     :hook ;; (after-init . global-company-mode)
     ((prog-mode . company-mode)
-     (text-mode . company-mode))
+     (text-mode . company-mode)
+     (conf-mode . company-mode))
     :bind (:map company-mode-map
                 ("C-\\" . company-complete))
     :diminish company-mode
@@ -887,8 +889,8 @@ custom tiling function to create popups by splitting the current window
       (define-key company-active-map (kbd "C-c") 'counsel-company)
       (define-key company-active-map (kbd "C-n") (lambda () (interactive) (company-complete-common-or-cycle 1)))
       (define-key company-active-map (kbd "C-p") (lambda () (interactive) (company-complete-common-or-cycle -1)))
-      (define-key company-mode-map (kbd "TAB") #'my/yas-expand-or-company-indent-or-complete-common)
-      (define-key company-mode-map (kbd "<tab>") #'my/yas-expand-or-company-indent-or-complete-common)
+      ;; (define-key company-mode-map (kbd "TAB") #'my/yas-expand-or-company-indent-or-complete-common)
+      ;; (define-key company-mode-map (kbd "<tab>") #'my/yas-expand-or-company-indent-or-complete-common)
       ))
 #+END_SRC
 ** company quickhelp
@@ -998,10 +1000,9 @@ custom tiling function to create popups by splitting the current window
   ;; (use-package aggressive-indent
   ;;   :hook (prog-mode . aggressive-indent-mode))
 #+END_SRC
-* hungry-delete (disabled)
+* hungry-delete
 #+BEGIN_SRC emacs-lisp
   (use-package hungry-delete
-    :disabled
     :diminish hungry-delete-mode
     :hook (prog-mode . hungry-delete-mode))
 #+END_SRC
@@ -1037,7 +1038,7 @@ custom tiling function to create popups by splitting the current window
     :init (setq projectile-completion-system 'ivy)
     :config (projectile-mode 1))   ; TODO
 #+END_SRC
-* TODO multiple-cursors
+* multiple-cursors
 #+BEGIN_SRC emacs-lisp
   ;; stolen from https://github.com/abo-abo/hydra/wiki/multiple-cursors
 
@@ -1145,7 +1146,7 @@ custom tiling function to create popups by splitting the current window
   (use-package git-timemachine
     :bind (("C-x t" . git-timemachine)))
 #+END_SRC
-* TODO origami
+* origami
 just an experiment for now; resolve key binding conflict!
 #+BEGIN_SRC emacs-lisp
   (use-package origami
@@ -1425,7 +1426,7 @@ insert some dead keys literally
                 solarized-height-plus-2 1.0
                 solarized-height-plus-3 1.0
                 solarized-height-plus-4 1.0
-                x-underline-at-descent-line nil)
+                x-underline-at-descent-line t)
     :config (load-theme 'solarized-dark 'noconfirm))
 #+END_SRC
 ** cursor
