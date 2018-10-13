@@ -43,8 +43,12 @@ alias vim=nvim
 alias v=nvim
 alias view="vim -R -c 'set nomodifiable'"
 
-function e {
+function em {
     emacsclient "$@" || emacs -nw "$@"
+}
+
+function e {
+    em "$@" & disown
 }
 
 alias ls='ls -q --color=auto'
