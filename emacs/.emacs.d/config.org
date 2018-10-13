@@ -80,6 +80,12 @@ from [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs Config
         savehist-additional-variables
             '(kill-ring search-ring regexp-search-ring register-alist))
 #+END_SRC
+** TODO saving the position of point between sessions
+#+BEGIN_SRC emacs-lisp
+  (require 'saveplace)
+  (save-place-mode t)
+  (setq save-place-file (expand-file-name ".places" user-emacs-directory))
+#+END_SRC
 ** recentf
 #+BEGIN_SRC emacs-lisp
   (eval-when-compile
