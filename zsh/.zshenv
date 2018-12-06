@@ -42,14 +42,13 @@ alias vv=fasd_vim
 alias vim=nvim
 alias v=nvim
 alias view="vim -R -c 'set nomodifiable'"
-
-function em {
-    emacsclient "$@" || emacs -nw "$@"
-}
+alias r=ranger
 
 function e {
-    em "$@" & disown
+    emacsclient "$@" & disown
 }
+
+alias ew='emacs -nw'
 
 alias ls='ls -q --color=auto'
 alias ll='ls -lh'
@@ -70,6 +69,7 @@ alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias md=mkdir
 alias rm='rm -Iv --one-file-system'
+alias rmback='rm *~'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
 
@@ -93,6 +93,8 @@ alias update='update.sh'
 
 alias g++="g++ -Wall -Wextra -std=c++11"
 alias gcc="gcc -Wall -Wextra -std=c99"
+alias pk-cc="gcc -std=c99 -g -Wall -Wextra -Wpedantic -Wbad-function-cast \
+    -Wconversion -Wwrite-strings -Wstrict-prototypes"
 
 alias yt='youtube-dl --add-metadata -ic'
 alias yta='youtube-dl --add-metadata -xic'
@@ -172,11 +174,11 @@ function memusage() {
              including all memory this process shares with other processes.
              It does not include swap;
         Shared: memory that this process shares with other processes;
-        Private: private memory used by this process, 
+        Private: private memory used by this process,
              you can look for memory leaks here;
         Swap: swap memory used by the process;
         Pss: Proportional Set Size, a good overall memory indicator.
-             It is the Rss adjusted for sharing: 
+             It is the Rss adjusted for sharing:
              if a process has 1MiB private and 20MiB shared between other 10
              processes, Pss is 1 + 20/10 = 3MiB
 EOF
@@ -239,7 +241,7 @@ function lcd() {
 function weather() {
     local LOC=${1:-$(head -1 ~/.local/share/.location)}
     curl --insecure --silent "https://wttr.in/$LOC?q" #\
-	# | grep -E '^\s*┌|│|└' --color=never
+        # | grep -E '^\s*┌|│|└' --color=never
 }
 
 alias wttr=weather
@@ -259,11 +261,11 @@ function brokenlinks() {
 }
 
 function lpdf() {
-    latexmk -pdf ${1:?missing file name}
+    latexmk -pdf "${@:?missing file name}"
     latexmk -c
 }
 
 function llpdf() {
-    latexmk -lualatex ${1:?missing file name}
+    latexmk -lualatex "${@:?missing file name}"
     latexmk -c
 }
