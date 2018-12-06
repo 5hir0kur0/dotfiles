@@ -90,7 +90,9 @@ bspc config focused_border_color        \#fbf1c7 # Color of the border of a focu
 
 # init
 
-set_wallpaper.sh &
+# if ~/.fehbg exists but running it fails, set_wallpaper.sh should be run
+# shellcheck disable=SC2015
+[ -x ~/.fehbg ] && ~/.fehbg || set_wallpaper.sh &
 
 xsetroot -cursor_name left_ptr &
 
