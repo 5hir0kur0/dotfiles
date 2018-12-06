@@ -279,13 +279,13 @@ super + shift + F2
 
 # brightness
 super + {plus,minus}
-        light -Sc 0.5 && light -{A,U} 10
+        light -N 0.5 && light -{A,U} 10
 
 super + {F6,F5}
-        light -Sc 0.5 && light -{A,U} 10
+        light -N 0.5 && light -{A,U} 10
 
 super + {button4,button5}
-        light -Sc 0.5 && light -{A,U} 5
+        light -N 0.5 && light -{A,U} 5
 
 # surfraw
 super + q
