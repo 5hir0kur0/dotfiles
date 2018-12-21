@@ -108,6 +108,27 @@ monitor = ${env:MONITOR:HDMI-1}
 ; TODO is there another way to disable the tray?
 tray-position =
 
+width = 99%
+height = 3%
+offset-x = 0.5%
+offset-y = 1%
+
+font-0 = monaco:fontformat=truetype:size=13;1
+font-1 = Noto Sans Mono:fontformat=truetype:size=15;1
+font-2 = InconsolataGo Nerd Font:fontformat=truetype:size=15;2
+font-3 = DejaVu Sans:fontformat=truetype:size=15;3
+font-4 = Noto Sans Symbols:fontformat=truetype:size=16;4
+font-5 = Noto Sans Symbols2:fontformat=truetype:size=16;4
+font-6 = Inconsolata:fontformat=truetype:size=15;0
+font-7 = Noto Sans Mono:fontformat=truetype:size=15;0
+font-8 = Noto Sans:fontformat=truetype:size=15;0
+font-9 = Noto Sans CJK JP:size=15;2
+font-10 = unifont:fontformat=truetype:size=15:antialias=false;1
+
+[bar/bspwm_secondary_tray]
+inherit = bar/bspwm_secondary
+tray-position = right
+
 [module/separator]
 type = custom/text
 content = │
@@ -306,7 +327,7 @@ label-song-ellipsis = true
 type = internal/xbacklight
 
 format = <ramp> <label>
-label = %percentage:3%%
+label = %percentage%%
 
 ; Only applies if <ramp> is used
 ramp-0 = 🌕
@@ -367,12 +388,14 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = ${colors.purple}
-label-connected = %essid% (%downspeed%)
+label-connected = %essid% (⇣%downspeed% ⇡%upspeed%)
 
 format-disconnected = <label-disconnected>
-format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = %ifname% disconnected
-label-disconnected-foreground = ${colors.foreground-alt}
+; format-disconnected-underline = ${self.format-connected-underline}
+format-disconnected-underline =
+; label-disconnected = %ifname% disconnected
+label-disconnected = " 睊 "
+label-disconnected-foreground = ${colors.darkgray}
 
 ; ramp-signal-0 = 
 ; ramp-signal-1 = 
@@ -416,7 +439,7 @@ type = internal/date
 interval = 5
 
 date = "%m-%d"
-date-alt = "%Y-%m-%d"
+date-alt = "%a %Y-%m-%d"
 
 time = %{F#a89984}%{F-} %H:%M
 time-alt = %{F#a89984}%{F-} %H:%M:%S
@@ -509,10 +532,12 @@ format-charging-underline = ${colors.yellow}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
+time-format = %H:%M
+label-discharging = %percentage%% [%time%]
 
 ; format-full-prefix = " "
 format-full-prefix = " "
-format-full =  <label-full>
+format-full = <label-full>
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
