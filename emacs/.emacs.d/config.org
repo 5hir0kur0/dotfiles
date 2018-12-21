@@ -788,11 +788,10 @@ custom tiling function to create popups by splitting the current window
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
     :diminish rainbow-delimiters-mode
-    :hook (prog-mode . rainbow-delimiters-mode))
+    :hook ((prog-mode . rainbow-delimiters-mode)))
 #+END_SRC
 * rainbow-mode
 #+BEGIN_SRC emacs-lisp
-  ;; TODO use a whitelist or a blacklist? (E.g. #def in C mode shouldn't be highlighted)
   (use-package rainbow-mode
     :diminish rainbow-mode
     :hook prog-mode)
@@ -805,15 +804,19 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * better regexp search/replace
 #+BEGIN_SRC emacs-lisp
-  (use-package visual-regexp-steroids
+  (use-package visual-regexp
     :bind (("C-c r" . vr/replace)
            ("C-c q" . vr/query-replace)
-           ("C-c M" . vr/mc-mark)))
+           ("C-c M" . vr/mc-mark))
+    :init
+    (use-package visual-regexp-steroids
+      :defer nil))
 #+END_SRC
 * beacon
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
     :defer nil
+    :disabled
     :diminish beacon-mode
     :init (setq beacon-push-mark 1)       ; this is a test (TODO)
     :config (beacon-mode 1))
@@ -1007,6 +1010,7 @@ custom tiling function to create popups by splitting the current window
 * hungry-delete
 #+BEGIN_SRC emacs-lisp
   (use-package hungry-delete
+    :disabled
     :diminish hungry-delete-mode
     :hook (prog-mode . hungry-delete-mode))
 #+END_SRC
@@ -1266,16 +1270,7 @@ emacs lisp template
                                     (auto-revert-mode)))
     (pdf-tools-install))
 #+END_SRC
-* tex / latex
-automatically enable spell checking in latex buffers
-#+BEGIN_SRC emacs-lisp
-  (eval-when-compile
-    (require 'ispell))
-
-  (add-hook 'tex-mode-hook
-            #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1)))
-#+END_SRC
-* programming language specific configuration
+* language specific configuration
 ** haskell
 #+BEGIN_SRC emacs-lisp
   (use-package haskell-mode
@@ -1330,6 +1325,65 @@ automatically enable spell checking in latex buffers
   (use-package cargo
     :diminish cargo-minor-mode
     :hook (rust-mode . cargo-minor-mode))
+#+END_SRC
+** markdown
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "markdown"
+                markdown-fontify-code-blocks-natively t))
+#+END_SRC
+** latex
+AUCTeX configuration
+#+BEGIN_SRC emacs-lisp
+  (use-package tex-site
+    :ensure auctex
+    :init
+    ;; enable document parsing
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+
+    ;; make AUCTeX aware of multi-file documents
+    (setq-default TeX-master nil)
+
+    ;; only fold environments and macro, not maths
+    (setq TeX-fold-type-list '(env macro))
+
+    ;; make preview images bigger
+    (setq preview-scale-function 2.1)
+
+    (add-hook 'LaTeX-mode-hook
+              (lambda ()
+                (TeX-fold-mode 1)
+                (setq prettify-symbols-alist
+                      (append prettify-symbols-alist
+                              '(("\\bigO" . ?O)
+                                ("\\IN" . ?ℕ)
+                                ("\\IR" . ?ℝ)
+                                ("\\IZ" . ?ℤ))))))
+
+    ;; stolen from https://yoo2080.wordpress.com/2016/11/15/how-to-make-prettify-symbols-mode-work-with-auctex/
+    ;; ran after fontification
+    (defun my/delayed-latex ()
+      (run-with-idle-timer 0 nil (lambda ()
+                                 (rainbow-delimiters-mode 1)
+                                 (hl-todo-mode 1)
+                                 (TeX-fold-buffer))))
+    (add-hook 'TeX-mode-hook #'my/delayed-latex))
+#+END_SRC
+automatically enable spell checking in latex buffers
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'ispell))
+  (add-hook 'tex-mode-hook
+            #'(lambda () (setq ispell-parser 'tex) (flyspell-mode 1)))
+#+END_SRC
+** c/cpp
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-hook (lambda () (rainbow-mode -1)))
 #+END_SRC
 * yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -1411,27 +1465,13 @@ insert some dead keys literally
 #+BEGIN_SRC emacs-lisp
   (use-package gruvbox-theme
     :defer nil
-    :init
+    :config
     (load-theme 'gruvbox-dark-hard 'noconfirm))
 
-  (use-package solarized-theme
+  (use-package color-theme-solarized
     :defer nil
     :disabled
-    :init (setq solarized-distinct-fringe-background t ; Make the fringe stand out from the background
-                solarized-use-variable-pitch nil ; Don't change the font for some headings and titles
-                solarized-high-contrast-mode-line nil ; Make the mode line high contrast
-                solarized-use-less-bold t ; Use less bolding
-                solarized-use-more-italic t ; Use more italics
-                solarized-emphasize-indicators t
-                solarized-scale-org-headlines t
-                ;; Avoid all font-size changes
-                solarized-height-minus-1 1.0
-                solarized-height-plus-1 1.0
-                solarized-height-plus-2 1.0
-                solarized-height-plus-3 1.0
-                solarized-height-plus-4 1.0
-                x-underline-at-descent-line t)
-    :config (load-theme 'solarized-dark 'noconfirm))
+    :config (load-theme 'solarized 'noconfirm))
 #+END_SRC
 ** cursor
 #+BEGIN_SRC emacs-lisp
@@ -1643,6 +1683,7 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
     ;; Amazingly, this does NOT break C-i (at least in GUI emacs)
     (define-key evil-motion-state-map (kbd "<tab>") #'forward-button)
     (evil-define-key my/all-evil-states org-mode-map (kbd "<tab>") #'org-cycle)
+    (evil-define-key my/all-evil-states markdown-mode-map (kbd "<tab>") #'markdown-cycle)
 
     ;; disable q in motion state (the default functionality seems more
     ;; useful than recording a _macro_...)
