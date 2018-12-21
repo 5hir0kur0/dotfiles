@@ -181,7 +181,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
 Plug 'lifepillar/vim-mucomplete'
-Plug 'xuhdev/vim-latex-live-preview'
 call plug#end()
 
 " enable filetype detection, enable file-type specific plugin loading, enable
