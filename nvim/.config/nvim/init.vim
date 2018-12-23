@@ -167,7 +167,7 @@ augroup AutoSaveFolds
 augroup END
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'Shougo/neobundle.vim'
+Plug 'junegunn/vim-plug'
 Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
