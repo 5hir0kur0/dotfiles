@@ -773,6 +773,10 @@ bindsym $mod+Down exec --no-startup-id $pulsescript down
 bindsym $mod+Ctrl+Up exec --no-startup-id $pulsescript force_up 1
 bindsym $mod+Ctrl+Down exec --no-startup-id $pulsescript force_down 1
 bindsym Scroll_Lock exec --no-startup-id $pulsescript mute
+
+bindsym $mod+F10 exec --no-startup-id $pulsescript mute
+bindsym $mod+F12 exec --no-startup-id $pulsescript up
+bindsym $mod+F11 exec --no-startup-id $pulsescript down
 #does not really work...
 #bindsym XF86AudioPlay exec playerctl play
 #bindsym XF86AudioPause exec playerctl pause
