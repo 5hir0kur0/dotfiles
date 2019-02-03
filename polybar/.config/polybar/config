@@ -89,8 +89,6 @@ tray-padding = 0
 ; Scale factor for tray clients
 tray-scale = 1.0
 
-
-
 wm-restack = bspwm
 
 ;override-redirect = true
@@ -279,36 +277,93 @@ ws-icon-default = 
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
-index-sort = true
-wrapping-scroll = false
 
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+ws-icon-0 = 0;零
+ws-icon-1 = 1;一
+ws-icon-2 = 2;二
+ws-icon-3 = 3;三
+ws-icon-4 = 4;四
+ws-icon-5 = 5;五
+ws-icon-6 = 6;六
+ws-icon-7 = 7;七
+ws-icon-8 = 8;八
+ws-icon-9 = 9;九
+ws-icon-10 = 10;十
+ws-icon-11 = 11;十一
+ws-icon-12 = 12;十二
+ws-icon-13 = 13;十三
+ws-icon-14 = 14;十四
+ws-icon-15 = 15;十五
+ws-icon-16 = 16;十六
+ws-icon-17 = 17;十七
+ws-icon-18 = 18;十八
+ws-icon-19 = 19;十九
+ws-icon-20 = 20;二十
+ws-icon-21 = e;
+ws-icon-22 = a;
+ws-icon-23 = w;
+ws-icon-24 = s;
+ws-icon-25 = f;
+ws-icon-26 = u;
+ws-icon-27 = v;
+ws-icon-28 = p;
+ws-icon-29 = i;﫸
+ws-icon-30 = l;韛
+ws-icon-default = 
 
-label-mode-padding = 2
+label-mode-padding = 1
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %icon%
 label-focused-background = ${module/bspwm.label-focused-background}
 label-focused-underline = ${module/bspwm.label-focused-underline}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
+label-unfocused = %icon%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
 ; visible = Active workspace on unfocused monitor
-label-visible = %index%
+label-visible = %icon%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %icon%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+; Only show workspaces defined on the same output as the bar
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+strip-wsnumbers = false
+
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+index-sort = false
+
+; Create click handler used to focus workspace
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+enable-scroll = true
+
+; Wrap around when reaching the first/last workspace
+wrapping-scroll = true
+
+; Set the scroll cycle direction 
+reverse-scroll = true
+
+; Use fuzzy (partial) matching on labels when assigning 
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces 
+; containing 'code' in the label
+fuzzy-match = false
+
 
 [module/mpd]
 type = internal/mpd
@@ -375,7 +430,7 @@ ramp-used-0 = "▁"
 ramp-used-1 = "▂"
 ramp-used-2 = "▃"
 ramp-used-3 = "▄"
-ramp-used-4 = "%{F#cc241d}▅"
+ramp-used-4 = "▅"
 ramp-used-5 = "%{F#cc241d}▆"
 ramp-used-6 = "%{F#cc241d}▇"
 ramp-used-7 = "%{F#cc241d}█"
@@ -621,5 +676,78 @@ screenchange-reload = true
 [global/wm]
 margin-top = 0
 margin-bottom = 0
+
+[bar/i3_notray]
+monitor = ${env:MONITOR:eDP-1}
+width = 100%
+height = 2%
+offset-x = 1%
+offset-y = 2%
+; radius = 2
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+; size of the underline
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 0
+module-margin-right = 1
+
+font-0 = monaco:fontformat=truetype:size=11;1
+font-1 = Noto Sans Mono:fontformat=truetype:size=13;1
+font-2 = InconsolataGo Nerd Font:fontformat=truetype:size=13;2
+font-3 = DejaVu Sans:fontformat=truetype:size=13;3
+font-4 = Noto Sans Symbols:fontformat=truetype:size=14;4
+font-5 = Noto Sans Symbols2:fontformat=truetype:size=14;4
+font-6 = Inconsolata:fontformat=truetype:size=13;0
+font-7 = Noto Sans Mono:fontformat=truetype:size=13;0
+font-8 = Noto Sans:fontformat=truetype:size=13;0
+font-9 = Noto Sans CJK JP:size=13;2
+font-10 = unifont:fontformat=truetype:size=13:antialias=false;1
+
+; scroll-up = i3-msg workspace next_on_output
+; scroll-down = i3-msg workspace prev_on_output
+
+modules-left = i3
+modules-center =
+modules-right = filesystem pulseaudio wlan eth vpn memory cpu temperature battery xkeyboard backlight-acpi date
+
+tray-position = 
+; tray-detached = true
+
+; Tray icon max size
+tray-maxsize = 16
+
+; Enable pseudo transparency
+; Will automatically be enabled if a fully transparent
+; background color is defined using `tray-background`
+tray-transparent = false
+
+; Background color for the tray container
+; By default the tray container will use the bar
+; background color.
+; Note: 32 bit alpha blending is not supported.
+tray-background = ${self.background}
+
+; Tray offset defined as pixel value (e.g. 35) or percentage (e.g. 50%)
+tray-offset-x = 0
+tray-offset-y = 0
+
+; Pad the sides of each tray icon
+tray-padding = 0
+
+; Scale factor for tray clients
+tray-scale = 1.0
+wm-restack = i3
+
+[bar/i3_tray]
+inherit = bar/i3_notray
+tray-position = right
 
 ; vim:ft=dosini
