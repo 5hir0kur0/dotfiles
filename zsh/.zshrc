@@ -14,6 +14,8 @@ setopt histreduceblanks
 # use native locking for histfile
 setopt hist_fcntl_lock
 
+bindkey -e # emacs mode
+
 # sharing history
 setopt sharehistory
 # don't use the shared history for moving up/down in history
@@ -140,11 +142,14 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 ## key bindings
 
-bindkey -e # emacs mode
-
 # better c-p, c-n
 bindkey '^P' up-line-or-local-search
 bindkey '^N' down-line-or-local-search
+
+# edit command line in $EDITOR (from http://distrustsimplicity.net/articles/zsh-command-editing/)
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
 
 # make M-DEL delete up to the last special character (e.g. / in paths)
 # except '*?.~!$' are considered parts of words
