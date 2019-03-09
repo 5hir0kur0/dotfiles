@@ -1,27 +1,95 @@
+" disable vi compatibility
 set nocompatible
-set ruler laststatus=2 hlsearch number showcmd title
-set autoindent backup writebackup history=1337
-set incsearch ignorecase smartcase
-set backspace=indent,eol,start expandtab tabstop=8 shiftwidth=4 softtabstop=4
-set wildmode=longest,list,full
-set wildmenu
-set list
-set listchars=tab:▸\ ,eol:¬,trail:\ ,precedes:◀,extends:▶
-set sidescrolloff=10
 
-" highlight the line the cursor is on
-set cursorline
+" show line/column number and relative position
+set ruler
+
+" always show status line
+set laststatus=2
+
+" highlight search matches
+set hlsearch
+
+" show line numbers
+set number
+
+" show (partial) commands on screen (in operator pending or visual mode)
+set showcmd
+
+" set the title of the terminal window to the current filename
+set title
+
+set autoindent
+
+" create backup before overwriting the file and don't delete it afterwards
+set writebackup backup
+
+" keep a history of ":" commands
+set history=10000
+
+" show search results while typing and ignore case except when the search
+" string contains a capital letter
+set incsearch ignorecase smartcase
+
+" allow backspace over indentation, end of line, and the point where insert
+" mode was started
+set backspace=indent,eol,start
+
+" insert the appropriate number of spaces if <tab> is pressed in insert mode
+set expandtab
+
+" number of spaces that a <tab> character counts for
+" (this is *not* the number of spaces that gets inserted when you press <tab>
+" in insert mode)
+set tabstop=8
+
+" number of spaces used for each step auf (auto)indent
+set shiftwidth=4
+
+" number of spaces that are inserted by <tab> and deleted by <bs>
+set softtabstop=4
+
+" better completion in command mode
+set wildmenu wildmode=longest:full,full
+
+" display non-printable characters (such as tabs and newlines)
+set list
+
+" how to display non-printable characters
+set listchars=tab:▸\ ,eol:¬,trail:\·,precedes:◀,extends:▶
+
+" display unnecessary whitespace (stolen from
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces)
+highlight ExtraWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=darkred
+
+" match trailing whitespace, except when typing at the end of a line
+match ExtraWhitespace /\s\+\%#\@<!$/
+" match tabs that are not at the start of a line
+match ExtraWhitespace /[^\t]\zs\t\+/
 
 set background=dark
 
+" show line numbers relative to the line the cursor is on
 set relativenumber
 
+" highlight the line of the cursor
+set cursorline
+
+" use <f10> to toggle the 'paste' option
 set pastetoggle=<F10>
+
+" don't redraw during macros, etc.
+set lazyredraw
 
 " create backups and swap files in the .vim directory (the double slashes
 " mean, VIM uses the full path)
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swp//
+set undodir=~/.vim/undo//
+
+" save undo history to a file
+set undofile
 
 " encryption method
 set cryptmethod=blowfish2
@@ -65,10 +133,17 @@ inoremap <C-c> <Esc><Esc>
 
 noremap <Esc> <Esc><Esc>
 
+" save from insert mode
+inoremap <silent> <C-s> <Esc>:update<CR>a
+nnoremap <silent> <C-s> :update<CR>
+
+nnoremap n nzz
+nnoremap N Nzz
+
 " force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
-"set colorcolumn=81
+set colorcolumn=81
 highlight ColorColumn ctermbg=lightblue guibg=lightblue
 
 " enable spell checking for certain file types
@@ -92,6 +167,7 @@ Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'w0rp/ale'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'morhetz/gruvbox'
+Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 
@@ -106,8 +182,8 @@ let g:airline_theme = 'lucius'
 let g:airline_symbols_ascii = 1
 
 " ale bindings
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <Leader>j <Plug>(ale_next_wrap)
+nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
 
 " gitgutter bindings
 nnoremap <silent> <Leader>gj :GitGutterNextHunk<CR>
