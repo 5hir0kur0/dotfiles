@@ -133,7 +133,7 @@ nnoremap n nzz
 nnoremap N Nzz
 
 " delete trailing whitespace
-nnoremap <silent> <Leader>W m`:s/\s*$//<CR>:noh<CR>``
+nnoremap <silent> <Leader>W m`:%s/\s*$//<CR>:noh<CR>``
 nnoremap <silent> <Leader>w m`g_ld$``
 
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
