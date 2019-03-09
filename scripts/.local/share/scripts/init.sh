@@ -2,7 +2,7 @@
 
 ~/.local/share/scripts/kill.sh
 
-pgrep -x urxvtd || urxvtd &
+urxvtd &
 redshift-gtk &
 ~/.local/share/scripts/set_wallpaper.sh &
 fcitx &
