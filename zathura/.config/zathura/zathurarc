@@ -1,0 +1,6 @@
+map <Space> navigate next
+map <BackSpace> navigate previous
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map i recolor
