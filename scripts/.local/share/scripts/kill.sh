@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NAMES=('urxvtd'
        'redshift-gtk'
