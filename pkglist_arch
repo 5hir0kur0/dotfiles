@@ -83,6 +83,7 @@ libreoffice-still
 linux-lts
 macchanger
 mediainfo
+mediainfo
 mlocate
 mpc
 mpd
@@ -116,6 +117,7 @@ pavucontrol
 pciutils
 pdfgrep
 perl
+perl-image-exiftool
 powertop
 pulseaudio
 pulseaudio-alsa
