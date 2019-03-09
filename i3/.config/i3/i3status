@@ -70,8 +70,9 @@ run_watch VPN {
 
 path_exists VPN {
         path = "/sys/class/net/tun0"
-        color_good = "#98971a"
-        color_bad = "#b9b9b9"
+        # color_good = "#98971a"
+        # color_bad = "#b9b9b9"
+        color_good = "#b9b9b9"
         format = "廬 %status"
 }
 
