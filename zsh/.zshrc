@@ -400,16 +400,16 @@ width_part='$(_my_prompt_width)'
 
 wd_50_percent="%${width_part}<…<$working_directory"
 
-PROMPT="%B%F{red}%(0?..[%?])%b%f%F{cyan}$wd_50_percent %# %f"
+PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 
 ## fzf
-export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
-export FZF_CTRL_T_OPTS='--preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
+export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
+export FZF_CTRL_T_OPTS="--preview='bash $HOME/.local/share/scripts/preview.sh {}'"
 export FZF_CTRL_R_OPTS='-e'
 {source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
 function fzf-locate-widget() {
   local selected
-  if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
+  if selected=$(locate / | grep -v '\.cache\|\.local' | FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" fzf); then
     if [ -z "$LBUFFER" -a -f "$selected" ]; then
       LBUFFER="rifle ""'$selected'"
     else
@@ -419,7 +419,28 @@ function fzf-locate-widget() {
   zle redisplay
 }
 zle -N fzf-locate-widget
-# kind of useless; use c-t + enter instead
-# bindkey '^J' fzf-cd-widget
+function fzf-cd-widget () {
+    local cmd="command find -L . -mindepth 1 \\( -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o \\( -type d -o -type f \\) -print 2> /dev/null | cut -b3-"
+    setopt localoptions pipefail 2> /dev/null
+    local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) +m)"
+    if [[ -z "$dir" ]]
+    then
+        zle redisplay
+        return 0
+    fi
+    if [[ -d "$dir" ]]; then
+        cd "$dir"
+    elif [[ -f "$dir" ]]; then
+        cd "${dir%/*}"
+    else
+        echo "fzf-cd: neither a file nor a directory: $dir" 1>&2
+        return 1
+    fi
+    local ret=$?
+    zle fzf-redraw-prompt
+    return $ret
+}
+zle -N fzf-cd-widget
+bindkey '^T' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
