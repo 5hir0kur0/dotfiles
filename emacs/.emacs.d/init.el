@@ -21,6 +21,8 @@
 (defvar my/config-file-path (file-truename (expand-file-name "~/.emacs.d/config.org")))
 (defvar my/config-file-tangled (expand-file-name "~/.emacs.d/config.el"))
 
+(require 'org)
+
 (defun my/compile-init ()
   "Tangle and compile init file."
   (require 'ob-tangle)
