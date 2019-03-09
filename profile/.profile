@@ -1,5 +1,8 @@
 export PATH="$HOME/.local/bin:$HOME/.local/share/scripts:""$PATH"
 
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 export EDITOR=nvim
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
