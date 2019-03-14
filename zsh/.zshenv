@@ -39,6 +39,8 @@ function fasd_vim() {
 alias j='fasd_cd -d'
 alias k=my_fasd_cd
 alias vv=fasd_vim
+alias fadd='fasd --proc'
+alias faddall='fasd --proc *'
 alias vim=nvim
 alias v=nvim
 alias view="vim -R -c 'set nomodifiable'"
