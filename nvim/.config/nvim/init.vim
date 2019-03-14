@@ -132,6 +132,10 @@ nnoremap <silent> <C-p> <C-y>k
 nnoremap n nzz
 nnoremap N Nzz
 
+" delete trailing whitespace
+nnoremap <silent> <Leader>W m`:%s/\s*$//<CR>:noh<CR>``
+nnoremap <silent> <Leader>w m`g_ld$``
+
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
 inoremap <silent> <C-c> <Esc><Esc>

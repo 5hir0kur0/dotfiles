@@ -1,0 +1,3 @@
+# stolen from https://wiki.archlinux.org/index.php/Laptop#Hibernate_on_low_battery_level
+# Suspend the system when battery level drops to 8% or lower
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-8]", RUN+="/usr/bin/systemctl hibernate"

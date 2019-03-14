@@ -343,7 +343,13 @@ bindsym $mod+F5 exec --no-startup-id $xbacklightscript -10
 bindsym $mod+button4 exec --no-startup-id $xbacklightscript +5
 bindsym $mod+button5 exec --no-startup-id $xbacklightscript -5
 
+
+# manipulating windows using the mouse
 bindsym button3 floating toggle
+bindsym button9 move right
+bindsym button8 move left
+bindsym --whole-window $mod+button9 move right
+bindsym --whole-window $mod+button8 move left
 
 set $mode_mark "mark"
 mode $mode_mark {
@@ -597,8 +603,12 @@ bindsym $mod+Ctrl+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
-#lock screen (Mod1 ist Alt)
-bindsym Ctrl+Mod1+l exec "$exitscript lock && xset dpms force off"
+# lock screen (Mod1 ist Alt)
+bindsym Ctrl+Mod1+l exec "$exitscript lock; sleep 0.2; xset dpms force off"
+
+# turn screen off
+bindsym Pause exec "sleep 0.2; xset dpms force off"
+bindsym $mod+F9 exec "sleep 0.2; xset dpms force off"
 
 # scratchpad
 bindsym $mod+Shift+e move scratchpad
@@ -737,7 +747,8 @@ for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad s
 for_window [instance="$floatingclass"] floating enable
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
-for_window [class="mpv"] focus, fullscreen
+for_window [class="mpv"] fullscreen
+for_window [class="FULLSCREEN"] fullscreen
 
 # mark rules
 # the anki one doesn't work with $markscript; if the title is omitted, then the add window is matched
@@ -773,6 +784,10 @@ bindsym $mod+Down exec --no-startup-id $pulsescript down
 bindsym $mod+Ctrl+Up exec --no-startup-id $pulsescript force_up 1
 bindsym $mod+Ctrl+Down exec --no-startup-id $pulsescript force_down 1
 bindsym Scroll_Lock exec --no-startup-id $pulsescript mute
+
+bindsym $mod+F10 exec --no-startup-id $pulsescript mute
+bindsym $mod+F12 exec --no-startup-id $pulsescript up
+bindsym $mod+F11 exec --no-startup-id $pulsescript down
 #does not really work...
 #bindsym XF86AudioPlay exec playerctl play
 #bindsym XF86AudioPause exec playerctl pause

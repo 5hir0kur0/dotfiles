@@ -1,18 +1,21 @@
-let searchlimit = 12
-let scrollstep = 84
 set defaultnewtabpage
 set cncpcompletion
+set typelinkhints
 set autohidecursor
 set noautofocus
 set insertmappings
 set smoothscroll
-set autoupdategist
-set showtabindices
+"set autoupdategist
+set noshowtabindices
 set sortlinkhints
 set localconfig
+set nohud
+
+let defaultengine = "duckduckgo"
+let searchlimit = 12
+let scrollstep = 84
 let mapleader = "<space>"
 let hintcharacters = "sadfjklewcmpghoi"
-set nohud
 
 map <Leader>r reloadTabUncached
 map <Leader>x :restore<Space>
@@ -22,3 +25,8 @@ map B :bookmarks<space>
 
 " Switch between alphabetical hint characters and numeric hints
 map <C-i> :set numerichints!<CR>
+
+let locale = "uk"
+
+let searchalias g = "google"
+let searchalias wk = "wikipedia"

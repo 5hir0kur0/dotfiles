@@ -12,9 +12,10 @@ general {
 #order += "ipv6"
 order += "disk /home"
 order += "run_watch DHCP"
-order += "run_watch VPN"
-order += "wireless wlan0"
-order += "ethernet enp5s0"
+# order += "run_watch VPN"
+order += "path_exists VPN"
+order += "wireless _first_"
+order += "ethernet _first_"
 order += "battery 0"
 order += "cpu_temperature 0"
 order += "cpu_usage"
@@ -23,13 +24,13 @@ order += "volume master"
 #order += "tztime tokyo"
 order += "tztime local"
 
-wireless wlan0 {
+wireless _first_ {
         format_up = "直 (%quality at %essid, %bitrate) %ip"
         format_down = "睊"
         color_bad = "#b9b9b9"
 }
 
-ethernet enp5s0 {
+ethernet _first_ {
         # if you use %speed, i3status requires the cap_net_admin capability
         #  is also a nice icon
         format_up = " %ip (%speed)"
@@ -42,11 +43,13 @@ battery 0 {
         #status_bat = "🔋 BAT"
         #status_unk = "? UNK"
         #status_full = "☻ FULL"
-        status_chr = " "
-        status_bat = " "
-        status_unk = " "
-        status_full = " "
+        status_chr = ""
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
         path = "/sys/class/power_supply/BAT%d/uevent"
+        integer_battery_capacity = true
+        hide_seconds = true
         format_down = ""
         low_threshold = 10
         threshold_type = percentage
@@ -62,6 +65,14 @@ run_watch VPN {
         pidfile = "/var/run/vpnc/pid"
         color_good = "#98971a"
         color_bad = "#b9b9b9"
+        format = "廬 %status"
+}
+
+path_exists VPN {
+        path = "/sys/class/net/tun0"
+        # color_good = "#98971a"
+        # color_bad = "#b9b9b9"
+        color_good = "#b9b9b9"
         format = "廬 %status"
 }
 
@@ -97,7 +108,8 @@ cpu_temperature 0 {
         format_above_threshold = " %degrees °C"
         # note: to find out which temperature the file refers to
         # consult the file temp*_label
-        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input"
+        # path = "/sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input"
+        path = "/sys/class/thermal/thermal_zone2/temp"
         max_threshold = 60
 }
 
