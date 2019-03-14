@@ -101,6 +101,8 @@ alias pk-cc="gcc -std=c99 -g -Wall -Wextra -Wpedantic -Wbad-function-cast \
 alias yt='youtube-dl --add-metadata -ic'
 alias yta='youtube-dl --add-metadata -xic'
 
+alias yay='PKGEXT=.pkg.tar yay'
+
 function findoldfiles() {
     find "${1:-.}" -atime "+${2:-60}"
 }
@@ -134,7 +136,7 @@ function gf() {
 }
 
 function gpdf() {
-    pdfgrep -iP "${1:?}" -R .
+    pdfgrep -iP "${1:?}" -R "${2:-.}"
 }
 
 # launch quietly and disown
@@ -271,3 +273,5 @@ function llpdf() {
     latexmk -lualatex "${@:?missing file name}"
     latexmk -c
 }
+
+[ -f .local_zsh_aliases ] && source .local_zsh_aliases

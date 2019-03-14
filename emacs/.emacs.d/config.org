@@ -804,13 +804,14 @@ custom tiling function to create popups by splitting the current window
 #+END_SRC
 * better regexp search/replace
 #+BEGIN_SRC emacs-lisp
-  (use-package visual-regexp
-    :bind (("C-c r" . vr/replace)
-           ("C-c q" . vr/query-replace)
-           ("C-c M" . vr/mc-mark))
-    :init
-    (use-package visual-regexp-steroids
-      :defer nil))
+    (use-package visual-regexp
+      :bind (("C-c r" . vr/replace)
+             ("C-c q" . vr/query-replace)
+             ("C-c M" . vr/mc-mark))
+      :init
+      (use-package visual-regexp-steroids
+        :defer nil)
+      (require 'visual-regexp-steroids))  ;TODO does that work
 #+END_SRC
 * beacon
 #+BEGIN_SRC emacs-lisp
@@ -1363,7 +1364,11 @@ AUCTeX configuration
                               '(("\\bigO" . ?O)
                                 ("\\IN" . ?ℕ)
                                 ("\\IR" . ?ℝ)
-                                ("\\IZ" . ?ℤ))))))
+                                ("\\IZ" . ?ℤ)
+                                ("\\implies" . ?⇒)
+                                ("\\lnot" . ?¬)
+                                ("\\land" . ?∧)
+                                ("\\lor" . ?∨))))))
 
     ;; stolen from https://yoo2080.wordpress.com/2016/11/15/how-to-make-prettify-symbols-mode-work-with-auctex/
     ;; ran after fontification
@@ -1372,7 +1377,12 @@ AUCTeX configuration
                                  (rainbow-delimiters-mode 1)
                                  (hl-todo-mode 1)
                                  (TeX-fold-buffer))))
-    (add-hook 'TeX-mode-hook #'my/delayed-latex))
+    (add-hook 'TeX-mode-hook #'my/delayed-latex)
+
+    ;; stolen from https://tex.stackexchange.com/questions/111726/preview-tikz-figure-in-auctex/111940#111940
+    (eval-after-load "preview"
+      '(progn (add-to-list 'preview-default-preamble "\\PreviewEnvironment{tikzpicture}" t)
+              (add-to-list 'preview-default-preamble "\\PreviewEnvironment{algorithm}" t))))
 #+END_SRC
 automatically enable spell checking in latex buffers
 #+BEGIN_SRC emacs-lisp
@@ -1394,7 +1404,7 @@ automatically enable spell checking in latex buffers
     (with-eval-after-load 'company
       ;; Add yasnippet support for all company backends
       ;; https://github.com/syl20bnr/spacemacs/pull/179
-      (defvar company-mode/enable-yas t
+      (defvar company-mode/enable-yas ()   ; disable it for now
         "Enable yasnippet for all backends.")
 
       ;; get rid of compiler warnings
@@ -1438,7 +1448,7 @@ automatically enable spell checking in latex buffers
 ** appearance customisations only for graphical sessions
 #+BEGIN_SRC emacs-lisp
   (when window-system
-    (global-hl-line-mode 1)
+    (global-hl-line-mode 0)
     (tool-bar-mode 0)
     ;; (tooltip-mode 0)
     (scroll-bar-mode 0)
@@ -1582,6 +1592,12 @@ from the book "Mastering Emacs" (commented out since crux provides the same func
       ("q" nil)
       ("<escape>" nil)
       ("<return>" nil)))
+#+END_SRC
+** disable other themes before loading a new one
+#+BEGIN_SRC emacs-lisp
+  ;; stolen from https://www.reddit.com/r/emacs/comments/8v9lgu/emacs_theme_configuration_is_very_confusing/e1lpcpk
+  (defadvice load-theme (before theme-dont-propagate activate)
+    (mapc #'disable-theme custom-enabled-themes))
 #+END_SRC
 ** disable some prompts
 #+BEGIN_SRC emacs-lisp

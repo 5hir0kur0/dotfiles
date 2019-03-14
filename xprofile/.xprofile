@@ -12,6 +12,10 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 # fix java in bspwm
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# qt scaling
+export QT_SCALING_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+
 export DISPLAY=:0
 
 # reset

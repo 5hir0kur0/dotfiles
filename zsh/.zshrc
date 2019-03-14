@@ -14,6 +14,8 @@ setopt histreduceblanks
 # use native locking for histfile
 setopt hist_fcntl_lock
 
+bindkey -e # emacs mode
+
 # sharing history
 setopt sharehistory
 # don't use the shared history for moving up/down in history
@@ -140,11 +142,14 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 ## key bindings
 
-bindkey -e # emacs mode
-
 # better c-p, c-n
 bindkey '^P' up-line-or-local-search
 bindkey '^N' down-line-or-local-search
+
+# edit command line in $EDITOR (from http://distrustsimplicity.net/articles/zsh-command-editing/)
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
 
 # make M-DEL delete up to the last special character (e.g. / in paths)
 # except '*?.~!$' are considered parts of words
@@ -248,7 +253,10 @@ function displaytime {
     local H=$((T/60/60%24))
     local M=$((T/60%60))
     local S=$((T%60))
+    float Df=$D
+    float Y=$((Df/365))
     (( $D > 0 )) && printf '%dd ' $D
+    (( $Y > 1 )) && printf '(~ %.1fy) ' $Y
     (( $H > 0 )) && printf '%dh ' $H
     (( $M > 0 )) && printf '%dm ' $M
     printf '%ds\n' $S
@@ -392,16 +400,16 @@ width_part='$(_my_prompt_width)'
 
 wd_50_percent="%${width_part}<…<$working_directory"
 
-PROMPT="%B%F{red}%(0?..[%?])%b%f%F{cyan}$wd_50_percent %# %f"
+PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 
 ## fzf
-export FZF_DEFAULT_OPTS='--height 42% --reverse --border --cycle --inline-info --border -1'
-export FZF_CTRL_T_OPTS='--preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"'
+export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
+export FZF_CTRL_T_OPTS="--preview='bash $HOME/.local/share/scripts/preview.sh {}'"
 export FZF_CTRL_R_OPTS='-e'
 {source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
 function fzf-locate-widget() {
   local selected
-  if selected=$(locate / | grep -v '\.cache\|\.local' | fzf --preview="bash /usr/share/doc/ranger/config/scope.sh {} $((COLS/2)) $((LINES/3)) $HOME/.thumbnails False"); then
+  if selected=$(locate / | grep -v '\.cache\|\.local' | FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" fzf); then
     if [ -z "$LBUFFER" -a -f "$selected" ]; then
       LBUFFER="rifle ""'$selected'"
     else
@@ -411,7 +419,28 @@ function fzf-locate-widget() {
   zle redisplay
 }
 zle -N fzf-locate-widget
-# kind of useless; use c-t + enter instead
-# bindkey '^J' fzf-cd-widget
+function fzf-cd-widget () {
+    local cmd="command find -L . -mindepth 1 \\( -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o \\( -type d -o -type f \\) -print 2> /dev/null | cut -b3-"
+    setopt localoptions pipefail 2> /dev/null
+    local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) +m)"
+    if [[ -z "$dir" ]]
+    then
+        zle redisplay
+        return 0
+    fi
+    if [[ -d "$dir" ]]; then
+        cd "$dir"
+    elif [[ -f "$dir" ]]; then
+        cd "${dir%/*}"
+    else
+        echo "fzf-cd: neither a file nor a directory: $dir" 1>&2
+        return 1
+    fi
+    local ret=$?
+    zle fzf-redraw-prompt
+    return $ret
+}
+zle -N fzf-cd-widget
+bindkey '^T' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
