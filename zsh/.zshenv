@@ -43,6 +43,7 @@ alias fadd='fasd --proc'
 alias faddall='fasd --proc *'
 alias vim=nvim
 alias v=nvim
+alias vimdiff='nvim -d'
 alias view="vim -R -c 'set nomodifiable'"
 alias r=ranger
 
