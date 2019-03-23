@@ -1,0 +1,31 @@
+[user]
+	name = 5hir0kur0
+[core]
+	editor = nvim
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+[alias]
+	p = pull --ff --ff-only
+	lo = log --oneline
+	unstage = reset HEAD --
+	wdiff = diff --word-diff
+	s = status --short --branch
+	g = grep -i --break --heading -e
+	l = log --graph --pretty=format:'%C(auto)%h -%d %s %C(cyan)(%cr) %C(blue)<%an>' --abbrev-commit
+	c = commit --verbose
+	ca = commit --verbose --amend
+	a = add
+	co = checkout
+	d = diff
+	dc = diff --cached
+	ai = add -i
+	h = help
+[credential]
+	username = 5hir0kur0
+	helper = cache --timeout 600
+[help]
+	autocorrect = 15
+[grep]
+	lineNumber = true
