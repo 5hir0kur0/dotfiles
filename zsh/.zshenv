@@ -76,16 +76,17 @@ alias rmback='rm *~'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
 
-alias grep='grep --color=auto'
+alias grep='grep -i --color=auto'
 alias diff='diff --color=auto'
 alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
-alias -g g='grep -i'
+alias g='git'
+alias gg='git grep -i --break --heading -e'
 alias fd='\fd --follow --full-path --hidden'
 
 alias less='less -FX'
-alias -g c='less'
+alias c='less'
 
 alias -g wl='wc -l'
 
