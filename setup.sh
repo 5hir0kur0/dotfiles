@@ -38,15 +38,13 @@ if [ "${1:-}" = git ]; then
     fi
 
     if [ "$GIT" -eq 1 ]; then
+        cp ./git/.gitconfig ~
         echo 'configuring git...'
-        echo -n 'username: ' && read USERNAME
-        git config --global user.name "$USERNAME"
-        echo -n 'email: ' && read EMAIL
+        echo -n 'username (leave blank for default): ' && read -r USERNAME
+        [ -n "$USERNAME" ] && git config --global user.name "$USERNAME"
+        [ -n "$USERNAME" ] && git config --global credential.username "$USERNAME"
+        echo -n 'email: ' && read -r EMAIL
         git config --global user.email "$EMAIL"
-        git config --global core.editor nvim
-        git config --global push.default simple
-        git config --global merge.tool vimdiff
-        git config --global alias.pull 'git pull --ff --only-ff'
     else
         echo 'git is already configured' 1>&2
     fi
