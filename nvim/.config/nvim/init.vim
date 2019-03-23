@@ -238,3 +238,8 @@ let g:AutoPairsMapSpace = 0
 imap <silent> <expr> <space> pumvisible()
         \ ? "<space>"
         \ : "<c-r>=AutoPairsSpace()<cr>"
+
+" remind me of how to use diff mode -_-
+if &diff
+    autocmd VimEnter * echomsg "do -> :diffget (\"obtain\");  dp -> :diffput;  ]c / [c -> next/prev difference"
+endif
