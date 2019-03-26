@@ -40,11 +40,32 @@ if [ "${1:-}" = git ]; then
     if [ "$GIT" -eq 1 ]; then
         cp ./git/.gitconfig ~
         echo 'configuring git...'
-        echo -n 'username (leave blank for default): ' && read -r USERNAME
-        [ -n "$USERNAME" ] && git config --global user.name "$USERNAME"
-        [ -n "$USERNAME" ] && git config --global credential.username "$USERNAME"
-        echo -n 'email: ' && read -r EMAIL
-        git config --global user.email "$EMAIL"
+        INIT_COMMIT=$(git rev-list --max-parents=0 HEAD)
+        REPO_USER=$(git log --format=%an "$INIT_COMMIT")
+        REPO_EMAIL=$(git log --format=%ae "$INIT_COMMIT")
+        printf 'user.name (leave blank to use "%s"): ' "$REPO_USER"
+        read -r USERNAME
+        if [ -n "$USERNAME" ]; then 
+            git config --global user.name "$USERNAME"
+        else
+            git config --global user.name "$REPO_USER"
+            git config --global credential.username "$REPO_USER"
+        fi
+        USERNAME=${USERNAME:-$REPO_USER}
+        printf 'credential.username (leave blank to use "%s"): ' "$USERNAME"
+        read -r CREDENTIAL
+        if [ -n "$CREDENTIAL" ]; then
+            git config --global credential.username "$CREDENTIAL"
+        else
+            git config --global credential.username "$USERNAME"
+        fi
+        printf 'user.email (leave blank to use "%s"): ' "$REPO_EMAIL"
+        read -r EMAIL
+        if [ -n "$EMAIL" ]; then 
+            git config --global user.email "$EMAIL"
+        else
+            git config --global user.email "$REPO_EMAIL"
+        fi
     else
         echo 'git is already configured' 1>&2
     fi
