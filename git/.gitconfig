@@ -1,5 +1,3 @@
-[user]
-	name = 5hir0kur0
 [core]
 	editor = nvim
 [push]
@@ -23,7 +21,6 @@
 	ai = add -i
 	h = help
 [credential]
-	username = 5hir0kur0
 	helper = cache --timeout 600
 [help]
 	autocorrect = 15
