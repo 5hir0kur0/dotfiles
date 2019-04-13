@@ -76,13 +76,14 @@ alias rmback='rm *~'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
 
+alias ag='ag --hidden'
 alias grep='grep -i --color=auto'
 alias diff='diff --color=auto'
 alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias g='git'
-alias gg='git grep -i --break --heading -e'
+alias gg='git grep -i --break --heading --no-index -e'
 alias fd='\fd --follow --full-path --hidden'
 
 alias less='less -FX'
@@ -134,7 +135,7 @@ function fl() {
 }
 
 function gf() {
-    grep -iP "${1:?}" -R .
+    grep -iP "${@:?}" -R .
 }
 
 function gpdf() {
