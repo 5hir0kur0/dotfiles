@@ -4,6 +4,7 @@
 	default = simple
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [alias]
 	p = pull --ff --ff-only
 	lo = log --oneline
@@ -11,7 +12,7 @@
 	wdiff = diff --word-diff
 	s = status --short --branch
 	g = grep -i --break --heading -e
-	l = log --graph --pretty=format:'%C(auto)%h -%d %s %C(cyan)(%cr) %C(blue)<%an>' --abbrev-commit
+	l = log --graph --pretty=format:'%C(auto)%h -%d %s %C(cyan)(%cr) %C(blue)<%an>'
 	c = commit --verbose
 	ca = commit --verbose --amend
 	a = add
@@ -26,3 +27,5 @@
 	autocorrect = 15
 [grep]
 	lineNumber = true
+[diff]
+	mnemonicprefix = true
