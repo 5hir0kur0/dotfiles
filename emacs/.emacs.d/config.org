@@ -329,6 +329,10 @@ I use C-\ for company
   ;; (global-set-key (kbd "C-s") #'isearch-forward-regexp)
   (global-set-key (kbd "C-r") #'isearch-backward-regexp)
 #+END_SRC
+** disable vc for git
+#+BEGIN_SRC emacs-lisp
+  (setq vc-handled-backends (delq 'Git vc-handled-backends))
+#+END_SRC
 * hydra
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
@@ -845,6 +849,7 @@ custom tiling function to create popups by splitting the current window
           company-require-match 'never
           company-transformers '(company-sort-by-occurrence company-sort-by-backend-importance)
           company-minimum-prefix-length 3
+          company-tooltip-align-annotations t
           ;; attempt at a whitelist for company global-modes
           ;; (currently not using company-global-mode)
           ;; company-global-modes
@@ -1117,7 +1122,7 @@ custom tiling function to create popups by splitting the current window
       (declare-function git-gutter:set-start-revision "git-gutter" (start-rev)))
 
     ;; stolen from: https://github.com/abo-abo/hydra/wiki/Git-gutter
-    (global-set-key (kbd "C-c g")
+    (global-set-key (kbd "C-c G")
                     (defhydra git-gutter-hydra (:hint nil)
                       "
   Git gutter:
@@ -1211,7 +1216,8 @@ just an experiment for now; resolve key binding conflict!
 * magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :bind (("C-x g" . magit-status)))
+    :bind (("C-x g" . magit-status)
+           ("C-c g" . magit-file-dispatch)))
 #+END_SRC
 * org
 #+BEGIN_SRC emacs-lisp
