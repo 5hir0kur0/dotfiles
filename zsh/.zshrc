@@ -142,6 +142,9 @@ bindkey -M menuselect '^P' up-line-or-history
 # make shift-tab go to the previous completion
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
+# first try to expand wildcards then try completion
+bindkey '^I' expand-or-complete
+
 ## key bindings
 
 # better c-p, c-n
