@@ -13,6 +13,8 @@ setopt histnostore
 setopt histreduceblanks
 # use native locking for histfile
 setopt hist_fcntl_lock
+# ignore commands or aliases starting with a space
+setopt hist_ignore_space
 
 bindkey -e # emacs mode
 

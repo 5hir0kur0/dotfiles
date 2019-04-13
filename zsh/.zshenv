@@ -276,4 +276,43 @@ function llpdf() {
     latexmk -c
 }
 
+
+# don't save some commands in the history file
+
+history_ignore=(
+    '* --help'
+    '?'
+    '??'
+    '..*'
+
+    'j *'
+    'k *'
+    'vv *'
+
+    'l *'
+    'ls *'
+    'lsd *'
+    'lr *'
+    'lrr *'
+    'la *'
+    'lla *'
+
+    'git add *'
+    'git a *'
+    'g add *'
+    'g a *'
+
+    'git commit *'
+    'git c *'
+    'g c *'
+
+    'git log'
+    'git l *'
+    'g log *'
+    'g l *'
+
+    'pass *'
+)
+HISTORY_IGNORE="(${(j.|.)history_ignore})"
+
 [ -f .local_zsh_aliases ] && source .local_zsh_aliases
