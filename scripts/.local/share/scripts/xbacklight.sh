@@ -8,6 +8,7 @@
 #       Driver      "intel"
 #       Option      "Backlight"  "intel_backlight"
 # EndSection
+# NOTE: on arch linux xf86-video-intel is needed (in this case)
 
 DEFAULT_ARGS='-steps 1 -time 1'
 LC_ALL=C
