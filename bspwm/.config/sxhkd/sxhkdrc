@@ -225,6 +225,9 @@ super + shift + u
 super + Pause; {l,e,s,r,shift + s,h,ctrl + s}
         exit.sh {lock,logout,suspend,reboot,shutdown,hibernate,hybrid_sleep}
 
+Pause
+        sleep 0.2; xset dpms force off
+
 # volume
 {XF86AudioRaiseVolume,XF86AudioLowerVolume}
         pulse.sh {up,down}
