@@ -10,7 +10,7 @@
 	lo = log --oneline
 	unstage = reset HEAD --
 	wdiff = diff --word-diff
-	s = status --short --branch
+	s = status --short --branch --show-stash
 	g = grep -i --break --heading -e
 	l = log --graph --pretty=format:'%C(auto)%h -%d %s %C(cyan)(%cr) %C(blue)<%an>'
 	c = commit --verbose
@@ -21,6 +21,16 @@
 	dc = diff --cached
 	ai = add -i
 	h = help
+	f = fetch
+	pp = pull --ff --ff-only --prune
+	fp = fetch --prune
+	bl = branch --list --all -vv
+	b = branch
+	bd = branch -d
+	blm = bl --merged
+	blnm = bl --no-merged
+	ap = add --patch
+	ds = diff --staged
 [credential]
 	helper = cache --timeout 600
 [help]
@@ -29,3 +39,7 @@
 	lineNumber = true
 [diff]
 	mnemonicprefix = true
+[gc]
+	reflogexpire = 1 year
+	reflogexpireunreachable = 120 days
+	pruneexpire = 120 days
