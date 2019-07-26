@@ -75,6 +75,7 @@ iproute2
 iputils
 ipython
 iw
+jq
 keepassxc
 keynav
 libaacs
@@ -151,8 +152,10 @@ swh-plugins
 sxiv
 syncthing
 systemd-ui
+tcl
 terminus-font
 texlive-core
+tk
 tmux
 traceroute
 transmission-gtk
@@ -182,6 +185,7 @@ xcape
 xclip
 xdg-user-dirs
 xdotool
+xorg-xbacklight
 xorg-xev
 xorg-xhost
 xorg-xinit
