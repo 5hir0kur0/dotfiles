@@ -184,7 +184,7 @@ dwim wrapper around `indent-rigidly`
 *** selecting rectangles
 map M-RET to start a rectangle selection with cua mode
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "M-<return>") #'cua-rectangle-mark-mode)
+  ;; (global-set-key (kbd "M-<return>") #'cua-rectangle-mark-mode)
 #+END_SRC
 *** delete selection
 delete the active region's contents when something is typed
@@ -1244,8 +1244,6 @@ emacs lisp template
 ** avoid arrow keys
 #+BEGIN_SRC emacs-lisp
   (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "M-K") #'org-metaup)
-    (define-key org-mode-map (kbd "M-J") #'org-metadown)
     (define-key org-mode-map (kbd "M-L") #'org-metaright)
     (define-key org-mode-map (kbd "M-H") #'org-metaleft)
 
