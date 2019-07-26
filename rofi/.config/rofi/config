@@ -13,7 +13,7 @@ rofi.yoffset:                        40
 ! rofi.xoffset:                        0
 ! always show number of lines
 rofi.fixed-num-lines:                false
-! terminal to use 
+! terminal to use
 ! rofi.terminal:                       rofi-sensible-terminal
 ! ssh client to use
 ! rofi.ssh-client:                     ssh
@@ -25,6 +25,7 @@ rofi.fixed-num-lines:                false
 ! rofi.run-shell-command:              {terminal} -e {cmd}
 ! command executed on accep-entry-custom for window modus
 rofi.window-command:                 xkill -id {window}
+rofi.window-match-fields:            title,class,desktop
 ! disable history in run/ssh
 ! rofi.disable-history:                false
 ! use levenshtein sorting
@@ -134,7 +135,7 @@ rofi.kb-row-first:                   Home,KP_Home,Control+A
 ! go to the last entry
 rofi.kb-row-last:                    End,KP_End,Control+E
 ! set selected item as input text
-rofi.kb-row-select:                  Control+space
+rofi.kb-row-select:                  Control+space,Alt+i
 ! take a screenshot of the rofi window
 ! rofi.kb-screenshot:                  Alt+S
 ! toggle case sensitivity
