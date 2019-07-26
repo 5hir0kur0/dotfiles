@@ -1,17 +1,18 @@
 # classes
 # if $scratchclass is changed, it needs to be changed in scratchpad.sh too
 set $ac (?i)^anki$
-set $at (?i)^Anki -
+set $at (?i)- Anki$
 set $chromeclass (?i)^(?:chromium|chrome)$
 set $dolphinclass (?)^dolphin$
 set $emacsclass (?)^emacs$
 set $firefoxclass (?i)^firefox$
 set $floatingclass floating-terminal
 set $gimpclass (?i)^gimp.*$
-set $jetbrainsclass (?i)^jetbrains.*$
-set $scratchclass scratchpad-terminal
 set $imgviewerclass (?i)^sxiv$
+set $jetbrainsclass (?i)^jetbrains.*$
 set $mediaplayerclass (?i)^(?:mpv|mplayer)$
+set $scratchclass scratchpad-terminal
+set $torclass (?i)^tor browser$
 set $urxvtclass (?i)^urxvt$
 set $vlcclass (?i)^vlc$
 set $writerclass (?i)^libreoffice-writer$
@@ -71,7 +72,7 @@ bindsym $mod+Shift+q kill
 # rofi
 bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Mod1+space exec --no-startup-id rofi -show run
-bindsym $mod+g exec --no-startup-id rofi -show window
+bindsym $mod+g exec --no-startup-id rofi -modi window -show window
 bindsym $mod+Shift+g exec --no-startup-id rofi -show windowcd
 bindsym $mod+Ctrl+g exec --no-startup-id rofi -show combi
 
@@ -413,6 +414,33 @@ mode $mode_goto_mark {
     bindsym x [con_mark="x"] focus, mode "default"
     bindsym y [con_mark="y"] focus, mode "default"
     bindsym z [con_mark="z"] focus, mode "default"
+
+    bindsym Mod1+a [con_mark="a"] kill, mode "default"
+    bindsym Mod1+b [con_mark="b"] kill, mode "default"
+    bindsym Mod1+c [con_mark="c"] kill, mode "default"
+    bindsym Mod1+d [con_mark="d"] kill, mode "default"
+    bindsym Mod1+e [con_mark="e"] kill, mode "default"
+    bindsym Mod1+f [con_mark="f"] kill, mode "default"
+    bindsym Mod1+g [con_mark="g"] kill, mode "default"
+    bindsym Mod1+h [con_mark="h"] kill, mode "default"
+    bindsym Mod1+i [con_mark="i"] kill, mode "default"
+    bindsym Mod1+j [con_mark="j"] kill, mode "default"
+    bindsym Mod1+k [con_mark="k"] kill, mode "default"
+    bindsym Mod1+l [con_mark="l"] kill, mode "default"
+    bindsym Mod1+m [con_mark="m"] kill, mode "default"
+    bindsym Mod1+n [con_mark="n"] kill, mode "default"
+    bindsym Mod1+o [con_mark="o"] kill, mode "default"
+    bindsym Mod1+p [con_mark="p"] kill, mode "default"
+    bindsym Mod1+q [con_mark="q"] kill, mode "default"
+    bindsym Mod1+r [con_mark="r"] kill, mode "default"
+    bindsym Mod1+s [con_mark="s"] kill, mode "default"
+    bindsym Mod1+t [con_mark="t"] kill, mode "default"
+    bindsym Mod1+u [con_mark="u"] kill, mode "default"
+    bindsym Mod1+v [con_mark="v"] kill, mode "default"
+    bindsym Mod1+w [con_mark="w"] kill, mode "default"
+    bindsym Mod1+x [con_mark="x"] kill, mode "default"
+    bindsym Mod1+y [con_mark="y"] kill, mode "default"
+    bindsym Mod1+z [con_mark="z"] kill, mode "default"
 
     bindsym Ctrl+a [con_mark="a"] move to workspace current, mode "default"
     bindsym Ctrl+b [con_mark="b"] move to workspace current, mode "default"
