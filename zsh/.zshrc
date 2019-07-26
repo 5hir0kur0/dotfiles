@@ -394,7 +394,7 @@ working_directory="\$(_my_fit_path2 '' \$((COLUMNS * PROMPT_PERCENT_OF_LINE / 10
 # make sure the prompt is never longer than about 50% of the available
 # characters even if the last element of the path is longer than 50% of the line
 # (stolen from https://unix.stackexchange.com/a/370276)
-export PROMPT_PERCENT_OF_LINE=45
+export PROMPT_PERCENT_OF_LINE=32
 # make a function, so that it can be evaluated repeatedly
 function _my_prompt_width() {
     echo $(( ${COLUMNS:-80} * PROMPT_PERCENT_OF_LINE / 100  ))

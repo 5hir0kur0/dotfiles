@@ -38,6 +38,8 @@ function fasd_vim() {
 
 alias j='fasd_cd -d'
 alias k=my_fasd_cd
+alias gitroot='cd "$(git rev-parse --show-toplevel)"'
+alias gr=gitroot
 alias vv=fasd_vim
 alias fadd='fasd --proc'
 alias faddall='fasd --proc *'
@@ -303,6 +305,8 @@ history_ignore=(
     'g add *'
     'g a *'
 
+    'svn add *'
+
     'git commit *'
     'git c *'
     'g c *'
@@ -312,8 +316,27 @@ history_ignore=(
     'g log *'
     'g l *'
 
+    'grep *'
+    'pgrep *'
+    'ag *'
+    'gg *'
+    'gpdf *'
+
+    'ff *'
+
+    'latexmk *'
+    'lpdf *'
+    'llpdf *'
+
     'pass *'
+
+    'lqd *'
+    'lqqd *'
+
+    'v *'
+    'vim *'
+    'sudoedit *'
 )
 HISTORY_IGNORE="(${(j.|.)history_ignore})"
 
-[ -f .local_zsh_aliases ] && source .local_zsh_aliases
+[ -f ~/.local_zsh_aliases ] && source ~/.local_zsh_aliases
