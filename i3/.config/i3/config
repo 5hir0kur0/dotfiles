@@ -29,7 +29,8 @@ set $exitscript ~/.local/share/scripts/exit.sh
 set $fetchscript ~/.local/share/scripts/rofifetch.sh
 set $initscript ~/.local/share/scripts/init.sh
 set $manscript ~/.local/share/scripts/rofiman.sh
-set $markscript ~/.local/share/scripts/mark.sh
+set $markscript ~/.local/share/scripts/i3_mark_current.sh
+set $markallscript ~/.local/share/scripts/i3_mark_all.sh
 set $mousescript ~/.local/share/scripts/mouse_action.sh
 set $newworkspacescript ~/.local/share/scripts/i3_new_workspace.sh
 set $openscript ~/.local/share/scripts/rofilocate.sh
@@ -380,13 +381,30 @@ mode $mode_mark {
     bindsym x mark --add --toggle x, mode "default"
     bindsym y mark --add --toggle y, mode "default"
     bindsym z mark --add --toggle z, mode "default"
+    bindsym 0 mark --add --toggle 0, mode "default"
+    bindsym 1 mark --add --toggle 1, mode "default"
+    bindsym 2 mark --add --toggle 2, mode "default"
+    bindsym 3 mark --add --toggle 3, mode "default"
+    bindsym 4 mark --add --toggle 4, mode "default"
+    bindsym 5 mark --add --toggle 5, mode "default"
+    bindsym 6 mark --add --toggle 6, mode "default"
+    bindsym 7 mark --add --toggle 7, mode "default"
+    bindsym 8 mark --add --toggle 8, mode "default"
+    bindsym 9 mark --add --toggle 9, mode "default"
+    bindsym semicolon      mark --add --toggle ";", mode "default"
+    bindsym comma          mark --add --toggle ",", mode "default"
+    bindsym apostrophe     mark --add --toggle "'", mode "default"
+    bindsym period         mark --add --toggle ".", mode "default"
+    bindsym slash          mark --add --toggle "/", mode "default"
+    bindsym equal          mark --add --toggle "=", mode "default"
+    bindsym minus          mark --add --toggle "-", mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+t mode $mode_mark
 
-set $mode_goto_mark "goto mark: shift -> move to mark, ctrl -> fetch mark"
+set $mode_goto_mark "goto mark: shift -> move to mark, ctrl -> fetch mark, alt -> kill"
 mode $mode_goto_mark {
     bindsym a [con_mark="a"] focus, mode "default"
     bindsym b [con_mark="b"] focus, mode "default"
@@ -414,6 +432,23 @@ mode $mode_goto_mark {
     bindsym x [con_mark="x"] focus, mode "default"
     bindsym y [con_mark="y"] focus, mode "default"
     bindsym z [con_mark="z"] focus, mode "default"
+    bindsym 0 [con_mark="0"] focus, mode "default"
+    bindsym 1 [con_mark="1"] focus, mode "default"
+    bindsym 2 [con_mark="2"] focus, mode "default"
+    bindsym 3 [con_mark="3"] focus, mode "default"
+    bindsym 4 [con_mark="4"] focus, mode "default"
+    bindsym 5 [con_mark="5"] focus, mode "default"
+    bindsym 6 [con_mark="6"] focus, mode "default"
+    bindsym 7 [con_mark="7"] focus, mode "default"
+    bindsym 8 [con_mark="8"] focus, mode "default"
+    bindsym 9 [con_mark="9"] focus, mode "default"
+    bindsym semicolon  [con_mark=";"] focus, mode "default"
+    bindsym comma      [con_mark=","] focus, mode "default"
+    bindsym apostrophe [con_mark="'"] focus, mode "default"
+    bindsym period     [con_mark="."] focus, mode "default"
+    bindsym slash      [con_mark="/"] focus, mode "default"
+    bindsym equal      [con_mark="="] focus, mode "default"
+    bindsym minus      [con_mark="-"] focus, mode "default"
 
     bindsym Mod1+a [con_mark="a"] kill, mode "default"
     bindsym Mod1+b [con_mark="b"] kill, mode "default"
@@ -441,6 +476,23 @@ mode $mode_goto_mark {
     bindsym Mod1+x [con_mark="x"] kill, mode "default"
     bindsym Mod1+y [con_mark="y"] kill, mode "default"
     bindsym Mod1+z [con_mark="z"] kill, mode "default"
+    bindsym Mod1+0 [con_mark="0"] kill, mode "default"
+    bindsym Mod1+1 [con_mark="1"] kill, mode "default"
+    bindsym Mod1+2 [con_mark="2"] kill, mode "default"
+    bindsym Mod1+3 [con_mark="3"] kill, mode "default"
+    bindsym Mod1+4 [con_mark="4"] kill, mode "default"
+    bindsym Mod1+5 [con_mark="5"] kill, mode "default"
+    bindsym Mod1+6 [con_mark="6"] kill, mode "default"
+    bindsym Mod1+7 [con_mark="7"] kill, mode "default"
+    bindsym Mod1+8 [con_mark="8"] kill, mode "default"
+    bindsym Mod1+9 [con_mark="9"] kill, mode "default"
+    bindsym Mod1+semicolon  [con_mark=";"] kill, mode "default"
+    bindsym Mod1+comma      [con_mark=","] kill, mode "default"
+    bindsym Mod1+apostrophe [con_mark="'"] kill, mode "default"
+    bindsym Mod1+period     [con_mark="."] kill, mode "default"
+    bindsym Mod1+slash      [con_mark="/"] kill, mode "default"
+    bindsym Mod1+equal      [con_mark="="] kill, mode "default"
+    bindsym Mod1+minus      [con_mark="-"] kill, mode "default"
 
     bindsym Ctrl+a [con_mark="a"] move to workspace current, mode "default"
     bindsym Ctrl+b [con_mark="b"] move to workspace current, mode "default"
@@ -468,6 +520,23 @@ mode $mode_goto_mark {
     bindsym Ctrl+x [con_mark="x"] move to workspace current, mode "default"
     bindsym Ctrl+y [con_mark="y"] move to workspace current, mode "default"
     bindsym Ctrl+z [con_mark="z"] move to workspace current, mode "default"
+    bindsym Ctrl+0 [con_mark="0"] move to workspace current, mode "default"
+    bindsym Ctrl+1 [con_mark="1"] move to workspace current, mode "default"
+    bindsym Ctrl+2 [con_mark="2"] move to workspace current, mode "default"
+    bindsym Ctrl+3 [con_mark="3"] move to workspace current, mode "default"
+    bindsym Ctrl+4 [con_mark="4"] move to workspace current, mode "default"
+    bindsym Ctrl+5 [con_mark="5"] move to workspace current, mode "default"
+    bindsym Ctrl+6 [con_mark="6"] move to workspace current, mode "default"
+    bindsym Ctrl+7 [con_mark="7"] move to workspace current, mode "default"
+    bindsym Ctrl+8 [con_mark="8"] move to workspace current, mode "default"
+    bindsym Ctrl+9 [con_mark="9"] move to workspace current, mode "default"
+    bindsym Ctrl+semicolon  [con_mark=";"] move to workspace current, mode "default"
+    bindsym Ctrl+comma      [con_mark=","] move to workspace current, mode "default"
+    bindsym Ctrl+apostrophe [con_mark="'"] move to workspace current, mode "default"
+    bindsym Ctrl+period     [con_mark="."] move to workspace current, mode "default"
+    bindsym Ctrl+slash      [con_mark="/"] move to workspace current, mode "default"
+    bindsym Ctrl+equal      [con_mark="="] move to workspace current, mode "default"
+    bindsym Ctrl+minus      [con_mark="-"] move to workspace current, mode "default"
 
     bindsym Shift+a move window to mark a, mode "default"
     bindsym Shift+b move window to mark b, mode "default"
@@ -499,7 +568,7 @@ mode $mode_goto_mark {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+t mode $mode_goto_mark
+bindsym $mod+t exec --no-startup-id $markallscript, mode $mode_goto_mark
 
 # change focus
 bindsym $mod+h focus left
@@ -781,23 +850,23 @@ for_window [class="FULLSCREEN"] fullscreen
 
 # mark rules
 # the anki one doesn't work with $markscript; if the title is omitted, then the add window is matched
-for_window [class="$ac" tiling title="$at"]                        mark --add a
+for_window [class="$ac" tiling title="$at"]                       mark --add a
 #for_window [class="$ankiclass" type="dialog"] unmark a
-for_window [class="$chromeclass"]            exec --no-startup-id $markscript c
-for_window [class="$dolphinclass"]           exec --no-startup-id $markscript d
-for_window [class="$emacsclass"]          exec --no-startup-id $markscript e
-for_window [class="$firefoxclass" tiling]    exec --no-startup-id $markscript f
-for_window [class="$gimpclass" tiling]       exec --no-startup-id $markscript g
-for_window [class="$imgviewerclass"]         exec --no-startup-id $markscript i
-for_window [class="$jetbrainsclass" tiling]  exec --no-startup-id $markscript j
-for_window [class="$mediaplayerclass"]                             mark --add m
-for_window [instance="$scratchclass"]        exec --no-startup-id $markscript s
-for_window [class="$scratchclass"]        exec --no-startup-id $markscript s
-for_window [class="$writerclass" tiling]     exec --no-startup-id $markscript w
+for_window [class="$chromeclass"]           exec --no-startup-id $markscript c
+for_window [class="$dolphinclass"]          exec --no-startup-id $markscript d
+for_window [class="$emacsclass"]            exec --no-startup-id $markscript e
+for_window [class="$firefoxclass" tiling]   exec --no-startup-id $markscript f
+for_window [class="$gimpclass" tiling]      exec --no-startup-id $markscript g
+for_window [class="$imgviewerclass"]        exec --no-startup-id $markscript i
+for_window [class="$jetbrainsclass" tiling] exec --no-startup-id $markscript j
+for_window [class="$mediaplayerclass"]                            mark --add m
+for_window [instance="$scratchclass"]       exec --no-startup-id $markscript s
+for_window [class="$scratchclass"]          exec --no-startup-id $markscript s
+for_window [class="$writerclass" tiling]    exec --no-startup-id $markscript w
 # when "class" is used instead of "instance" it also matches the scratchpad
-for_window [instance="$urxvtclass"]          exec --no-startup-id $markscript u
-for_window [class="$vlcclass" tiling]        exec --no-startup-id $markscript v
-for_window [class="$zathuraclass"]           exec --no-startup-id $markscript z
+for_window [instance="$urxvtclass"]         exec --no-startup-id $markscript u
+for_window [class="$vlcclass" tiling]       exec --no-startup-id $markscript v
+for_window [class="$zathuraclass"]          exec --no-startup-id $markscript z
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
