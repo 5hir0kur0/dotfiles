@@ -16,3 +16,5 @@ pgrep -x i3lock || i3lock -i /tmp/.screen_locked.png -e --radius=240 --datestr='
     --datesize=30 --timesize=48 --time-font=Inconsolata --date-font=Inconsolata \
     --indicator --veriftext="..." --wrongtext="-_-" "${colors[@]}" \
     --datepos='tx : ty + 35' --modsize=32 --verifsize=32 --wrongsize=32
+
+rm -f /tmp/.screen_locked.png
