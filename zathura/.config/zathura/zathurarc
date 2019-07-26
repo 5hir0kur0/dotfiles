@@ -4,3 +4,5 @@ map u scroll half-up
 map d scroll half-down
 map D toggle_page_mode
 map i recolor
+# first column in single and dual page mode is the first column (default is 1:2)
+set first-page-column "1:1"
