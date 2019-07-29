@@ -411,6 +411,11 @@ PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
 export FZF_CTRL_T_OPTS="--preview='bash $HOME/.local/share/scripts/preview.sh {}'"
 export FZF_CTRL_R_OPTS='-e'
+# in tmux, italic text only works if term is set to "tmux",
+# but in that case fzf looks weird...
+if [[ "$TERM" == 'tmux' ]]; then
+    alias fzf='TERM=screen-256color fzf'
+fi
 {source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
 function fzf-locate-widget() {
   local selected
@@ -427,7 +432,7 @@ zle -N fzf-locate-widget
 function fzf-cd-widget () {
     local cmd="command find -L . -mindepth 1 \\( -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o \\( -type d -o -type f \\) -print 2> /dev/null | cut -b3-"
     setopt localoptions pipefail 2> /dev/null
-    local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) +m)"
+    local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS $FZF_CTRL_T_OPTS" fzf +m)"
     if [[ -z "$dir" ]]
     then
         zle redisplay
