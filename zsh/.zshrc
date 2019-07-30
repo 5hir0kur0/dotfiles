@@ -411,11 +411,6 @@ PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
 export FZF_CTRL_T_OPTS="--preview='bash $HOME/.local/share/scripts/preview.sh {}'"
 export FZF_CTRL_R_OPTS='-e'
-# in tmux, italic text only works if term is set to "tmux",
-# but in that case fzf looks weird...
-if [[ "$TERM" == 'tmux' ]]; then
-    alias fzf='TERM=screen-256color fzf'
-fi
 {source /usr/share/fzf/key-bindings.zsh || source ~/misc/apps/fzf/shell/key-bindings.zsh} 2>/dev/null
 function fzf-locate-widget() {
   local selected
