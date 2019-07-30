@@ -771,8 +771,8 @@ bar {
 }
 
 # rules
-for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1032 764, move position center
-for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1032 764, move position center
+for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1572 1037, move position center
+for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1572 1037, move position center
 for_window [instance="$floatingclass"] floating enable
 for_window [class="$floatingclass"] floating enable
 assign [class="mpv"] mpv
