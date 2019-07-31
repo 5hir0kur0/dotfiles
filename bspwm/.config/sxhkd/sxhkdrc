@@ -235,6 +235,9 @@ Pause
 XF86AudioMute
         pulse.sh mute
 
+Scroll_Lock
+        pulse.sh mute
+
 ctrl + {XF86AudioRaiseVolume,XF86AudioLowerVolume}
         pulse.sh {up,down} 1
 

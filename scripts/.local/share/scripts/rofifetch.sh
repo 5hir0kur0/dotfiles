@@ -4,23 +4,19 @@ wm_name() {
     wmctrl -m | grep -oP '(?<=Name: )(.+)$' 
 }
 
-current_desktop() {
-    case "$(wm_name)" in
-        bspwm)
-            bspc query -D -d -m focused --names
-            ;;
-        *)
-            echo not implemented for "$(wm_name)" yet 1>&2
-            exit 1
-            ;;
-    esac
+function list_windows {
+    wmctrl -l | grep -iEv "$(bspwm_current_desktop_regex)"
 }
 
-list_windows() {
-    wmctrl -l | grep -vP ".+\s+$(current_desktop)\s+"
+function bspwm_current_desktop_regex {
+    readarray -t current < <(bspc query --nodes --desktop focused)
+    local IFS='|'
+    echo "(${current[*]})"
 }
+
 
 if [[ "$(wm_name)" == bspwm ]]; then
+    
     WINDOW=$(list_windows | rofi -dmenu -i -p 'fetch' | cut -f1 -d' ')
     bspc node "$WINDOW" -d focused
     bspwm_workspace.sh reset
