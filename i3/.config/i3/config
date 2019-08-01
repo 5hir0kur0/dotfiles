@@ -848,9 +848,24 @@ assign [class="mpv"] mpv
 for_window [class="mpv"] fullscreen
 for_window [class="FULLSCREEN"] fullscreen
 
+no_focus [window_role="pop-up"]
+no_focus [window_type="splash"]
+no_focus [window_type="tooltip"]
+# focus only the dialogs that have the given string in their name
+# (commented out because it turns out it's kind of hard to make a good whitelist for this)
+#no_focus [window_type="dialog" title="(?i)^(?:(?!close|save|exit|open|import|export).)*$"]
+
+# don't focus anki's dialogs
+no_focus [floating class="$ac" title="(?i)^(?:(?!import|export|about|card types|fields).)*$"]
+
+no_focus [floating instance="TorLauncher"]
+
+# don't focus windows that request focus unless they are on the current workspace
+# (see also $mod+q)
+focus_on_window_activation smart
+
 # mark rules
-# the anki one doesn't work with $markscript; if the title is omitted, then the add window is matched
-for_window [class="$ac" tiling title="$at"]                       mark --add a
+for_window [class="$ac" tiling title="$at"]  mark a
 #for_window [class="$ankiclass" type="dialog"] unmark a
 for_window [class="$chromeclass"]           exec --no-startup-id $markscript c
 for_window [class="$dolphinclass"]          exec --no-startup-id $markscript d
