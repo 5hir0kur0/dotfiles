@@ -31,6 +31,7 @@
 	blnm = bl --no-merged
 	ap = add --patch
 	ds = diff --staged
+	cob = checkout -b
 [credential]
 	helper = cache --timeout 600
 [help]
