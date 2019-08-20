@@ -89,8 +89,6 @@ set sidescrolloff=10
 " also use gui cursor in terminal (the cursor changes in insert mode)
 set guicursor&
 
-"set termguicolors
-
 " don't redraw during macros, etc.
 set lazyredraw
 
