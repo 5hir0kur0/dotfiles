@@ -3,14 +3,14 @@
 set $ac (?i)^anki$
 set $at (?i)- Anki$
 set $chromeclass (?i)^(?:chromium|chrome)$
-set $dolphinclass (?)^dolphin$
-set $emacsclass (?)^emacs$
+set $dolphinclass (?i)^dolphin$
+set $emacsclass (?i)^emacs$
 set $firefoxclass (?i)^firefox$
 set $floatingclass floating-terminal
 set $gimpclass (?i)^gimp.*$
 set $imgviewerclass (?i)^sxiv$
 set $jetbrainsclass (?i)^jetbrains.*$
-set $mediaplayerclass (?i)^(?:mpv|mplayer)$
+set $mediaplayerclass (?i)^(?:mpv|mplayer|vlc)$
 set $scratchclass scratchpad-terminal
 set $torclass (?i)^tor browser$
 set $urxvtclass (?i)^urxvt$
@@ -19,6 +19,7 @@ set $writerclass (?i)^libreoffice-writer$
 set $zathuraclass (?i)^zathura$
 
 # scripts
+set $alttabscript ~/.local/share/scripts/i3_alt_tab.sh
 set $bookmarkscript ~/.local/share/scripts/rofibookmarks.sh
 set $centerscript ~/.local/share/scripts/center_cursor.sh
 set $centerwindowscript ~/.local/share/scripts/center_window.sh
@@ -630,7 +631,7 @@ bindsym $mod+Shift+b bar mode toggle
 bindsym $mod+ctrl+space focus mode_toggle
 
 # switch between floating windows like a desktop environment
-bindsym Mod1+Tab focus floating, focus right
+bindsym Mod1+Tab exec --no-startup-id $alttabscript
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -840,12 +841,12 @@ bar {
 }
 
 # rules
-for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1572 1037, move position center
-for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1572 1037, move position center
+for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1240 800, move position center
+for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1240 800, move position center
 for_window [instance="$floatingclass"] floating enable
 for_window [class="$floatingclass"] floating enable
-assign [class="mpv"] mpv
-for_window [class="mpv"] fullscreen
+assign [class="$mediaplayerclass"] m
+for_window [class="$mediaplayerclass"] fullscreen, focus
 for_window [class="FULLSCREEN"] fullscreen
 
 no_focus [window_role="pop-up"]
@@ -869,7 +870,7 @@ for_window [class="$ac" tiling title="$at"]  mark a
 #for_window [class="$ankiclass" type="dialog"] unmark a
 for_window [class="$chromeclass"]           exec --no-startup-id $markscript c
 for_window [class="$dolphinclass"]          exec --no-startup-id $markscript d
-for_window [class="$emacsclass"]            exec --no-startup-id $markscript e
+for_window [tiling class="$emacsclass"]     exec --no-startup-id $markscript e
 for_window [class="$firefoxclass" tiling]   exec --no-startup-id $markscript f
 for_window [class="$gimpclass" tiling]      exec --no-startup-id $markscript g
 for_window [class="$imgviewerclass"]        exec --no-startup-id $markscript i
