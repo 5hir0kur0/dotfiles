@@ -1,6 +1,7 @@
 #!/bin/sh
 
-~/.local/share/scripts/set_wallpaper.sh &
+{ [ -x ~/.fehbg ] && ~/.fehbg; } || set_wallpaper.sh &
+
 pgrep -x urxvtd || urxvtd &
 pgrep -x fcitx || { sleep 0.1; fcitx; } &
 pgrep -x dunst || { sleep 0.15; dunst; } &
