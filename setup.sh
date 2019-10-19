@@ -6,7 +6,7 @@ STOW_DIRECTORY=$( cd "$(dirname "$0")"; pwd -P )
 STOW_TARGET=$HOME
 
 function install_pkg() {
-    echo 'stow is missing; trying to install it...' 1>&2
+    echo "${1} is missing; trying to install it..." 1>&2
     if hash apt; then
         sudo apt install "${1:?pkg name missing}"
     elif hash pacman; then
@@ -23,7 +23,7 @@ function my_stow() {
 }
 
 if [ -z "${1:-}" ]; then
-    echo "usage: $0 [--stow|--delete|--restow] <dirname>" 1>&2
+    echo "usage: $0 [--stow|--delete|--restow] <directory>" 1>&2
     echo "  (use --no to simulate)" 1>&2
     exit 1
 fi
