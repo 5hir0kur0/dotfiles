@@ -311,11 +311,6 @@ history_ignore=(
     'git c *'
     'g c *'
 
-    'git log'
-    'git l *'
-    'g log *'
-    'g l *'
-
     'grep *'
     'pgrep *'
     'ag *'

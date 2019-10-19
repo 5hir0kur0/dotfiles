@@ -104,7 +104,7 @@ setopt completeinword
 # completion config (mainy generated using compinstall)
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' auto-description '<%d>'
-zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate
+zstyle ':completion:*' completer _expand _complete _match _correct _approximate _ignored
 # enable colored completions using the default colors
 # (for some reason the directory color didn't match ls)
 zstyle ':completion:*' list-colors 'di=1;34'
