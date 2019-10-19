@@ -57,16 +57,16 @@ font pango:Inconsolata, monaco, Noto Sans Mono 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec urxvt
 
 # start st
 bindsym $mod+Mod1+Return exec st
 
 # start a floating terminal with tmux
-bindsym $mod+Shift+Return exec "urxvtc -name $scratchclass -e tmux new-session -As0"
+bindsym $mod+Shift+Return exec "urxvt -name $scratchclass -e tmux new-session -As0"
 
 # start a floating terminal
-bindsym $mod+Ctrl+Return exec "urxvtc -name $floatingclass"
+bindsym $mod+Ctrl+Return exec "urxvt -name $floatingclass"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -349,10 +349,10 @@ bindsym $mod+button5 exec --no-startup-id $xbacklightscript -5
 
 # manipulating windows using the mouse
 bindsym button3 floating toggle
-bindsym button9 move right
-bindsym button8 move left
-bindsym --whole-window $mod+button9 move right
-bindsym --whole-window $mod+button8 move left
+bindsym button8 move right
+bindsym button9 move left
+bindsym --whole-window $mod+button8 move right
+bindsym --whole-window $mod+button9 move left
 
 set $mode_mark "mark"
 mode $mode_mark {
@@ -678,6 +678,9 @@ bindsym $mod+Shift+Mod1+p move output left
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
 
+# switch to the last workspace when you "switch" to the currently focused workspace
+workspace_auto_back_and_forth yes
+
 # move workspace (Mod1 is alt)
 bindsym $mod+Mod1+l move workspace to output right
 bindsym $mod+Mod1+h move workspace to output left
@@ -713,7 +716,7 @@ bindsym $mod+F9 exec "sleep 0.2; xset dpms force off"
 bindsym $mod+Shift+e move scratchpad
 #bindsym $mod+e scratchpad show
 bindsym $mod+e exec --no-startup-id $scratchscript
-bindsym $mod+ctrl+e [instance="^(?!$scratchclass)"] scratchpad show
+bindsym $mod+ctrl+e [class="^(?!$scratchclass)" instance="^(?!$scratchclass)"] scratchpad show
 bindsym $mod+u scratchpad show
 bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
 
@@ -857,13 +860,15 @@ no_focus [window_type="tooltip"]
 #no_focus [window_type="dialog" title="(?i)^(?:(?!close|save|exit|open|import|export).)*$"]
 
 # don't focus anki's dialogs
-no_focus [floating class="$ac" title="(?i)^(?:(?!import|export|about|card types|fields).)*$"]
+# (only works if focus_on_window_activation is set to urgent, because they 
+# also request focus upon creation)
+no_focus [floating class="$ac" title="(?i)Anki"]
 
 no_focus [floating instance="TorLauncher"]
 
-# don't focus windows that request focus unless they are on the current workspace
+# don't focus floating windows that request focus unless they are on the current workspace
 # (see also $mod+q)
-focus_on_window_activation smart
+focus_on_window_activation urgent
 
 # mark rules
 for_window [class="$ac" tiling title="$at"]  mark a
