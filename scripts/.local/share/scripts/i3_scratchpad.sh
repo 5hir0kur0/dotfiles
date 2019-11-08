@@ -5,9 +5,9 @@
 SCRATCHCLASS='scratchpad-terminal'
 
 if xdotool search --class "$SCRATCHCLASS" > /dev/null 2>&1; then
-    i3-msg "[class=\"$SCRATCHCLASS\"] scratchpad show"
+    i3-msg "[class=\"$SCRATCHCLASS\"] scratchpad show" || i3-msg "[class=\"$SCRATCHCLASS\"] focus"
 elif xdotool search --classname "$SCRATCHCLASS" > /dev/null 2>&1; then
-    i3-msg "[instance=\"$SCRATCHCLASS\"] scratchpad show"
+    i3-msg "[instance=\"$SCRATCHCLASS\"] scratchpad show" || i3-msg "[instance=\"$SCRATCHCLASS\"] focus"
 else
     st -c "$SCRATCHCLASS" -e tmux new-session -As0
 fi
