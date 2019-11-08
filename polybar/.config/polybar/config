@@ -17,7 +17,7 @@ gray = #a89984
 darkgray = #665c54
 
 [bar/bspwm]
-monitor = ${env:MONITOR:eDP-1}
+monitor = ${env:MONITOR:eDP1}
 width = 98%
 height = 4%
 offset-x = 1%
@@ -101,7 +101,7 @@ wm-restack = bspwm
 ;
 [bar/bspwm_secondary]
 inherit = bar/bspwm
-monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:HDMI1}
 ; height = 42
 ; TODO is there another way to disable the tray?
 tray-position =
@@ -678,7 +678,7 @@ margin-top = 0
 margin-bottom = 0
 
 [bar/i3_notray]
-monitor = ${env:MONITOR:eDP-1}
+monitor = ${env:MONITOR:eDP1}
 width = 100%
 height = 2%
 offset-x = 1%
