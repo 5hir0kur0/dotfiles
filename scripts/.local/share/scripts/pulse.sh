@@ -152,7 +152,7 @@ toggle_notification() {
 
 mute_state() {
     pactl list sinks | grep -FA10 "$(default_sink)" \
-        | grep -F 'Mute:' | rev | cut -d' ' -f1 | rev
+        | grep -Fm1 'Mute:' | rev | cut -d' ' -f1 | rev
 }
 
 case "$1" in
