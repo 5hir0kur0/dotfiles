@@ -152,6 +152,13 @@ cnoremap w!! w !sudo tee > /dev/null %
 autocmd FileType gitcommit setlocal spell spelllang=en
 autocmd FileType markdown setlocal spell spelllang=en
 
+nnoremap <Leader>se :setlocal spell spelllang=en<CR>
+nnoremap <Leader>sa :setlocal spell spelllang=en_us<CR>
+nnoremap <Leader>sb :setlocal spell spelllang=en_gb<CR>
+nnoremap <Leader>sg :setlocal spell spelllang=de<CR>
+nnoremap <Leader>sd :setlocal spell spelllang=de<CR>
+nnoremap <Leader>sn :setlocal nospell<CR>
+
 " use man to look up the word below the cursor when K is pressed while editing
 " a shell script
 autocmd FileType sh setlocal keywordprg=man\ -s
