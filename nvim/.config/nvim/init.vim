@@ -58,15 +58,24 @@ set list
 " how to display non-printable characters
 set listchars=tab:▸\ ,eol:¬,trail:\·,precedes:◀,extends:▶
 
+" get dictionary completions using C-n/C-p in insert mode
+set complete+=kspell
+
 " display unnecessary whitespace (stolen from
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces)
-highlight ExtraWhitespace ctermbg=red guibg=darkred
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=darkred
-
+highlight StrayTabs ctermbg=red guibg=darkred
+highlight TrailingWhitespace ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight StrayTabs ctermbg=red guibg=darkred
+autocmd ColorScheme * highlight TrailingWhitespace ctermbg=red guibg=darkred
 " match trailing whitespace, except when typing at the end of a line
-match ExtraWhitespace /\s\+\%#\@<!$/
+match TrailingWhitespace /\s\+$/
 " match tabs that are not at the start of a line
-match ExtraWhitespace /[^\t]\zs\t\+/
+2match StrayTabs /[^\t]\zs\t\+/
+" match trailing whitespace, except when typing at the end of a line
+autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
+" go back to the normal highlighting in other modes
+autocmd InsertLeave * match TrailingWhitespace /\s\+$/
+
 
 set background=dark
 
@@ -113,9 +122,6 @@ set undofile
 " use escape to exit out of terminal input
 tnoremap <Esc> <C-\><C-n>
 
-" use :help insted of !man to look up word below cursor with K
-set keywordprg=:help
-
 " remap leader to space
 let mapleader = "\<Space>"
 
@@ -123,16 +129,16 @@ let mapleader = "\<Space>"
 nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:GitGutter<cr><c-l>
 
 " <C-n> and <C-p> scroll without moving the relative position of the cursor
-nnoremap <silent> <C-n> <C-e>j
-nnoremap <silent> <C-p> <C-y>k
+"nnoremap <silent> <C-n> <C-e>j
+"nnoremap <silent> <C-p> <C-y>k
 
 " center cursor after jumping to match TODO keep or discard?
 nnoremap n nzz
 nnoremap N Nzz
 
 " delete trailing whitespace
-nnoremap <silent> <Leader>W m`:%s/\s*$//<CR>:noh<CR>``
-nnoremap <silent> <Leader>w m`g_ld$``
+nnoremap <silent> <Leader>dW m`:%s/\s*$//<CR>:noh<CR>``
+nnoremap <silent> <Leader>dw m`g_ld$``
 
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
@@ -148,10 +154,7 @@ nnoremap <silent> <C-s> :update<CR>
 " use :w!! to force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
 
-" enable spell checking for certain file types
-autocmd FileType gitcommit setlocal spell spelllang=en
-autocmd FileType markdown setlocal spell spelllang=en
-
+" Quick toggles for spell checking
 nnoremap <Leader>se :setlocal spell spelllang=en<CR>
 nnoremap <Leader>sa :setlocal spell spelllang=en_us<CR>
 nnoremap <Leader>sb :setlocal spell spelllang=en_gb<CR>
@@ -159,9 +162,19 @@ nnoremap <Leader>sg :setlocal spell spelllang=de<CR>
 nnoremap <Leader>sd :setlocal spell spelllang=de<CR>
 nnoremap <Leader>sn :setlocal nospell<CR>
 
+" enable spell checking for certain file types
+autocmd FileType gitcommit setlocal spell spelllang=en
+autocmd FileType markdown setlocal spell spelllang=en
+
 " use man to look up the word below the cursor when K is pressed while editing
-" a shell script
-autocmd FileType sh setlocal keywordprg=man\ -s
+" a shell script or viewing a man page
+autocmd FileType sh setlocal keywordprg=:Man
+autocmd FileType man setlocal keywordprg=:Man
+
+" use :help instead of !man to look up word below cursor with K in vim and help
+" buffers
+autocmd FileType vim setlocal keywordprg=:help
+autocmd FileType help setlocal keywordprg=:help
 
 " latex files
 autocmd FileType tex setlocal spell
@@ -189,7 +202,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
-Plug 'lifepillar/vim-mucomplete'
+Plug 'junegunn/fzf'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+" Plug 'lifepillar/vim-mucomplete'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deathlyfrantic/deoplete-spell'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " enable filetype detection, enable file-type specific plugin loading, enable
@@ -215,34 +236,118 @@ let g:airline_theme = 'lucius'
 "let g:airline_symbols_ascii = 1
 
 " ale bindings
-nmap <silent> <Leader>j <Plug>(ale_next_wrap)
-nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>n <Plug>(ale_next_wrap)
+nmap <silent> <Leader>p <Plug>(ale_previous_wrap)
 
 " gitgutter bindings
-nnoremap <silent> <Leader>gj :GitGutterNextHunk<CR>
-nnoremap <silent> <Leader>gk :GitGutterPrevHunk<CR>
+nnoremap <silent> <Leader>gn :GitGutterNextHunk<CR>
+nnoremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
 nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
 
 " gruvbox options
 let g:gruvbox_contrast_dark = 'soft'
 
-" latex-live-preview options
-let g:livepreview_previewer = 'zathura'
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+" stolen from https://github.com/Shougo/deoplete.nvim/issues/816
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ deoplete#manual_complete()
+
+inoremap <silent><expr> <S-TAB>
+            \ pumvisible() ? "\<C-p>" :
+            \ <SID>check_back_space() ? "\<S-TAB>" :
+            \ deoplete#manual_complete()
 
 " vim-mucomplete-related options
-set completeopt+=menuone
-set completeopt+=noselect
-set shortmess+=c   " Shut off completion messages
-set belloff+=ctrlg"
-let g:mucomplete#enable_auto_at_startup = 1 " enable automatic completion
-" let g:mucomplete#delayed_completion = 1
-set wildignorecase " ignore case in filename completions
+"set completeopt+=menuone
+"set completeopt+=noselect
+"set shortmess+=c   " Shut off completion messages
+"set belloff+=ctrlg
+"let g:mucomplete#enable_auto_at_startup = 1 " enable automatic completion
+"" let g:mucomplete#delayed_completion = 1
+"set wildignorecase " ignore case in filename completions
+"" fix compatibility with auto-pairs (stolen from mucomplete documentation)
+"let g:AutoPairsMapSpace = 0
+"imap <silent> <expr> <space> pumvisible()
+"        \ ? "<space>"
+"        \ : "<c-r>=AutoPairsSpace()<cr>"
 
-" fix compatibility with auto-pairs (stolen from mucomplete documentation)
-let g:AutoPairsMapSpace = 0
-imap <silent> <expr> <space> pumvisible()
-        \ ? "<space>"
-        \ : "<c-r>=AutoPairsSpace()<cr>"
+
+" LanguageClient
+
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+" for rls: rustup component add rls
+" for pyls: pip3 install --user python-language-server
+let g:LanguageClient_serverCommands = {
+            \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+            \ 'python': ['pyls'],
+            \ }
+
+function SetLanguageClientMappings()
+endfunction
+
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nnoremap <buffer> <silent> <Leader>m :call LanguageClient_contextMenu()<CR>
+    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <buffer> <silent> <Leader>wgd :call LanguageClient#textDocument_definition({'gotoCmd': 'split'})<CR>
+    nnoremap <buffer> <silent> <Leader>h :call LanguageClient#textDocument_documentHighlight()<CR>
+    nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+    " C-F12
+    nnoremap <buffer> <silent> <F36> :call LanguageClient#textDocument_documentSymbol()<CR>
+  endif
+endfunction
+
+autocmd FileType * call LC_maps()
+
+function MyFZFGit()
+    let $FZF_DEFAULT_COMMAND='git ls-files "$(git rev-parse --show-toplevel)" || find .'
+    FZF
+    unlet $FZF_DEFAULT_COMMAND
+endfunction
+
+" fzf
+nnoremap <silent> <Leader>o :call MyFZFGit()<CR>
+nnoremap <silent> <Leader>O :FZF .<CR>
+
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let $FZF_DEFAULT_OPTS .= ' --border --margin=0,0'
+
+function! FloatingFZF()
+    let width = float2nr(&columns * 0.9)
+    let height = float2nr(&lines * 0.42)
+    let opts = { 'relative': 'editor',
+                \ 'row': 0,
+                \ 'col': (&columns - width) / 2,
+                \ 'width': &columns,
+                \ 'height': height }
+    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
+    setlocal nonumber norelativenumber
+endfunction
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" or
+"let g:fzf_layout = { 'down': '~40%' }
+
+" Easymotion
+map <Leader> <Plug>(easymotion-prefix)
 
 " remind me of how to use diff mode -_-
 if &diff
