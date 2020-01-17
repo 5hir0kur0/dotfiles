@@ -98,6 +98,9 @@ set sidescrolloff=10
 " also use gui cursor in terminal (the cursor changes in insert mode)
 set guicursor&
 
+" enable mouse support (all modes)
+set mouse=a
+
 " don't redraw during macros, etc.
 set lazyredraw
 
@@ -286,7 +289,7 @@ inoremap <silent><expr> <S-TAB>
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
-" for rls: rustup component add rls
+" for rls: rustup component add rls rust-analysis rust-src
 " for pyls: pip3 install --user python-language-server
 let g:LanguageClient_serverCommands = {
             \ 'rust': ['rustup', 'run', 'stable', 'rls'],
