@@ -679,7 +679,7 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move workspace back_and_forth
 
 # switch to the last workspace when you "switch" to the currently focused workspace
-workspace_auto_back_and_forth yes
+#workspace_auto_back_and_forth yes
 
 # move workspace (Mod1 is alt)
 bindsym $mod+Mod1+l move workspace to output right
