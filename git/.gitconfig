@@ -6,7 +6,7 @@
 	tool = vimdiff
 	conflictstyle = diff3
 [alias]
-	p = pull --ff --ff-only
+	p = pull --ff-only
 	lo = log --oneline
 	unstage = reset HEAD --
 	wdiff = diff --word-diff
@@ -22,7 +22,7 @@
 	ai = add -i
 	h = help
 	f = fetch
-	pp = pull --ff --ff-only --prune
+	pp = pull --ff-only --prune
 	fp = fetch --prune
 	bl = branch --list --all -vv
 	b = branch
