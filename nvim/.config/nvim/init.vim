@@ -141,7 +141,7 @@ nnoremap N Nzz
 
 " delete trailing whitespace
 nnoremap <silent> <Leader>dW m`:%s/\s*$//<CR>:noh<CR>``
-nnoremap <silent> <Leader>dw m`g_ld$``
+nnoremap <silent> <Leader>dw m`:s/\s*$//<CR>:noh<CR>``
 
 " <C-c> does not trigger the InsertLeave autocommand by default so you cannot
 " use it to insert multiple lines at once from visual mode
@@ -168,6 +168,7 @@ nnoremap <Leader>sn :setlocal nospell<CR>
 " enable spell checking for certain file types
 autocmd FileType gitcommit setlocal spell spelllang=en
 autocmd FileType markdown setlocal spell spelllang=en
+autocmd FileType tex setlocal spell
 
 " use man to look up the word below the cursor when K is pressed while editing
 " a shell script or viewing a man page
@@ -179,16 +180,16 @@ autocmd FileType man setlocal keywordprg=:Man
 autocmd FileType vim setlocal keywordprg=:help
 autocmd FileType help setlocal keywordprg=:help
 
-" latex files
-autocmd FileType tex setlocal spell
-
 " automatically save the view (cursor position, folds, etc.)
-" (except for the files in blacklist)
-let blacklist = ['help', 'txt']
+" (except for the files in the blacklists)
+let filetype_blacklist = ['gitcommit', 'man']
+let buftype_blacklist = ['terminal', 'help']
 augroup AutoSaveFolds
     autocmd!
-    autocmd BufWinLeave * if index(blacklist, &ft) < 0 && @% != '' | mkview
-    autocmd BufWinEnter * if index(blacklist, &ft) < 0 && @% != '' | silent! loadview
+    autocmd BufWinLeave * if index(filetype_blacklist, &ft) < 0
+                \&& index(buftype_blacklist, &bt) < 0 && @% != '' | mkview
+    autocmd BufWinEnter * if index(filetype_blacklist, &ft) < 0
+                \&& index(buftype_blacklist, &bt) < 0 && @% != '' | silent! loadview
 augroup END
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -206,6 +207,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -314,15 +316,21 @@ endfunction
 
 autocmd FileType * call LC_maps()
 
+" fzf
+let g:fzf_command_prefix = 'FZF'
 function MyFZFGit()
     let $FZF_DEFAULT_COMMAND='git ls-files "$(git rev-parse --show-toplevel)" || find .'
     FZF
     unlet $FZF_DEFAULT_COMMAND
 endfunction
 
-" fzf
 nnoremap <silent> <Leader>o :call MyFZFGit()<CR>
 nnoremap <silent> <Leader>O :FZF .<CR>
+nnoremap <silent> <Leader>l :FZFBLines .<CR>
+nnoremap <silent> <Leader>x :FZFCommands<CR>
+nnoremap <silent> <Leader>p :FZFBuffers<CR>
+nnoremap <silent> <Leader>H :FZFHelptags<CR>
+nnoremap <silent> <Leader>M :FZFMaps<CR>
 
 
 let g:fzf_action = {
