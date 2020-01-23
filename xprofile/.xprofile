@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# shellcheck source=.profile
 [ -f "$HOME/.profile" ] && source "$HOME/.profile"
 
 export GTK_IM_MODULE=fcitx
@@ -36,3 +37,8 @@ setxkbmap -option compose:lwin-altgr
 xcape -e 'Caps_Lock=Escape' -t 210
 
 numlockx on
+
+# machine-specific configuration
+# shellcheck source=/dev/null
+[ -f "$HOME/.xprofile-${HOSTNAME:-$HOST}" ] \
+    && source "$HOME/.xprofile-${HOSTNAME:-$HOST}"
