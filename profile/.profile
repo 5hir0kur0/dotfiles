@@ -9,6 +9,9 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 
 export BUILDDIR=/tmp/.build-$USER
 
+# nicer output for bash -x
+export PS4='+${LINENO}: '
+
 # experiment
 export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' -"
 
