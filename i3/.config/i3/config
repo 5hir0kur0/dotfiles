@@ -25,7 +25,7 @@ set $centerscript ~/.local/share/scripts/center_cursor.sh
 set $centerwindowscript ~/.local/share/scripts/center_window.sh
 set $comptonscript ~/.local/share/scripts/compton.sh
 set $emacsscript ~/.local/share/scripts/toemacs.sh
-set $entiresplitscript ~/.local/share/scripts/i3_splitentire.sh
+set $entiresplitscript ~/.local/share/scripts/i3_split_entire.sh
 set $exitscript ~/.local/share/scripts/exit.sh
 set $fetchscript ~/.local/share/scripts/rofifetch.sh
 set $initscript ~/.local/share/scripts/init.sh
@@ -602,10 +602,14 @@ bindsym $mod+Shift+Right move right
 # split in horizontal orientation
 bindsym $mod+Ctrl+l split h
 bindsym $mod+Ctrl+h split h
+bindsym $mod+Shift+Ctrl+l exec --no-startup-id $entiresplitscript h
+bindsym $mod+Shift+Ctrl+h exec --no-startup-id $entiresplitscript h
 
 # split in vertical orientation
 bindsym $mod+Ctrl+j split v
 bindsym $mod+Ctrl+k split v
+bindsym $mod+Shift+Ctrl+j exec --no-startup-id $entiresplitscript v
+bindsym $mod+Shift+Ctrl+k exec --no-startup-id $entiresplitscript v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
