@@ -37,7 +37,7 @@ jq -r '.window_properties.class' <<< "$unmarked_windows" \
 
 # the following is a little bit faster but you get the js notation for strings
 # (e.g. '"' is escaped to '\"')
-# (note that the following line depends on the '-c' flag being used when 
+# (note that the following line depends on the '-c' flag being used when
 # unmarked_windows is created)
 #readarray -t window_ids \
 #    < <(grep -oP '(?<="window":)[^,]+' <<< "$unmarked_windows" || echo -n)
@@ -83,6 +83,8 @@ for i in "${!window_ids[@]}"; do
             fi
         done
     fi
-    [ -n "$char" ] && i3-msg "[id=${window_ids[$i]}] mark $char"
-    existing_marks+=("$char")
+    if [[ -n "$char" ]]; then
+        i3-msg "[id=${window_ids[$i]}] mark \"$char\""
+        existing_marks+=("$char")
+    fi
 done
