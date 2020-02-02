@@ -860,7 +860,7 @@ no_focus [window_type="tooltip"]
 #no_focus [window_type="dialog" title="(?i)^(?:(?!close|save|exit|open|import|export).)*$"]
 
 # don't focus anki's dialogs
-# (only works if focus_on_window_activation is set to urgent, because they 
+# (only works if focus_on_window_activation is set to urgent, because they
 # also request focus upon creation)
 no_focus [floating class="$ac" title="(?i)Anki"]
 
@@ -868,26 +868,26 @@ no_focus [floating instance="TorLauncher"]
 
 # don't focus floating windows that request focus unless they are on the current workspace
 # (see also $mod+q)
-focus_on_window_activation urgent
+#focus_on_window_activation urgent
 
 # mark rules
 for_window [class="$ac" tiling title="$at"]  mark a
 #for_window [class="$ankiclass" type="dialog"] unmark a
-for_window [class="$chromeclass"]           exec --no-startup-id $markscript c
-for_window [class="$dolphinclass"]          exec --no-startup-id $markscript d
-for_window [tiling class="$emacsclass"]     exec --no-startup-id $markscript e
-for_window [class="$firefoxclass" tiling]   exec --no-startup-id $markscript f
-for_window [class="$gimpclass" tiling]      exec --no-startup-id $markscript g
-for_window [class="$imgviewerclass"]        exec --no-startup-id $markscript i
-for_window [class="$jetbrainsclass" tiling] exec --no-startup-id $markscript j
-for_window [class="$mediaplayerclass"]                            mark --add m
-for_window [instance="$scratchclass"]       exec --no-startup-id $markscript s
-for_window [class="$scratchclass"]          exec --no-startup-id $markscript s
-for_window [class="$writerclass" tiling]    exec --no-startup-id $markscript w
+for_window [class="$chromeclass"]            mark c
+for_window [class="$dolphinclass"]           mark d
+for_window [tiling class="$emacsclass"]      mark e
+for_window [class="$firefoxclass" tiling]    mark f
+for_window [class="$gimpclass" tiling]       mark g
+for_window [class="$imgviewerclass"]         mark i
+for_window [class="$jetbrainsclass" tiling]  mark j
+for_window [class="$mediaplayerclass"]       mark m
+for_window [instance="$scratchclass"]        mark s
+for_window [class="$scratchclass"]           mark s
+for_window [class="$writerclass" tiling]     mark w
 # when "class" is used instead of "instance" it also matches the scratchpad
-for_window [instance="$urxvtclass"]         exec --no-startup-id $markscript u
-for_window [class="$vlcclass" tiling]       exec --no-startup-id $markscript v
-for_window [class="$zathuraclass"]          exec --no-startup-id $markscript z
+for_window [instance="$urxvtclass"]          mark u
+for_window [class="$vlcclass" tiling]        mark v
+for_window [class="$zathuraclass"]           mark z
 
 #enable multimedia keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id $pulsescript up
