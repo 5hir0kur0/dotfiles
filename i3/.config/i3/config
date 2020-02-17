@@ -349,9 +349,9 @@ bindsym $mod+F5 exec --no-startup-id light -N 0.5 && light -U 10
 
 
 # manipulating windows using the mouse
-bindsym button3 floating toggle
-bindsym button8 move right
-bindsym button9 move left
+bindsym --border button3 floating toggle
+bindsym --border button8 move right
+bindsym --border button9 move left
 bindsym --whole-window $mod+button8 move right
 bindsym --whole-window $mod+button9 move left
 
@@ -725,17 +725,13 @@ bindsym $mod+ctrl+e [class="^(?!$scratchclass)" instance="^(?!$scratchclass)"] s
 bindsym $mod+u scratchpad show
 bindsym $mod+Shift+u [floating workspace="__focused__"] move scratchpad
 
-# emacs
-bindsym $mod+semicolon exec --no-startup-id $emacsscript
-assign [class="Emacs"] e
-
 # resize window (you can also use the mouse for that)
-mode "resize" {
+set $mode_resize "resize: hjkl, default 20px, ctrl -> 1px, alt -> 50px, shift -> 80px, g -> grow, s -> shrink, scroll -> height, shift+scroll -> width"
+mode $mode_resize {
     bindsym ctrl+h resize shrink width  1 px
     bindsym ctrl+j resize grow   height 1 px
     bindsym ctrl+k resize shrink height 1 px
-    # "grow width" not working for some reason
-    bindsym ctrl+l resize grow right    1 px 
+    bindsym ctrl+l resize grow   width  1 px
 
     bindsym h resize shrink width  20 px
     bindsym j resize grow   height 20 px
@@ -747,20 +743,87 @@ mode "resize" {
     bindsym shift+k resize shrink height 80 px
     bindsym shift+l resize grow   width  80 px
 
-    bindsym Mod1+h resize shrink right  50 px
-    bindsym Mod1+j resize shrink up     50 px
-    bindsym Mod1+k resize shrink down   50 px
-    bindsym Mod1+l resize shrink left 50 px
+    bindsym Mod1+h resize shrink width  50 px
+    bindsym Mod1+j resize grow   height 50 px
+    bindsym Mod1+k resize shrink height 50 px
+    bindsym Mod1+l resize grow   width  50 px
 
-    bindsym ctrl+mod1+h resize grow left  50 px
-    bindsym ctrl+mod1+j resize grow down  50 px
-    bindsym ctrl+mod1+k resize grow up    50 px
-    bindsym ctrl+mod1+l resize grow right 50 px
+    bindsym --whole-window --border button4 resize shrink height 5 px or 5 ppt
+    bindsym --whole-window --border button5 resize grow height 5 px or 5 ppt
+    bindsym --whole-window --border shift+button4 resize shrink width 5 px or 5 ppt
+    bindsym --whole-window --border shift+button5 resize grow width 5 px or 5 ppt
+
+    bindsym g mode $mode_resize_grow
+    bindsym s mode $mode_resize_shrink
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r exec --no-startup-id $centerscript, mode "resize"
+bindsym $mod+r exec --no-startup-id $centerscript, mode $mode_resize
+
+set $mode_resize_grow "[resize] grow: hjkl, default 20px, ctrl -> 1px, alt -> 50px, shift -> 80px, scroll up -> height, scroll down -> width"
+mode $mode_resize_grow {
+    bindsym ctrl+h resize grow left  1 px
+    bindsym ctrl+j resize grow down  1 px
+    bindsym ctrl+k resize grow up    1 px
+    bindsym ctrl+l resize grow right 1 px
+
+    bindsym h resize grow left  20 px
+    bindsym j resize grow down  20 px
+    bindsym k resize grow up    20 px
+    bindsym l resize grow right 20 px
+
+    bindsym shift+h resize grow left  80 px
+    bindsym shift+j resize grow down  80 px
+    bindsym shift+k resize grow up    80 px
+    bindsym shift+l resize grow right 80 px
+
+    bindsym Mod1+h resize grow left  50 px
+    bindsym Mod1+j resize grow down  50 px
+    bindsym Mod1+k resize grow up    50 px
+    bindsym Mod1+l resize grow right 50 px
+
+    bindsym --whole-window --border button4 resize grow height 5 px or 5 ppt
+    bindsym --whole-window --border button5 resize grow width  5 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_resize_shrink "[resize] shrink: hjkl, default 20px, ctrl -> 1px, alt -> 50px, shift -> 80px, scroll up -> height, scroll down -> width"
+mode $mode_resize_shrink {
+    bindsym ctrl+h resize shrink left  1 px
+    bindsym ctrl+j resize shrink down  1 px
+    bindsym ctrl+k resize shrink up    1 px
+    bindsym ctrl+l resize shrink right 1 px
+
+    bindsym h resize shrink left  20 px
+    bindsym j resize shrink down  20 px
+    bindsym k resize shrink up    20 px
+    bindsym l resize shrink right 20 px
+
+    bindsym shift+h resize shrink left  80 px
+    bindsym shift+j resize shrink down  80 px
+    bindsym shift+k resize shrink up    80 px
+    bindsym shift+l resize shrink right 80 px
+
+    bindsym Mod1+h resize shrink left  50 px
+    bindsym Mod1+j resize shrink down  50 px
+    bindsym Mod1+k resize shrink up    50 px
+    bindsym Mod1+l resize shrink right 50 px
+
+    bindsym --whole-window --border button4 resize shrink height 5 px or 5 ppt
+    bindsym --whole-window --border button5 resize shrink width  5 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# resize using the mouse
+bindsym --whole-window --border $mod+button4 resize shrink height 5 px or 5 ppt
+bindsym --whole-window --border $mod+button5 resize grow height 5 px or 5 ppt
+bindsym --whole-window --border $mod+shift+button4 resize shrink width 5 px or 5 ppt
+bindsym --whole-window --border $mod+shift+button5 resize grow width 5 px or 5 ppt
 
 # turn borders on/off/1pixel
 bindsym $mod+Ctrl+b border toggle
@@ -874,6 +937,10 @@ no_focus [floating instance="TorLauncher"]
 # don't focus floating windows that request focus unless they are on the current workspace
 # (see also $mod+q)
 #focus_on_window_activation urgent
+
+# emacs
+bindsym $mod+semicolon exec --no-startup-id $emacsscript
+assign [class="Emacs"] e
 
 # mark rules
 for_window [class="$ac" tiling title="$at"]  mark a
