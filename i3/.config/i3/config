@@ -45,7 +45,7 @@ set $setvolumescript ~/.local/share/scripts/pulse.sh set
 set $surfrawscript ~/.local/share/scripts/rofisurfraw.sh
 set $wallpaperscript ~/.local/share/scripts/set_wallpaper.sh
 set $workspacescript ~/.local/share/scripts/i3_workspace.sh
-set $xbacklightscript ~/.local/share/scripts/xbacklight.sh
+# set $xbacklightscript ~/.local/share/scripts/xbacklight.sh
 
 set $mod Mod4
 
@@ -338,13 +338,14 @@ mode $volume_9 {
 }
 
 # brightness
-bindsym $mod+plus exec --no-startup-id $xbacklightscript +10
-bindsym $mod+minus exec --no-startup-id $xbacklightscript -10
-bindsym $mod+F6 exec --no-startup-id $xbacklightscript +10
-bindsym $mod+F5 exec --no-startup-id $xbacklightscript -10
-# doesn't really seem to work :-/
-bindsym $mod+button4 exec --no-startup-id $xbacklightscript +5
-bindsym $mod+button5 exec --no-startup-id $xbacklightscript -5
+bindsym $mod+plus exec --no-startup-id light -N 0.5 && light -A 10
+bindsym $mod+minus exec --no-startup-id light -N 0.5 && light -U 10
+bindsym $mod+F6 exec --no-startup-id light -N 0.5 && light -A 10
+bindsym $mod+F5 exec --no-startup-id light -N 0.5 && light -U 10
+
+# set brightness by scrolling
+#bindsym --whole-window --border $mod+button4 exec --no-startup-id light -N 0.5 && light -A 5
+#bindsym --whole-window --border $mod+button5 exec --no-startup-id light -N 0.5 && light -U 5
 
 
 # manipulating windows using the mouse

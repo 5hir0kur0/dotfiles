@@ -8,7 +8,9 @@
 #       Driver      "intel"
 #       Option      "Backlight"  "intel_backlight"
 # EndSection
-# NOTE: on arch linux xf86-video-intel is needed (in this case)
+# NOTE: On arch linux xf86-video-intel is needed (in this case)
+#       It might be preferable not to install this though, see
+#       https://wiki.archlinux.org/index.php/Intel_graphics
 
 DEFAULT_ARGS='-steps 1 -time 1'
 LC_ALL=C
