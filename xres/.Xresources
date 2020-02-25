@@ -56,7 +56,7 @@ floating-terminal*background: rgba:2000/2000/2000/cccc
 
 ! Select the fonts to be used. This is a comma separated list of font names
 scratchpad-terminal*font: xft:Gohu GohuFont:pixelsize=14,xft:xos4 Terminus:pixelsize=14,xft:Inconsolata:pixelsize=14,xft:InconsolataForPowerline Nerd Font:pixelsize=14,xft:Monaco:pixelsize=14,xft:Noto Mono:pixelsize=14,xft:Noto Sans:pixelsize=14
-URxvt*font: xft:Monaco:size=12,xft:Inconsolata:size=12,xft:Inconsolata:size=12,xft:Noto Mono:size=12,xft:Noto Sans:size=12
+URxvt*font: xft:Monaco:size=12,xft:Inconsolata:size=12,xftxft:Noto Mono:size=12,xft:Noto Sans:size=12
 URxvt*title: urxvt
 URxvt*visualBell: false
 URxvt*scrollBar: false

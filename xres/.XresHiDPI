@@ -11,3 +11,5 @@ Xft.rgba: rgb
 rofi.dpi: 140
 
 scratchpad-terminal*font: xft:xos4 Terminus:pixelsize=27,xft:Inconsolata:pixelsize=14,xft:InconsolataForPowerline Nerd Font:pixelsize=14,xft:Monaco:pixelsize=14,xft:Noto Mono:pixelsize=14,xft:Noto Sans:pixelsize=14
+
+! vim: ft=xdefaults
