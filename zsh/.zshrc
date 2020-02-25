@@ -386,24 +386,22 @@ function _my_fit_path2() {
 
 # PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
 
-# can't pass pwd directly, because otherwise the percent expansion takes
-# place after the command substitution
-# (if the user is displayed in the prompt, maybe subtract ${#USER})
-working_directory="\$(_my_fit_path2 '' \$((COLUMNS * PROMPT_PERCENT_OF_LINE / 100 - 2)))"
-
-# make sure the prompt is never longer than about 50% of the available
-# characters even if the last element of the path is longer than 50% of the line
+# make sure the prompt is never longer than about PROMPT_PERCENT_OF_LINE % of
+# the available characters even if the last element of the path is longer than
+# PROMPT_PERCENT_OF_LINE % of the line
 # (stolen from https://unix.stackexchange.com/a/370276)
 export PROMPT_PERCENT_OF_LINE=32
 # make a function, so that it can be evaluated repeatedly
 function _my_prompt_width() {
     echo $(( ${COLUMNS:-80} * PROMPT_PERCENT_OF_LINE / 100  ))
 }
-# for some reason you can't put a function right in PROMPT, so make an
-# intermediary variable
-width_part='$(_my_prompt_width)'
 
-wd_50_percent="%${width_part}<…<$working_directory"
+# can't pass pwd directly, because otherwise the percent expansion takes
+# place after the command substitution
+# (if the user is displayed in the prompt, maybe subtract ${#USER})
+working_directory="\$(_my_fit_path2 '' \$((\$(_my_prompt_width) - 2)))"
+
+wd_50_percent="%\$(_my_prompt_width)<…<$working_directory"
 
 PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 
