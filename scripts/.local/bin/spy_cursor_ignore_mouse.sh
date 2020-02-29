@@ -23,6 +23,6 @@ xprop -spy -root _NET_ACTIVE_WINDOW | while read; do
     MOUSE_NEW="`mouse_location`"
 
     if [ "$MOUSE_OLD" = "$MOUSE_NEW" ]; then
-        ~/.local/share/scripts/center_cursor.sh
+        ~/.local/bin/center_cursor.sh
     fi
 done

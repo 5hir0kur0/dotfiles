@@ -1,7 +1,11 @@
-export PATH="$HOME/.local/bin:$HOME/.local/share/scripts:""$PATH"
+if [[ "$PATH" != *"$HOME/.local/bin"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH"
+if [[ "$PATH" != *"$HOME/.cargo/bin"* ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 export EDITOR=nvim
 

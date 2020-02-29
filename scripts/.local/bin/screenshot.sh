@@ -8,7 +8,7 @@ DELAY=0
 ACTION=whole
 SHOWPROG=/usr/bin/sxiv
 SCROTPROG=/usr/bin/scrot
-MIMECOPY=~/.local/share/scripts/mimecopy.sh
+MIMECOPY=~/.local/bin/mimecopy.sh
 QUALITY=75 # when using png, this affects the compression rate (100 = uncompressed)
 source "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
 DIRECTORY="${XDG_PICTURES_DIR:-$HOME/pics}/"

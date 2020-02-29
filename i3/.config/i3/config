@@ -19,33 +19,33 @@ set $writerclass (?i)^libreoffice-writer$
 set $zathuraclass (?i)^zathura$
 
 # scripts
-set $alttabscript ~/.local/share/scripts/i3_alt_tab.sh
-set $bookmarkscript ~/.local/share/scripts/rofibookmarks.sh
-set $centerscript ~/.local/share/scripts/center_cursor.sh
-set $centerwindowscript ~/.local/share/scripts/center_window.sh
-set $comptonscript ~/.local/share/scripts/compton.sh
-set $emacsscript ~/.local/share/scripts/toemacs.sh
-set $entiresplitscript ~/.local/share/scripts/i3_split_entire.sh
-set $exitscript ~/.local/share/scripts/exit.sh
-set $fetchscript ~/.local/share/scripts/rofifetch.sh
-set $initscript ~/.local/share/scripts/init.sh
-set $manscript ~/.local/share/scripts/rofiman.sh
-set $markscript ~/.local/share/scripts/i3_mark_current.sh
-set $markallscript ~/.local/share/scripts/i3_mark_all.sh
-set $mousescript ~/.local/share/scripts/mouse_action.sh
-set $newworkspacescript ~/.local/share/scripts/i3_new_workspace.sh
-set $openscript ~/.local/share/scripts/rofilocate.sh
-set $pulsescript ~/.local/share/scripts/pulse.sh
-set $renameworkspacescript ~/.local/share/scripts/i3_rename_workspace.sh
-set $rofiinteractivescript ~/.local/share/scripts/rofiinteractive.sh
-set $rofipythonscript ~/.local/share/scripts/rofipython.sh
-set $scratchscript ~/.local/share/scripts/i3_scratchpad.sh
-set $scrotscript ~/.local/share/scripts/screenshot.sh
-set $setvolumescript ~/.local/share/scripts/pulse.sh set
-set $surfrawscript ~/.local/share/scripts/rofisurfraw.sh
-set $wallpaperscript ~/.local/share/scripts/set_wallpaper.sh
-set $workspacescript ~/.local/share/scripts/i3_workspace.sh
-# set $xbacklightscript ~/.local/share/scripts/xbacklight.sh
+set $alttabscript ~/.local/bin/i3_alt_tab.sh
+set $bookmarkscript ~/.local/bin/rofibookmarks.sh
+set $centerscript ~/.local/bin/center_cursor.sh
+set $centerwindowscript ~/.local/bin/center_window.sh
+set $comptonscript ~/.local/bin/compton.sh
+set $emacsscript ~/.local/bin/toemacs.sh
+set $entiresplitscript ~/.local/bin/i3_split_entire.sh
+set $exitscript ~/.local/bin/exit.sh
+set $fetchscript ~/.local/bin/rofifetch.sh
+set $initscript ~/.local/bin/init.sh
+set $manscript ~/.local/bin/rofiman.sh
+set $markscript ~/.local/bin/i3_mark_current.sh
+set $markallscript ~/.local/bin/i3_mark_all.sh
+set $mousescript ~/.local/bin/mouse_action.sh
+set $newworkspacescript ~/.local/bin/i3_new_workspace.sh
+set $openscript ~/.local/bin/rofilocate.sh
+set $pulsescript ~/.local/bin/pulse.sh
+set $renameworkspacescript ~/.local/bin/i3_rename_workspace.sh
+set $rofiinteractivescript ~/.local/bin/rofiinteractive.sh
+set $rofipythonscript ~/.local/bin/rofipython.sh
+set $scratchscript ~/.local/bin/i3_scratchpad.sh
+set $scrotscript ~/.local/bin/screenshot.sh
+set $setvolumescript ~/.local/bin/pulse.sh set
+set $surfrawscript ~/.local/bin/rofisurfraw.sh
+set $wallpaperscript ~/.local/bin/set_wallpaper.sh
+set $workspacescript ~/.local/bin/i3_workspace.sh
+# set $xbacklightscript ~/.local/bin/xbacklight.sh
 
 set $mod Mod4
 
