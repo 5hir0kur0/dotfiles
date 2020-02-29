@@ -44,7 +44,7 @@ class fzf(Command):
     """
     def execute(self):
         import subprocess, os
-        command="locate $PWD | fzf --height=100% --preview='bash $HOME/.local/share/scripts/preview.sh {}'"
+        command="locate $PWD | fzf --height=100% --preview='bash $HOME/.local/bin/preview.sh {}'"
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:

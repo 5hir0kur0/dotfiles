@@ -2,8 +2,8 @@
 
 set -u +e
 
-SCRIPT_LOCATION="$HOME/.local/share/scripts/manage_surfraw_bookmarks.py"
-OPENSCRIPT="$HOME/.local/share/scripts/openbrowser.sh"
+SCRIPT_LOCATION="$HOME/.local/bin/manage_surfraw_bookmarks.py"
+OPENSCRIPT="$HOME/.local/bin/openbrowser.sh"
 MAX_URL_WIDTH=32
 MAX_TAG_WIDTH=64
 MAX_TITLE_WIDTH=128

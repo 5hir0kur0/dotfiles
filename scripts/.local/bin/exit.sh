@@ -4,10 +4,10 @@ set -u
 
 # requires: wmctrl, xdotool
 
-LOCK_SCRIPT=~/.local/share/scripts/blured_screenshot_lock.sh
-KILL_SCRIPT=~/.local/share/scripts/kill.sh
-NAGSCRIPT=~/.local/share/scripts/rofinag.sh
-PULSESCRIPT=~/.local/share/scripts/pulse.sh
+LOCK_SCRIPT=~/.local/bin/blured_screenshot_lock.sh
+KILL_SCRIPT=~/.local/bin/kill.sh
+NAGSCRIPT=~/.local/bin/rofinag.sh
+PULSESCRIPT=~/.local/bin/pulse.sh
 LC_ALL=C
 
 lock() {
