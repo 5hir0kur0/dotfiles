@@ -47,7 +47,6 @@ alias vim=nvim
 alias v=nvim
 alias vimdiff='nvim -d'
 alias view="vim -R -c 'set nomodifiable'"
-alias r=ranger
 
 function e {
     emacsclient "$@" & disown
@@ -88,8 +87,7 @@ alias g='git'
 alias gg='git grep -i --break --heading --no-index -e'
 alias fd='\fd --follow --full-path --hidden'
 
-alias less='less -FX'
-alias c='less'
+alias c='less -iFX'
 
 alias -g wl='wc -l'
 
@@ -107,6 +105,22 @@ alias yt='youtube-dl --add-metadata -ic'
 alias yta='youtube-dl --add-metadata -xic'
 
 alias yay='PKGEXT=.pkg.tar yay'
+
+# stolen from the examples directory of the ranger project
+# (https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh)
+#
+# make the shell switch to the directory that ranger was in when you exited it
+function ranger_cd() {
+    local chosen_dir temp_file
+    temp_file="$(\mktemp "/tmp/.ranger_cd.XXXXXXXXXX")"
+    command ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+    if chosen_dir="$(\cat -- "$temp_file")" && [ -n "$chosen_dir" ] && \
+        [ "$chosen_dir" != "$PWD" ]; then
+        builtin cd -- "$chosen_dir" || echo 'cd failed'
+    fi
+    command rm -f -- "$temp_file"
+}
+alias r=ranger_cd
 
 function findoldfiles() {
     find "${1:-.}" -atime "+${2:-60}"
