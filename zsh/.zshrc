@@ -18,35 +18,6 @@ setopt hist_ignore_space
 
 bindkey -e # emacs mode
 
-# sharing history
-setopt sharehistory
-# don't use the shared history for moving up/down in history
-# (stolen from  https://superuser.com/a/691603)
-function up-line-or-local-history() {
-    zle set-local-history 1
-    zle up-line-or-history
-    zle set-local-history 0
-}
-zle -N up-line-or-local-history
-function down-line-or-local-history() {
-    zle set-local-history 1
-    zle down-line-or-history
-    zle set-local-history 0
-}
-zle -N down-line-or-local-history
-function up-line-or-local-search() {
-    zle set-local-history 1
-    zle up-line-or-search
-    zle set-local-history 0
-}
-zle -N up-line-or-local-search
-function down-line-or-local-search() {
-    zle set-local-history 1
-    zle down-line-or-search
-    zle set-local-history 0
-}
-zle -N down-line-or-local-search
-
 # time reporting
 # report how long a command took if it was longer than a certain amount of cpu time
 REPORTTIME=20
@@ -133,12 +104,7 @@ zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*
 autoload -Uz compinit
 compinit
 
-# use c-n and c-p in the completion menu
-# (the reason this doesn't work without those lines is probably that I rebound
-# c-n and c-p)
 zmodload zsh/complist
-bindkey -M menuselect '^N' down-line-or-history
-bindkey -M menuselect '^P' up-line-or-history
 # make shift-tab go to the previous completion
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
@@ -146,10 +112,6 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey '^I' expand-or-complete
 
 ## key bindings
-
-# better c-p, c-n
-bindkey '^P' up-line-or-local-search
-bindkey '^N' down-line-or-local-search
 
 # edit command line in $EDITOR (from http://distrustsimplicity.net/articles/zsh-command-editing/)
 autoload -Uz edit-command-line
@@ -185,9 +147,8 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
 [[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
 [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
-# {up,down}-line-or-local-history is defined above
-[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-local-history
-[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-local-history
+[[ -n "${key[Up]}"       ]]  && bindkey  "${key[Up]}"       up-line-or-history
+[[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     down-line-or-history
 [[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
 [[ -n "${key[Right]}"    ]]  && bindkey  "${key[Right]}"    forward-char
 [[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
