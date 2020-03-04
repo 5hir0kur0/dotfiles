@@ -1,6 +1,7 @@
-from ranger.api.commands import *
+from ranger.api.commands import Command
 import subprocess
-from os import getcwd
+import os
+
 
 # autojump integration
 # stolen from https://github.com/ranger/ranger/issues/91#issuecomment-231938613
@@ -17,6 +18,7 @@ class j(Command):
         directory = directory.rstrip('\n')
         self.fm.cd(directory)
 
+
 class jc(Command):
     '''
     :jc <directory>
@@ -25,15 +27,17 @@ class jc(Command):
     '''
 
     def execute(self):
-        directory = subprocess.check_output(['autojump', getcwd()] + self.args[1:])
+        directory = subprocess.check_output(
+            ['autojump', os.getcwd()] + self.args[1:]
+        )
         directory = directory.decode('utf-8', 'ignore')
         directory = directory.rstrip('\n')
         self.fm.cd(directory)
 
-# fasd/fzf integration (stolen from: https://github.com/gotbletu/shownotes/blob/master/ranger_fasd_fzf.md)
 
-
-# fzf_fasd - Fasd + Fzf + Ranger (Interactive Style)
+# fzf integration
+# (stolen from:
+#  https://github.com/gotbletu/shownotes/blob/master/ranger_fasd_fzf.md)
 class fzf(Command):
     '''
     :fzf
@@ -43,8 +47,8 @@ class fzf(Command):
     URL: https://github.com/junegunn/fzf
     '''
     def execute(self):
-        import subprocess, os
-        command='locate "$PWD" | fzf --height=100% --preview="bash $HOME/.local/bin/preview.sh {}"'
+        command = 'locate "$PWD" | fzf ' \
+            + '--height=100% --preview="bash $HOME/.local/bin/preview.sh {}"'
         fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
         stdout, stderr = fzf.communicate()
         if fzf.returncode == 0:
@@ -53,22 +57,6 @@ class fzf(Command):
                 self.fm.cd(fzf_file)
             else:
                 self.fm.select_file(fzf_file)
-
-# Fasd with ranger (Command Line Style)
-# https://github.com/ranger/ranger/wiki/Commands
-class fasd(Command):
-    '''
-    :fasd
-
-    Jump to directory using fasd
-    URL: https://github.com/clvv/fasd
-    '''
-    def execute(self):
-        import subprocess
-        arg = self.rest(1)
-        if arg:
-            directory = subprocess.check_output(['fasd', '-d']+arg.split(), universal_newlines=True).strip()
-            self.fm.cd(directory)
 
 
 # tmux integration
@@ -91,8 +79,8 @@ class open_with_tmux(Command):
 
     def stringified_selection(self):
         '''
-        convert a ranger selection into a list of strings (describing the paths)
-        use relative or absolute paths, depending on which is shorter
+        Convert a ranger selection into a list of strings (of the paths).
+        Use relative or absolute paths, depending on which is shorter.
         '''
         from os import path
         sel = self.fm.thistab.get_selection()
@@ -106,9 +94,9 @@ class open_with_tmux(Command):
 
     def make_name(self, file_paths):
         '''
-        come up with a reasonable default name for a new tmux window
-        fit as many files as possible into the name and truncate it if it gets
-        longer than MAX_NAME_LENGTH
+        Come up with a reasonable default name for a new tmux window.
+        Fit as many files as possible into the name and truncate it if it gets
+        longer than MAX_NAME_LENGTH.
         '''
         from os.path import basename
         # must be >= 3
@@ -116,8 +104,9 @@ class open_with_tmux(Command):
         name = ''
         for f in file_paths:
             name += basename(f) if name == '' else ',' + basename(f)
-            if len(name) >= MAX_NAME_LENGTH: break
-        else: # the loop did not encounter a break statement
+            if len(name) >= MAX_NAME_LENGTH:
+                break
+        else:  # the loop did not encounter a break statement
             if len(name) > MAX_NAME_LENGTH:
                 return name[:MAX_NAME_LENGTH - 1] + '…'
             else:
@@ -136,14 +125,13 @@ class open_with_tmux(Command):
             return []
 
     def execute(self):
-        import subprocess, os
         if len(self.args) < 3:
             self.fm.notify('usage: open_with_tmux application|mode split_arg',
-                    bad=True)
+                           bad=True)
             return
         if 'TMUX' not in os.environ:
             self.fm.notify('this command can only be used from within tmux',
-                    bad=True)
+                           bad=True)
             return
         if self.is_nonnegative_int(self.args[1]):
             rifle_args = ['-p', self.args[1]]
@@ -151,16 +139,15 @@ class open_with_tmux(Command):
             rifle_args = ['-w', self.args[1]]
         file_list = list(self.stringified_selection())
         args = ['tmux'] + self.args[2:] + self.maybe_name(file_list) + \
-                ['--', 'rifle'] + rifle_args + ['--'] + file_list
+               ['--', 'rifle'] + rifle_args + ['--'] + file_list
         for _ in range(self.quantifier or 1):
             try:
                 subprocess.run(args, cwd=str(self.fm.thisdir), check=True,
-                        shell=False, capture_output=True)
+                               shell=False, capture_output=True)
             except OSError as e:
                 self.fm.notify(str(e), bad=True)
                 return
             except subprocess.CalledProcessError as e:
                 self.fm.notify('tmux failed: ' + e.stderr.decode('utf-8'),
-                        bad=True)
+                               bad=True)
                 return
-
