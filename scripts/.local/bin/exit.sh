@@ -201,6 +201,13 @@ my_hibernate() {
     fi
 }
 
+check_borg() {
+    if pgrep -x borg; then
+        notify-send -u critical 'borg is running; not shutting down'
+        exit 1
+    fi
+}
+
 case "$1" in
     lock)
         lock
@@ -220,23 +227,28 @@ case "$1" in
         lock; my_hybrid_sleep
         ;;
     hibernate)
+        check_borg
         $PULSESCRIPT mute 1
         lock; my_hibernate
         ;;
 # in the following cases the audio should only be muted, if the operatoin fails
     reboot)
+        check_borg
         kill_apps; my_reboot
         $PULSESCRIPT mute 1
         ;;
     reboot_force)
+        check_borg
         my_reboot
         $PULSESCRIPT mute 1
         ;;
     shutdown)
+        check_borg
         kill_apps; my_shutdown
         $PULSESCRIPT mute 1
         ;;
     shutdown_force)
+        check_borg
         my_shutdown
         $PULSESCRIPT mute 1
         ;;
