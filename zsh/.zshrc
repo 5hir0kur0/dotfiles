@@ -16,7 +16,64 @@ setopt hist_fcntl_lock
 # ignore commands or aliases starting with a space
 setopt hist_ignore_space
 
-bindkey -e # emacs mode
+# don't save some commands in the history file
+history_ignore=(
+    '* --help'
+    '?'
+    '??'
+    '..*'
+
+    'j *'
+    'k *'
+    'vv *'
+
+    'l *'
+    'ls *'
+    'lsd *'
+    'lr *'
+    'lrr *'
+    'la *'
+    'lla *'
+
+    'git add *'
+    'git a *'
+    'g add *'
+    'g a *'
+
+    'svn add *'
+
+    'git commit *'
+    'git c *'
+    'g c *'
+
+    'grep *'
+    'pgrep *'
+    'ag *'
+    'rg *'
+    'gg *'
+    'gpdf *'
+
+    'ff *'
+    'fd *'
+
+    'latexmk *'
+    'lpdf *'
+    'llpdf *'
+
+    'pass *'
+
+    'lqd *'
+    'lqqd *'
+
+    'v *'
+    'vim *'
+    'sudoedit *'
+)
+HISTORY_IGNORE="(${(j.|.)history_ignore})"
+
+
+# emacs mode (use emacs-style keybindings)
+bindkey -e
 
 # time reporting
 # report how long a command took if it was longer than a certain amount of cpu time
@@ -408,3 +465,5 @@ zle -N fzf-cd-widget
 bindkey '^T' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
+
+[ -f "$HOME/.zsh_aliases" ] && source "$HOME/.zsh_aliases"

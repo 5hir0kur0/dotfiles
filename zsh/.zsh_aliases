@@ -42,7 +42,7 @@ alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias g='git'
-alias gg='git grep -i --break --heading --no-index -e'
+alias gg='git grep -i --break --heading --no-index'
 alias fd='\fd --follow --full-path --hidden'
 
 alias c='less -iFX'
@@ -251,59 +251,17 @@ function llpdf() {
     latexmk -c
 }
 
+function to_opus() {
+    if [[ -z "${1:-}" ]]; then
+        echo "usage: ${0} <file_to_convert> [<birtate>k]" 1>&2
+        return 1
+    fi
+    local old_name="${1}"
+    local new_name="${1%.*}.opus"
+    local bitrate="${2:-128k}"
+    echo "'${old_name}' -> '${new_name}' (bitrate: ${bitrate})"
+    ffmpeg -i "${old_name}" -c:a libopus -b:a "${bitrate}" "${new_name}"
+}
 
-# don't save some commands in the history file
-
-history_ignore=(
-    '* --help'
-    '?'
-    '??'
-    '..*'
-
-    'j *'
-    'k *'
-    'vv *'
-
-    'l *'
-    'ls *'
-    'lsd *'
-    'lr *'
-    'lrr *'
-    'la *'
-    'lla *'
-
-    'git add *'
-    'git a *'
-    'g add *'
-    'g a *'
-
-    'svn add *'
-
-    'git commit *'
-    'git c *'
-    'g c *'
-
-    'grep *'
-    'pgrep *'
-    'ag *'
-    'gg *'
-    'gpdf *'
-
-    'ff *'
-
-    'latexmk *'
-    'lpdf *'
-    'llpdf *'
-
-    'pass *'
-
-    'lqd *'
-    'lqqd *'
-
-    'v *'
-    'vim *'
-    'sudoedit *'
-)
-HISTORY_IGNORE="(${(j.|.)history_ignore})"
 
 [ -f ~/.local_zsh_aliases ] && source ~/.local_zsh_aliases
