@@ -1,0 +1,340 @@
+#+BEGIN_SRC emacs-lisp
+;;; $DOOMDIR/config.el --- My personal configuration for Doom Emacs -*- lexical-binding: nil; -*-
+;;; Commentary:
+;;; If you're viewing the config.el file, you should rather look at the
+;;; config.org file that it is generated from.
+;;; Code:
+#+END_SRC
+
+#+TITLE: Doom Emacs Configuration
+#+PROPERTY: header-args :tangle yes :comments org
+
+* Appearance
+** Fonts
+#+BEGIN_SRC emacs-lisp
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; are the three important ones:
+;;
+;; + `doom-font'
+;; + `doom-variable-pitch-font'
+;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+;; font string. You generally only need these two:
+(setq doom-font (font-spec :family "Iosevka Slab" :size 14))
+(setq doom-unicode-font (font-spec :family "Noto Sans Mono"))
+;; I'd like to set more fallback fonts but those two lines currently cause emacs to segfault...
+;; (set-fontset-font t 'unicode (font-spec :family "Noto Serif CJK JP") nil 'append)
+;; (set-fontset-font t 'unicode (font-spec :family "Noto Sans") nil 'append)
+#+END_SRC
+Bigger font for ace-window:
+#+BEGIN_SRC emacs-lisp
+(after! ace-window
+  (custom-set-faces '(aw-leading-char-face
+                      ((t (:foreground "red" :height 2.0))))))
+#+END_SRC
+** Theme
+#+BEGIN_SRC emacs-lisp
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-gruvbox)
+#+END_SRC
+** Line Numbers
+#+BEGIN_SRC emacs-lisp
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+#+END_SRC
+** GUI
+Show menu bar:
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode 1)
+#+END_SRC
+* Customized Variables
+** Miscellaneous
+Personal Information:
+#+BEGIN_SRC emacs-lisp
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets.
+(setq user-full-name "5hir0kur0"
+      user-mail-address "12101162+5hir0kur0@users.noreply.github.com")
+#+END_SRC
+Use bash for (non-interactive) inferior shells:
+#+BEGIN_SRC emacs-lisp
+(setq shell-file-name "/bin/bash")
+#+END_SRC
+Increase maximum number of kill ring entries:
+#+BEGIN_SRC emacs-lisp
+(setq kill-ring-max 1000)
+#+END_SRC
+Show cursor as a hollow box in non-selected windows:
+#+BEGIN_SRC emacs-lisp
+;;(setq-default cursor-in-non-selected-windows t)
+#+END_SRC
+Use ~abbrev~ mode:
+#+BEGIN_SRC emacs-lisp
+(setq-default abbrev-mode t)
+#+END_SRC
+Always defer use-package:
+#+BEGIN_SRC emacs-lisp
+ (setq use-package-always-defer t)
+#+END_SRC
+** Automatic Backups
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files t
+      vc-make-backup-files t  ; make backups of version-controlled files
+      version-control t       ; use version numbers on backups
+      delete-old-versions t   ; delete excess backup files silently
+      kept-new-versions 2
+      kept-old-versions 2)
+;; don't backup tramp files
+ (add-to-list 'backup-directory-alist
+                  (cons tramp-file-name-regexp nil))
+#+END_SRC
+** Hooks
+Enable sub-word navigation (e.g. in CamelCase words):
+#+BEGIN_SRC emacs-lisp
+(add-hook! (prog-mode conf-mode) :append
+  (subword-mode 1))
+#+END_SRC
+Enable spellcheck and spelling completion in ~text-mode~:
+#+BEGIN_SRC emacs-lisp
+(add-hook! text-mode #'flyspell-mode)
+(after! text-mode
+  (set-company-backend! 'text-mode 'company-ispell))
+#+END_SRC
+** Whitespace Mode Appearance
+#+BEGIN_SRC emacs-lisp
+(setq whitespace-display-mappings
+      '((tab-mark ?\t [?› ?\t] [?| ?\t])
+        (newline-mark ?\n [?¬ ?\n] [?$ ?\n])
+        (space-mark ?\  [?·] [?.])
+        (space-mark 160 [?¤] [?_])))     ; non-breaking space
+#+END_SRC
+~whitespace-mode~ is currently not enabled by default.
+See [[file:~/code/dots/emacs/.emacs.d/config.org::*show whitespace in programming modes][show whitespace in programming modes]] in my old config for a slightly more
+elaborate setup.
+** Undo Tree
+#+BEGIN_SRC emacs-lisp
+(setq undo-tree-visualizer-timestamps t)
+#+END_SRC
+* Helper Functions
+#+BEGIN_SRC emacs-lisp
+;; stolen from https://emacs.stackexchange.com/a/13432
+(defun my/simulate-key-press (key)
+  "Pretend that KEY was pressed.
+  KEY must be given in `kbd' notation."
+  `(lambda () (interactive)
+     (setq prefix-arg current-prefix-arg)
+     (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
+
+(defun my/ispell-toggle-english-german ()
+  "Toggle ispell dictionary between English and German."
+  (interactive)
+  (if (string= ispell-current-dictionary "de_DE")
+      (progn
+        (setq-local ispell-alternate-dictionary "/usr/share/dict/words")
+        (ispell-change-dictionary "en_US"))
+    (setq-local ispell-alternate-dictionary "/usr/share/dict/german")
+    (ispell-change-dictionary "de_DE")))
+#+END_SRC
+* Custom Keybindings
+** Changes to Existing Keybindings
+Swap =SPC := and =SPC ;=:
+#+BEGIN_SRC emacs-lisp
+;; swap SPC ; and SPC :
+;; (because M-x is used more often and SPC ; is easier to press and also because
+;;  the emacs shortcut to evaulate an expression is M-:)
+(map! :leader
+      :desc "Eval expression"       ":"    #'pp-eval-expression
+      :desc "M-x"                   ";"    #'execute-extended-command)
+#+END_SRC
+Use =M-<n>= for the universal argument instead of workspace switching
+(Switching between workspaces can still be done using SPC TAB <n>):
+#+BEGIN_SRC emacs-lisp
+(map! "M-0" #'digit-argument
+      "M-1" #'digit-argument
+      "M-2" #'digit-argument
+      "M-3" #'digit-argument
+      "M-4" #'digit-argument
+      "M-5" #'digit-argument
+      "M-6" #'digit-argument
+      "M-7" #'digit-argument
+      "M-8" #'digit-argument
+      "M-9" #'digit-argument)
+#+END_SRC
+Make =SPC w w= the same as =C-w C-w=:
+#+BEGIN_SRC emacs-lisp
+(map! :map evil-window-map "w" #'ace-window)
+#+END_SRC
+*** Minibuffer
+Reset =C-v= from ~paste~ back to the default:
+#+BEGIN_SRC emacs-lisp
+(define-key! :keymaps +default-minibuffer-maps
+  "C-v"    #'scroll-up-command)
+(map! (:after ivy
+  :map ivy-minibuffer-map
+  "C-v"   #'scroll-up-command))
+#+END_SRC
+** Additional Keybindings
+*** Leader Map
+Quickly jump to characters or lines (can jump to lines in all visible buffers in the current frame):
+#+BEGIN_SRC emacs-lisp
+;; more convenient avy mappings
+(map! :leader
+      :desc "Jump to line" "l" (λ! (let ((avy-all-windows t)) (avy-goto-line)))
+      ;; read arbitrary number of charaters and jump in all windows of current
+      ;; frame (same as `g s SPC`)
+      :desc "Jump to char(s)" "j" (λ!! #'evil-avy-goto-char-timer t))
+#+END_SRC
+Easier-to-type way to reach the ~ctl-x-map~:
+#+BEGIN_SRC emacs-lisp
+;; use SPC x to bring up emacs' ctrl-x-map
+(map! :leader
+      :desc "C-x" "x" (my/simulate-key-press "C-x"))
+#+END_SRC
+Easier-to-type way to type =C-c= (make =SPC k= equivalent to =C-c=):
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      :desc "C-c" "k" (my/simulate-key-press "C-c"))
+#+END_SRC
+Shorter keybinding for ~which-key-show-top-level~:
+#+BEGIN_SRC emacs-lisp
+;; replace the useless view-emacs-todo binding with something useful
+(map! :leader :prefix "h"
+      :desc "Show top level" "C-t" #'which-key-show-top-level)
+#+END_SRC
+~diff-buffer-with-file~ (Similar to =:w !diff % -= but nicer):
+#+BEGIN_SRC emacs-lisp
+(map! :leader :prefix "b"
+      :desc "Diff buffer w/ file" "w" #'diff-buffer-with-file)
+#+END_SRC
+**** Toggles
+Toggle between German and English spelling:
+#+BEGIN_SRC emacs-lisp
+(map! :leader :prefix "t"
+      :desc "Toggle dict. (de_DE, en_US)" "D" #'my/ispell-toggle-english-german)
+#+END_SRC
+Toggle menu bar:
+#+BEGIN_SRC emacs-lisp
+(map! :leader :prefix "t"
+      :desc "Toggle menu bar" "m" #'menu-bar-mode)
+#+END_SRC
+*** Global
+Use =M-i= like =^= in VIM:
+#+BEGIN_SRC emacs-lisp
+(map! :desc "To first non-blank char" "M-i" #'back-to-indentation)
+#+END_SRC
+Use =M-o= (previously ~facemenu-keymap~) for cycling through the deletion of
+whitespace (similar to what =C-x C-o= (~delete-blank-lines~) does for blank lines):
+#+BEGIN_SRC emacs-lisp
+(map! :desc "Cycle spacing" "M-o" (lambda (arg) (interactive "p") (cycle-spacing arg nil 'fast)))
+#+END_SRC
+Note that that keymap contains two (potentially) useful bindings: ~center-line~
+and ~center-paragraph~. However, I don't use those often enough to warrant
+binding them to a keychord.
+
+Change font size using mouse wheel:
+#+BEGIN_SRC emacs-lisp
+(map! "<C-mouse-4>" #'text-scale-increase)
+(map! "<C-mouse-5>" #'text-scale-decrease)
+(map! "<C-S-mouse-4>" #'doom/increase-font-size)
+(map! "<C-S-mouse-5>" #'doom/decrease-font-size)
+#+END_SRC
+**** For S-Expressions
+#+BEGIN_SRC emacs-lisp
+(map! :desc "Backward kill sexp" "C-M-<backspace>" #'backward-kill-sexp)
+#+END_SRC
+Smartparens:
+#+BEGIN_SRC emacs-lisp
+(map! :map smartparens-mode-map
+      ;; "C-M-f"           #'sp-forward-sexp
+      ;; "C-M-b"           #'sp-backward-sexp
+      ;; "C-M-d"           #'sp-down-sexp
+      ;; "C-M-u"           #'sp-backward-up-sexp
+      "C-M-a"           #'sp-beginning-of-sexp
+      "C-M-e"           #'sp-end-of-sexp
+      ;; "C-M-n"           #'sp-next-sexp
+      ;; "C-M-p"           #'sp-previous-sexp
+      ;; "C-M-k"           #'sp-kill-sexp
+      ;; "C-M-<backspace>" #'sp-backward-kill-sexp
+      ;; "C-M-t"           #'sp-transpose-sexp
+      "M-s M-u"         #'sp-backward-unwrap-sexp ; TODO which of these bindings do I like best?
+      "M-s M-r"         #'sp-rewrap-sexp
+      "M-U"             #'sp-backward-unwrap-sexp
+      "M-R"             #'sp-rewrap-sexp
+      "M-]"             #'sp-forward-slurp-sexp
+      "M-s M-["         #'sp-backward-slurp-sexp
+      "M-["             #'sp-forward-barf-sexp
+      "M-s M-]"         #'sp-backward-barf-sexp)
+#+END_SRC
+*** ~indent-rigidly-map~
+More VIM-like keybindings for ~indent-rigidly~ (Can be activated with =C-x TAB=):
+#+BEGIN_SRC emacs-lisp
+(map! :map indent-rigidly-map
+   "H"         #'indent-rigidly-left
+   "L"         #'indent-rigidly-right
+   "h"         #'indent-rigidly-left-to-tab-stop
+   "S-TAB"     #'indent-rigidly-left-to-tab-stop
+   "<backtab>" #'indent-rigidly-left-to-tab-stop
+   "l"         #'indent-rigidly-right-to-tab-stop
+   "TAB"       #'indent-rigidly-right-to-tab-stop
+   "<tab>"     #'indent-rigidly-right-to-tab-stop)
+#+END_SRC
+It's probably best to use Evil's own indentation commands though (=<=, =>=, ===,
+etc.).
+* Org Mode
+#+BEGIN_SRC emacs-lisp
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/docs/orgs"
+      +org-capture-journal-file "llog.org"
+      +org-capture-todo-file "todo.org"
+      +org-capture-notes-file "ever.org")
+#+END_SRC
+Emacs Lisp Template:
+#+BEGIN_SRC emacs-lisp
+;;(after! org
+;;  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+;;  (require 'org-tempo))
+#+END_SRC
+** Mouse Support
+Enable left-clicking on the bullets to cycle visibility and context menu:
+#+BEGIN_SRC emacs-lisp
+(after! org (require 'org-mouse))
+#+END_SRC
+* Language-Specific Configuration
+** Rust
+#+BEGIN_SRC emacs-lisp
+(setq rustic-lsp-server 'rust-analyzer)
+#+END_SRC
+** LaTeX / TeX
+#+BEGIN_SRC emacs-lisp
+(setq +latex-viewers '(zathura pdf-tools okular evince))
+
+;; (add-hook! TeX-mode :append
+;;   (run-with-idle-timer 0 nil #'TeX-fold-buffer))
+(add-hook! TeX-mode :append (TeX-fold-buffer))
+
+(after! tex-fold
+  (setq LaTeX-fold-math-spec-list
+        (append '(("O" ("bigO"))
+                  ("ℕ" ("IN"))
+                  ("ℝ" ("IR"))
+                  ("ℤ" ("IZ"))
+                  ("⇒" ("implies"))
+                  ("¬" ("lnot"))
+                  ("≠" ("ne"))
+                  ("∧" ("land"))
+                  ("∨" ("lor")))
+                LaTeX-fold-math-spec-list)))
+#+END_SRC
+** Elisp
+#+BEGIN_SRC emacs-lisp
+(set-pretty-symbols! 'emacs-lisp-mode :null "nil")
+#+END_SRC
+* Additional Packages
+Configure additional packages here (there are none so far).
+See [[file:packages.el][packages.el]].
