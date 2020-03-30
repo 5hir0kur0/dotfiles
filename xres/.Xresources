@@ -74,3 +74,5 @@ URxvt*iso14755_52: false
 scratchpad-terminal*letterSpace: 0
 URxvt*letterSpace: 0
 URxvt*lineSpace: 0
+! Otherwise autojump is not sourced from /etc/profile.d/autojump.zsh.
+URxvt*loginShell: true
