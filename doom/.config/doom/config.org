@@ -263,8 +263,8 @@ Smartparens:
       ;; "C-M-t"           #'sp-transpose-sexp
       "M-s M-u"         #'sp-backward-unwrap-sexp ; TODO which of these bindings do I like best?
       "M-s M-r"         #'sp-rewrap-sexp
-      "M-U"             #'sp-backward-unwrap-sexp
-      "M-R"             #'sp-rewrap-sexp
+      ;; "M-U"             #'sp-backward-unwrap-sexp
+      ;; "M-R"             #'sp-rewrap-sexp
       "M-]"             #'sp-forward-slurp-sexp
       "M-s M-["         #'sp-backward-slurp-sexp
       "M-["             #'sp-forward-barf-sexp
