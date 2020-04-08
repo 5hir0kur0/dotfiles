@@ -51,7 +51,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font pango:Inconsolata, monaco, Noto Sans Mono 12
+font pango:Iosevka Slab, Inconsolata, monaco, Noto Sans Mono 12
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -896,7 +896,7 @@ client.urgent $base03 $base03 $base07 $base08
 
 bar {
    # font pango:InconsolataGo Nerd Font 13
-   font pango:InconsolataGo Nerd Font, InconsolataForPowerline Nerd Font, Inconsolata, Noto Sans Mono, monaco 12
+   font pango:Iosevka Slab, Iosevka Nerd Font, InconsolataGo Nerd Font, InconsolataForPowerline Nerd Font, Inconsolata, Noto Sans Mono, monaco 12
    status_command i3status --config ~/.config/i3/i3status
    position bottom
    tray_output primary
