@@ -5,7 +5,7 @@ rofi.width:                          60
 rofi.lines:                          12
 ! rofi.bw:                             1
 ! rofi.columns:                        1
-rofi.font:                           Inconsolata 12
+rofi.font:                           Iosevka Slab 12
 rofi.location:                       2
 rofi.padding:                        4
 ! offset relative to "location" (needs to be changed if location changes)
