@@ -264,4 +264,6 @@ function to_opus() {
 }
 
 
-[ -f ~/.local_zsh_aliases ] && source ~/.local_zsh_aliases
+if [ -f ~/.local_zsh_aliases ]; then
+    source ~/.local_zsh_aliases
+fi

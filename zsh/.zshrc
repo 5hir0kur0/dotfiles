@@ -466,4 +466,6 @@ bindkey '^T' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
 
-[ -f "$HOME/.zsh_aliases" ] && source "$HOME/.zsh_aliases"
+if [ -f "$HOME/.zsh_aliases" ]; then
+    source "$HOME/.zsh_aliases"
+fi
