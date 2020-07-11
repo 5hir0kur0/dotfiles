@@ -373,6 +373,10 @@ let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 " Easymotion
 map <Leader> <Plug>(easymotion-prefix)
 
+if filereadable(expand("~/.config/nvim/temp.vim"))
+    source ~/.config/nvim/temp.vim
+endif
+
 " remind me of how to use diff mode -_-
 if &diff
     autocmd VimEnter * echomsg "do -> :diffget (\"obtain\");  dp -> :diffput;  ]c / [c -> next/prev difference"
