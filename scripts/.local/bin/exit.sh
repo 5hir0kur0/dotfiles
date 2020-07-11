@@ -72,7 +72,7 @@ kill_apps() {
     sleep 0.2 # arbitrary value...
     kill_all_clients
     # are there clients that refuse to die?
-    if [ "$(count_windows)" -gt 0 ]; then 
+    if [ "$(count_windows)" -gt 0 ]; then
         case "$WINDOW_MANAGER" in
             i3)
                 i3-nagbar -t warning \
@@ -227,7 +227,6 @@ case "$1" in
         lock; my_hybrid_sleep
         ;;
     hibernate)
-        check_borg
         $PULSESCRIPT mute 1
         lock; my_hibernate
         ;;
@@ -238,7 +237,6 @@ case "$1" in
         $PULSESCRIPT mute 1
         ;;
     reboot_force)
-        check_borg
         my_reboot
         $PULSESCRIPT mute 1
         ;;
@@ -248,7 +246,6 @@ case "$1" in
         $PULSESCRIPT mute 1
         ;;
     shutdown_force)
-        check_borg
         my_shutdown
         $PULSESCRIPT mute 1
         ;;
