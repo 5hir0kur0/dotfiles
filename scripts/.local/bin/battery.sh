@@ -1,19 +1,22 @@
 #!/bin/bash
 
+export LC_ALL=C
+
+BAT_PATH=/sys/class/power_supply/BAT0
+
 while :; do
-    udev=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)
-    level=$(grep percentage <<< "$udev" | grep -oP '\d+(?=%)')
-    discharging=true
-    if grep -qE 'state:\s*(charging|fully-charged)' <<< "$udev"; then
-        discharging=false
+    read -r level < $BAT_PATH/capacity
+    discharging=''
+    if grep -qi 'discharging' $BAT_PATH/status; then
+        discharging=true
     fi
-    if ((level <= 14)) && [[ "$discharging" == true ]]; then
-        systemctl hibernate
-    elif ((level <= 30)) && [[ "$discharging" == true ]]; then
+    if ((level <= 14)) && [[ "$discharging" ]]; then
+        i3-nagbar -m "Battery critically low: ${level}%" -B Hibernate 'exit.sh hibernate' -B Suspend 'exit.sh suspend' -B 'Hybrid Sleep' 'exit.sh hybrid_sleep'
+    elif ((level <= 30)) && [[ "$discharging" ]]; then
         notify-send -u critical "low battery level: ${level}%"
-    elif ((90 <= level && level <= 95)) && [[ "$discharging" == false ]]; then
-        notify-send -u low "battery full: ${level}%"
+    elif ((90 <= level && level <= 94)) && ! [[ "$discharging" ]]; then
+        notify-send -u low "battery almost full: ${level}%"
     fi
     # notify-send "battery: ${level}%"
-    sleep 3m
+    sleep 1m
 done
