@@ -116,6 +116,11 @@ Enable spellcheck and spelling completion in ~text-mode~:
 ~whitespace-mode~ is currently not enabled by default.
 See [[file:~/code/dots/emacs/.emacs.d/config.org::*show whitespace in programming modes][show whitespace in programming modes]] in my old config for a slightly more
 elaborate setup.
+** Show Trailing Whitespace
+#+BEGIN_SRC emacs-lisp
+(setq-default show-trailing-whitespace t)
+(setq-hook! 'minibuffer-setup-hook show-trailing-whitespace nil) ; except in minibuffers
+#+END_SRC
 ** Undo Tree
 #+BEGIN_SRC emacs-lisp
 (setq undo-tree-visualizer-timestamps t)
