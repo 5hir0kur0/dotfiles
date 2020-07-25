@@ -31,10 +31,12 @@ setxkbmap us altgr-intl nodeadkeys
 # caps lock like ctrl (when pressed in conjunction with another key)
 # and like escape on its own
 setxkbmap -option shift:both_capslock
-setxkbmap -option caps:ctrl_modifier
+setxkbmap -option caps:shiftlock
 setxkbmap -option compose:rwin-altgr
 setxkbmap -option compose:lwin-altgr
-xcape -e 'Caps_Lock=Escape' -t 210
+setxkbmap -option compose:menu
+xcape -e 'Control_L=Escape' -t 210
+xcape -e 'Control_R=Escape' -t 210
 
 numlockx on
 
