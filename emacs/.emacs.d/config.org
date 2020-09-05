@@ -178,7 +178,7 @@ dwim wrapper around `indent-rigidly`
           (indent-rigidly (region-beginning) (region-end) arg)
         (indent-rigidly (point-at-bol) (point-at-eol) arg))))
 
-  (global-set-key (kbd"C-x TAB") #'my/indent-rigidly-dwim)
+  (global-set-key (kbd "C-x TAB") #'my/indent-rigidly-dwim)
 #+END_SRC
 ** selection / mark
 *** selecting rectangles

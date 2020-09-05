@@ -65,6 +65,10 @@ Use bash for (non-interactive) inferior shells:
 #+BEGIN_SRC emacs-lisp
 (setq shell-file-name "/bin/bash")
 #+END_SRC
+But =zsh= for interactive shells:
+#+BEGIN_SRC emacs-lisp
+(setq vterm-shell "/bin/zsh")
+#+END_SRC
 Increase maximum number of kill ring entries:
 #+BEGIN_SRC emacs-lisp
 (setq kill-ring-max 1000)
@@ -118,8 +122,8 @@ See [[file:~/code/dots/emacs/.emacs.d/config.org::*show whitespace in programmin
 elaborate setup.
 ** Show Trailing Whitespace
 #+BEGIN_SRC emacs-lisp
-(setq-default show-trailing-whitespace t)
-(setq-hook! 'minibuffer-setup-hook show-trailing-whitespace nil) ; except in minibuffers
+(setq-hook! 'prog-mode-hook show-trailing-whitespace t)
+(setq-hook! 'text-mode-hook show-trailing-whitespace t)
 #+END_SRC
 ** Undo Tree
 #+BEGIN_SRC emacs-lisp
