@@ -828,11 +828,12 @@ bindsym --whole-window --border $mod+shift+button5 resize grow width 5 px or 5 p
 # turn borders on/off/1pixel
 bindsym $mod+Ctrl+b border toggle
 
-set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep"
+set $mode_system "system: (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown, (ctrl+s) hybrid sleep, (h) hibernate"
 mode $mode_system {
     bindsym l exec --no-startup-id       $exitscript lock, mode "default"
     bindsym e exec --no-startup-id       $exitscript logout, mode "default"
     bindsym s exec --no-startup-id       $exitscript suspend, mode "default"
+    bindsym h exec --no-startup-id       $exitscript hibernate, mode "default"
     bindsym r exec --no-startup-id       $exitscript reboot, mode "default"
     bindsym Shift+s exec --no-startup-id $exitscript shutdown, mode "default"
     bindsym Ctrl+s exec --no-startup-id  $exitscript hybrid_sleep, mode "default"
@@ -849,7 +850,7 @@ mode $mode_command {
     bindsym p exec --no-startup-id killall -SIGUSR1 dunst, mode "default"
     bindsym r exec --no-startup-id killall -SIGUSR2 dunst, mode "default"
     bindsym Shift+t exec --no-startup-id $mousescript toggle, mode "default"
-    
+
     bindsym 0, mode $volume_0
     bindsym 1, mode $volume_1
     bindsym 2, mode $volume_2

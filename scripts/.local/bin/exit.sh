@@ -191,11 +191,11 @@ my_hibernate() {
     if [ "$?" -ne 0 ]; then
         case "$WINDOW_MANAGER" in
             i3)
-                i3-nagbar -t error -m "Could not enter hybrid sleep: $ERROR"
+                i3-nagbar -t error -m "Could not hibernate: $ERROR"
                 ;;
             *)
                 pkill -x rofi
-                rofi -e "Could not enter hybrid sleep: $ERROR"
+                rofi -e "Could not hibernate: $ERROR"
                 ;;
         esac
     fi
