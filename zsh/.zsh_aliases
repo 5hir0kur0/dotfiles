@@ -46,6 +46,7 @@ alias gg='git grep -i --break --heading --no-index'
 alias fd='\fd --follow --full-path --hidden'
 
 alias c='less -iFX'
+alias lessmesg='dmesg --follow --time-format ctime --color=always --nopager | \less --RAW-CONTROL-CHARS --chop-long-lines +F'
 
 alias -g wl='wc -l'
 
