@@ -181,8 +181,8 @@ function fancy_unixtime() {
     local OLDF=""
      while true; do
          local SECS=`date +%s`
-         local BASE="${1-16}"
-         local NEWF="$(figlet -W -f banner -tc $(echo "obase=$BASE; $SECS" | bc))"
+         local BASE="${1:-X}"
+         local NEWF="$(figlet -W -f banner -tc $(printf "%$BASE\n" "$SECS"))"
          if [ ! "$OLDF" = "$NEWF" ]; then
              echo -n "\x1B[2J\x1B[0;0H"; #clear screen and move cursor to 0,0
              echo "$NEWF"
