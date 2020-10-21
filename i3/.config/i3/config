@@ -717,6 +717,9 @@ bindsym Ctrl+Mod1+l exec "$exitscript lock; sleep 0.2; xset dpms force off"
 bindsym Pause exec "sleep 0.2; xset dpms force off"
 bindsym $mod+F9 exec "sleep 0.2; xset dpms force off"
 
+# quick suspend without screen locking
+bindsym $mod+Shift+Pause exec --no-startup-id systemctl suspend
+
 # scratchpad
 bindsym $mod+Shift+e move scratchpad
 #bindsym $mod+e scratchpad show
