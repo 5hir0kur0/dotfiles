@@ -264,6 +264,46 @@ function to_opus() {
     ffmpeg -i "${old_name}" -c:a libopus -b:a "${bitrate}" "${new_name}"
 }
 
+# make notify-send always work (e.g. when run as root)
+# $1 needs to be either '--all' or a user id.
+function _notify_send() {
+    local extracted_uid bus_paths
+    if [[ "$1" == '--all' ]]; then
+        bus_paths=(/run/user/*/bus)
+    else
+        bus_paths=("/run/user/$1/bus")
+    fi
+    shift
+    for bus in "${bus_paths[@]}"; do
+        extracted_uid="${bus#*/user/}"
+        extracted_uid="${extracted_uid%/bus*}"
+        sudo -u "#$extracted_uid" DBUS_SESSION_BUS_ADDRESS="unix:path=$bus" notify-send "$@"
+    done
+}
+
+function _alert_completion() {
+    local start=$SECONDS how time_str bus notify_arg
+    if [[ "$1" == "--only-me" ]]; then
+        shift
+        notify_arg=$(id --user)
+    else
+        notify_arg='--all'
+    fi
+    if "$@"; then
+        how=completed
+    else
+        how=failed
+    fi
+    echo -ne '\a'  # bell for tmux
+    time_str=$(displaytime $((SECONDS-start)))
+    _notify_send "$notify_arg" "Task $how in $time_str" "$*"
+}
+
+# usually I'm the only user anyway...
+alias alert_completion='_alert_completion'
+# in case I'm not...
+alias alert_completion_me='_alert_completion --only-me'
+
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
