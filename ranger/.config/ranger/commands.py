@@ -1,6 +1,8 @@
-from ranger.api.commands import Command
+from os.path import basename
 import subprocess
 import os
+
+from ranger.api.commands import Command
 
 
 # autojump integration
@@ -59,6 +61,40 @@ class fzf(Command):
                 self.fm.select_file(fzf_file)
 
 
+def make_limited_length_name(file_paths, max_name_length=16):
+    '''
+    Come up with a reasonable default name for a new tmux window.
+    Fit as many files as possible into the name and truncate it if it gets
+    longer than max_name_length.
+
+    max_name_length must be >= 3.
+    '''
+    name = ''
+    i = 0
+    for i, path in enumerate(file_paths):
+        name += basename(path) if name == '' else ',' + basename(path)
+        if len(name) >= max_name_length:
+            break
+    else:  # the loop did not encounter a break statement
+        if len(name) > max_name_length:
+            return name[:max_name_length - 1] + '…'
+        return name
+    # here we know that the size of name is >= max_name_length
+    if i < len(file_paths) - 1:
+        return name[:max_name_length - 3] + '…,…'
+    return name[:max_name_length - 1] + '…'
+
+
+def is_nonnegative_int(number):
+    '''
+    check if the argument (string or integer) is an ingeger >= 0
+    '''
+    try:
+        return int(number) >= 0
+    except ValueError:
+        return False
+
+
 # tmux integration
 class open_with_tmux(Command):
     '''
@@ -67,15 +103,6 @@ class open_with_tmux(Command):
     or a number displayed by `draw_possible_programs` (e.g. `1`).
     split arg can be e.g. `splitw -h` or `neww -d`
     '''
-
-    def is_nonnegative_int(_self, s):
-        '''
-        check if the argument is an ingeger >= 0
-        '''
-        try:
-            return int(s) >= 0
-        except ValueError:
-            return False
 
     def stringified_selection(self):
         '''
@@ -92,35 +119,13 @@ class open_with_tmux(Command):
             else:
                 yield path2
 
-    def make_name(self, file_paths):
-        '''
-        Come up with a reasonable default name for a new tmux window.
-        Fit as many files as possible into the name and truncate it if it gets
-        longer than MAX_NAME_LENGTH.
-        '''
-        from os.path import basename
-        # must be >= 3
-        MAX_NAME_LENGTH = 16
-        name = ''
-        for f in file_paths:
-            name += basename(f) if name == '' else ',' + basename(f)
-            if len(name) >= MAX_NAME_LENGTH:
-                break
-        else:  # the loop did not encounter a break statement
-            if len(name) > MAX_NAME_LENGTH:
-                return name[:MAX_NAME_LENGTH - 1] + '…'
-            else:
-                return name
-        # here we know that the size of name is >= MAX_NAME_LENGTH
-        return name[:MAX_NAME_LENGTH - 3] + '…,…'
-
     def maybe_name(self, file_paths):
         '''
         return arguments for tmux neww to change the name of the new window
         if no new window is being created, return an empty list
         '''
         if self.args[2] == 'neww' or self.args[2] == 'new-window':
-            return ['-n', self.make_name(file_paths)]
+            return ['-n', make_limited_length_name(file_paths)]
         else:
             return []
 
@@ -133,7 +138,7 @@ class open_with_tmux(Command):
             self.fm.notify('this command can only be used from within tmux',
                            bad=True)
             return
-        if self.is_nonnegative_int(self.args[1]):
+        if is_nonnegative_int(self.args[1]):
             rifle_args = ['-p', self.args[1]]
         else:
             rifle_args = ['-w', self.args[1]]
@@ -143,11 +148,10 @@ class open_with_tmux(Command):
         for _ in range(self.quantifier or 1):
             try:
                 subprocess.run(args, cwd=str(self.fm.thisdir), check=True,
-                               shell=False, capture_output=True)
-            except OSError as e:
-                self.fm.notify(str(e), bad=True)
+                               shell=False, capture_output=False)
+            except OSError as exception:
+                self.fm.notify(str(exception), bad=True)
                 return
-            except subprocess.CalledProcessError as e:
-                self.fm.notify('tmux failed: ' + e.stderr.decode('utf-8'),
-                               bad=True)
+            except subprocess.CalledProcessError as exception:
+                self.fm.notify('tmux failed: ' + exception.stderr.decode('utf-8'), bad=True)
                 return
