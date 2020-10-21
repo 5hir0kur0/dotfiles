@@ -37,6 +37,7 @@ setxkbmap -option compose:lwin-altgr
 setxkbmap -option compose:menu
 xcape -e 'Control_L=Escape' -t 210
 xcape -e 'Control_R=Escape' -t 210
+xcape -e 'Super_L=Return' -t 210
 
 numlockx on
 
