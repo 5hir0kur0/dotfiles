@@ -916,6 +916,7 @@ bar {
 }
 
 # rules
+for_window [title="Picture-in-Picture"] border pixel 2, sticky enable
 for_window [instance="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1240 800, move position center
 for_window [class="$scratchclass"] border pixel 2, move scratchpad, scratchpad show, resize set 1240 800, move position center
 for_window [instance="$floatingclass"] floating enable
