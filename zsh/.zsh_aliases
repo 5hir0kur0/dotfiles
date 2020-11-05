@@ -252,6 +252,11 @@ function llpdf() {
     latexmk -c
 }
 
+function xlpdf() {
+    latexmk -xelatex "${@:?missing file name}"
+    latexmk -c
+}
+
 function to_opus() {
     if [[ -z "${1:-}" ]]; then
         echo "usage: ${0} <file_to_convert> [<birtate>k]" 1>&2
