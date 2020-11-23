@@ -124,6 +124,7 @@ elaborate setup.
 #+BEGIN_SRC emacs-lisp
 (setq-hook! 'prog-mode-hook show-trailing-whitespace t)
 (setq-hook! 'text-mode-hook show-trailing-whitespace t)
+(setq-hook! 'comint-mode-hook show-trailing-whitespace f)
 #+END_SRC
 ** Undo Tree
 #+BEGIN_SRC emacs-lisp
