@@ -345,6 +345,11 @@ Enable left-clicking on the bullets to cycle visibility and context menu:
 #+BEGIN_SRC emacs-lisp
 (set-pretty-symbols! 'emacs-lisp-mode :null "nil")
 #+END_SRC
+** bash
+#+BEGIN_SRC emacs-lisp
+(add-hook! sh-mode
+  (add-to-list '+lookup-documentation-functions 'man))
+#+END_SRC
 * Additional Packages
 Configure additional packages here (there are none so far).
 See [[file:packages.el][packages.el]].
