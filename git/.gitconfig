@@ -44,3 +44,5 @@
 	reflogexpire = 1 year
 	reflogexpireunreachable = 120 days
 	pruneexpire = 120 days
+[pull]
+	ff = only
