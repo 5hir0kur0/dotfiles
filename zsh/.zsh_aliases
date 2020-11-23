@@ -45,6 +45,9 @@ alias g='git'
 alias gg='git grep -i --break --heading --no-index'
 alias fd='\fd --follow --full-path --hidden'
 
+alias encrpyt_gpg='gpg --symmetric'
+alias decrypt_gpg='gpg --decrypt'
+
 alias c='less -iFX'
 alias lessmesg='dmesg --follow --time-format ctime --color=always --nopager | \less --RAW-CONTROL-CHARS --chop-long-lines +F'
 
