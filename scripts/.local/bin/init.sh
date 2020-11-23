@@ -11,7 +11,8 @@ pgrep -x keynav || { sleep 0.9; keynav; } &
 pgrep -x udiskie || { sleep 1; udiskie --no-automount --smart-tray --notify; } &
 pgrep -x unclutter || { sleep 5; unclutter -noevents -root -idle 8; } &
 pgrep -x xautolock || { sleep 10; xautolock -time 42 -locker "$HOME/.local/bin/exit.sh lock"; } &
+pgrep -x battery.sh || { sleep 20; battery.sh; } &
 
-#[ ! -s ~/.config/mpd/pid ] && mpd &
+[ ! -s ~/.config/mpd/pid ] && mpd &
 
 exit 0
