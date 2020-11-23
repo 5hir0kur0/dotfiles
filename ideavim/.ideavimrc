@@ -2,3 +2,4 @@ set surround
 set ignorecase
 set relativenumber
 set number
+set ideajoin
