@@ -305,7 +305,9 @@ function prompt_wrapper() {
   fi
 }
 
+# old rprompt
 #RPROMPT='%F{magenta}~%n%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
+
 RPROMPT='$(print "%{\e[2m%}~%n%{\e[22m%}")%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
 
 # helper function to shorten paths
@@ -402,8 +404,6 @@ function _my_fit_path2() {
     echo ${(j./.)path_elements}
 }
 
-# PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
-
 # make sure the prompt is never longer than about PROMPT_PERCENT_OF_LINE % of
 # the available characters even if the last element of the path is longer than
 # PROMPT_PERCENT_OF_LINE % of the line
@@ -422,6 +422,13 @@ working_directory="\$(_my_fit_path2 '' \$((\$(_my_prompt_width) - 2)))"
 wd_50_percent="%\$(_my_prompt_width)<…<$working_directory"
 
 PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
+
+# prompt for remote machines
+#PROMPT="%F{red}%(0?..[%?])%f%F{magenta}@%M%f%F{white}:%f%F{cyan}$wd_50_percent %# %f"
+
+# old prompt
+#PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
+
 
 ## fzf
 export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
