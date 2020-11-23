@@ -4,6 +4,10 @@ export LC_ALL=C
 
 BAT_PATH=/sys/class/power_supply/BAT0
 
+if ! [ -e "$BAT_PATH" ]; then
+    exit 1
+fi
+
 while :; do
     read -r level < $BAT_PATH/capacity
     discharging=''
