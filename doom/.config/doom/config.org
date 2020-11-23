@@ -164,16 +164,16 @@ Swap =SPC := and =SPC ;=:
 Use =M-<n>= for the universal argument instead of workspace switching
 (Switching between workspaces can still be done using SPC TAB <n>):
 #+BEGIN_SRC emacs-lisp
-(map! "M-0" #'digit-argument
-      "M-1" #'digit-argument
-      "M-2" #'digit-argument
-      "M-3" #'digit-argument
-      "M-4" #'digit-argument
-      "M-5" #'digit-argument
-      "M-6" #'digit-argument
-      "M-7" #'digit-argument
-      "M-8" #'digit-argument
-      "M-9" #'digit-argument)
+;; (map! "M-0" #'digit-argument
+;;       "M-1" #'digit-argument
+;;       "M-2" #'digit-argument
+;;       "M-3" #'digit-argument
+;;       "M-4" #'digit-argument
+;;       "M-5" #'digit-argument
+;;       "M-6" #'digit-argument
+;;       "M-7" #'digit-argument
+;;       "M-8" #'digit-argument
+;;       "M-9" #'digit-argument)
 #+END_SRC
 Make =SPC w w= the same as =C-w C-w=:
 #+BEGIN_SRC emacs-lisp
