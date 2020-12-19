@@ -324,22 +324,33 @@ Enable left-clicking on the bullets to cycle visibility and context menu:
 #+BEGIN_SRC emacs-lisp
 (setq +latex-viewers '(zathura pdf-tools okular evince))
 
-;; (add-hook! TeX-mode :append
-;;   (run-with-idle-timer 0 nil #'TeX-fold-buffer))
-(add-hook! TeX-mode :append (TeX-fold-buffer))
+;; (add-hook! 'TeX-mode-hook :append (TeX-fold-buffer))
+(add-hook! '(TeX-mode-hook LaTeX-mode-hook)
+  (defun my/custom-prettify-symbols-alist ()
+    (setq prettify-symbols-alist
+          (append '(("\\bigO"    . ?O)
+                    ("\\IN"      . ?ℕ)
+                    ("\\IR"      . ?ℝ)
+                    ("\\IZ"      . ?ℤ)
+                    ("\\implies" . ?⇒)
+                    ("\\lnot"    . ?¬)
+                    ("\\ne"      . ?≠)
+                    ("\\land"    . ?∧)
+                    ("\\lor"     . ?∨))
+                  prettify-symbols-alist))))
 
-(after! tex-fold
-  (setq LaTeX-fold-math-spec-list
-        (append '(("O" ("bigO"))
-                  ("ℕ" ("IN"))
-                  ("ℝ" ("IR"))
-                  ("ℤ" ("IZ"))
-                  ("⇒" ("implies"))
-                  ("¬" ("lnot"))
-                  ("≠" ("ne"))
-                  ("∧" ("land"))
-                  ("∨" ("lor")))
-                LaTeX-fold-math-spec-list)))
+;; (after! tex-fold
+;;   (setq LaTeX-fold-math-spec-list
+;;         (append '(("O" ("bigO"))
+;;                   ("ℕ" ("IN"))
+;;                   ("ℝ" ("IR"))
+;;                   ("ℤ" ("IZ"))
+;;                   ("⇒" ("implies"))
+;;                   ("¬" ("lnot"))
+;;                   ("≠" ("ne"))
+;;                   ("∧" ("land"))
+;;                   ("∨" ("lor")))
+;;                 LaTeX-fold-math-spec-list)))
 #+END_SRC
 ** Elisp
 #+BEGIN_SRC emacs-lisp
