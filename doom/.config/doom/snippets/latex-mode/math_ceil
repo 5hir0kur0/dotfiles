@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \lceil...\rceil
+# key: ceil
+# --
+\\left\\lceil $0 \\right\\rceil
