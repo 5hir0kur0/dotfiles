@@ -57,7 +57,7 @@ font pango:Iosevka Slab, Inconsolata, monaco, Noto Sans Mono 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec alacritty
 
 # start st
 bindsym $mod+Mod1+Return exec st
