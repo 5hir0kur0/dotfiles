@@ -220,15 +220,15 @@ case "$1" in
         ;;
     suspend)
         $PULSESCRIPT mute 1
-        lock; my_suspend
+        my_suspend
         ;;
     hybrid_sleep)
         $PULSESCRIPT mute 1
-        lock; my_hybrid_sleep
+        my_hybrid_sleep
         ;;
     hibernate)
         $PULSESCRIPT mute 1
-        lock; my_hibernate
+        my_hibernate
         ;;
 # in the following cases the audio should only be muted, if the operatoin fails
     reboot)
