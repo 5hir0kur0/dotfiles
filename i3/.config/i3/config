@@ -689,6 +689,8 @@ bindsym $mod+Shift+Tab move workspace back_and_forth
 # move workspace (Mod1 is alt)
 bindsym $mod+Mod1+l move workspace to output right
 bindsym $mod+Mod1+h move workspace to output left
+bindsym $mod+Mod1+j move workspace to output up
+bindsym $mod+Mod1+k move workspace to output down
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
