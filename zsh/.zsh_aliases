@@ -35,7 +35,6 @@ alias rmback='rm *~'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
 
-alias ag='ag --hidden'
 alias grep='grep -i --color=auto'
 alias diff='diff --color=auto'
 alias wdiff='\dwdiff --color'
@@ -45,8 +44,15 @@ alias g='git'
 alias gg='git grep -i --break --heading --no-index'
 alias fd='\fd --follow --full-path --hidden'
 
-alias encrpyt_gpg='gpg --symmetric'
-alias decrypt_gpg='gpg --decrypt'
+alias encrypt_gpg='gpg --symmetric'
+
+function decrypt_gpg() {
+    local arg
+    for arg; do
+        echo "running gpg --output ${arg%.*} --decrypt $arg"
+        gpg --output "${arg%.*}" --decrypt "$arg"
+    done
+}
 
 alias c='less -iFX'
 alias lessmesg='dmesg --follow --time-format ctime --color=always --nopager | \less --RAW-CONTROL-CHARS --chop-long-lines +F'
@@ -67,6 +73,8 @@ alias yt='youtube-dl --add-metadata -ic'
 alias yta='youtube-dl --add-metadata -xic'
 
 alias yay='PKGEXT=.pkg.tar yay'
+
+alias mpva='mpv --no-video'
 
 # stolen from the examples directory of the ranger project
 # (https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh)
