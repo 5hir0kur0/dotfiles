@@ -40,8 +40,7 @@ export MY_ETHERNET
 MY_WLAN=$(find /sys/class/net -name 'wlp*' -print0 -name 'wlan*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_WLAN
 
-
-export MY_PROFILE_SOURCED=1
-
 # bash uses $HOSTNAME and zsh uses $HOST
 [ -f "$HOME/.profile-${HOSTNAME:-$HOST}" ] && source "$HOME/.profile-${HOSTNAME:-$HOST}"
+
+export MY_PROFILE_SOURCED=1
