@@ -105,7 +105,7 @@ Enable sub-word navigation (e.g. in CamelCase words):
 #+END_SRC
 Enable spellcheck and spelling completion in ~text-mode~:
 #+BEGIN_SRC emacs-lisp
-(add-hook! text-mode #'flyspell-mode)
+;(add-hook! text-mode #'flyspell-mode)
 (after! text-mode
   (set-company-backend! 'text-mode 'company-ispell))
 #+END_SRC
