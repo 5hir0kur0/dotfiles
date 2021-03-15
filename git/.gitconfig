@@ -32,6 +32,8 @@
 	ap = add --patch
 	ds = diff --staged
 	cob = checkout -b
+	sw = switch
+	swc = switch -c
 [credential]
 	helper = cache --timeout 600
 [help]
@@ -46,3 +48,5 @@
 	pruneexpire = 120 days
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
