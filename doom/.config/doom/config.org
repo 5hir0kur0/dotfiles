@@ -260,17 +260,17 @@ Change font size using mouse wheel:
 Smartparens:
 #+BEGIN_SRC emacs-lisp
 (map! :map smartparens-mode-map
-      ;; "C-M-f"           #'sp-forward-sexp
-      ;; "C-M-b"           #'sp-backward-sexp
-      ;; "C-M-d"           #'sp-down-sexp
-      ;; "C-M-u"           #'sp-backward-up-sexp
+      "C-M-f"           #'sp-forward-sexp
+      "C-M-b"           #'sp-backward-sexp
+      "C-M-d"           #'sp-down-sexp
+      "C-M-u"           #'sp-backward-up-sexp
       "C-M-a"           #'sp-beginning-of-sexp
       "C-M-e"           #'sp-end-of-sexp
       ;; "C-M-n"           #'sp-next-sexp
       ;; "C-M-p"           #'sp-previous-sexp
       ;; "C-M-k"           #'sp-kill-sexp
       ;; "C-M-<backspace>" #'sp-backward-kill-sexp
-      ;; "C-M-t"           #'sp-transpose-sexp
+      "C-M-t"           #'sp-transpose-sexp
       "M-s M-u"         #'sp-backward-unwrap-sexp ; TODO which of these bindings do I like best?
       "M-s M-r"         #'sp-rewrap-sexp
       ;; "M-U"             #'sp-backward-unwrap-sexp
