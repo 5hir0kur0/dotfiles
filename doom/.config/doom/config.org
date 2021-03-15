@@ -130,6 +130,10 @@ elaborate setup.
 #+BEGIN_SRC emacs-lisp
 (setq undo-tree-visualizer-timestamps t)
 #+END_SRC
+** LSP
+#+BEGIN_SRC emacs-lisp
+(setq lsp-headerline-breadcrumb-enable t)
+#+END_SRC
 * Helper Functions
 #+BEGIN_SRC emacs-lisp
 ;; stolen from https://emacs.stackexchange.com/a/13432
