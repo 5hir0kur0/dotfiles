@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: \left(...\right)
+# key: lrp
+# --
+\left($1\right)$0
