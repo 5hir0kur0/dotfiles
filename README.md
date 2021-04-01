@@ -30,6 +30,7 @@ This only works on Arch Linux.
 
 Fake busy. Programs in screenshot:
 - [i3 (window manager)](https://i3wm.org/)
+- [alacritty (terminal emulator)](https://github.com/alacritty/alacritty)
 - [tmux](https://github.com/tmux/tmux)
 - [bpytop (system monitor)](https://github.com/aristocratos/bpytop)
 - [neofetch](https://github.com/dylanaraps/neofetch)
