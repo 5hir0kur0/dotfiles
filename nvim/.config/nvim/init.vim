@@ -229,6 +229,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deathlyfrantic/deoplete-spell'
 Plug 'easymotion/vim-easymotion'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " enable filetype detection, enable file-type specific plugin loading, enable
@@ -381,3 +382,21 @@ endif
 if &diff
     autocmd VimEnter * echomsg "do -> :diffget (\"obtain\");  dp -> :diffput;  ]c / [c -> next/prev difference"
 endif
+
+" TreeSitter
+" ==========
+
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    --ignore_install = { "javascript" }, -- List of parsers to ignore installing
+    highlight = {
+      enable = true,              -- false will disable the whole extension
+      --disable = { "c", "rust" },  -- list of language that will be disabled
+    },
+    indent = {
+        enable = true
+    }
+}
+EOF
