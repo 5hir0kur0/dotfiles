@@ -5,11 +5,11 @@ current_id() {
 }
 
 invert_current() {
-    compton --invert-color-include "client=`current_id`"
+    picom --invert-color-include "client=$(current_id)"
 }
 
 kill_compton() {
-    if pgrep -x compton; then pkill -x compton; fi
+    if pgrep -x picom; then pkill -x picom; fi
 }
 
 case "$1" in
@@ -22,7 +22,7 @@ case "$1" in
         ;;
     start)
         kill_compton
-        compton
+        picom
         ;;
     *)
         echo "Usage: $0 {invert|kill|start}"
