@@ -47,4 +47,6 @@ if mount | grep -q 'on / type btrfs'; then
 fi
 
 echo 'updating...'
-sudo pacmatic -Syu
+PKGEXT=.pkg.tar command paru --sudoloop --newsonupgrade --review \
+    --upgrademenu --fm ranger --nouseask --combinedupgrade --provides -Syu
+sudo pacdiff
