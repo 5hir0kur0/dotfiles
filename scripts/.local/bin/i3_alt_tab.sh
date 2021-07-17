@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# If there is only one floating window, this script behaves like 
-# "focuse mode_toggle". Otherwise it switches focus between the floating windows
+# If there is only one floating window, this script behaves like
+# "focused mode_toggle". Otherwise it switches focus between the floating windows
 # (like Alt+Tab does on Windows).
 
 workspace_with_focused_window_filter=$(cat <<EOF
-    .nodes[].nodes[].nodes[] 
-    | select(.type == "workspace") 
-    | select(recurse(.nodes[],.floating_nodes[]) 
+    .nodes[].nodes[].nodes[]
+    | select(.type == "workspace")
+    | select(recurse(.nodes[],.floating_nodes[])
     | [.nodes[].focused] | any)
 EOF
 )
@@ -16,7 +16,7 @@ is_focused_window_tiling_query='[recurse(.nodes[]) | .nodes[].focused] | any'
 focused_window_tiling=$(jq "$is_focused_window_tiling_query" <<< "$workspace")
 count_floating_nodes=$(cat <<EOF
 [
-    .floating_nodes[] | recurse(.nodes[]) | 
+    .floating_nodes[] | recurse(.nodes[]) |
     select(has("window") and .window != null)
 ] | length
 EOF
