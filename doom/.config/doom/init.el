@@ -14,6 +14,11 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+;; This must be set before evil is loaded. It seems to not work when set in
+;; config.org. I think it is best to set it because otherwise visual-line-mode
+;; can interfere with macros.
+(setq evil-respect-visual-line-mode nil)
+
 (doom! :input
        ;;chinese
        ;;japanese
@@ -127,7 +132,7 @@
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
-       ;;(go +lsp)         ; the hipster dialect
+       (go +lsp)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
