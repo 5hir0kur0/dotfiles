@@ -30,8 +30,9 @@ alias '........'='cd ../../../../../../..'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias md=mkdir
-alias rm='rm -Iv --one-file-system'
-alias rmback='rm *~'
+#alias rm='rm -Iv --one-file-system'
+alias rm='trash'
+alias rmback='trash *~'
 alias cp='cp --reflink=auto -iv'
 alias d='dirs -v'
 
