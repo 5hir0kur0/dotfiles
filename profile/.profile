@@ -20,6 +20,8 @@ fi
 export EDITOR=nvim
 export VISUAL=nvim
 
+export LESS='--mouse --use-color --ignore-case --chop-long-lines --raw-control-chars --incsearch --LONG-PROMPT'
+
 # avoid loading the ranger default config only for it to be overwritten by my
 # personal config
 export RANGER_LOAD_DEFAULT_RC=FALSE
