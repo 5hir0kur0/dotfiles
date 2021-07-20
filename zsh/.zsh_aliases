@@ -57,7 +57,25 @@ function decrypt_gpg() {
 }
 
 alias c='less -iFX'
-alias lessmesg='dmesg --follow --time-format ctime --color=always --nopager | \less --RAW-CONTROL-CHARS --chop-long-lines +F'
+
+# Allows to follow a pipe (given by `$1`) to be followed by `less`.
+# Directly piping into `less` kind of works but the following cannot be resumed
+# using the `F` command after an interrupt.
+function less_pipe() {
+    local tempfile=$(mktemp /tmp/.less_pipe.XXXX)
+    local pipe_command=$1
+    (eval "$pipe_command" > $tempfile) &
+    local subshell_pid=$!
+    \less --RAW-CONTROL-CHARS --chop-long-lines -n +F $tempfile
+    \kill -- "-${subshell_pid}" # kill subshell process group
+    \rm -v "$tempfile"
+}
+
+# In the following aliases, the following of the pipe can be stopped with `^C`
+# to be able to scroll/search the buffer in `less`. The following of the pipe
+# can be continued using the `F` command of `less`.
+alias lessmesg="less_pipe 'dmesg --follow --time-format ctime --color=always --nopager'"
+alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
 
 alias -g wl='wc -l'
 
