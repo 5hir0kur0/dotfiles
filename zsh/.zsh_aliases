@@ -66,9 +66,9 @@ function less_pipe() {
     local pipe_command=$1
     (eval "$pipe_command" > $tempfile) &
     local subshell_pid=$!
-    \less --RAW-CONTROL-CHARS --chop-long-lines -n +F $tempfile
+    \less --RAW-CONTROL-CHARS --chop-long-lines -n +F -- $tempfile
     \kill -- "-${subshell_pid}" # kill subshell process group
-    \rm -v "$tempfile"
+    \rm -v -- "$tempfile"
 }
 
 # In the following aliases, the following of the pipe can be stopped with `^C`
