@@ -80,7 +80,6 @@ alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --ra
 alias -g wl='wc -l'
 
 alias hcat="highlight --force -O ansi"
-alias cat='cat -v'
 
 alias update='update.sh'
 
