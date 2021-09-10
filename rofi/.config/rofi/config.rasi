@@ -1,6 +1,7 @@
 configuration {
     modi: "drun,run";
     font: "Iosevka Slab 12";
+    dpi: 0;
     location: 2;
     yoffset: 2;
     show-icons: true;
