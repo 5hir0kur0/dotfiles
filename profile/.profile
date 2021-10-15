@@ -4,17 +4,17 @@ fi
 
 # custom scripts
 if [[ "$PATH" != *"$HOME/.local/bin"* ]]; then
-    export PATH="$HOME/.local/bin:$PATH"
+    export PATH="$PATH:$HOME/.local/bin"
 fi
 
 # rust
 if [[ "$PATH" != *"$HOME/.cargo/bin"* ]]; then
-    export PATH="$HOME/.cargo/bin:$PATH"
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 # doom emacs
 if [[ "$PATH" != *"$HOME/.emacs/bin"* ]]; then
-    export PATH="$HOME/.emacs.d/bin:$PATH"
+    export PATH="$PATH:$HOME/.emacs.d/bin"
 fi
 
 export EDITOR=nvim
@@ -34,7 +34,7 @@ export BUILDDIR=/tmp/.build-$USER
 export PS4='+${LINENO}: '
 
 # display man pages using neovim
-export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' -"
+export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' -"
 
 MY_ETHERNET=$(find /sys/class/net -name 'enp*' -print0 -name 'eth*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_ETHERNET
