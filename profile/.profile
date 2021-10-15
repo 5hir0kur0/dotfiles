@@ -34,7 +34,7 @@ export BUILDDIR=/tmp/.build-$USER
 export PS4='+${LINENO}: '
 
 # display man pages using neovim
-export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' -"
+export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' '+map q ZQ' -"
 
 MY_ETHERNET=$(find /sys/class/net -name 'enp*' -print0 -name 'eth*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_ETHERNET
