@@ -4,7 +4,7 @@ alias gr=gitroot
 alias vim=nvim
 alias v=nvim
 alias vimdiff='nvim -d'
-alias view="vim -R -c 'set nomodifiable'"
+alias view="vim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'"
 
 function e {
     emacsclient "$@" & disown
