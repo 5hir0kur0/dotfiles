@@ -43,8 +43,8 @@ alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias g='git'
 alias gg='git grep -i --break --heading --no-index'
-alias rg='rg --smart-case'
-alias fd='\fd --follow --full-path --hidden'
+alias rg='rg --smart-case --hidden --no-ignore'
+alias fd='\fd --follow --full-path --hidden --no-ignore --show-errors'
 
 alias encrypt_gpg='gpg --symmetric'
 
