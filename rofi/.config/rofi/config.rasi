@@ -14,7 +14,6 @@ configuration {
     combi-modi: "drun,window,run,ssh";
     scroll-method: 1;
     window-format: "[{w}]    {c}   {t}";
-    theme: "/usr/share/rofi/themes/gruvbox-dark.rasi";
     max-history-size: 256;
     display-window: "win";
     display-windowcd: "wcd";
@@ -54,3 +53,5 @@ configuration {
     kb-toggle-sort: "Alt+grave,Control+s";
     kb-cancel: "Escape,Control+g,Control+bracketleft,Control+c";
 }
+
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
