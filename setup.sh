@@ -38,14 +38,15 @@ if [ "${1:-}" = git ]; then
     fi
 
     if [ "$GIT" -eq 1 ]; then
-        cp ./git/.gitconfig ~
+        mkdir -p ~/.config/git
+        cp ./git/.config/git/config ~/.config/git
         echo 'configuring git...'
         INIT_COMMIT=$(git rev-list --max-parents=0 HEAD)
         REPO_USER=$(git log --format=%an "$INIT_COMMIT")
         REPO_EMAIL=$(git log --format=%ae "$INIT_COMMIT")
         printf 'user.name (leave blank to use "%s"): ' "$REPO_USER"
         read -r USERNAME
-        if [ -n "$USERNAME" ]; then 
+        if [ -n "$USERNAME" ]; then
             git config --global user.name "$USERNAME"
         else
             git config --global user.name "$REPO_USER"
@@ -61,7 +62,7 @@ if [ "${1:-}" = git ]; then
         fi
         printf 'user.email (leave blank to use "%s"): ' "$REPO_EMAIL"
         read -r EMAIL
-        if [ -n "$EMAIL" ]; then 
+        if [ -n "$EMAIL" ]; then
             git config --global user.email "$EMAIL"
         else
             git config --global user.email "$REPO_EMAIL"
