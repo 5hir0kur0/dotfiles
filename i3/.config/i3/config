@@ -848,12 +848,10 @@ mode $mode_system {
 }
 bindsym $mod+Pause mode $mode_system
 
-set $mode_command "command: (t)oggle def. sink, (m)ove inputs to def. sink, (p)ause dunst, (r)esume dunst, (T)oggle mouse, (u) volume++ / (d) volume-- [shift => force], (0-9) set volume"
+set $mode_command "command: (t)oggle def. sink, (m)ove inputs to def. sink, (T)oggle mouse, (u) volume++ / (d) volume-- [shift => force], (0-9) set volume"
 mode $mode_command {
     bindsym t exec --no-startup-id $pulsescript toggle, mode "default"
     bindsym m exec --no-startup-id $pulsescript move, mode "default"
-    bindsym p exec --no-startup-id killall -SIGUSR1 dunst, mode "default"
-    bindsym r exec --no-startup-id killall -SIGUSR2 dunst, mode "default"
     bindsym Shift+t exec --no-startup-id $mousescript toggle, mode "default"
 
     bindsym 0, mode $volume_0
@@ -876,6 +874,29 @@ mode $mode_command {
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+x mode $mode_command
+
+set $mode_dunst "dunst: (P)ause dunst, (R)esume dunst, (`/x) close, (~/X) Close all, (./u)ndo close, (i/c)ontext"
+mode $mode_dunst {
+    bindsym Shift+p mode "default", exec --no-startup-id notify-send -u low dunst 'notifications <b><u>disabled</u></b>', exec --no-startup-id bash -c "sleep 3 && dunstctl set-paused true"
+    bindsym Shift+r exec --no-startup-id dunstctl set-paused false, mode "default", exec --no-startup-id notify-send -u low dunst 'notifications enabled'
+
+    bindsym x exec --no-startup-id dunstctl close
+    bindsym grave exec --no-startup-id dunstctl close, mode "default"
+    bindsym Shift+x exec --no-startup-id dunstctl close-all, mode "default"
+    bindsym Shift+grave exec --no-startup-id dunstctl close-all, mode "default"
+
+    bindsym u exec --no-startup-id dunstctl history-pop
+    bindsym period exec --no-startup-id dunstctl history-pop
+
+    bindsym c exec --no-startup-id dunstctl context, mode "default"
+    bindsym i exec --no-startup-id dunstctl context, mode "default"
+    bindsym $mod+i exec --no-startup-id dunstctl context, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+i mode $mode_dunst
+bindsym $mod+grave mode $mode_dunst
 
 # colors
 set $base00 #101010
