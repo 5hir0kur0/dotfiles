@@ -1,5 +1,17 @@
-set surround
 set ignorecase
 set relativenumber
 set number
 set ideajoin
+
+" use system clipboard
+set clipboard+=unnamedplus
+
+" plugins
+set surround
+set sneak
+set easymotion
+set multiple-cursors
+set commentary
+set argtextobj
+" set textobj-entire
+set textobj-indent
