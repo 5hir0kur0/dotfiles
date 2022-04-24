@@ -62,9 +62,6 @@ history_ignore=(
 
     'pass *'
 
-    'lqd *'
-    'lqqd *'
-
     'v *'
     'vim *'
     'sudoedit *'
