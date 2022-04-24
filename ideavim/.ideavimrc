@@ -1,17 +1,51 @@
+" set leader key to space
+" =======================
+
+nmap <Space> <Nop>
+let mapleader=" "
+
+" customize options
+" =================
+
+set showmode
 set ignorecase
 set relativenumber
 set number
+" join lines via IDE
 set ideajoin
+" sync IDE bookmarks and vim marks
+set ideamarks
 
 " use system clipboard
 set clipboard+=unnamedplus
 
+" enable native IDE insertion
+set clipboard+=ideaput
+
 " plugins
 set surround
 set sneak
-set easymotion
+" set easymotion
 set multiple-cursors
 set commentary
 set argtextobj
+let g:argtextobj_pairs="[:],(:),<:>"
 " set textobj-entire
 set textobj-indent
+set which-key
+
+" key bindings
+" ============
+nmap gD :action FindUsages<CR>
+nmap <leader>ci :action GotoImplementation<CR>
+nmap <leader>cr :action RenameElement<CR>
+nmap <leader>ca :action ShowIntentionActions<CR>
+nmap <leader>j :action AceAction<CR>
+nmap <leader>l :action AceLineAction<CR>
+nmap <leader>fs :w<CR>
+nmap <leader>sp :action FindInPath<CR>
+nmap <leader>ot :action ActivateTerminalToolWindow<CR>
+nmap <leader><leader> :action SearchEverywhere<CR>
+nmap g[ :action GotoDeclaration<CR>
+nmap ]e :action GotoNextError<CR>
+nmap [e :action GotoPreviousError<CR>
