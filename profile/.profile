@@ -34,13 +34,27 @@ export BUILDDIR=/tmp/.build-$USER
 export PS4='+${LINENO}: '
 
 # display man pages using neovim
-export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' '+map q ZQ' -"
+export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' '+nnoremap q ZQ' -"
 
 MY_ETHERNET=$(find /sys/class/net -name 'enp*' -print0 -name 'eth*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_ETHERNET
 
 MY_WLAN=$(find /sys/class/net -name 'wlp*' -print0 -name 'wlan*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_WLAN
+
+export SSH_AUTH_SOCK=/tmp/.ssh-agent.schoenherr.sock
+export SSH_AGENT_PID
+
+ssh_agent_output=$(ssh-agent -a "$SSH_AUTH_SOCK" 2>/dev/null)
+if [ "$?" -ne 0 ]; then
+    SSH_AGENT_PID=$(pgrep -fx "ssh-agent.*$SSH_AUTH_SOCK")
+    if [ "$?" -ne 0 ]; then
+        rm -f "${SSH_AUTH_SOCK:?}"
+        eval "$(ssh-agent -a "$SSH_AUTH_SOCK")"
+    fi
+else
+    eval "${ssh_agent_output}"
+fi
 
 # bash uses $HOSTNAME and zsh uses $HOST
 [ -f "$HOME/.profile-${HOSTNAME:-$HOST}" ] && source "$HOME/.profile-${HOSTNAME:-$HOST}"
