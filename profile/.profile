@@ -12,6 +12,12 @@ if [[ "$PATH" != *"$HOME/.cargo/bin"* ]]; then
     export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
+# golang
+export GOPATH="$HOME/code/go"
+if [[ "$PATH" != *"$HOME/code/go/bin"* ]]; then
+    export PATH="$PATH:$HOME/code/go/bin"
+fi
+
 # doom emacs
 if [[ "$PATH" != *"$HOME/.emacs/bin"* ]]; then
     export PATH="$PATH:$HOME/.emacs.d/bin"
@@ -42,7 +48,9 @@ export MY_ETHERNET
 MY_WLAN=$(find /sys/class/net -name 'wlp*' -print0 -name 'wlan*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
 export MY_WLAN
 
-export SSH_AUTH_SOCK=/tmp/.ssh-agent.schoenherr.sock
+# SSH Agent
+
+export SSH_AUTH_SOCK="$HOME/.ssh/.ssh-agent.sock"
 export SSH_AGENT_PID
 
 ssh_agent_output=$(ssh-agent -a "$SSH_AUTH_SOCK" 2>/dev/null)
