@@ -29,7 +29,7 @@ set sneak
 set multiple-cursors
 set commentary
 set argtextobj
-let g:argtextobj_pairs="[:],(:),<:>"
+let g:argtextobj_pairs="[:],(:),<:>,{:}"
 " set textobj-entire
 set textobj-indent
 set which-key
