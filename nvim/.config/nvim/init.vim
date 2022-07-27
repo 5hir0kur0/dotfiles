@@ -205,33 +205,6 @@ augroup AutoSaveFolds
                 \&& index(buftype_blacklist, &bt) < 0 && @% != '' | silent! loadview
 augroup END
 
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'junegunn/vim-plug'
-Plug 'w0rp/ale'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'airblade/vim-gitgutter'
-Plug 'jiangmiao/auto-pairs'
-Plug 'lifepillar/vim-solarized8'
-Plug 'morhetz/gruvbox'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-" Plug 'lifepillar/vim-mucomplete'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deathlyfrantic/deoplete-spell'
-Plug 'easymotion/vim-easymotion'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-call plug#end()
-
 " enable filetype detection, enable file-type specific plugin loading, enable
 " file-type specific indentation
 filetype plugin indent on
@@ -244,135 +217,10 @@ syntax enable
 
 colorscheme gruvbox
 
-" airline settings
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_exclude_preview = 0
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-" (minimalist is also nice)
-let g:airline_theme = 'lucius'
-" let g:airline_powerline_fonts = 1
-"let g:airline_symbols_ascii = 1
-
-" ale bindings
-nmap <silent> <Leader>n <Plug>(ale_next_wrap)
-nmap <silent> <Leader>p <Plug>(ale_previous_wrap)
-
-" gitgutter bindings
-nnoremap <silent> <Leader>gn :GitGutterNextHunk<CR>
-nnoremap <silent> <Leader>gp :GitGutterPrevHunk<CR>
-nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
-
-" gruvbox options
-let g:gruvbox_contrast_dark = 'soft'
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-
-" stolen from https://github.com/Shougo/deoplete.nvim/issues/816
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ deoplete#manual_complete()
-
-inoremap <silent><expr> <S-TAB>
-            \ pumvisible() ? "\<C-p>" :
-            \ <SID>check_back_space() ? "\<S-TAB>" :
-            \ deoplete#manual_complete()
-
-" vim-mucomplete-related options
-"set completeopt+=menuone
-"set completeopt+=noselect
-"set shortmess+=c   " Shut off completion messages
-"set belloff+=ctrlg
-"let g:mucomplete#enable_auto_at_startup = 1 " enable automatic completion
-"" let g:mucomplete#delayed_completion = 1
-"set wildignorecase " ignore case in filename completions
-"" fix compatibility with auto-pairs (stolen from mucomplete documentation)
-"let g:AutoPairsMapSpace = 0
-"imap <silent> <expr> <space> pumvisible()
-"        \ ? "<space>"
-"        \ : "<c-r>=AutoPairsSpace()<cr>"
-
-
-" LanguageClient
-
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
-" for rls: rustup component add rls rust-analysis rust-src
-" for pyls: pip3 install --user python-language-server
-let g:LanguageClient_serverCommands = {
-            \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-            \ 'python': ['pyls'],
-            \ }
-
-function SetLanguageClientMappings()
-endfunction
-
-function LC_maps()
-  if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <buffer> <silent> <Leader>m :call LanguageClient_contextMenu()<CR>
-    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <buffer> <silent> <Leader>wgd :call LanguageClient#textDocument_definition({'gotoCmd': 'split'})<CR>
-    nnoremap <buffer> <silent> <Leader>h :call LanguageClient#textDocument_documentHighlight()<CR>
-    nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-    " C-F12
-    nnoremap <buffer> <silent> <F36> :call LanguageClient#textDocument_documentSymbol()<CR>
-  endif
-endfunction
-
-autocmd FileType * call LC_maps()
-
-" fzf
-let g:fzf_command_prefix = 'FZF'
-function MyFZFGit()
-    let $FZF_DEFAULT_COMMAND='git ls-files "$(git rev-parse --show-toplevel)" || find .'
-    FZF
-    unlet $FZF_DEFAULT_COMMAND
-endfunction
-
-nnoremap <silent> <Leader>o :call MyFZFGit()<CR>
-nnoremap <silent> <Leader>O :FZF .<CR>
-nnoremap <silent> <Leader>l :FZFBLines .<CR>
-nnoremap <silent> <Leader>x :FZFCommands<CR>
-nnoremap <silent> <Leader>p :FZFBuffers<CR>
-nnoremap <silent> <Leader>H :FZFHelptags<CR>
-nnoremap <silent> <Leader>M :FZFMaps<CR>
-
-
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
 let $FZF_DEFAULT_OPTS .= ' --border --margin=0,0'
-
-function! FloatingFZF()
-    let width = float2nr(&columns * 0.9)
-    let height = float2nr(&lines * 0.42)
-    let opts = { 'relative': 'editor',
-                \ 'row': 0,
-                \ 'col': (&columns - width) / 2,
-                \ 'width': &columns,
-                \ 'height': height }
-    let win = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-    call setwinvar(win, '&winhighlight', 'NormalFloat:Normal')
-    setlocal nonumber norelativenumber
-endfunction
-
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-" or
-"let g:fzf_layout = { 'down': '~40%' }
-
-" Easymotion
-map <Leader> <Plug>(easymotion-prefix)
 
 if filereadable(expand("~/.config/nvim/temp.vim"))
     source ~/.config/nvim/temp.vim
@@ -383,20 +231,4 @@ if &diff
     autocmd VimEnter * echomsg "do -> :diffget (\"obtain\");  dp -> :diffput;  ]c / [c -> next/prev difference"
 endif
 
-" TreeSitter
-" ==========
-
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    --ignore_install = { "javascript" }, -- List of parsers to ignore installing
-    highlight = {
-      enable = true,              -- false will disable the whole extension
-      --disable = { "c", "rust" },  -- list of language that will be disabled
-    },
-    indent = {
-        enable = true
-    }
-}
-EOF
+lua require('plugins')
