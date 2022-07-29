@@ -1,0 +1,8 @@
+[Unit]
+Description=borg backup
+
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingPriority=2
+ExecStart=/bin/sh -c '/root/borg.sh 1>>/var/log/borg-out 2>>/var/log/borg-error'

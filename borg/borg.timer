@@ -1,0 +1,10 @@
+[Unit]
+Description=borg backup timer (runs every 30 mins)
+
+[Timer]
+#  this makes it run every 30 minutes
+OnCalendar=*:00/30
+Unit=borg.service
+
+[Install]
+WantedBy=timers.target
