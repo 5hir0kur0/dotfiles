@@ -1,8 +1,10 @@
 #!/bin/bash
 
-cd -- "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1
+set -euo pipefail
 
-source ./borg_common_secret.sh
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
+
+source ./borg-common.sh
 
 trap 'umount $BACKUP_DIR; echo $( date ) Backup interrupted >&2; exit 2' INT TERM
 
@@ -11,7 +13,7 @@ if ! lsblk --output UUID | grep -q -F "$DISK_UUID"; then
     exit 1
 fi
 
-if mount | grep -q -F "DISK_UUID"; then
+if mount | grep -q -F "$DISK_UUID"; then
     info "disk already mounted; exiting"
     exit 1
 fi

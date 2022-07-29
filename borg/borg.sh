@@ -6,7 +6,7 @@
 
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1
 
-source ./borg-common.sh
+source ./borg-common.sh || exit 1
 
 indicator_on() {
     setleds -L +scroll < /dev/tty1
