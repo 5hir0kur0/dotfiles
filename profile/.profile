@@ -64,6 +64,13 @@ else
     eval "${ssh_agent_output}"
 fi
 
+# Input Method
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=xim
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+
 # bash uses $HOSTNAME and zsh uses $HOST
 [ -f "$HOME/.profile-${HOSTNAME:-$HOST}" ] && source "$HOME/.profile-${HOSTNAME:-$HOST}"
 
