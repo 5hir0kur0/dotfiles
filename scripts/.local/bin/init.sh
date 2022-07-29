@@ -2,7 +2,7 @@
 
 { [ -x ~/.fehbg ] && ~/.fehbg; } || set_wallpaper.sh &
 
-pgrep -x fcitx || { sleep 0.1; fcitx; } &
+pgrep -x fcitx5 || { sleep 0.1; fcitx5; } &
 pgrep -x dunst || { sleep 0.15; dunst; } &
 pgrep -x nm-applet || { sleep 0.2; nm-applet; } &
 pgrep -x redshift-gtk || { sleep 0.5; redshift-gtk; } &
