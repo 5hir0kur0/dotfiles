@@ -2,7 +2,7 @@
 
 # UUID of the disk containing the borg repository
 DISK_UUID='{{Insert UUID here}}'
-# username of the user who should receive the notifications
+# username of the user who should receive the notifications (used if `notify` fails, see below)
 NOTFIY_USER=$(ls /home | grep -vF 'lost+found|sbox|sandbox' | head -n 1)
 
 MOUNT_DIR=/mnt
@@ -19,7 +19,7 @@ export BORG_PASSPHRASE='{{Insert Passphrase here}}'
 # some helpers and error handling:
 notify() {
     local wm_pids
-    if ! wm_pids=$(pgrep -x i3); then
+    if ! wm_pids=$(pgrep -x '(i3|gnome-shell)'); then
         return 1
     fi
     for pid in $wm_pids; do
@@ -33,7 +33,7 @@ notify() {
 
 info() {
     local info_message
-    info_message=$(printf "%s %s" "$( date )" "$*")
+    info_message=$(printf "%s %s" "$( date '+%H:%M' )" "$*")
     printf "\n%s\n\n" "$info_message" >&2
     if ! notify "$info_message"; then
         if [ -n "$NOTFIY_USER" ]; then
