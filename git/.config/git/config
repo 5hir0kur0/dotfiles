@@ -6,6 +6,7 @@
 [merge]
 	tool = vimdiff
 	conflictstyle = zdiff3
+	guitool = meld
 [alias]
 	p = pull --ff-only
 	lo = log --oneline
