@@ -129,7 +129,7 @@ tnoremap <Esc> <C-\><C-n>
 let mapleader = "\<Space>"
 
 " <C-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:GitGutter<cr><c-l>
+nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:Gitsigns refresh<cr><c-l>
 
 " <C-n> and <C-p> scroll without moving the relative position of the cursor
 "nnoremap <silent> <C-n> <C-e>j
