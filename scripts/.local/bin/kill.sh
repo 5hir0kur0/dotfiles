@@ -12,6 +12,7 @@ NAMES=('urxvtd'
        'keynav'
        'sxhkd'
        'polybar'
+       'picom'
 )
 
 for NAME in "${NAMES[@]}"; do

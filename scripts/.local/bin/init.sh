@@ -14,6 +14,10 @@ pgrep -x unclutter || { sleep 5; unclutter -noevents -root -idle 8; } &
 pgrep -x xautolock || { sleep 10; xautolock -time 42 -locker "$HOME/.local/bin/exit.sh lock"; } &
 pgrep -x battery.sh || { sleep 20; battery.sh; } &
 
+if hash picom; then
+    pgrep -x picom || { picom --config /dev/null; } &
+fi
+
 [ ! -s ~/.config/mpd/pid ] && mpd &
 
 exit 0
