@@ -50,6 +50,8 @@ Bigger font for ace-window:
 ** GUI
 Show menu bar:
 #+BEGIN_SRC emacs-lisp
+;; hide the client-side decoration title bar
+(add-to-list 'default-frame-alist '(undecorated . t))
 (menu-bar-mode 1)
 #+END_SRC
 * Customized Variables
@@ -150,8 +152,10 @@ elaborate setup.
   (if (string= ispell-current-dictionary "de_DE")
       (progn
         (setq-local ispell-alternate-dictionary "/usr/share/dict/words")
+        (setq ispell-personal-dictionary "~/.emacs.d/.local/etc/ispell/en.pws")
         (ispell-change-dictionary "en_US"))
     (setq-local ispell-alternate-dictionary "/usr/share/dict/german")
+    (setq ispell-personal-dictionary "~/.emacs.d/.local/etc/ispell/de.pws")
     (ispell-change-dictionary "de_DE")))
 #+END_SRC
 * Custom Keybindings
