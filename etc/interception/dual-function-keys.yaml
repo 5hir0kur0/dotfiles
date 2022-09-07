@@ -1,0 +1,42 @@
+TIMING:
+  TAP_MILLISEC: 200
+  # disable double tap functionality
+  DOUBLE_TAP_MILLISEC: 0
+
+MAPPINGS:
+  # left ctrl acts as esc when tapped
+  - KEY: KEY_LEFTCTRL
+    TAP: KEY_ESC
+    HOLD: KEY_LEFTCTRL
+
+  # right ctrl acts as esc when tapped
+  - KEY: KEY_RIGHTCTRL
+    TAP: KEY_ESC
+    HOLD: KEY_RIGHTCTRL
+
+  # left alt acts as return when tapped
+  - KEY: KEY_LEFTALT
+    TAP: KEY_ENTER
+    HOLD: KEY_LEFTALT
+
+  # right alt acts as compose (mapped to right alt + super by xkbmap) when tapped
+  - KEY: KEY_RIGHTALT
+    TAP: [KEY_RIGHTALT, KEY_RIGHTMETA]
+    HOLD: KEY_RIGHTALT
+
+  # right super acts as compose (mapped to right alt + super by xkbmap) when tapped
+  - KEY: KEY_RIGHTMETA
+    TAP: [KEY_RIGHTALT, KEY_RIGHTMETA]
+    HOLD: KEY_RIGHTMETA
+
+  # right shift acts as backshash when tapped
+  - KEY: KEY_RIGHTSHIFT
+    TAP: KEY_BACKSLASH
+    HOLD: KEY_RIGHTSHIFT
+
+  # left super acts as return when tapped -- convenient in i3/sway, inconvenient in gnome
+  #- KEY: KEY_LEFTMETA
+  #  TAP: KEY_ENTER
+  #  HOLD: KEY_LEFTMETA
+  #  HOLD_START: BEFORE_CONSUME_OR_RELEASE
+
