@@ -41,9 +41,9 @@ configuration {
     kb-delete-entry: "Shift+Delete,Control+r";
     kb-mode-next: "Shift+Right,Control+Tab";
     kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
-    kb-row-up: "Up,Control+p,ISO_Left_Tab";
+    kb-row-up: "Up,Control+p";
     kb-row-down: "Down,Control+n";
-    kb-row-tab: "Tab";
+    /* kb-row-tab: "Tab"; */
     kb-page-prev: "Page_Up,Alt+v";
     kb-page-next: "Page_Down,Alt+V";
     kb-row-first: "Home,KP_Home";
