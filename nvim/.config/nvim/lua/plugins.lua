@@ -79,9 +79,9 @@ return require('packer').startup(function()
         'NvChad/nvim-colorizer.lua',
         config = function()
             require('colorizer').setup {
-                'css',
-                'javascript',
-                'html'
+                css = {};
+                javascript = {};
+                html = {};
             }
         end
     }
