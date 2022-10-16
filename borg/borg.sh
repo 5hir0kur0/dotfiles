@@ -48,6 +48,8 @@ borg create                                             \
     --exclude '/home/*/.subversion/*'                   \
     --exclude '/home/*/.config/libreoffice/*/cache/*'   \
     --exclude '/home/*/.local/share/Anki/QtWebEngine/*' \
+    --exclude '/home/*/.local/share/flatpak/*'          \
+    --exclude '/home/*/.local/share/gvfs-metadata/*'    \
     --exclude '/home/*/.local/share/nvim/swap/*'        \
     --exclude '/home/*/.local/share/nvim/view/*'        \
     --exclude '/home/*/.local/share/JetBrains/*'        \
@@ -119,7 +121,7 @@ info "Pruning repository"
 
 borg prune                          \
     --list                          \
-    --prefix '{hostname}-'          \
+    --glob-archives '{hostname}-*'  \
     --show-rc                       \
     --keep-hourly   24              \
     --keep-daily    7               \
