@@ -5,3 +5,4 @@ TODO
 /emacs/.emacs.d/config.el
 /doom/.config/doom/config.el
 /doom/.config/doom/custom.el
+*.swp
