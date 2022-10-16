@@ -50,18 +50,19 @@ export MY_WLAN
 
 # SSH Agent
 
-export SSH_AUTH_SOCK="$HOME/.ssh/.ssh-agent.sock"
-export SSH_AGENT_PID
 
-ssh_agent_output=$(ssh-agent -a "$SSH_AUTH_SOCK" 2>/dev/null)
-if [ "$?" -ne 0 ]; then
-    SSH_AGENT_PID=$(pgrep -fx "ssh-agent.*$SSH_AUTH_SOCK")
+export SSH_AGENT_PID
+export SSH_AUTH_SOCK
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$HOME/.ssh/.ssh-agent.sock}"
+    SSH_AGENT_PID=$(pgrep -fx "(/usr/bin/)?ssh-agent.*$SSH_AUTH_SOCK")
     if [ "$?" -ne 0 ]; then
         rm -f "${SSH_AUTH_SOCK:?}"
         eval "$(ssh-agent -a "$SSH_AUTH_SOCK")"
     fi
-else
-    eval "${ssh_agent_output}"
+elif [ -z "$SSH_AGENT_PID" ]; then
+    SSH_AGENT_PID=$(pgrep -x ssh-agent | head -n 1)
 fi
 
 # Input Method
