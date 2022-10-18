@@ -49,6 +49,7 @@ alias g='git'
 alias gg='git grep -i --break --heading --no-index'
 alias rg='rg --smart-case --hidden --no-ignore'
 alias fd='\fd --follow --full-path --hidden --no-ignore --show-errors'
+alias ip='ip -color'
 
 alias encrypt_gpg='gpg --symmetric'
 
