@@ -11,7 +11,7 @@
 	p = pull --ff-only
 	lo = log --oneline
 	unstage = reset HEAD --
-	wdiff = diff --word-diff
+	wdiff = diff --histogram --word-diff=color
 	s = status --short --branch --show-stash
 	g = grep -i --break --heading -e
 	l = log --graph --pretty=format:'%C(auto)%h -%d %s %C(cyan)(%cr) %C(blue)<%an>'
@@ -19,8 +19,8 @@
 	ca = commit --verbose --amend
 	a = add
 	co = checkout
-	d = diff
-	dc = diff --cached
+	d = diff --histogram
+	dc = diff --histogram --cached
 	ai = add -i
 	h = help
 	f = fetch
@@ -32,7 +32,7 @@
 	blm = bl --merged
 	blnm = bl --no-merged
 	ap = add --patch
-	ds = diff --staged
+	ds = diff --histogram --staged
 	cob = checkout -b
 	sw = switch
 	swc = switch -c
@@ -42,8 +42,10 @@
 	rl = remote -v
 	summc = shortlog --email --count --all --summary --group=committer --numbered
 	summa = shortlog --email --count --all --summary --group=author --numbered
-	dw = diff --word-diff=color
+	dw = diff --histogram --word-diff=color
 	backup = ! git stash store $(git stash create) -m \"workdir backup from $(date --iso-8601=minutes)\"
+	sm = submodule
+	smur = submodule update --recursive
 [credential]
 	helper = cache --timeout 600
 [help]
