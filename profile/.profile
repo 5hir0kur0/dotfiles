@@ -50,27 +50,18 @@ export MY_WLAN
 
 # SSH Agent
 
-
 export SSH_AGENT_PID
 export SSH_AUTH_SOCK
 
 if [ -z "$SSH_AUTH_SOCK" ]; then
     SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$HOME/.ssh/.ssh-agent.sock}"
-    SSH_AGENT_PID=$(pgrep -fx "(/usr/bin/)?ssh-agent.*$SSH_AUTH_SOCK")
-    if [ "$?" -ne 0 ]; then
+    if ! SSH_AGENT_PID=$(pgrep -x ssh-agent -u "$(id -u)" | head -n 1); then
         rm -f "${SSH_AUTH_SOCK:?}"
         eval "$(ssh-agent -a "$SSH_AUTH_SOCK")"
     fi
 elif [ -z "$SSH_AGENT_PID" ]; then
-    SSH_AGENT_PID=$(pgrep -x ssh-agent | head -n 1)
+    SSH_AGENT_PID=$(pgrep -x ssh-agent -u "$(id -u)" | head -n 1)
 fi
-
-# Input Method
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=xim
-export SDL_IM_MODULE=fcitx
-export GLFW_IM_MODULE=ibus
 
 # bash uses $HOSTNAME and zsh uses $HOST
 [ -f "$HOME/.profile-${HOSTNAME:-$HOST}" ] && source "$HOME/.profile-${HOSTNAME:-$HOST}"
