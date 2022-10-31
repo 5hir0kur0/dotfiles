@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# shellcheck source=.profile
-[ -f "$HOME/.profile" ] && source "$HOME/.profile"
-
+# Input Method
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=xim
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
 
 export GTK2_RC_FILES=~/.gtkrc-2.0
 export QT_QPA_PLATFORMTHEME=qt5ct
@@ -23,7 +23,7 @@ export DISPLAY=:0
 setxkbmap ''
 setxkbmap -option ''
 
-{ pgrep -x xcape && pkill -x xcape; } >/dev/null 2>&1
+# { pgrep -x xcape && pkill -x xcape; } >/dev/null 2>&1
 
 setxkbmap us altgr-intl nodeadkeys
 
@@ -34,9 +34,10 @@ setxkbmap -option shift:both_capslock
 setxkbmap -option caps:shiftlock
 setxkbmap -option compose:rwin-altgr
 setxkbmap -option compose:lwin-altgr
-xcape -e 'Control_L=Escape' -t 210
-xcape -e 'Control_R=Escape' -t 210
-xcape -e 'Super_L=Return' -t 210
+# xcape -e 'Control_L=Escape' -t 210
+# xcape -e 'Control_R=Escape' -t 210
+# xcape -e 'Super_L=Return' -t 210
+# xcape -e 'Shift_R=Return' -t 210
 
 numlockx on
 
