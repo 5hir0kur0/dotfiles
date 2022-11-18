@@ -12,13 +12,13 @@ function e {
 
 alias ew='emacs -nw'
 
-alias ls='ls -q --color=auto'
+alias ls='ls -q --color=auto --hyperlink=auto'
 alias ll='ls -lh'
 alias la='ls -A'
 alias lla='la -Alh'
 alias l='ls -C'
 alias lr='ls -lAht'
-alias lrr='lr | head'
+alias lrr='lr --color=always | head'
 alias lsd='ls -ld'
 alias '..'='cd ..'
 alias '...'='cd ../..'
@@ -108,7 +108,6 @@ function update {
     paru -Syu
     sudo pacdiff
 }
-alias yay=update
 
 alias mpva='mpv --no-video'
 
