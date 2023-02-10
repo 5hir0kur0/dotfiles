@@ -33,8 +33,8 @@ schemes:
 
     # Colors the cursor will use if `custom_cursor_colors` is true
     cursor:
-      text: '0x1d2021'
-      cursor: '0xd5c4a1'
+      text: '#1d2021'
+      cursor: '#d5c4a1'
 
     # Normal colors
     normal:
