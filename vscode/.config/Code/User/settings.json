@@ -1,0 +1,64 @@
+{
+    "workbench.colorTheme": "Solarized Light",
+    "editor.fontFamily": "'Iosevka Slab', 'monaco', monospace",
+    "editor.fontSize": 18,
+    "editor.stickyScroll.enabled": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "vim.camelCaseMotion.enable": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.enableNeovim": true,
+    "vim.highlightedyank.enable": true,
+    "vim.replaceWithRegister": true,
+    "vim.sneak": true,
+    "vim.useSystemClipboard": true,
+    "vim.visualstar": true,
+    "svelte.enable-ts-plugin": true,
+    "svelte.plugin.svelte.note-new-transformation": false,
+    "window.zoomLevel": 1.1,
+    "git.autofetch": true,
+    // Vim easymotion is required for Jump menu - <SPC> j
+    "vim.easymotion": true,
+    // Trigger the main which key menu with in the active editor with vim
+    // This cannot be put into keybindings.json because it will
+    // create conflict with Vim.
+    // https://github.com/stevenguh/spacecode/issues/3
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<space>"],
+            "commands": ["vspacecode.space"]
+        },
+        {
+            "before": [","],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<space>"],
+            "commands": ["vspacecode.space"]
+        },
+        {
+            "before": [","],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        }
+    ],
+    "debug.toolBarLocation": "docked",
+    "window.titleBarStyle": "custom",
+    "markdown-pdf.executablePath": "/usr/bin/chromium",
+    "workbench.editor.enablePreview": false,
+    "files.insertFinalNewline": true
+}
