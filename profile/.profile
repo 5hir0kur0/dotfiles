@@ -20,7 +20,7 @@ fi
 
 # doom emacs
 if [[ "$PATH" != *"$HOME/.emacs/bin"* ]]; then
-    export PATH="$PATH:$HOME/.emacs.d/bin"
+    export PATH="$PATH:$HOME/.config/emacs/bin"
 fi
 
 export EDITOR=nvim
@@ -53,7 +53,7 @@ export MY_WLAN
 export SSH_AGENT_PID
 export SSH_AUTH_SOCK
 
-if [ -z "$SSH_AUTH_SOCK" ]; then
+if [ -z "$SSH_AUTH_SOCK" ] || ! [ -f "$SSH_AUTH_SOCK" ]; then
     SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$HOME/.ssh/.ssh-agent.sock}"
     if ! SSH_AGENT_PID=$(pgrep -x ssh-agent -u "$(id -u)" | head -n 1); then
         rm -f "${SSH_AUTH_SOCK:?}"
