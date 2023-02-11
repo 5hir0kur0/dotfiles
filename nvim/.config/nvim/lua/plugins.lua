@@ -312,7 +312,7 @@ return require('packer').startup(function()
                 options = {
                     icons_enabled = false,
                     section_separators = '',
-                    component_separators = '',
+                    component_separators = ''
                 }
             }
         end

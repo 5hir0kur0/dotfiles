@@ -215,6 +215,7 @@ set termguicolors
 " enable syntax highlighting
 syntax enable
 
+let g:gruvbox_contrast_dark="hard"
 colorscheme gruvbox
 
 " Required for operations modifying multiple buffers like rename.
