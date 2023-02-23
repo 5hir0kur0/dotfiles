@@ -1,10 +1,12 @@
 {
-    "workbench.colorTheme": "Solarized Light",
+    "workbench.colorTheme": "Default Light+ Experimental",
     "editor.fontFamily": "'Iosevka Slab', 'monaco', monospace",
     "editor.fontSize": 18,
     "editor.stickyScroll.enabled": true,
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
+    "git.autofetch": true,
+    "svelte.enable-ts-plugin": true,
     "vim.camelCaseMotion.enable": true,
     "vim.cursorStylePerMode.insert": "line",
     "vim.cursorStylePerMode.normal": "block",
@@ -14,10 +16,7 @@
     "vim.sneak": true,
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
-    "svelte.enable-ts-plugin": true,
-    "svelte.plugin.svelte.note-new-transformation": false,
-    "window.zoomLevel": 1.1,
-    "git.autofetch": true,
+    "vim.hlsearch": true,
     // Vim easymotion is required for Jump menu - <SPC> j
     "vim.easymotion": true,
     // Trigger the main which key menu with in the active editor with vim
@@ -38,7 +37,7 @@
                     "args": "m"
                 }
             ]
-        }
+        },
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -54,11 +53,11 @@
                     "args": "m"
                 }
             ]
-        }
+        },
     ],
     "debug.toolBarLocation": "docked",
     "window.titleBarStyle": "custom",
     "markdown-pdf.executablePath": "/usr/bin/chromium",
     "workbench.editor.enablePreview": false,
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
 }

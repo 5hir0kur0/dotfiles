@@ -118,6 +118,10 @@
 		"command": "file-browser.stepIn",
 		"when": "inFileBrowser"
 	},
+	{
+		"key": "alt+d",
+		"command": "editor.action.addSelectionToNextFindMatch"
+	},
 	// pass C-e and C-p to terminal when it's in focus
     {
         "key": "ctrl+e",
