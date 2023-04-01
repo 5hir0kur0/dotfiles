@@ -35,6 +35,8 @@
 *color7:  #a89984
 *color15: #ebdbb2
 
+Xcursor.size: 16
+
 ! URxvt config
 !URxvt*background: base00
 !URxvt*foreground: base05
