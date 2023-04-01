@@ -30,10 +30,10 @@ setxkbmap us altgr-intl nodeadkeys
 # make both shift keys together act like caps lock
 # caps lock like ctrl (when pressed in conjunction with another key)
 # and like escape on its own
-setxkbmap -option shift:both_capslock
-setxkbmap -option caps:shiftlock
-setxkbmap -option compose:rwin-altgr
-setxkbmap -option compose:lwin-altgr
+#setxkbmap -option shift:both_capslock
+#setxkbmap -option caps:shiftlock
+#setxkbmap -option compose:rwin-altgr
+#setxkbmap -option compose:lwin-altgr
 # xcape -e 'Control_L=Escape' -t 210
 # xcape -e 'Control_R=Escape' -t 210
 # xcape -e 'Super_L=Return' -t 210
