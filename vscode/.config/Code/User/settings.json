@@ -9,6 +9,7 @@
     "svelte.enable-ts-plugin": true,
     "vim.camelCaseMotion.enable": true,
     "vim.cursorStylePerMode.insert": "line",
+    "vim.smartcase": true,
     "vim.cursorStylePerMode.normal": "block",
     "vim.enableNeovim": true,
     "vim.highlightedyank.enable": true,
@@ -60,4 +61,5 @@
     "markdown-pdf.executablePath": "/usr/bin/chromium",
     "workbench.editor.enablePreview": false,
     "files.insertFinalNewline": true,
+    "editor.formatOnSave": true,
 }
