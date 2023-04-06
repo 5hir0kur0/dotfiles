@@ -97,7 +97,7 @@ SPROMPT="'%U%R%u' -> '%F{cyan}%B%r%f%b' [nyae]? "
 setopt nobeep
 
 # warn if shell functions create global variables
-setopt warncreateglobal
+#setopt warncreateglobal
 # setopt warnnestedvar
 
 # don't run background jobs at a lower priority

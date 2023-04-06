@@ -95,8 +95,8 @@ alias gcc="gcc -Wall -Wextra -std=c99"
 alias pk-cc="gcc -std=c99 -g -Wall -Wextra -Wpedantic -Wbad-function-cast \
     -Wconversion -Wwrite-strings -Wstrict-prototypes"
 
-alias yt='youtube-dl --add-metadata -ic'
-alias yta='youtube-dl --add-metadata -xic'
+alias yt='yt-dlp --add-metadata -ic'
+alias yta='yt-dlp --add-metadata -xic'
 
 function paru {
     PKGEXT=.pkg.tar command paru --sudoloop --newsonupgrade --review \
