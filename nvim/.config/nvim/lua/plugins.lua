@@ -228,10 +228,14 @@ return require('packer').startup(function()
                             fallback()
                         end
                     end, { 'i', 's' }),
+                    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i','c'}),
+                    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i','c'}),
                 }),
                 sources = {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
+                    { name = 'buffer' },
+                    { name = 'path' },
                 },
             }
         end
