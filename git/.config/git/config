@@ -45,7 +45,7 @@
 	dw = diff --histogram --word-diff=color
 	backup = ! git stash store $(git stash create) -m \"workdir backup from $(date --iso-8601=minutes)\"
 	sm = submodule
-	smur = submodule update --recursive
+	smur = submodule update --recursive --init
 [credential]
 	helper = cache --timeout 600
 [help]
