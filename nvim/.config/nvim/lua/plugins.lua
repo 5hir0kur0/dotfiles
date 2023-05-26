@@ -236,6 +236,7 @@ return require('packer').startup(function()
                     { name = 'luasnip' },
                     { name = 'buffer' },
                     { name = 'path' },
+                    { name = 'buffer-lines' },
                 },
             }
         end
