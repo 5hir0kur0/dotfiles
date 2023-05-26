@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Default Light+ Experimental",
+    "workbench.colorTheme": "Default Light Modern",
     "editor.fontFamily": "'Iosevka Slab', 'monaco', monospace",
     "editor.fontSize": 18,
     "editor.stickyScroll.enabled": true,
@@ -26,11 +26,17 @@
     // https://github.com/stevenguh/spacecode/issues/3
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": ["<space>"],
-            "commands": ["vspacecode.space"]
+            "before": [
+                "<space>"
+            ],
+            "commands": [
+                "vspacecode.space"
+            ]
         },
         {
-            "before": [","],
+            "before": [
+                ","
+            ],
             "commands": [
                 "vspacecode.space",
                 {
@@ -42,11 +48,17 @@
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
-            "before": ["<space>"],
-            "commands": ["vspacecode.space"]
+            "before": [
+                "<space>"
+            ],
+            "commands": [
+                "vspacecode.space"
+            ]
         },
         {
-            "before": [","],
+            "before": [
+                ","
+            ],
             "commands": [
                 "vspacecode.space",
                 {
@@ -62,4 +74,6 @@
     "workbench.editor.enablePreview": false,
     "files.insertFinalNewline": true,
     "editor.formatOnSave": true,
+    "editor.mouseWheelZoom": true,
+    "window.zoomLevel": -1,
 }
