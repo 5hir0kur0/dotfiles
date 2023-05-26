@@ -42,12 +42,6 @@ export PS4='+${LINENO}: '
 # display man pages using neovim
 export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' '+nnoremap q ZQ' -"
 
-MY_ETHERNET=$(find /sys/class/net -name 'enp*' -print0 -name 'eth*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
-export MY_ETHERNET
-
-MY_WLAN=$(find /sys/class/net -name 'wlp*' -print0 -name 'wlan*' -print0 2>/dev/null | xargs -rL1 -0 basename | head -1)
-export MY_WLAN
-
 # SSH Agent
 
 export SSH_AGENT_PID
