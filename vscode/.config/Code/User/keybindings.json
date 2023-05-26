@@ -1,5 +1,5 @@
-// Place your key bindings in this file to override the defaults
 [
+	// VSpaceCode
 	{
 		"key": "space",
 		"command": "vspacecode.space",
@@ -122,15 +122,30 @@
 		"key": "alt+d",
 		"command": "editor.action.addSelectionToNextFindMatch"
 	},
+	{
+		"key": "ctrl+j",
+		"command": "selectNextCodeAction",
+		"when": "codeActionMenuVisible"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "selectPrevCodeAction",
+		"when": "codeActionMenuVisible"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "acceptSelectedCodeAction",
+		"when": "codeActionMenuVisible"
+	},
 	// pass C-e and C-p to terminal when it's in focus
-    {
-        "key": "ctrl+e",
-        "command": "ctrl+e",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+p",
-        "command": "ctrl+p",
-        "when": "terminalFocus"
-    },
+	{
+		"key": "ctrl+e",
+		"command": "ctrl+e",
+		"when": "terminalFocus"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "ctrl+p",
+		"when": "terminalFocus"
+	},
 ]
