@@ -76,4 +76,8 @@
     "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
     "window.zoomLevel": -1,
+    "latex-workshop.texcount.autorun": "onSave",
+    "latex-workshop.view.pdf.trim": 2,
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    "latex-workshop.latex.recipe.default": "lastUsed",
 }
