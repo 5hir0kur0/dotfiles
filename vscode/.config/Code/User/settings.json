@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Default Light Modern",
     "editor.fontFamily": "'Iosevka Slab', 'monaco', monospace",
     "editor.fontSize": 18,
     "editor.stickyScroll.enabled": true,
@@ -75,9 +74,17 @@
     "files.insertFinalNewline": true,
     "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
-    "window.zoomLevel": -1,
+    // "Disable" the auto-indent thing by just setting the command to `cat`.
+    // It's nice but I don't know how to stop it from indenting `verbatim`
+    // environments.
+    "latex-workshop.latexindent.path": "cat",
+    "latex-workshop.latexindent.args": [
+        "%TMPFILE%"
+    ],
     "latex-workshop.texcount.autorun": "onSave",
     "latex-workshop.view.pdf.trim": 2,
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
     "latex-workshop.latex.recipe.default": "lastUsed",
+    "window.autoDetectColorScheme": true,
+    "workbench.colorTheme": "Default Light Modern",
 }
