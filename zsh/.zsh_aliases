@@ -80,6 +80,7 @@ function less_pipe() {
 # to be able to scroll/search the buffer in `less`. The following of the pipe
 # can be continued using the `F` command of `less`.
 alias lessmesg="less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'"
+alias dmesg="dmesg --follow --time-format reltime"
 alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
 
 function log_view() {
