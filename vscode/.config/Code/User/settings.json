@@ -70,7 +70,6 @@
     "debug.toolBarLocation": "docked",
     "window.titleBarStyle": "custom",
     "markdown-pdf.executablePath": "/usr/bin/chromium",
-    "workbench.editor.enablePreview": false,
     "files.insertFinalNewline": true,
     "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
@@ -85,6 +84,16 @@
     "latex-workshop.view.pdf.trim": 2,
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
     "latex-workshop.latex.recipe.default": "lastUsed",
+    "workbench.editor.enablePreview": false,
     "window.autoDetectColorScheme": true,
     "workbench.colorTheme": "Default Light Modern",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.olean": true
+    },
 }
