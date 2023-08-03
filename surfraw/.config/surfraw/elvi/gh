@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: gh		-- shortcut for github
-
-surfraw github "$@"

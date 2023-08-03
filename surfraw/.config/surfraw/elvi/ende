@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: ende		-- shortcut for dict -l=ende
-
-surfraw dict -l=ende "$@"

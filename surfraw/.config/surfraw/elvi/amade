@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: amade		-- shortcut for amazon.de
-
-surfraw amazon -country=de "$@"

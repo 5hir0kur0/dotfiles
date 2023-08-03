@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wkde		-- shortcut for wikipedia -language=de
-
-surfraw wikipedia -language=de "$@"

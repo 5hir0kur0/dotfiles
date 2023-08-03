@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: trfrde		-- shortcut for translate -from=fr -to=de
-
-surfraw translate -from=fr -to=de "$@"

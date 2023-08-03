@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: ama		-- shortcut for amazon
-
-surfraw amazon "$@"

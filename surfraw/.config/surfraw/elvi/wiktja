@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wiktja		-- shortcut for wiktionary -l=ja
-
-surfraw wiktionary -l=ja "$@"

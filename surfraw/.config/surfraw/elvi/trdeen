@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: trdeen		-- shortcut for translate -from=de -to=en
-
-surfraw translate -from=de -to=en "$@"

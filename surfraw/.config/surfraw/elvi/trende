@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: trende		-- shortcut for translate -from=en -to=de
-
-surfraw translate -from=en -to=de "$@"

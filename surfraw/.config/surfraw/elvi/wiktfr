@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wiktfr		-- shortcut for wiktionary -l=fr
-
-surfraw wiktionary -l=fr "$@"

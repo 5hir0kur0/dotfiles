@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: kanji		-- search jisho.org with tag #kanji
-
-surfraw jisho '#kanji' "$@"

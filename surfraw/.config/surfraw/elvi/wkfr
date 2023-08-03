@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wkfr		-- shortcut for wikipedia -language=fr
-
-surfraw wikipedia -language=fr "$@"

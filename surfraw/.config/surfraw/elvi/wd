@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wd		-- shortcut for wadoku
-
-surfraw wadoku "$@"

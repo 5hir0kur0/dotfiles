@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: wiki		-- shortcut for wikipedia
-
-surfraw wikipedia "$@"

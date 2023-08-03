@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: yt		-- shortcut for youtube
-
-surfraw youtube "$@"

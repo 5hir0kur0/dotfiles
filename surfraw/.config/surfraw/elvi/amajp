@@ -1,5 +1,0 @@
-#!/bin/sh
-# $Id$
-# elvis: amajp		-- shortcut for amazon.jp
-
-surfraw amazon -country=jp "$@"
