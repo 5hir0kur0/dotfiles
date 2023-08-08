@@ -148,4 +148,14 @@
 		"command": "ctrl+p",
 		"when": "terminalFocus"
 	},
+	{
+		"key": "ctrl+d",
+		"command": "extension.vim_ctrl+d",
+		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl && vim.mode != 'Insert' && vim.mode != 'Visual'"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "-extension.vim_ctrl+d",
+		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl"
+	},
 ]

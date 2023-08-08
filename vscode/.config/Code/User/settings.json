@@ -17,6 +17,17 @@
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
     "vim.hlsearch": true,
+    "vim.argumentObjectOpeningDelimiters": [
+        "(",
+        "[",
+        "<"
+    ],
+    "vim.argumentObjectClosingDelimiters": [
+        ")",
+        "]",
+        ">"
+    ],
+    "vim.targets.enable": true,
     // Vim easymotion is required for Jump menu - <SPC> j
     "vim.easymotion": true,
     // Trigger the main which key menu with in the active editor with vim
@@ -86,7 +97,6 @@
     "latex-workshop.latex.recipe.default": "lastUsed",
     "workbench.editor.enablePreview": false,
     "window.autoDetectColorScheme": true,
-    "workbench.colorTheme": "Default Light Modern",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -96,4 +106,7 @@
         "**/Thumbs.db": true,
         "**/*.olean": true
     },
+    "cmake.configureOnOpen": true,
+    "files.autoSave": "afterDelay",
+    "vim.useCtrlKeys": false,
 }
