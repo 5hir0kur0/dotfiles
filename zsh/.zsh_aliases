@@ -91,10 +91,8 @@ alias -g wl='wc -l'
 
 alias hcat="highlight --force -O ansi"
 
-alias g++="g++ -Wall -Wextra -std=c++11"
-alias gcc="gcc -Wall -Wextra -std=c99"
-alias pk-cc="gcc -std=c99 -g -Wall -Wextra -Wpedantic -Wbad-function-cast \
-    -Wconversion -Wwrite-strings -Wstrict-prototypes"
+alias g++="g++ -Wall -Wextra -std=c++17"
+alias gcc="gcc -Wall -Wextra -std=c11"
 
 alias yt='yt-dlp --add-metadata -ic'
 alias yta='yt-dlp --add-metadata -xic'
@@ -135,11 +133,9 @@ lfcd () {
     command lf -last-dir-path="$tmp" "$@"
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
+        \rm -f "$tmp"
+        if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
+            cd "$dir"
         fi
     fi
 }
