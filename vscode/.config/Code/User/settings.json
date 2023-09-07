@@ -108,5 +108,8 @@
     },
     "cmake.configureOnOpen": true,
     "files.autoSave": "afterDelay",
-    "vim.useCtrlKeys": false,
+    "editor.dragAndDrop": false,
+    "editor.dropIntoEditor.enabled": false,
+    "files.autoSaveDelay": 3000,
+    "editor.smoothScrolling": true,
 }
