@@ -78,6 +78,11 @@
             ]
         },
     ],
+    // disable vim bindings for some common VS Code shortcuts
+    "vim.handleKeys": {
+        "<C-k>": false,
+        "<C-t>": false,
+    },
     "debug.toolBarLocation": "docked",
     "window.titleBarStyle": "custom",
     "markdown-pdf.executablePath": "/usr/bin/chromium",
@@ -110,6 +115,9 @@
     "files.autoSave": "afterDelay",
     "editor.dragAndDrop": false,
     "editor.dropIntoEditor.enabled": false,
-    "files.autoSaveDelay": 3000,
     "editor.smoothScrolling": true,
+    "diffEditor.experimental.showMoves": true,
+    "diffEditor.experimental.useVersion2": true,
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "editor.minimap.renderCharacters": false,
 }
