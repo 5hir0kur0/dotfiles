@@ -120,4 +120,9 @@
     "diffEditor.experimental.useVersion2": true,
     "terminal.integrated.sendKeybindingsToShell": true,
     "editor.minimap.renderCharacters": false,
+    "workbench.colorTheme": "Default Light Modern",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "terminal.integrated.smoothScrolling": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.linkedEditing": true,
 }
