@@ -144,11 +144,6 @@
 		"when": "terminalFocus"
 	},
 	{
-		"key": "ctrl+p",
-		"command": "ctrl+p",
-		"when": "terminalFocus"
-	},
-	{
 		"key": "ctrl+d",
 		"command": "extension.vim_ctrl+d",
 		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl && vim.mode != 'Insert' && vim.mode != 'Visual'"
@@ -158,4 +153,9 @@
 		"command": "-extension.vim_ctrl+d",
 		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl"
 	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpen",
+		"when": "vim.mode != 'Insert' && !terminalFocus"
+	}
 ]

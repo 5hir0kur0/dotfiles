@@ -125,4 +125,5 @@
     "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "smooth",
     "editor.linkedEditing": true,
+    "workbench.list.smoothScrolling": true,
 }
