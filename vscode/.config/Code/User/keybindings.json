@@ -157,5 +157,19 @@
 		"key": "ctrl+p",
 		"command": "workbench.action.quickOpen",
 		"when": "vim.mode != 'Insert' && !terminalFocus"
+	},
+	// Hippie completion like in Emacs (needs an extension)
+	{
+		"key": "alt+/",
+		"command": "hippie-completion.next",
+	},
+	{
+		"key": "alt+shift+/",
+		"command": "hippie-completion.prev",
+	},
+	// close all notifications (message boxes)
+	{
+		"key": "shift+escape",
+		"command": "notifications.clearAll"
 	}
 ]
