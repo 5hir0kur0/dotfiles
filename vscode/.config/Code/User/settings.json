@@ -55,6 +55,14 @@
                 }
             ]
         },
+        {
+            "before": [
+                "K"
+            ],
+            "commands": [
+                "editor.action.showHover",
+            ]
+        }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
