@@ -229,7 +229,7 @@ EOF
     local PIDS=( $(pgrep -x $1) )
     local PID
     for PID in "${PIDS[@]}"; do
-        echo 0 $(awk "/${2:-Pss}/ {print \"+\", \$2}" "/proc/$PID/smaps") | bc
+        awk "BEGIN {res = 0} /^${2:-Pss}:/ {res += \$2} END {print res}" "/proc/$PID/smaps"
     done
 }
 
