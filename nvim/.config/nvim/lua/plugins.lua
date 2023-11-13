@@ -260,7 +260,7 @@ return require('packer').startup(function()
     }
 
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
             local builtin = require('telescope.builtin')
