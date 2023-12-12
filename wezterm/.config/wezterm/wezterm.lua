@@ -2,6 +2,7 @@ local wezterm = require 'wezterm'
 return {
     scrollback_lines = 10000,
     font =  wezterm.font_with_fallback {
+        -- 'Monaspace Xenon',
         {
             family = 'Iosevka Term Slab',
             -- harfbuzz_features = { '+ss07' },
@@ -9,7 +10,8 @@ return {
         'Noto Serif CJK JP',
     },
     font_size = 16.0,
-    color_scheme = 'GruvboxDark',
+    color_scheme = 'GruvboxDarkHard',
+    default_cursor_style = 'SteadyBar',
     hide_tab_bar_if_only_one_tab = true,
     window_decorations = "RESIZE",
     window_padding = {
