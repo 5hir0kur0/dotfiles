@@ -1,0 +1,27 @@
+import = [
+    # Color Scheme. Values:
+    # - gruvbox_dark.toml
+    # - monokai_dark.toml
+    # - nord.toml
+    # - solarized_dark.toml
+    # - solarized_light.toml
+    "~/.config/alacritty/gruvbox_dark.toml"
+]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+# [env]
+# TERM = "xterm-256color"
+
+[font]
+size = 13
+offset = { x = 0, y = -1}
+normal = { family = "Iosevka Term Slab", style = "Regular" }
+
+[shell]
+args = ["--login"]
+program = "zsh"
+
+[window]
+decorations = "none"
