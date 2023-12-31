@@ -94,6 +94,14 @@
                 }
             ]
         },
+        {
+            "before": [
+                "<C-i>"
+            ],
+            "commands": [
+                "inlineChat.start"
+            ]
+        }
     ],
     // disable vim bindings for some common VS Code shortcuts
     "vim.handleKeys": {
@@ -146,6 +154,19 @@
     },
     "latex-workshop.view.pdf.invert": 1,
     "latex-workshop.view.pdf.invertMode.sepia": 0.8,
-    "latex-workshop.view.pdf.invertMode.brightness": 1.1,
+    "latex-workshop.view.pdf.invertMode.brightness": 1.0,
     "files.trimTrailingWhitespace": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "workbench.sideBar.location": "right",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "latex": false
+    },
+    "workbench.tree.enableStickyScroll": true,
+    "editor.renderWhitespace": "none",
+    "editor.lineNumbers": "relative",
+    "git.suggestSmartCommit": false,
 }
