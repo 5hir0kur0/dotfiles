@@ -35,9 +35,9 @@ MAPPINGS:
     HOLD: KEY_RIGHTSHIFT
 
   # capslock acts as capslock when tapped, shift when held
-  - KEY: KEY_CAPSLOCK
-    TAP: KEY_CAPSLOCK
-    HOLD: KEY_LEFTSHIFT
+  # - KEY: KEY_CAPSLOCK
+  #   TAP: KEY_CAPSLOCK
+  #   HOLD: KEY_LEFTSHIFT
 
   # left super acts as return when tapped -- convenient in i3/sway, inconvenient in gnome
   #- KEY: KEY_LEFTMETA
