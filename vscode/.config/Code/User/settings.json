@@ -1,5 +1,10 @@
 {
-    "editor.fontFamily": "'Monaspace Xenon', 'Iosevka Slab', 'Monego', 'monaco', monospace",
+    //
+    // ----------------
+    // Editor Settings:
+    // ----------------
+    //
+    "editor.fontFamily": "'Iosevka Slab', 'Monego', 'monaco', monospace",
     // "editor.fontLigatures": true,
     "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss07'",
     "editor.fontSize": 18,
@@ -13,8 +18,31 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorBlinking": "smooth",
     "editor.linkedEditing": true,
+    "editor.formatOnSave": true,
+    "editor.mouseWheelZoom": true,
+    "editor.renderWhitespace": "none",
+    "editor.lineNumbers": "relative",
+    //
+    // -------------
+    // Git Settings:
+    // -------------
+    //
     "git.autofetch": true,
-    "svelte.enable-ts-plugin": true,
+    "git.suggestSmartCommit": false,
+    //
+    // -------------------
+    // Workbench Settings:
+    // -------------------
+    //
+    "workbench.sideBar.location": "right",
+    "workbench.tree.enableStickyScroll": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.list.smoothScrolling": true,
+    //
+    // -------------
+    // VIM Settings:
+    // -------------
+    //
     "vim.camelCaseMotion.enable": true,
     "vim.cursorStylePerMode.insert": "line",
     "vim.smartcase": true,
@@ -108,12 +136,43 @@
         "<C-k>": false,
         "<C-t>": false,
     },
-    "debug.toolBarLocation": "docked",
+    //
+    // ----------------
+    // Window Settings:
+    // ----------------
+    //
     "window.titleBarStyle": "custom",
-    "markdown-pdf.executablePath": "/usr/bin/chromium",
+    "window.autoDetectColorScheme": true,
+    "window.density.editorTabHeight": "compact",
+    //
+    // ------------------
+    // Terminal Settings:
+    // ------------------
+    //
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "terminal.integrated.smoothScrolling": true,
+    //
+    // ---------------
+    // Files Settings:
+    // ---------------
+    //
     "files.insertFinalNewline": true,
-    "editor.formatOnSave": true,
-    "editor.mouseWheelZoom": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.olean": true
+    },
+    "files.autoSave": "afterDelay",
+    "files.trimTrailingWhitespace": true,
+    //
+    // ---------------
+    // Latex Settings:
+    // ---------------
+    //
     // "Disable" the auto-indent thing by just setting the command to `cat`.
     // It's nice but I don't know how to stop it from indenting `verbatim`
     // environments.
@@ -125,39 +184,21 @@
     "latex-workshop.view.pdf.trim": 2,
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
     "latex-workshop.latex.recipe.default": "lastUsed",
-    "workbench.editor.enablePreview": false,
-    "window.autoDetectColorScheme": true,
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/*.olean": true
-    },
-    "cmake.configureOnOpen": true,
-    "files.autoSave": "afterDelay",
-    "diffEditor.experimental.showMoves": true,
-    "terminal.integrated.sendKeybindingsToShell": true,
-    "terminal.integrated.smoothScrolling": true,
-    "workbench.list.smoothScrolling": true,
-    "cSpell.userWords": [
-        "heur",
-        "proptest"
-    ],
-    "window.density.editorTabHeight": "compact",
-    "breadcrumbs.enabled": false,
-    "redhat.telemetry.enabled": false,
     "ltex.latex.commands": {
         "\\Lightning": "dummy"
     },
     "latex-workshop.view.pdf.invert": 1,
     "latex-workshop.view.pdf.invertMode.sepia": 0.8,
     "latex-workshop.view.pdf.invertMode.brightness": 1.0,
-    "files.trimTrailingWhitespace": true,
+    //
+    // ---------------
+    // Misc. Settings:
+    // ---------------
+    //
+    "debug.toolBarLocation": "docked",
+    "diffEditor.experimental.showMoves": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "workbench.sideBar.location": "right",
+    "breadcrumbs.enabled": false,
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
@@ -165,8 +206,12 @@
         "scminput": false,
         "latex": false
     },
-    "workbench.tree.enableStickyScroll": true,
-    "editor.renderWhitespace": "none",
-    "editor.lineNumbers": "relative",
-    "git.suggestSmartCommit": false,
+    "svelte.enable-ts-plugin": true,
+    "markdown-pdf.executablePath": "/usr/bin/chromium",
+    "redhat.telemetry.enabled": false,
+    "cmake.configureOnOpen": true,
+    "cSpell.userWords": [
+        "heur",
+        "proptest"
+    ],
 }
