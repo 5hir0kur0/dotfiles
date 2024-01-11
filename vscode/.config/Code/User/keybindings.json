@@ -144,6 +144,11 @@
 		"when": "terminalFocus"
 	},
 	{
+		"key": "ctrl+j",
+		"command": "workbench.action.togglePanel",
+		"when": "terminalFocus"
+	},
+	{
 		"key": "ctrl+d",
 		"command": "extension.vim_ctrl+d",
 		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl && vim.mode != 'Insert' && vim.mode != 'Visual'"
@@ -153,10 +158,21 @@
 		"command": "-extension.vim_ctrl+d",
 		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl"
 	},
+	// Restore some default shortcuts that don't work in VIM
 	{
 		"key": "ctrl+p",
 		"command": "workbench.action.quickOpen",
-		"when": "vim.mode != 'Insert' && !terminalFocus"
+		"when": "!terminalFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "expandLineSelection",
+		"when": "vim.mode == 'Insert' && textInputFocus",
+	},
+	{
+		"key": "ctrl+g",
+		"command": "workbench.action.gotoLine",
+		"when": "vim.mode == 'Insert'",
 	},
 	// Hippie completion like in Emacs (needs an extension)
 	{

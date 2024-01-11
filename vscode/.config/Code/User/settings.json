@@ -54,6 +54,9 @@
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
     "vim.hlsearch": true,
+    "vim.smartRelativeLine": true,
+    "vim.leader": " ",
+    "vim.showMarksInGutter": true,
     "vim.argumentObjectOpeningDelimiters": [
         "(",
         "[",
@@ -65,6 +68,8 @@
         ">"
     ],
     "vim.targets.enable": true,
+    // Plugins:
+    // --------
     // Vim easymotion is required for Jump menu - <SPC> j
     "vim.easymotion": true,
     // Trigger the main which key menu with in the active editor with vim
@@ -131,10 +136,15 @@
             ]
         }
     ],
+    "vim.insertModeKeyBindings": [],
     // disable vim bindings for some common VS Code shortcuts
     "vim.handleKeys": {
+        "<C-j>": false,
         "<C-k>": false,
         "<C-t>": false,
+        "<C-x>": false,
+        "<C-[>": false,
+        "<C-]>": false,
     },
     //
     // ----------------
@@ -149,7 +159,75 @@
     // Terminal Settings:
     // ------------------
     //
-    "terminal.integrated.sendKeybindingsToShell": true,
+    // "terminal.integrated.sendKeybindingsToShell": true,
+    // Is there no better way to do this? I want to disable all keybindings in the terminal except for C-j basically...
+    "terminal.integrated.commandsToSkipShell": [
+        "-editor.action.accessibilityHelp",
+        "-editor.action.toggleTabFocusMode",
+        "-notification.acceptPrimaryAction",
+        "-notifications.hideList",
+        "-notifications.hideToasts",
+        "-runCommands",
+        "-workbench.action.closeQuickOpen",
+        "-workbench.action.debug.continue",
+        "-workbench.action.debug.pause",
+        "-workbench.action.debug.restart",
+        "-workbench.action.debug.run",
+        "-workbench.action.debug.start",
+        "-workbench.action.debug.stepInto",
+        "-workbench.action.debug.stepOut",
+        "-workbench.action.debug.stepOver",
+        "-workbench.action.debug.stop",
+        "-workbench.action.firstEditorInGroup",
+        "-workbench.action.focusActiveEditorGroup",
+        "-workbench.action.focusEighthEditorGroup",
+        "-workbench.action.focusFifthEditorGroup",
+        "-workbench.action.focusFirstEditorGroup",
+        "-workbench.action.focusFourthEditorGroup",
+        "-workbench.action.focusLastEditorGroup",
+        "-workbench.action.focusNextPart",
+        "-workbench.action.focusPreviousPart",
+        "-workbench.action.focusSecondEditorGroup",
+        "-workbench.action.focusSeventhEditorGroup",
+        "-workbench.action.focusSixthEditorGroup",
+        "-workbench.action.focusThirdEditorGroup",
+        "-workbench.action.lastEditorInGroup",
+        "-workbench.action.navigateDown",
+        "-workbench.action.navigateLeft",
+        "-workbench.action.navigateRight",
+        "-workbench.action.navigateUp",
+        "-workbench.action.nextEditor",
+        "-workbench.action.nextEditorInGroup",
+        "-workbench.action.nextPanelView",
+        "-workbench.action.nextSideBarView",
+        "-workbench.action.openNextRecentlyUsedEditor",
+        "-workbench.action.openNextRecentlyUsedEditorInGroup",
+        "-workbench.action.openPreviousRecentlyUsedEditor",
+        "-workbench.action.openPreviousRecentlyUsedEditorInGroup",
+        "-workbench.action.previousEditor",
+        "-workbench.action.previousEditorInGroup",
+        "-workbench.action.previousPanelView",
+        "-workbench.action.previousSideBarView",
+        "-workbench.action.quickOpen",
+        "-workbench.action.quickOpenLeastRecentlyUsedEditor",
+        "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+        "-workbench.action.quickOpenPreviousEditor",
+        "-workbench.action.quickOpenPreviousRecentlyUsedEditor",
+        "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+        "-workbench.action.quickOpenView",
+        "-workbench.action.showCommands",
+        "-workbench.action.tasks.build",
+        "-workbench.action.tasks.reRunTask",
+        "-workbench.action.tasks.restartTask",
+        "-workbench.action.tasks.runTask",
+        "-workbench.action.tasks.showLog",
+        "-workbench.action.tasks.showTasks",
+        "-workbench.action.tasks.terminate",
+        "-workbench.action.tasks.test",
+        "-workbench.action.toggleFullScreen",
+        "-workbench.action.toggleMaximizedPanel",
+        "workbench.action.togglePanel",
+    ],
     "terminal.integrated.smoothScrolling": true,
     //
     // ---------------
@@ -187,7 +265,7 @@
     "ltex.latex.commands": {
         "\\Lightning": "dummy"
     },
-    "latex-workshop.view.pdf.invert": 1,
+    "latex-workshop.view.pdf.invert": 0,
     "latex-workshop.view.pdf.invertMode.sepia": 0.8,
     "latex-workshop.view.pdf.invertMode.brightness": 1.0,
     //
