@@ -165,9 +165,10 @@
 		"when": "!terminalFocus"
 	},
 	{
+		// This is expandLineSelection by default.
 		"key": "ctrl+l",
-		"command": "expandLineSelection",
-		"when": "vim.mode == 'Insert' && textInputFocus",
+		"command": "editor.action.smartSelect.expand",
+		"when": "textInputFocus",
 	},
 	{
 		"key": "ctrl+g",
