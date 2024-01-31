@@ -275,7 +275,6 @@
     //
     "debug.toolBarLocation": "docked",
     "diffEditor.experimental.showMoves": true,
-    "diffEditor.hideUnchangedRegions.enabled": true,
     "breadcrumbs.enabled": false,
     "github.copilot.enable": {
         "*": true,
@@ -292,4 +291,6 @@
         "heur",
         "proptest"
     ],
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "workbench.colorTheme": "Default Light Modern",
 }
