@@ -97,6 +97,8 @@ set sidescrolloff=10
 
 " also use gui cursor in terminal (the cursor changes in insert mode)
 set guicursor&
+" reset cursor to beam when leaving VIM
+autocmd VimLeave * set guicursor=a:ver100-blinkon0
 
 " enable mouse support (all modes)
 set mouse=a
@@ -166,6 +168,9 @@ noremap <silent> <Esc> <Esc><Esc>
 " save from insert mode
 inoremap <silent> <C-s> <Esc>:update<CR>a
 nnoremap <silent> <C-s> :update<CR>
+
+" use Y for copying up to the end of the line like in DOOM Emacs
+nnoremap Y y$
 
 " use :w!! to force saving files that require root permission
 cnoremap w!! w !sudo tee > /dev/null %
