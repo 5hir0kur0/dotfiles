@@ -104,6 +104,16 @@
             "commands": [
                 "editor.action.showHover",
             ]
+        },
+        {
+            // Make Y work like in Doom Emacs
+            "before": [
+                "Y"
+            ],
+            "after": [
+                "y",
+                "$"
+            ]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
@@ -229,6 +239,7 @@
         "workbench.action.togglePanel",
     ],
     "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.mouseWheelZoom": true,
     //
     // ---------------
     // Files Settings:
@@ -279,7 +290,6 @@
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
-        "markdown": false,
         "scminput": false,
         "latex": false
     },
@@ -288,9 +298,12 @@
     "redhat.telemetry.enabled": false,
     "cmake.configureOnOpen": true,
     "cSpell.userWords": [
+        "Beamer",
         "heur",
         "proptest"
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
+    "terminal.integrated.fontSize": 21,
+    "terminal.integrated.cursorStyle": "line",
     "workbench.colorTheme": "Default Light Modern",
 }
