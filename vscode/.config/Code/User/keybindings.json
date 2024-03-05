@@ -160,6 +160,8 @@
         "when": "inFileBrowser"
     },
 	// </VSpaceCode>
+
+    // Terminal Shortcuts
 	// Allow toggling the terminal when it's in focus with Ctrl+J
 	{
 		"key": "ctrl+j",
@@ -176,6 +178,57 @@
 		"command": "-extension.vim_ctrl+d",
 		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl"
 	},
+    // Terminal shortcuts inspired by my tmux config
+    {
+        "key": "alt+shift+o",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "alt+shift+e",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "alt+c",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalFocus && terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+    },
+    {
+        "key": "alt+p",
+        "command": "workbench.action.terminal.focusPrevious",
+        "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+    },
+    {
+        "key": "alt+l",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+j",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+h",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+k",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+shift+b",
+        "command": "workbench.action.terminal.moveToEditor",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
 	// Restore some default shortcuts that don't work in VIM
 	{
 		"key": "ctrl+p",
