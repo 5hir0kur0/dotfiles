@@ -426,6 +426,13 @@ PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 # old prompt
 #PROMPT="%F{red}%(0?..[%?])%f%F{magenta}%n%f%F{white}:%f%F{cyan}%~ %# %f"
 
+# Automatically run `ls` after every `cd`
+cd_fun() {
+    #basename $PWD | toilet --font pagga --termwidth | lolcat
+    ls
+}
+chpwd_functions+=( cd_fun )
+
 
 ## fzf
 export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
