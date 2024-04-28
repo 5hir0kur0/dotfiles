@@ -33,6 +33,7 @@ emacs
 fasd
 fbreader
 fcitx
+fcitx5-im
 fcitx-configtool
 fcitx-gtk2
 fcitx-gtk3
@@ -61,6 +62,7 @@ i3status
 i3-wm
 inetutils
 inkscape
+interception-dual-function-keys
 iotop
 ipython
 iw
