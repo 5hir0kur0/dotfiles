@@ -428,8 +428,17 @@ PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
 
 # Automatically run `ls` after every `cd`
 cd_fun() {
+    # Alternative for some more fun:
     #basename $PWD | toilet --font pagga --termwidth | lolcat
-    ls
+    local ls_output
+    ls_output=$(ls --color --hyperlink --format=across --width="$COLUMNS")
+    num_lines=$(wc -l <<<"$ls_output")
+    if [ "$num_lines" -le 5 ]; then
+        echo "$ls_output"
+    else
+        echo "$ls_output" | head -n 5
+        echo -e "\033[1;36m[...]\033[0m" # 1;36 for bold cyan
+    fi
 }
 chpwd_functions+=( cd_fun )
 
