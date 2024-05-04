@@ -49,3 +49,4 @@ nmap <leader><leader> :action SearchEverywhere<CR>
 nmap g[ :action GotoDeclaration<CR>
 nmap ]e :action GotoNextError<CR>
 nmap [e :action GotoPreviousError<CR>
+nmap Y y$
