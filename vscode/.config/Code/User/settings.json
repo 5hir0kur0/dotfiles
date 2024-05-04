@@ -22,6 +22,7 @@
     "editor.mouseWheelZoom": true,
     "editor.renderWhitespace": "none",
     "editor.lineNumbers": "relative",
+    "explorer.excludeGitIgnore": true,
     //
     // -------------
     // Git Settings:
@@ -29,6 +30,8 @@
     //
     "git.autofetch": true,
     "git.suggestSmartCommit": false,
+    "git.terminalGitEditor": true,
+    "git.verboseCommit": true,
     //
     // -------------------
     // Workbench Settings:
@@ -36,7 +39,6 @@
     //
     "workbench.sideBar.location": "right",
     "workbench.tree.enableStickyScroll": true,
-    "workbench.editor.enablePreview": false,
     "workbench.list.smoothScrolling": true,
     //
     // -------------
@@ -47,7 +49,6 @@
     "vim.cursorStylePerMode.insert": "line",
     "vim.smartcase": true,
     "vim.cursorStylePerMode.normal": "block",
-    "vim.enableNeovim": true,
     "vim.highlightedyank.enable": true,
     "vim.replaceWithRegister": true,
     "vim.sneak": true,
@@ -171,6 +172,7 @@
     //
     // "terminal.integrated.sendKeybindingsToShell": true,
     // Is there no better way to do this? I want to disable all keybindings in the terminal except for C-j basically...
+    "terminal.integrated.allowChords": false,
     "terminal.integrated.commandsToSkipShell": [
         "-editor.action.accessibilityHelp",
         "-editor.action.toggleTabFocusMode",
@@ -234,6 +236,8 @@
         "-workbench.action.tasks.showTasks",
         "-workbench.action.tasks.terminate",
         "-workbench.action.tasks.test",
+        "-workbench.action.terminal.findNext",
+        "-workbench.action.terminal.focusFind",
         "-workbench.action.toggleFullScreen",
         "-workbench.action.toggleMaximizedPanel",
         "workbench.action.togglePanel",
@@ -290,6 +294,7 @@
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
+        "markdown": true,
         "scminput": false,
         "latex": false
     },
@@ -303,7 +308,26 @@
         "proptest"
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "terminal.integrated.fontSize": 21,
+    "terminal.integrated.fontSize": 20,
     "terminal.integrated.cursorStyle": "line",
+    //
+    // ---------------
+    // Python Settings:
+    // ---------------
+    //
+    "python.analysis.inlayHints.callArgumentNames": "all",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.extraCommitChars": true,
+    "python.terminal.launchArgs": [
+        "-m",
+        "IPython",
+        "--no-autoindent",
+    ],
+    // etc.
+    "bitbake.parseOnSave": false,
     "workbench.colorTheme": "Default Light Modern",
 }
