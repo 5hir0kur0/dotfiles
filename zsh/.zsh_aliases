@@ -34,6 +34,7 @@ function mkcd() {
     [ -d "$1" ] || mkdir -p "$1"
     cd "$1" || return 1
 }
+alias take=mkcd
 #alias rm='rm -Iv --one-file-system'
 alias rm='trash'
 alias rmback='trash *~'
@@ -48,7 +49,7 @@ alias dwdiff='wdiff'
 alias g='git'
 alias gg='git grep -i --break --heading --no-index'
 alias rg='rg --smart-case --hidden --no-ignore'
-alias fd='\fd --follow --full-path --hidden --no-ignore --show-errors'
+alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
 alias ip='ip -color'
 
 alias encrypt_gpg='gpg --symmetric'
