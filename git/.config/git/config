@@ -54,6 +54,8 @@
 	lineNumber = true
 [diff]
 	mnemonicprefix = true
+	colormoved = "default"
+	colormovedws = "allow-indentation-change"
 [gc]
 	reflogexpire = 1 year
 	reflogexpireunreachable = 120 days
