@@ -46,6 +46,7 @@
 	backup = ! git stash store $(git stash create) -m \"workdir backup from $(date --iso-8601=minutes)\"
 	sm = submodule
 	smur = submodule update --recursive --init
+	recent = ! git branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\" | head -10
 [credential]
 	helper = cache --timeout 600
 [help]
