@@ -1,0 +1,27 @@
+[manager]
+ratio          = [ 1, 3, 4 ]
+sort_by        = "natural"
+sort_dir_first = true
+linemode       = "size"
+
+[preview]
+tab_size = 2
+max_width = 4000
+max_height = 2000
+
+[plugin]
+prepend_previewers = [
+    { name = "*.md", run = "glow" },
+    { mime = "text/csv", run = "miller" },
+    { mime = "audio/*", run = "exifaudio" },
+    # Archive previewer
+    { mime = "application/*zip",            run = "ouch" },
+    { mime = "application/x-tar",           run = "ouch" },
+    { mime = "application/x-bzip2",         run = "ouch" },
+    { mime = "application/x-7z-compressed", run = "ouch" },
+    { mime = "application/x-rar",           run = "ouch" },
+    { mime = "application/x-xz",            run = "ouch" },
+]
+append_previewers = [
+    { name = "*", run = "hexyl" },
+]
