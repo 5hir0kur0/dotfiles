@@ -142,6 +142,22 @@ lfcd () {
 }
 alias lf=lfcd
 
+yazi_cd() {
+    tmp="$(mktemp)"
+    # `command` is needed in case `yazi_cd` is aliased to `yazi`
+    command yazi --cwd-file="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        \rm -f "$tmp"
+        if [ -d "$dir" ] && [ "$dir" != "$(pwd)" ]; then
+            cd "$dir" || return 1
+        fi
+    fi
+}
+alias y=yazi_cd
+alias yazi=yazi_cd
+alias r=yazi_cd
+
 function findoldfiles() {
     find "${1:-.}" -atime "+${2:-60}"
 }
