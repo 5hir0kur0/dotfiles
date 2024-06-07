@@ -276,5 +276,10 @@
     {
         "key": "shift+escape",
         "command": "notifications.clearAll"
-    }
+    },
+    // Quick search
+    {
+        "key": "ctrl+shift+q",
+        "command": "workbench.action.quickTextSearch"
+    },
 ]
