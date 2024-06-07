@@ -386,6 +386,9 @@ alias alert_completion='_alert_completion'
 # in case I'm not...
 alias alert_completion_me='_alert_completion --only-me'
 
+# Zoxide
+eval "$(zoxide init zsh)" || true
+alias j=z
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
