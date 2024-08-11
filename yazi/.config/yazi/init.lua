@@ -1,10 +1,12 @@
-function File:icon(file)
-	local icon = file:icon()
+function Entity:icon()
+	local icon = self._file:icon()
 	if not icon then
-		return {}
-	elseif file:is_hovered() then
-		return { ui.Span(" " .. icon.text .. "  ") }
+		return ui.Line("")
+	elseif self._file:is_hovered() then
+		return ui.Line(" " .. icon.text .. "  ")
 	else
-		return { ui.Span(" " .. icon.text .. "  "):style(icon.style) }
+		return ui.Line(" " .. icon.text .. "  "):style(icon.style)
 	end
 end
+
+require("full-border"):setup()
