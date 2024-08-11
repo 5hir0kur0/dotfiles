@@ -21,7 +21,6 @@
     "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
     "editor.renderWhitespace": "none",
-    "editor.lineNumbers": "relative",
     "explorer.excludeGitIgnore": true,
     //
     // -------------
@@ -40,6 +39,7 @@
     "workbench.sideBar.location": "right",
     "workbench.tree.enableStickyScroll": true,
     "workbench.list.smoothScrolling": true,
+    "workbench.tree.indent": 16,
     //
     // -------------
     // VIM Settings:
@@ -222,10 +222,8 @@
         "-workbench.action.previousSideBarView",
         "-workbench.action.quickOpen",
         "-workbench.action.quickOpenLeastRecentlyUsedEditor",
-        "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
         "-workbench.action.quickOpenPreviousEditor",
         "-workbench.action.quickOpenPreviousRecentlyUsedEditor",
-        "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
         "-workbench.action.quickOpenView",
         "-workbench.action.showCommands",
         "-workbench.action.tasks.build",
@@ -237,7 +235,6 @@
         "-workbench.action.tasks.terminate",
         "-workbench.action.tasks.test",
         "-workbench.action.terminal.findNext",
-        "-workbench.action.terminal.focusFind",
         "-workbench.action.toggleFullScreen",
         "-workbench.action.toggleMaximizedPanel",
         "workbench.action.togglePanel",
@@ -285,33 +282,6 @@
     "latex-workshop.view.pdf.invertMode.brightness": 1.0,
     //
     // ---------------
-    // Misc. Settings:
-    // ---------------
-    //
-    "debug.toolBarLocation": "docked",
-    "diffEditor.experimental.showMoves": true,
-    "breadcrumbs.enabled": false,
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": true,
-        "scminput": false,
-        "latex": false
-    },
-    "svelte.enable-ts-plugin": true,
-    "markdown-pdf.executablePath": "/usr/bin/chromium",
-    "redhat.telemetry.enabled": false,
-    "cmake.configureOnOpen": true,
-    "cSpell.userWords": [
-        "Beamer",
-        "heur",
-        "proptest"
-    ],
-    "diffEditor.hideUnchangedRegions.enabled": true,
-    "terminal.integrated.fontSize": 20,
-    "terminal.integrated.cursorStyle": "line",
-    //
-    // ---------------
     // Python Settings:
     // ---------------
     //
@@ -327,9 +297,36 @@
         "IPython",
         "--no-autoindent",
     ],
-    // etc.
+    //
+    // ---------------
+    // Misc. Settings:
+    // ---------------
+    //
+    "debug.toolBarLocation": "docked",
+    "diffEditor.experimental.showMoves": true,
+    "breadcrumbs.enabled": false,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "latex": false
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "svelte.enable-ts-plugin": true,
+    "markdown-pdf.executablePath": "/usr/bin/chromium",
+    "redhat.telemetry.enabled": false,
+    "cmake.configureOnOpen": true,
+    "cSpell.userWords": [
+        "Beamer",
+        "heur",
+        "proptest"
+    ],
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "terminal.integrated.fontSize": 20,
+    "terminal.integrated.cursorStyle": "line",
     "bitbake.parseOnSave": false,
     "workbench.colorTheme": "Default Light Modern",
-    "github.copilot.editor.enableAutoCompletions": true,
-    "workbench.preferredDarkColorTheme": "One Dark",
+    "markdown.preview.scrollPreviewWithEditor": false,
+    "cSpell.enabled": false,
 }

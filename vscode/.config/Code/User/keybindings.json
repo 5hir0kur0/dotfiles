@@ -282,4 +282,19 @@
         "key": "ctrl+shift+q",
         "command": "workbench.action.quickTextSearch"
     },
+    // Focus find (Ctrl+F is already bound by VIM)
+    {
+        "key": "ctrl+alt+f",
+        "command": "actions.find",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+alt+f",
+        "command": "workbench.action.terminal.focusFind",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "-workbench.action.terminal.focusFind"
+    }
 ]
