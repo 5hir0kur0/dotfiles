@@ -153,6 +153,7 @@ yazi_cd() {
             cd "$dir" || return 1
         fi
     fi
+    echo -e "\e[6 q" # set cursor back to line
 }
 alias y=yazi_cd
 alias yazi=yazi_cd
