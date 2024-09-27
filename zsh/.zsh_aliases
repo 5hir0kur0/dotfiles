@@ -30,7 +30,7 @@ alias '........'='cd ../../../../../../..'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias md=mkdir
-function mkcd() {
+function mcd() {
     [ -d "$1" ] || mkdir -p "$1"
     cd "$1" || return 1
 }
