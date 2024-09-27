@@ -70,7 +70,7 @@ autocmd ColorScheme * highlight TrailingWhitespace ctermbg=red guibg=darkred
 " match trailing whitespace, except when typing at the end of a line
 match TrailingWhitespace /\s\+$/
 " match tabs that are not at the start of a line
-2match StrayTabs /[^\t]\zs\t\+/
+"match StrayTabs /[^\t]\zs\t\+/
 " match trailing whitespace, except when typing at the end of a line
 autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
 " go back to the normal highlighting in other modes
@@ -102,9 +102,6 @@ autocmd VimLeave * set guicursor=a:ver100-blinkon0
 
 " enable mouse support (all modes)
 set mouse=a
-
-" don't redraw during macros, etc.
-set lazyredraw
 
 " highlight column 81 (so you can avoid typing text longer than 80 cols)
 " TODO change this so text beyond column 80 gets highlighted instead of the

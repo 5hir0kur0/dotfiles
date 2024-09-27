@@ -183,7 +183,7 @@ return require('packer').startup(function()
             local lspconfig = require('lspconfig')
 
             -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-            local servers = { 'rust_analyzer', 'pylsp', 'tsserver', 'gopls', 'hls' }
+            local servers = { 'rust_analyzer', 'pylsp', 'ts_ls', 'gopls', 'hls' }
             for _, lsp in ipairs(servers) do
                 lspconfig[lsp].setup {
                     -- on_attach is set as a default value above
