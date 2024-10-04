@@ -21,7 +21,6 @@
     "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
     "editor.renderWhitespace": "none",
-    "explorer.excludeGitIgnore": true,
     //
     // -------------
     // Git Settings:
@@ -236,7 +235,6 @@
         "-workbench.action.tasks.test",
         "-workbench.action.terminal.findNext",
         "-workbench.action.toggleFullScreen",
-        "-workbench.action.toggleMaximizedPanel",
         "workbench.action.togglePanel",
     ],
     "terminal.integrated.smoothScrolling": true,
@@ -333,4 +331,11 @@
     "workbench.colorTheme": "Default Light Modern",
     "markdown.preview.scrollPreviewWithEditor": false,
     "cSpell.enabled": false,
+    "explorer.excludeGitIgnore": true,
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+    },
 }

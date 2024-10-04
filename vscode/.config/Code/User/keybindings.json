@@ -246,6 +246,11 @@
         "command": "workbench.action.terminal.moveToEditor",
         "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
     },
+    {
+        "key": "alt+shift+f",
+        "command": "workbench.action.toggleMaximizedPanel",
+        "when": "panelFocus"
+    },
     // Restore some default shortcuts that don't work in VIM
     {
         "key": "ctrl+p",
