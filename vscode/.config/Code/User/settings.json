@@ -18,7 +18,6 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorBlinking": "smooth",
     "editor.linkedEditing": true,
-    "editor.formatOnSave": true,
     "editor.mouseWheelZoom": true,
     "editor.renderWhitespace": "none",
     //
@@ -60,12 +59,14 @@
     "vim.argumentObjectOpeningDelimiters": [
         "(",
         "[",
-        "<"
+        "<",
+        "{"
     ],
     "vim.argumentObjectClosingDelimiters": [
         ")",
         "]",
-        ">"
+        ">",
+        "}"
     ],
     "vim.targets.enable": true,
     // Plugins:
@@ -338,4 +339,5 @@
     "[shellscript]": {
         "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
     },
+    "editor.formatOnSave": true,
 }
