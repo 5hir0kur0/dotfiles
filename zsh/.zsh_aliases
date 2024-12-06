@@ -92,15 +92,15 @@ alias -g wl='wc -l'
 
 alias hcat="highlight --force -O ansi"
 
-alias g++="g++ -Wall -Wextra -std=c++17"
-alias gcc="gcc -Wall -Wextra -std=c11"
+alias g++="g++ -Wall -Wextra -std=c++23"
+alias gcc="gcc -Wall -Wextra -std=c23"
 
 alias yt='yt-dlp --add-metadata -ic'
 alias yta='yt-dlp --add-metadata -xic'
 
 function paru {
     PKGEXT=.pkg.tar command paru --sudoloop --newsonupgrade --review \
-        --upgrademenu --fm ranger --nouseask --combinedupgrade --provides "$@"
+        --upgrademenu --fm yazi --nouseask --combinedupgrade --provides "$@"
     sudo pacdiff
 }
 
@@ -224,31 +224,12 @@ function output() {
     tail -f "/proc/${PID:?not found}/fd/1" "/proc/$PID/fd/2"
 }
 
-# stolen from https://stackoverflow.com/a/3854444
-function memusage() {
-    if [ -z "${1:-}" ]; then
-        echo "usage: memusage <process_name> [<type>]" 1>&2
-        cat 1>&2 << EOF
-    values for <type>:
-        Rss: resident memory usage, all memory the process uses,
-             including all memory this process shares with other processes.
-             It does not include swap;
-        Shared: memory that this process shares with other processes;
-        Private: private memory used by this process,
-             you can look for memory leaks here;
-        Swap: swap memory used by the process;
-        Pss: Proportional Set Size, a good overall memory indicator.
-             It is the Rss adjusted for sharing:
-             if a process has 1MiB private and 20MiB shared between other 10
-             processes, Pss is 1 + 20/10 = 3MiB
-EOF
-        return 1
-    fi
-    local PIDS=( $(pgrep -x $1) )
-    local PID
-    for PID in "${PIDS[@]}"; do
-        awk "BEGIN {res = 0} /^${2:-Pss}:/ {res += \$2} END {print res}" "/proc/$PID/smaps"
-    done
+memusage() {
+    local all_pids parent_pid mode
+    parent_pid=$(pgrep -x "${1:?expected process name}")
+    mode=${2:-pss}
+    all_pids=$(pstree -T -p $parent_pid | grep -oP '\(\d+\)' | tr -d '()' | tr '\n' ',' | sed 's/,$//')
+    ps -o "${mode}=" --pid "$all_pids" | awk '{res += $1} END {res_mib = res / 1024; res_gib = res_mib / 1024; print res_gib "GiB =", res_mib, "MiB =", res, "KiB"}'
 }
 
 function memusage_total() {
@@ -390,6 +371,9 @@ alias alert_completion_me='_alert_completion --only-me'
 # Zoxide
 eval "$(zoxide init zsh)" || true
 alias j=z
+
+# Docker
+alias drmit='docker run --interactive --tty --rm'
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
