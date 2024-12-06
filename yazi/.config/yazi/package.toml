@@ -1,0 +1,5 @@
+[plugin]
+deps = [{ use = "yazi-rs/plugins:full-border", rev = "4a6edc3" }, { use = "yazi-rs/plugins:max-preview", rev = "4a6edc3" }, { use = "Sonico98/exifaudio", rev = "855ff05" }, { use = "Reledia/glow", rev = "388e847" }, { use = "Reledia/hexyl", rev = "ccc0a4a" }, { use = "Reledia/miller", rev = "40e0265" }, { use = "ndtoan96/ouch", rev = "db14883" }, { use = "Ape/open-with-cmd", rev = "8d7abc8" }]
+
+[flavor]
+deps = []
