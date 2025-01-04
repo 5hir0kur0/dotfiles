@@ -374,6 +374,9 @@ alias j=z
 
 # Docker
 alias drmit='docker run --interactive --tty --rm'
+function dat() {
+    docker exec -it "${1:?expected container}" /bin/sh
+}
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
