@@ -2,6 +2,22 @@ theme = "gruvbox_dark_hard"
 
 [editor]
 line-number = "relative"
+# or ╎
+indent-guides = { render = true, character = "┊" }
+scrolloff = 4
+#default-yank-register = "+" # System clipboard
+#	Number of lines to scroll per scroll wheel step
+scroll-lines = 1
+cursorline = true
+# rulers = [120]
+# text-width = 120
+popup-border = "all"
+end-of-line-diagnostics = "hint"
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -9,7 +25,15 @@ normal = "block"
 select = "underline"
 
 [editor.file-picker]
+# Ignore hidden files?
 hidden = false
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.inline-diagnostics]
+# The minimum severity that a diagnostic must have to be shown inline on the line that contains the primary cursor.
+cursor-line = "warning"
 
 # [keys.normal]
 # "{" = "goto_prev_paragraph"
