@@ -10,3 +10,4 @@ function Entity:icon()
 end
 
 require("full-border"):setup()
+require("git"):setup()

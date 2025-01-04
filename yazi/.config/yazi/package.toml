@@ -1,5 +1,5 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins:full-border", rev = "4a6edc3" }, { use = "yazi-rs/plugins:max-preview", rev = "4a6edc3" }, { use = "Sonico98/exifaudio", rev = "855ff05" }, { use = "Reledia/glow", rev = "388e847" }, { use = "Reledia/hexyl", rev = "ccc0a4a" }, { use = "Reledia/miller", rev = "40e0265" }, { use = "ndtoan96/ouch", rev = "db14883" }, { use = "Ape/open-with-cmd", rev = "8d7abc8" }]
+deps = [{ use = "yazi-rs/plugins:full-border", rev = "600614a" }, { use = "yazi-rs/plugins:max-preview", rev = "600614a" }, { use = "Sonico98/exifaudio", rev = "d794614" }, { use = "Reledia/glow", rev = "5ce76dc" }, { use = "Reledia/hexyl", rev = "39d3d4e" }, { use = "Reledia/miller", rev = "40e0265" }, { use = "ndtoan96/ouch", rev = "b869886" }, { use = "Ape/open-with-cmd", rev = "a80d1cf" }, { use = "boydaihungst/mediainfo", rev = "ddfd5ec" }, { use = "dedukun/relative-motions", rev = "df97039" }, { use = "yazi-rs/plugins:chmod", rev = "600614a" }, { use = "yazi-rs/plugins:hide-preview", rev = "600614a" }, { use = "yazi-rs/plugins:git", rev = "600614a" }, { use = "yazi-rs/plugins:smart-enter", rev = "600614a" }, { use = "pirafrank/what-size", rev = "b23e3a4" }]
 
 [flavor]
 deps = []
