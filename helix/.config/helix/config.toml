@@ -7,12 +7,13 @@ indent-guides = { render = true, character = "┊" }
 scrolloff = 4
 #default-yank-register = "+" # System clipboard
 #	Number of lines to scroll per scroll wheel step
-scroll-lines = 1
+scroll-lines = 2
 cursorline = true
 # rulers = [120]
 # text-width = 120
 popup-border = "all"
 end-of-line-diagnostics = "hint"
+jump-label-alphabet = "asdfjkl;ghqwertuiopnmxcvb"
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -35,6 +36,14 @@ display-inlay-hints = true
 # The minimum severity that a diagnostic must have to be shown inline on the line that contains the primary cursor.
 cursor-line = "warning"
 
-# [keys.normal]
-# "{" = "goto_prev_paragraph"
-# "}" = "goto_next_paragraph"
+[keys.normal]
+"X" = ["extend_line_up", "extend_to_line_bounds"]
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
+"G" = "goto_last_line"
+
+[keys.select]
+"X" = ["extend_line_up", "extend_to_line_bounds"]
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
+"G" = "goto_last_line"

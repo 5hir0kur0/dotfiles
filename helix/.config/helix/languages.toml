@@ -1,0 +1,12 @@
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[[language]]
+name = "go"
+auto-format = true
+formatter = { command = "gofmt" }
+
+[[language]]
+name = "rust"
+auto-format = true
+formatter = { command = "rustfmt" }
