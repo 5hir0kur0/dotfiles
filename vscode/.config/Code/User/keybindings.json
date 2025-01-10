@@ -301,5 +301,16 @@
     {
         "key": "ctrl+f",
         "command": "-workbench.action.terminal.focusFind"
+    },
+    // Expand selection
+    {
+        "key": "alt+o",
+        "command": "editor.action.smartSelect.expand",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+shift+o",
+        "command": "editor.action.smartSelect.shrink",
+        "when": "editorFocus"
     }
 ]
