@@ -1,10 +1,13 @@
-theme = "gruvbox_dark_hard"
+# theme = "gruvbox_dark_hard"
+# theme = "ayu_dark"
+# theme = "sonokai"
+theme = "tokyonight"
 
 [editor]
 line-number = "relative"
 # or ╎
 indent-guides = { render = true, character = "┊" }
-scrolloff = 4
+scrolloff = 0
 #default-yank-register = "+" # System clipboard
 #	Number of lines to scroll per scroll wheel step
 scroll-lines = 2
@@ -14,6 +17,7 @@ cursorline = true
 popup-border = "all"
 end-of-line-diagnostics = "hint"
 jump-label-alphabet = "asdfjkl;ghqwertuiopnmxcvb"
+completion-replace = true
 
 [editor.statusline]
 mode.normal = "NORMAL"
@@ -37,13 +41,35 @@ display-inlay-hints = true
 cursor-line = "warning"
 
 [keys.normal]
-"X" = ["extend_line_up", "extend_to_line_bounds"]
-"{" = "goto_prev_paragraph"
-"}" = "goto_next_paragraph"
-"G" = "goto_last_line"
+"{"   = "goto_prev_paragraph"
+"}"   = "goto_next_paragraph"
+"G"   = "goto_last_line"
+"H"   = "goto_window_top"
+"L"   = "goto_window_bottom"
+"M"   = "goto_window_center"
+"0"   = "goto_line_start"
+"C-p" = "file_picker_in_current_directory"
+"C-k" = ["kill_to_line_end", "insert_at_line_end"]
+"D"   = "kill_to_line_end"
+
+[keys.normal."space"]
+":"     = "command_palette"
+"space" = "file_picker_in_current_directory"
+
+[keys.normal."space".f]
+"f" = "file_picker"
+"s" = ":write"
+
+[keys.normal.g]
+"q" = ":reflow"
 
 [keys.select]
-"X" = ["extend_line_up", "extend_to_line_bounds"]
 "{" = "goto_prev_paragraph"
 "}" = "goto_next_paragraph"
 "G" = "goto_last_line"
+"H" = "goto_window_top"
+"L" = "goto_window_bottom"
+"M" = "goto_window_center"
+
+[keys.select.g]
+"q" = ":reflow"
