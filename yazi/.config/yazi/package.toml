@@ -1,5 +1,24 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins:full-border", rev = "600614a" }, { use = "yazi-rs/plugins:max-preview", rev = "600614a" }, { use = "Sonico98/exifaudio", rev = "d794614" }, { use = "Reledia/glow", rev = "5ce76dc" }, { use = "Reledia/hexyl", rev = "39d3d4e" }, { use = "Reledia/miller", rev = "40e0265" }, { use = "ndtoan96/ouch", rev = "083d564" }, { use = "Ape/open-with-cmd", rev = "a80d1cf" }, { use = "boydaihungst/mediainfo", rev = "ddfd5ec" }, { use = "dedukun/relative-motions", rev = "df97039" }, { use = "yazi-rs/plugins:chmod", rev = "600614a" }, { use = "yazi-rs/plugins:hide-preview", rev = "600614a" }, { use = "yazi-rs/plugins:git", rev = "600614a" }, { use = "yazi-rs/plugins:smart-enter", rev = "600614a" }, { use = "pirafrank/what-size", rev = "b23e3a4" }]
+deps = [
+    { use = "yazi-rs/plugins:full-border", rev = "02d18be" },
+    { use = "yazi-rs/plugins:max-preview", rev = "02d18be" },
+    { use = "Sonico98/exifaudio", rev = "d794614" },
+    { use = "Reledia/glow", rev = "5ce76dc" },
+    { use = "Reledia/hexyl", rev = "39d3d4e" },
+    { use = "Reledia/miller", rev = "40e0265" },
+    { use = "Ape/open-with-cmd", rev = "a80d1cf" },
+    { use = "boydaihungst/mediainfo", rev = "e2a7cfd" },
+    { use = "dedukun/relative-motions", rev = "0d9c8cf" },
+    { use = "yazi-rs/plugins:chmod", rev = "02d18be" },
+    { use = "yazi-rs/plugins:hide-preview", rev = "02d18be" },
+    { use = "yazi-rs/plugins:git", rev = "02d18be" },
+    { use = "yazi-rs/plugins:smart-enter", rev = "02d18be" },
+    { use = "pirafrank/what-size", rev = "b23e3a4" },
+    { use = "ndtoan96/ouch", rev = "ce6fb75" },
+]
 
 [flavor]
-deps = [{ use = "bennyyip/gruvbox-dark", rev = "b4cc9f2" }, { use = "BennyOe/tokyo-night", rev = "caa00ab" }]
+deps = [
+    { use = "bennyyip/gruvbox-dark", rev = "b4cc9f2" },
+    { use = "BennyOe/tokyo-night", rev = "9e6f899" },
+]
