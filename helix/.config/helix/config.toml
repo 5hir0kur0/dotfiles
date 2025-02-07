@@ -70,6 +70,7 @@ cursor-line = "warning"
 "H" = "goto_window_top"
 "L" = "goto_window_bottom"
 "M" = "goto_window_center"
+"0" = "goto_line_start"
 
 [keys.select.g]
 "q" = ":reflow"
