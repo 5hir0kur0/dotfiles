@@ -366,12 +366,15 @@
     "accessibility.signalOptions.debouncePositionChanges": true,
     "git.blame.editorDecoration.enabled": true,
     "git.blame.statusBarItem.enabled": true,
-    "terminal.integrated.fontLigatures": true,
     "gitlens.plusFeatures.enabled": false,
     "gitlens.currentLine.enabled": false,
     "gitlens.currentLine.pullRequests.enabled": false,
     "gitlab.duoCodeSuggestions.enabled": false,
     "gitlab.duoChat.enabled": false,
-    "vim.easymotion": true,
     "vim.foldfix": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "terminal.integrated.fontLigatures.enabled": true,
 }
