@@ -48,9 +48,11 @@ cursor-line = "warning"
 "L"   = "goto_window_bottom"
 "M"   = "goto_window_center"
 "0"   = "goto_line_start"
+"$"   = "goto_line_end"
 "C-p" = "file_picker_in_current_directory"
 "C-k" = ["kill_to_line_end", "insert_at_line_end"]
 "D"   = "kill_to_line_end"
+"V"   = ["select_mode", "goto_line_end"]
 
 [keys.normal."space"]
 ":"     = "command_palette"
