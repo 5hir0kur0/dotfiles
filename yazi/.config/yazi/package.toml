@@ -1,24 +1,84 @@
-[plugin]
-deps = [
-    { use = "yazi-rs/plugins:full-border", rev = "02d18be" },
-    { use = "yazi-rs/plugins:max-preview", rev = "02d18be" },
-    { use = "Sonico98/exifaudio", rev = "d794614" },
-    { use = "Reledia/glow", rev = "5ce76dc" },
-    { use = "Reledia/hexyl", rev = "39d3d4e" },
-    { use = "Reledia/miller", rev = "40e0265" },
-    { use = "Ape/open-with-cmd", rev = "a80d1cf" },
-    { use = "boydaihungst/mediainfo", rev = "e2a7cfd" },
-    { use = "dedukun/relative-motions", rev = "0d9c8cf" },
-    { use = "yazi-rs/plugins:chmod", rev = "02d18be" },
-    { use = "yazi-rs/plugins:hide-preview", rev = "02d18be" },
-    { use = "yazi-rs/plugins:git", rev = "02d18be" },
-    { use = "yazi-rs/plugins:smart-enter", rev = "02d18be" },
-    { use = "pirafrank/what-size", rev = "b23e3a4" },
-    { use = "ndtoan96/ouch", rev = "ce6fb75" },
-]
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "02d18be"
+hash = "882ed23839778f82dc137248979c8681"
 
-[flavor]
-deps = [
-    { use = "bennyyip/gruvbox-dark", rev = "b4cc9f2" },
-    { use = "BennyOe/tokyo-night", rev = "9e6f899" },
-]
+[[plugin.deps]]
+use = "yazi-rs/plugins:max-preview"
+rev = "02d18be"
+hash = "9bc26d10d2f6e2aa93b10905b1b76979"
+
+[[plugin.deps]]
+use = "Sonico98/exifaudio"
+rev = "d794614"
+hash = "a8e15d3c21c02a5af41d46ed04778a02"
+
+[[plugin.deps]]
+use = "Reledia/hexyl"
+rev = "39d3d4e"
+hash = "dd624cbaff94af65f39fd86bc57b340"
+
+[[plugin.deps]]
+use = "Reledia/miller"
+rev = "40e0265"
+hash = "2d6d77583162aaf0a599e7a3091b5878"
+
+[[plugin.deps]]
+use = "Ape/open-with-cmd"
+rev = "a80d1cf"
+hash = "86e0312b01bc5762813c6c1d0517f073"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "e2a7cfd"
+hash = "8d45529a12b71afec8bf4f15330cf136"
+
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "0d9c8cf"
+hash = "561ad872c77b95360c2657c5e8d395ed"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "02d18be"
+hash = "4c7e8fd0266eedee7b619d966bd2d025"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:hide-preview"
+rev = "02d18be"
+hash = "5be5885898ca9df783bdec0d402bf4b0"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "02d18be"
+hash = "4d6a07559118975e2dee983d27474d70"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "02d18be"
+hash = "c1a2739e9ef2d837030ccb4267be3ed1"
+
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "b23e3a4"
+hash = "98e5f5af3efd3ba8bc2db0720187cc83"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "ce6fb75"
+hash = ""
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "c76bf4f"
+hash = "a6b78bf9af5390e3a85a6951fbb7b93"
+
+[[flavor.deps]]
+use = "bennyyip/gruvbox-dark"
+rev = "b4cc9f2"
+hash = "f44c42bcbed3c8564100e45e2fe3649a"
+
+[[flavor.deps]]
+use = "BennyOe/tokyo-night"
+rev = "9e6f899"
+hash = "2338a26b44318e22e649df342226b759"
