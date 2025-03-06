@@ -56,10 +56,10 @@ cursor-line = "warning"
 
 [keys.normal."space"]
 ":"     = "command_palette"
-"space" = "file_picker_in_current_directory"
+"space" = "file_picker"
 
 [keys.normal."space".f]
-"f" = "file_picker"
+"f" = "file_picker_in_current_directory"
 "s" = ":write"
 
 [keys.normal.g]
