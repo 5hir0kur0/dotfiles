@@ -239,6 +239,7 @@
         "-workbench.action.terminal.findNext",
         "-workbench.action.toggleFullScreen",
         "workbench.action.togglePanel",
+        "matlab.interrupt"
     ],
     "terminal.integrated.smoothScrolling": true,
     "terminal.integrated.mouseWheelZoom": true,
@@ -347,23 +348,30 @@
     ],
     "accessibility.signals.taskCompleted": {
         "sound": "on",
-        "announcement": "auto"
     },
     "accessibility.signals.taskFailed": {
         "sound": "on",
-        "announcement": "auto"
     },
     "accessibility.signals.terminalBell": {
         "sound": "on",
-        "announcement": "auto"
     },
     "accessibility.signals.terminalCommandFailed": {
         "sound": "on",
-        "announcement": "auto"
     },
-    "accessibility.signals.terminalCommandSucceeded": {
-        "sound": "on",
-        "announcement": "auto"
+    "accessibility.signals.chatResponseReceived": {
+        "sound": "on"
+    },
+    "accessibility.signals.codeActionApplied": {
+        "sound": "on"
+    },
+    "accessibility.signals.diffLineDeleted": {
+        "sound": "on"
+    },
+    "accessibility.signals.diffLineInserted": {
+        "sound": "on"
+    },
+    "accessibility.signals.diffLineModified": {
+        "sound": "on"
     },
     "accessibility.signalOptions.debouncePositionChanges": true,
     "git.blame.editorDecoration.enabled": true,
@@ -378,4 +386,6 @@
     },
     "github.copilot.nextEditSuggestions.enabled": true,
     "terminal.integrated.fontLigatures.enabled": true,
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.history": 1000
 }

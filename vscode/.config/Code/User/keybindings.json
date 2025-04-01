@@ -158,7 +158,7 @@
         "key": "ctrl+l",
         "command": "file-browser.stepIn",
         "when": "inFileBrowser"
-    },
+    }
     // </VSpaceCode>
     // Terminal Shortcuts
     // Allow toggling the terminal when it's in focus with Ctrl+J
