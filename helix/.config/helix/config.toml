@@ -38,7 +38,7 @@ display-inlay-hints = true
 
 [editor.inline-diagnostics]
 # The minimum severity that a diagnostic must have to be shown inline on the line that contains the primary cursor.
-cursor-line = "warning"
+cursor-line = "hint"
 
 [keys.normal]
 "{"   = "goto_prev_paragraph"
@@ -52,6 +52,7 @@ cursor-line = "warning"
 "C-p" = "file_picker_in_current_directory"
 "C-k" = ["kill_to_line_end", "insert_at_line_end"]
 "D"   = "kill_to_line_end"
+"ret" = "goto_word"
 
 [keys.normal."space"]
 ":"     = "command_palette"
