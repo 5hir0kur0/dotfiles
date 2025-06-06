@@ -55,6 +55,8 @@
     "vim.hlsearch": true,
     "vim.leader": " ",
     "vim.showMarksInGutter": true,
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.history": 1000,
     "vim.argumentObjectOpeningDelimiters": [
         "(",
         "[",
@@ -243,6 +245,9 @@
     ],
     "terminal.integrated.smoothScrolling": true,
     "terminal.integrated.mouseWheelZoom": true,
+    "terminal.integrated.fontLigatures.enabled": true,
+    "terminal.integrated.fontSize": 20,
+    "terminal.integrated.fontFamily": "'Iosevka Slab', 'Iosevka NF', 'Monego', 'monaco', monospace",
     //
     // ---------------
     // Files Settings:
@@ -329,7 +334,6 @@
         "proptest"
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "terminal.integrated.fontSize": 20,
     "terminal.integrated.cursorStyle": "line",
     "bitbake.parseOnSave": false,
     "workbench.colorTheme": "Default Light Modern",
@@ -339,7 +343,7 @@
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
     "[shellscript]": {
-        "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+        "editor.defaultFormatter": "foxundermoon.shell-format"
     },
     "editor.formatOnSave": true,
     "cmake.pinnedCommands": [
@@ -385,7 +389,7 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "github.copilot.nextEditSuggestions.enabled": true,
-    "terminal.integrated.fontLigatures.enabled": true,
-    "vim.cursorStylePerMode.replace": "underline",
-    "vim.history": 1000
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
