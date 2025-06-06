@@ -62,6 +62,9 @@ cursor-line = "hint"
 "f" = "file_picker_in_current_directory"
 "s" = ":write"
 
+[keys.normal."space".t]
+w = ":toggle whitespace.render all none"
+
 [keys.normal.g]
 "q" = ":reflow"
 
