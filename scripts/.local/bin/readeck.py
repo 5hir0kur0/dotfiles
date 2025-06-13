@@ -49,7 +49,7 @@ def generate_article(**article):
         f'{article["authors"] and
             "author:: " + ", ".join(
                 [f"[[{author}]]" for author in article["authors"]]
-            )}',
+            ) or ""}',
         f'{f"tags:: [[Readeck]]" +
             "".join([f", [[{label}]]" for label in article["labels"]]) +
             (article["site_name"] and f", [[{article["site_name"]}]]")}',
