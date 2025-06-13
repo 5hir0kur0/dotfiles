@@ -6,8 +6,8 @@ linemode = "size"
 
 [preview]
 tab_size = 2
-max_width = 4000
-max_height = 2000
+max_width = 5000
+max_height = 5000
 
 [plugin]
 prepend_previewers = [
