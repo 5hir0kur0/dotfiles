@@ -45,7 +45,7 @@ def generate_article(**article):
     properties = [
         "collapsed:: true",
         "type:: [[Article]]",
-        f'url:: [{article["site_name"]}]({article["url"]})',
+        f'url:: {article["url"]}',
         f'{article["authors"] and
             "author:: " + ", ".join(
                 [f"[[{author}]]" for author in article["authors"]]
