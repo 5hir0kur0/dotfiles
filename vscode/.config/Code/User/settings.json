@@ -104,7 +104,7 @@
                 "K"
             ],
             "commands": [
-                "editor.action.showHover",
+                "editor.action.showHover"
             ]
         },
         {
@@ -156,7 +156,7 @@
         "<C-t>": false,
         "<C-x>": false,
         "<C-[>": false,
-        "<C-]>": false,
+        "<C-]>": false
     },
     "vim.foldfix": true,
     "vim.smartRelativeLine": true,
@@ -248,6 +248,8 @@
     "terminal.integrated.fontLigatures.enabled": true,
     "terminal.integrated.fontSize": 20,
     "terminal.integrated.fontFamily": "'Iosevka Slab', 'Iosevka NF', 'Monego', 'monaco', monospace",
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "terminal.integrated.cursorStyle": "line",
     //
     // ---------------
     // Files Settings:
@@ -299,10 +301,11 @@
     "python.analysis.autoImportCompletions": true,
     "python.analysis.completeFunctionParens": true,
     "python.analysis.extraCommitChars": true,
+    "python.analysis.typeCheckingMode": "standard",
     "python.terminal.launchArgs": [
         "-m",
         "IPython",
-        "--no-autoindent",
+        "--no-autoindent"
     ],
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
@@ -334,7 +337,6 @@
         "proptest"
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "terminal.integrated.cursorStyle": "line",
     "bitbake.parseOnSave": false,
     "workbench.colorTheme": "Default Light Modern",
     "markdown.preview.scrollPreviewWithEditor": false,
@@ -351,16 +353,16 @@
         "workbench.action.tasks.runTask"
     ],
     "accessibility.signals.taskCompleted": {
-        "sound": "on",
+        "sound": "on"
     },
     "accessibility.signals.taskFailed": {
-        "sound": "on",
+        "sound": "on"
     },
     "accessibility.signals.terminalBell": {
-        "sound": "on",
+        "sound": "on"
     },
     "accessibility.signals.terminalCommandFailed": {
-        "sound": "on",
+        "sound": "on"
     },
     "accessibility.signals.chatResponseReceived": {
         "sound": "on"
@@ -391,5 +393,8 @@
     "github.copilot.nextEditSuggestions.enabled": true,
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
     }
 }
