@@ -380,6 +380,10 @@ function deitsh() {
 }
 alias dsai='docker start -ai'
 
+strace-fancy() {
+	strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
+}
+
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
 fi
