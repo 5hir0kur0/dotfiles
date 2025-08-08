@@ -42,6 +42,7 @@
 	fl = log --pretty=full
 	cd = switch
     ri = rebase --interactive --committer-date-is-author-date
+    rt = rebase --committer-date-is-author-date
 	rl = remote -v
 	summc = shortlog --email --count --all --summary --group=committer --numbered
 	summa = shortlog --email --count --all --summary --group=author --numbered
@@ -52,6 +53,7 @@
 	recent = ! git branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\" | head -10
 	mff = merge --ff-only
 	rph = rev-parse HEAD
+	cd1 = clone --depth=1
 [credential]
 	helper = cache --timeout 600
 [help]
