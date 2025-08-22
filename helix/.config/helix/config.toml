@@ -71,7 +71,7 @@ w = ":toggle whitespace.render all none"
 [keys.select]
 "{" = "goto_prev_paragraph"
 "}" = "goto_next_paragraph"
-"G" = "goto_last_line"
+"G" = "extend_to_last_line"
 "H" = "goto_window_top"
 "L" = "goto_window_bottom"
 "M" = "goto_window_center"
