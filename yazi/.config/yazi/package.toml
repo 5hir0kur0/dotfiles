@@ -1,12 +1,12 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "aeca767"
+rev = "e95c7b3"
 hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
-rev = "e766cd2"
-hash = "5fd39bf4e88d6a046d4b81691a38d615"
+rev = "4506f9d"
+hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
 use = "Reledia/hexyl"
@@ -20,60 +20,60 @@ hash = "86e0312b01bc5762813c6c1d0517f073"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "a7d1aa6"
-hash = "844133c7247cda086819d63a9ca5e457"
+rev = "0e2ae47"
+hash = "6656f2869ae2274a0e1860876f15186f"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
-rev = "2e3b617"
-hash = "b67ee12053113983273e9118a7d1272b"
+rev = "a603d9e"
+hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "aeca767"
-hash = "d0ad0c1946b46a30c8489735fe8de41c"
+rev = "e95c7b3"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "aeca767"
-hash = "bf6f074cd41ee33c3360341d168f9733"
+rev = "e95c7b3"
+hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "aeca767"
-hash = "a7ab702e1ef0c097defbc976ed34c186"
+rev = "e95c7b3"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
 
 [[plugin.deps]]
 use = "pirafrank/what-size"
-rev = "0a4904c"
-hash = "fca231a128488a554823374f8f6d5241"
+rev = "d896656"
+hash = "62251f94eb67648d42cdfcfb8be0fad2"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "1ee69a5"
-hash = "63679f3daf8551ff8755be38b5ced0f"
+rev = "0742fff"
+hash = "2bd799b42b8e42b8ef100310be71f8d1"
 
 [[plugin.deps]]
 use = "Reledia/glow"
-rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
+rev = "bd3eaa5"
+hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "aeca767"
-hash = "d5d4f3527592da5fbe77fd6f51815f80"
+rev = "e95c7b3"
+hash = "d6f60c24d8c0cf57a855bf46115b2502"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
-rev = "aeca767"
-hash = "4d82cd9e7534d976f000edf9c0f68d8f"
+rev = "e95c7b3"
+hash = "e56b7abf3c06e8ce496eadcca168c093"
 
 [[flavor.deps]]
 use = "bennyyip/gruvbox-dark"
-rev = "91fdfa7"
-hash = "f48f510e5505f5d01e79c4f8257ec5cb"
+rev = "e5e1aef"
+hash = "eb88137cf13a796225254344bf6def2c"
 
 [[flavor.deps]]
 use = "BennyOe/tokyo-night"
-rev = "b3950bf"
-hash = "319ce574cdb2865baf4323db90456504"
+rev = "5f56364"
+hash = "c0bf69ad2c44005892d586e9693993c6"
