@@ -50,7 +50,7 @@ def generate_article(**article):
             "author:: " + ", ".join(
                 [f"[[{author}]]" for author in article["authors"]]
             ) or ""}',
-        f'{f"tags:: [[Readeck]]" +
+        f'{f"links:: [[Readeck]]" +
             "".join([f", [[{label}]]" for label in article["labels"]]) +
             (article["site_name"] and f", [[{article["site_name"]}]]")}',
         f'{article.get("published", "") and "date-published:: " + format_date(article["published"])}',
