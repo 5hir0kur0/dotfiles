@@ -89,7 +89,13 @@ function log_view() {
     cat "${@:?expected file name(s)}" | ccze --raw-ansi | less -rFXS
 }
 
-alias -g wl='wc -l'
+function man() {
+    # Fix issue that setting MANPAGER="nvim '+Man!'" no longer shows syntax highlighting
+    # for code inside of man pages (e.g. `man nanosleep`).
+    # Haven't found another workaround so far.
+    nvim "+Man $* | bd #"
+}
+
 
 alias hcat="highlight --force -O ansi"
 
@@ -381,7 +387,7 @@ function deitsh() {
 alias dsai='docker start -ai'
 
 strace-fancy() {
-	strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
+    strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
 }
 
 if [ -f ~/.local_zsh_aliases ]; then

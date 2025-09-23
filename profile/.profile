@@ -40,7 +40,7 @@ export BUILDDIR=/tmp/.build-$USER
 export PS4='+${LINENO}: '
 
 # display man pages using neovim
-export MANPAGER="nvim -c 'set ft=man nonumber nolist ts=8 laststatus=1 showtabline=1' '+Man!' '+nnoremap q ZQ' -"
+export MANPAGER="nvim '+Man!'"
 
 # SSH Agent
 
