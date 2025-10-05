@@ -108,7 +108,7 @@ alias yta='yt-dlp --add-metadata -xic'
 function paru {
     PKGEXT=.pkg.tar command paru --sudoloop --newsonupgrade --review \
         --upgrademenu --fm yazi --nouseask --combinedupgrade --provides "$@"
-    sudo pacdiff
+    sudo DIFFPROG='nvim -d' pacdiff
 }
 
 function update {
