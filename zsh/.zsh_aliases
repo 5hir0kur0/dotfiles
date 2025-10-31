@@ -49,7 +49,7 @@ alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias g='git'
 alias gg='git grep -i --break --heading --no-index'
-alias rg='rg --smart-case --hidden --no-ignore'
+alias rg='rg --smart-case --hidden'
 alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
 alias ip='ip -color'
 
@@ -87,6 +87,10 @@ alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --ra
 
 function log_view() {
     cat "${@:?expected file name(s)}" | ccze --raw-ansi | less -rFXS
+}
+
+function tail_ccze() {
+    tail --retry --follow=name "${@:?expected file name(s)}" | ccze --raw-ansi
 }
 
 function man() {
@@ -231,12 +235,19 @@ function output() {
     tail -f "/proc/${PID:?not found}/fd/1" "/proc/$PID/fd/2"
 }
 
-memusage() {
-    local all_pids parent_pid mode
-    parent_pid=$(pgrep -x "${1:?expected process name}")
+memusage_pid() {
+    local all_pids parent_pid
+    parent_pid="${1:?expected parent pid}"
     mode=${2:-pss}
     all_pids=$(pstree -T -p $parent_pid | grep -oP '\(\d+\)' | tr -d '()' | tr '\n' ',' | sed 's/,$//')
     ps -o "${mode}=" --pid "$all_pids" | awk '{res += $1} END {res_mib = res / 1024; res_gib = res_mib / 1024; print res_gib "GiB =", res_mib, "MiB =", res, "KiB"}'
+}
+
+memusage() {
+    local parent_pid mode
+    parent_pid=$(pgrep -x "${1:?expected process name}")
+    mode=${2:-pss}
+    memusage_pid "$parent_pid" "$mode"
 }
 
 function memusage_total() {
