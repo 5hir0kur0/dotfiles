@@ -1,7 +1,7 @@
 ## options and variables
 
 # history
-HISTFILE=~/.histfile
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}"/zsh/histfile
 HISTSIZE=420000
 SAVEHIST=420000
 # don't enter command in history if it's the same as the previous command
@@ -486,6 +486,10 @@ bindkey '^T' fzf-cd-widget
 bindkey '\ei' fzf-locate-widget
 # /fzf
 
-if [ -f "$HOME/.zsh_aliases" ]; then
-    source "$HOME/.zsh_aliases"
+if [ -f "$HOME/.config/zsh/.zsh_aliases" ]; then
+    source "$HOME/.config/zsh/.zsh_aliases"
+fi
+
+if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
+    source $HOME/.config/broot/launcher/bash/br
 fi

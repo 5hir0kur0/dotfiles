@@ -44,9 +44,9 @@ config.use_fancy_tab_bar = false
 
 local ok, local_config = pcall(require, "wezterm-local")
 if ok and type(local_config) == "table" then
-  for k, v in pairs(local_config) do
-    config[k] = v
-  end
+	for k, v in pairs(local_config) do
+		config[k] = v
+	end
 end
 
-return config 
+return config
