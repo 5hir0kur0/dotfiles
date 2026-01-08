@@ -21,11 +21,10 @@ config.font_rules = {
 		}),
 	},
 }
-config.font_size = 15
-config.line_height = 1.15
+config.font_size = 16
+config.line_height = 1.1
 -- color_scheme = 'Solarized Dark Higher Contrast (Gogh)'
-config.color_scheme = "GruvboxDarkHard"
--- color_scheme = 'Gruvbox dark, hard (base16)'
+config.color_scheme = "tokyonight_night"
 config.default_cursor_style = "SteadyBar"
 config.hide_tab_bar_if_only_one_tab = true
 config.force_reverse_video_cursor = true
