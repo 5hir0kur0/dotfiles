@@ -58,10 +58,6 @@ cursor-line = "hint"
 ":"     = "command_palette"
 "space" = "file_picker"
 
-[keys.normal."space".f]
-"f" = "file_picker_in_current_directory"
-"s" = ":write"
-
 [keys.normal."space".t]
 w = ":toggle whitespace.render all none"
 
