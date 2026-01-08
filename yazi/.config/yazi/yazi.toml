@@ -11,7 +11,7 @@ max_height = 5000
 
 [plugin]
 prepend_previewers = [
-    { name = "*.md", run = "glow" },
+    { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
     { mime = "text/csv", run = "miller" },
     { mime = "audio/*", run = "exifaudio" },
     # Archive previewer
@@ -23,10 +23,11 @@ prepend_previewers = [
     { mime = "application/x-xz", run = "ouch" },
     { mime = "{image,audio,video}/*", run = "mediainfo" },
     { mime = "application/subrip", run = "mediainfo" },
+    { mime = "application/sqlite3", run  = 'piper -- sqlite3 "$1" ".schema --indent"' },
 ]
-append_previewers = [{ name = "*", run = "hexyl" }]
+append_previewers = [{ url = "*", run = 'piper -- hexyl --border=none --terminal-width=$w "$1"' }]
 
 prepend_fetchers = [
-    { id = "git", name = "*", run = "git" },
-    { id = "git", name = "*/", run = "git" },
+    { id = "git", url = "*", run = "git" },
+    { id = "git", url = "*/", run = "git" },
 ]
