@@ -19,6 +19,14 @@ if [[ "$PATH" != *"$HOME/.emacs/bin"* ]]; then
     export PATH="$PATH:$HOME/.config/emacs/bin"
 fi
 
+if [[ "$PATH" != *"$HOME/.local/share/cargo/bin"* ]]; then
+    export PATH="$PATH:$HOME/.local/share/cargo/bin"
+fi
+
+if [[ "$PATH" != *"$HOME/.elan/bin"* ]]; then
+    export PATH="$PATH:$HOME/.elan/bin"
+fi
+
 export EDITOR=helix
 export VISUAL=helix
 
