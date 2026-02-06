@@ -338,7 +338,6 @@
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
     "bitbake.parseOnSave": false,
-    "workbench.colorTheme": "Default Light Modern",
     "markdown.preview.scrollPreviewWithEditor": false,
     "cSpell.enabled": false,
     "[dockerfile]": {
@@ -396,5 +395,29 @@
     },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "docker.extension.enableComposeLanguageServer": false,
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "cmake.buildDirectory": "${workspaceFolder}/vscode-build",
+    "terminal.integrated.stickyScroll.enabled": false,
+    "terminal.integrated.suggest.enabled": true,
+    "lean4.alwaysAskBeforeInstallingLeanVersions": false,
+    "hediet.vscode-drawio.resizeImages": null,
+    "chat.viewSessions.orientation": "stacked",
 }
