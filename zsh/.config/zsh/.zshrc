@@ -46,25 +46,7 @@ history_ignore=(
     'git c *'
     'g c *'
 
-    'grep *'
-    'pgrep *'
-    'ag *'
-    'rg *'
-    'gg *'
-    'gpdf *'
-
-    'ff *'
-    'fd *'
-
-    'latexmk *'
-    'lpdf *'
-    'llpdf *'
-
     'pass *'
-
-    'v *'
-    'vim *'
-    'sudoedit *'
 )
 HISTORY_IGNORE="(${(j.|.)history_ignore})"
 
@@ -431,7 +413,7 @@ cd_fun() {
     # Alternative for some more fun:
     #basename $PWD | toilet --font pagga --termwidth | lolcat
     local ls_output
-    ls_output=$(ls --color --hyperlink --format=across --width="$COLUMNS")
+    ls_output=$(ls --color --format=across --width="$COLUMNS")
     num_lines=$(wc -l <<<"$ls_output")
     if [ "$num_lines" -le 5 ]; then
         echo "$ls_output"
