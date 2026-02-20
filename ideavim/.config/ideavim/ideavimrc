@@ -31,8 +31,16 @@ set commentary
 set argtextobj
 let g:argtextobj_pairs="[:],(:),<:>,{:}"
 " set textobj-entire
-set textobj-indent
 set which-key
+set highlightedyank
+set matchit
+set mini-ai
+set vim-paragraph-motion
+set ReplaceWithRegister
+
+vnoremap * y/\V<C-r>"<CR>
+vnoremap # y?\V<C-r>"<CR>
+
 
 " key bindings
 " ============
@@ -50,3 +58,4 @@ nmap g[ :action GotoDeclaration<CR>
 nmap ]e :action GotoNextError<CR>
 nmap [e :action GotoPreviousError<CR>
 nmap Y y$
+vmap <C-d> <Plug>NextWholeOccurrence
