@@ -1,27 +1,4 @@
 -- Adapted from https://github.com/Hashino/minimal.nvim/blob/featureful/init.lua
--- INFO: introduction
--- this is a minimal neovim configuration written in lua. this is not meant to
--- be a distribution, but rather a template for you to build upon and/or a
--- reference for how to configure neovim using lua in the latest version.
---
--- TUTOR:
--- if you're completely new to neovim and/or vim, consider going through
--- `:Tutor` inside neovim to get a basic idea of how it works.
---     if you don't know what this means, type the following:
---       - <escape key>
---       - :
---       - Tutor
---       - <enter key>
---
--- LUA:
--- some level of familiarity with lua/programming languages are also expected.
--- if you're new to lua, consider going through the official reference:
---    https://www.lua.org/manual
--- or a more friendly tutorial like:
---    https://learnxinyminutes.com/docs/lua/
--- you can also check out `:h lua-guide` inside neovim for a neovim-specific
--- lua guide.
---
 -- DEPENDENCIES:
 -- this configuration assumes you have the following tools installed on your
 -- system:
@@ -30,19 +7,6 @@
 --    clipboard tool: xclip/xsel/win32yank - for clipboard sharing between OS and neovim (see `h: clipboard-tool`)
 --    a nerdfont (ensure the terminal running neovim is using it)
 -- run `:checkhealth` inside neovim to see if your system is missing anything.
---
--- MINIMAL:
--- to say that something is 'minimal' you have to define what variable you're
--- minimizing. this configuration minimizes for lines of code and concepts.
--- to some, this configuration may have too many plugins. for example, using
--- mason.nvim to manage lsp servers will be an unnecessary dependency if the
--- user is already familiar with lsps and is comfortable managing them through
--- their OS package manager. but to someone that isn't familiar with lsp servers
--- this approach wouldn't cover everything needed to have the 'minimum' necessary
--- for lsp + completion + fuzzy finding. to some, fuzzy finding is also a bloated
--- dependency.
--- this configuration is only a starting point/reference. it is expected that
--- the user will change the configuration to suit their needs.
 
 
 -- INFO: options
@@ -338,20 +302,20 @@ require("mini.ai").setup({
 -- - sd'   - [S]urround [D]elete [']quotes
 -- - sr)'  - [S]urround [R]eplace [)] [']
 require("mini.surround").setup {
-    -- Had to give up and change the bindings back to the tpope ones.
-    -- (Because so many other tools like Doom, VS Code Vim, IntelliJ use them...)
-    mappings = {
-      add = "ys", -- Add surrounding in Normal and Visual modes
-      delete = "ds", -- Delete surrounding
-      find = "sf", -- Find surrounding (to the right)
-      find_left = "sF", -- Find surrounding (to the left)
-      highlight = "sh", -- Highlight surrounding
-      replace = "cs", -- Replace surrounding
-      update_n_lines = "sn", -- Update `n_lines`
+  -- Had to give up and change the bindings back to the tpope ones.
+  -- (Because so many other tools like Doom, VS Code Vim, IntelliJ use them...)
+  mappings = {
+    add = "ys", -- Add surrounding in Normal and Visual modes
+    delete = "ds", -- Delete surrounding
+    find = "sf", -- Find surrounding (to the right)
+    find_left = "sF", -- Find surrounding (to the left)
+    highlight = "sh", -- Highlight surrounding
+    replace = "cs", -- Replace surrounding
+    update_n_lines = "sn", -- Update `n_lines`
 
-      suffix_last = "l", -- Suffix to search with "prev" method
-      suffix_next = "n", -- Suffix to search with "next" method
-    },
+    suffix_last = "l", -- Suffix to search with "prev" method
+    suffix_next = "n", -- Suffix to search with "next" method
+  },
 }
 
 --  Simple and easy statusline.
@@ -377,48 +341,48 @@ require("gitsigns").setup({
     changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
   },
 
-on_attach = function(bufnr)
-  local gitsigns = require 'gitsigns'
+  on_attach = function(bufnr)
+    local gitsigns = require 'gitsigns'
 
-  local function map(mode, l, r, opts)
-    opts = opts or {}
-    opts.buffer = bufnr
-    vim.keymap.set(mode, l, r, opts)
-  end
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
 
-  -- Navigation
-  map('n', ']g', function()
+    -- Navigation
+    map('n', ']g', function()
       gitsigns.nav_hunk 'next'
-  end, { desc = 'Jump to next git [c]hange' })
+    end, { desc = 'Jump to next git [c]hange' })
 
-  map('n', '[g', function()
+    map('n', '[g', function()
       gitsigns.nav_hunk 'prev'
-  end, { desc = 'Jump to previous git [c]hange' })
+    end, { desc = 'Jump to previous git [c]hange' })
 
-  -- Actions
-  -- visual mode
-  map('v', '<leader>=s', function()
-    gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-  end, { desc = 'git [s]tage hunk' })
-  map('v', '<leader>=r', function()
-    gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-  end, { desc = 'git [r]eset hunk' })
+    -- Actions
+    -- visual mode
+    map('v', '<leader>=s', function()
+      gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+    end, { desc = 'git [s]tage hunk' })
+    map('v', '<leader>=r', function()
+      gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+    end, { desc = 'git [r]eset hunk' })
 
-  -- normal mode
-  map('n', '<leader>=s', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
-  map('n', '<leader>=r', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
-  map('n', '<leader>=S', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
-  map('n', '<leader>=u', gitsigns.stage_hunk, { desc = 'git [u]ndo stage hunk' })
-  map('n', '<leader>=R', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
-  map('n', '<leader>=p', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
-  map('n', '<leader>=b', gitsigns.blame_line, { desc = 'git [b]lame line' })
-  map('n', '<leader>=d', gitsigns.diffthis, { desc = 'git [d]iff against index' })
-  map('n', '<leader>=D', function()
-    gitsigns.diffthis '@'
-  end, { desc = 'git [D]iff against last commit' })
-  -- Toggles
-  map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-  map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+    -- normal mode
+    map('n', '<leader>=s', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
+    map('n', '<leader>=r', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
+    map('n', '<leader>=S', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
+    map('n', '<leader>=u', gitsigns.stage_hunk, { desc = 'git [u]ndo stage hunk' })
+    map('n', '<leader>=R', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
+    map('n', '<leader>=p', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
+    map('n', '<leader>=b', gitsigns.blame_line, { desc = 'git [b]lame line' })
+    map('n', '<leader>=d', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+    map('n', '<leader>=D', function()
+      gitsigns.diffthis '@'
+    end, { desc = 'git [D]iff against last commit' })
+    -- Toggles
+    map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
+    map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
   end,
 })
 
@@ -547,11 +511,11 @@ local lsp_servers = {
     Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
   },
   rust_analyzer = {
-      ['rust-analyzer'] = {
-        diagnostics = {
-          enable = false;
-        }
+    ['rust-analyzer'] = {
+      diagnostics = {
+        enable = false;
       }
+    }
   },
   gopls = {},
 }
@@ -645,7 +609,7 @@ for server, config in pairs(lsp_servers) do
       end
     end,
   })
-    vim.lsp.enable(server)
+  vim.lsp.enable(server)
 end
 
 -- NOTE: if all you want is lsp + completion + highlighting, you're done.
@@ -668,15 +632,15 @@ vim.keymap.set("n", "<leader>b", pickers.buffers, { desc = "Search [B]uffers", }
 vim.keymap.set('n', '<leader>?', pickers.keymaps, { desc = '[?] Search Keymaps' })
 vim.keymap.set('n', '<leader>:', pickers.commands, { desc = '[:] Command Palette' })
 vim.keymap.set('n', '<leader><leader>', function()
-    pickers.find_files { follow = true }
+  pickers.find_files { follow = true }
 end, { desc = '[ ] File Picker' })
 vim.keymap.set("n", "<leader>/", pickers.live_grep, { desc = "[/] Grep Directory", })
 vim.keymap.set("n", "<leader>'", pickers.resume, { desc = "['] Open Last Picker", })
 vim.keymap.set('n', '<leader>F', function()
-    pickers.find_files { cwd = utils.buffer_dir() }
+  pickers.find_files { cwd = utils.buffer_dir() }
 end, { desc = '[F]file picker at buffer’s CWD' })
 vim.keymap.set('n', '<leader>d', function()
-    pickers.diagnostics { bufnr = 0 }
+  pickers.diagnostics { bufnr = 0 }
 end, { desc = '[D]iagnostics (current buf)' })
 vim.keymap.set('n', '<leader>D', pickers.diagnostics, { desc = '[D]iagnostics (global)' })
 vim.keymap.set('n', '<leader>.', pickers.oldfiles, { desc = '[.] Search Recent Files' })
@@ -692,8 +656,11 @@ vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
 
 require("which-key").setup({
   -- delay between pressing a key and opening which-key (milliseconds)
-  delay = 100,
+  delay = 250,
   icons = { mappings = vim.g.have_nerd_font },
+  win = {
+    height = { min = 4, max = 40 },
+  },
   spec = {
     { '<leader>=', group = '[=] Git', mode = { 'n', 'v' } },
   }
@@ -727,19 +694,22 @@ vim.keymap.set("n", "<leader>E", ":Neotree toggle dir=%:p:h<CR>", { desc = "[E] 
 
 -- INFO: utility plugins
 vim.pack.add({
-  "https://github.com/windwp/nvim-autopairs",   -- auto pairs
-  "https://github.com/folke/todo-comments.nvim" -- highlight TODO/INFO/WARN comments
+  "https://github.com/windwp/nvim-autopairs",
+  "https://github.com/folke/todo-comments.nvim",
+  "https://github.com/NMAC427/guess-indent.nvim"
 }, { confirm = false })
 
 require("nvim-autopairs").setup()
 
 require("todo-comments").setup({
-    highlight = {
-        pattern = [[.*<(KEYWORDS)\s*:?]],
-        keyword = "bg"
-    },
-    signs = false,
+  highlight = {
+    pattern = [[.*<(KEYWORDS)\s*:?]],
+    keyword = "bg"
+  },
+  signs = false,
 })
+
+require('guess-indent').setup()
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
