@@ -322,7 +322,16 @@ vim.keymap.set({ 'n', 'x', 'o' }, 'gw', '<Plug>(leap)', { desc = '[G]oto [W]ord'
 
 -- INFO: mini.nvim
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })
-require("mini.ai").setup()
+require("mini.ai").setup({
+  -- Number of lines within which textobject is searched
+  n_lines = 1000,
+
+  -- How to search for object (first inside current line, then inside
+  -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+  -- 'cover_or_nearest', 'next', 'previous', 'nearest'.
+  search_method = 'cover_or_next',
+})
+
 -- Add/delete/replace surroundings (brackets, quotes, etc.)
 --
 -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -463,6 +472,22 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.keymap.set({ "v", "o" }, "an", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require "vim.treesitter._select".select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end, { desc = "Select parent treesitter node or outer incremental lsp selections" })
+
+vim.keymap.set({ "v", "o" }, "in", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require "vim.treesitter._select".select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end, { desc = "Select child treesitter node or inner incremental lsp selections" })
+
 -- INFO: completion engine
 vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
 
@@ -528,6 +553,7 @@ local lsp_servers = {
         }
       }
   },
+  gopls = {},
 }
 
 vim.pack.add({
@@ -563,7 +589,7 @@ for server, config in pairs(lsp_servers) do
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration,
         { buffer = bufnr, desc = "LSP: [G]oto [D]eclaration", })
 
-      vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references,
+      vim.keymap.set("n", "gR", require('telescope.builtin').lsp_references,
         { buffer = bufnr, desc = "LSP: [G]oto [R]eferences", })
 
       vim.keymap.set("n", "gI", require('telescope.builtin').lsp_implementations,
