@@ -306,5 +306,10 @@
         "key": "alt+shift+o",
         "command": "editor.action.smartSelect.shrink",
         "when": "editorFocus"
+    },
+    // Disable Ctrl+Q to quit
+    {
+        "key": "ctrl+q",
+        "command": "-workbench.action.quit"
     }
 ]
