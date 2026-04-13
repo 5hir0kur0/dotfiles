@@ -49,7 +49,8 @@ alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
 alias dwdiff='wdiff'
 alias g='git'
 alias gg='git grep -i --break --heading'
-alias rg='rg --smart-case --hidden'
+alias rg='\rg --smart-case'
+alias rg-all='\rg --smart-case --hidden'
 alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
 alias ip='ip -color'
 
@@ -398,8 +399,10 @@ function deitsh() {
 alias dsai='docker start -ai'
 
 strace-fancy() {
-    strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
+    \strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
 }
+
+alias strace='strace -fCDYyy'
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
