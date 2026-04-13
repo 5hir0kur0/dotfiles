@@ -18,7 +18,7 @@
 -- set <space> as the leader key
 -- must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
-vim.g.maplocalleader = "  "
+vim.g.maplocalleader = " k"
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -168,7 +168,7 @@ vim.keymap.set('n', '<leader>w', '<C-w>', { desc = '[W]indow commands' })
 -- Some other helix-inspired mappings
 
 vim.keymap.set('v', '<leader>y', '"+y', { desc = '[Y]ank to system clipboard' })
-vim.keymap.set('n', '<leader>y', '"+yl', { desc = '[Y]ank to system clipboard' })
+vim.keymap.set('n', '<leader>y', '"+yy', { desc = '[Y]ank to system clipboard' })
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', { desc = '[P]aste system clipboard' })
 vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P', { desc = '[P]aste system clipboard before' })
 -- vim.keymap.set('n', '<leader>k', 'K', { desc = '[K] Docs for item' })
@@ -510,13 +510,7 @@ local lsp_servers = {
     -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
     Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
   },
-  rust_analyzer = {
-    ['rust-analyzer'] = {
-      diagnostics = {
-        enable = false;
-      }
-    }
-  },
+  rust_analyzer = {},
   gopls = {},
 }
 
@@ -638,7 +632,7 @@ vim.keymap.set("n", "<leader>/", pickers.live_grep, { desc = "[/] Grep Directory
 vim.keymap.set("n", "<leader>'", pickers.resume, { desc = "['] Open Last Picker", })
 vim.keymap.set('n', '<leader>F', function()
   pickers.find_files { cwd = utils.buffer_dir() }
-end, { desc = '[F]file picker at buffer’s CWD' })
+end, { desc = '[F]ile picker at buffer’s CWD' })
 vim.keymap.set('n', '<leader>d', function()
   pickers.diagnostics { bufnr = 0 }
 end, { desc = '[D]iagnostics (current buf)' })
