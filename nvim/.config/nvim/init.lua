@@ -521,6 +521,13 @@ local lsp_servers = {
     -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
     Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
   },
+  rust_analyzer = {
+      ['rust-analyzer'] = {
+        diagnostics = {
+          enable = false;
+        }
+      }
+  },
 }
 
 vim.pack.add({
@@ -529,9 +536,9 @@ vim.pack.add({
   -- NOTE: if you'd rather install the lsps through your OS package manager you
   -- can delete the next three mason-related lines and their setup calls below.
   -- see `:h lsp-quickstart` for more details.
-  "https://github.com/mason-org/mason.nvim",                     -- package manager
-  "https://github.com/mason-org/mason-lspconfig.nvim",           -- lspconfig bridge
-  "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" -- auto installer
+  -- "https://github.com/mason-org/mason.nvim",                     -- package manager
+  -- "https://github.com/mason-org/mason-lspconfig.nvim",           -- lspconfig bridge
+  -- "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" -- auto installer
 }, { confirm = false })
 
 -- require("mason").setup()
@@ -556,11 +563,17 @@ for server, config in pairs(lsp_servers) do
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration,
         { buffer = bufnr, desc = "LSP: [G]oto [D]eclaration", })
 
+      vim.keymap.set("n", "gr", require('telescope.builtin').lsp_references,
+        { buffer = bufnr, desc = "LSP: [G]oto [R]eferences", })
+
+      vim.keymap.set("n", "gI", require('telescope.builtin').lsp_implementations,
+        { buffer = bufnr, desc = "LSP: [G]oto [I]mplementations", })
+
       vim.keymap.set("n", "gy", require('telescope.builtin').lsp_type_definitions,
         { buffer = bufnr, desc = "LSP: [G]ode [Y] Type Def.", })
 
-      vim.keymap.set("n", "<leader>%", vim.lsp.buf.format,
-        { buffer = bufnr, desc = "LSP: [%] Format", })
+      vim.keymap.set({"n", "v"}, "=", vim.lsp.buf.format,
+        { buffer = bufnr, desc = "LSP: [=] Format", })
 
       vim.keymap.set("n", "<leader>s", require('telescope.builtin').lsp_document_symbols,
         { buffer = bufnr, desc = "LSP: [S]ymbol Picker", })
@@ -573,16 +586,16 @@ for server, config in pairs(lsp_servers) do
       --    See `:help CursorHold` for information about when this is executed
       --
       -- When you move your cursor, the highlights will be cleared (the second autocommand).
-      if client and client:supports_method('textDocument/documentHighlight', event.buf) then
+      if client and client:supports_method('textDocument/documentHighlight', bufnr) then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-          buffer = event.buf,
+          buffer = bufnr,
           group = highlight_augroup,
           callback = vim.lsp.buf.document_highlight,
         })
 
         vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          buffer = event.buf,
+          buffer = bufnr,
           group = highlight_augroup,
           callback = vim.lsp.buf.clear_references,
         })
@@ -600,11 +613,13 @@ for server, config in pairs(lsp_servers) do
       -- code, if the language server you are using supports them
       --
       -- This may be unwanted, since they displace some of your code
-      if client and client:supports_method('textDocument/inlayHint', event.buf) then
-        map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+      if client and client:supports_method('textDocument/inlayHint', bufnr) then
+        vim.keymap.set("n", "<leader>th", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }) end,
+          { buffer = bufnr, desc = "LSP: [T]oggle Inlay [H]ints", })
       end
     end,
   })
+    vim.lsp.enable(server)
 end
 
 -- NOTE: if all you want is lsp + completion + highlighting, you're done.
