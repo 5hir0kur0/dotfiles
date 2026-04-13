@@ -22,7 +22,8 @@ config.font_rules = {
 	},
 }
 config.font_size = 16
-config.line_height = 1.1
+config.line_height = 1.08
+config.cell_width = 0.96
 -- color_scheme = 'Solarized Dark Higher Contrast (Gogh)'
 config.color_scheme = "tokyonight_night"
 config.default_cursor_style = "SteadyBar"
