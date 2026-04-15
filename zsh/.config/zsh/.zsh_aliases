@@ -94,13 +94,14 @@ function tail_ccze() {
     tail --retry --follow=name "${@:?expected file name(s)}" | ccze --raw-ansi
 }
 
-function man() {
+function _nvim_man() {
     # Fix issue that setting MANPAGER="nvim '+Man!'" no longer shows syntax highlighting
     # for code inside of man pages (e.g. `man nanosleep`).
     # Haven't found another workaround so far.
     nvim "+Man $* | bd #"
 }
-
+compdef _man _nvim_man
+alias man='_nvim_man'
 
 alias hcat="highlight --force -O ansi"
 
