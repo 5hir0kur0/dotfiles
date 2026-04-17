@@ -208,6 +208,8 @@ keybinds clear-defaults=true {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt Shift [" { MovePaneBackwards; }
         bind "Alt Shift ]" { MovePane; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
         bind "Alt Shift p" { ToggleGroupMarking; }
     }
     shared_except "normal" "locked" {
