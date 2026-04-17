@@ -312,6 +312,8 @@ copy_clipboard "system"
 //
 copy_on_select false
 
+show_startup_tips false
+
 web_client {
     font "monospace"
 }
