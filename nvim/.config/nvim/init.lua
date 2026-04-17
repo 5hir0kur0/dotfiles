@@ -282,7 +282,8 @@ vim.pack.add({ "https://github.com/folke/tokyonight.nvim" }, { confirm = false }
 vim.cmd.colorscheme("tokyonight-night")
 
 vim.pack.add({ "https://codeberg.org/andyg/leap.nvim" }, { confirm = false })
-vim.keymap.set({ 'n', 'x', 'o' }, 'gw', '<Plug>(leap)', { desc = '[G]oto [W]ord' })
+vim.keymap.set({ "n", "x", "o" }, "gw", "<Plug>(leap)", { desc = "[G]oto [W]ord" })
+vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap)", { desc = "[G]oto [W]ord" })
 
 -- INFO: mini.nvim
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })
@@ -625,13 +626,13 @@ local utils = require("telescope.utils")
 vim.keymap.set("n", "<leader>b", pickers.buffers, { desc = "Search [B]uffers", })
 vim.keymap.set('n', '<leader>?', pickers.keymaps, { desc = '[?] Search Keymaps' })
 vim.keymap.set('n', '<leader>:', pickers.commands, { desc = '[:] Command Palette' })
-vim.keymap.set('n', '<leader><leader>', function()
-  pickers.find_files { follow = true }
-end, { desc = '[ ] File Picker' })
+vim.keymap.set('n', '<leader><leader>', function() 
+  pickers.git_files({ show_untracked = true })
+end , { desc = '[ ] Git Files' })
 vim.keymap.set("n", "<leader>/", pickers.live_grep, { desc = "[/] Grep Directory", })
 vim.keymap.set("n", "<leader>'", pickers.resume, { desc = "['] Open Last Picker", })
 vim.keymap.set('n', '<leader>F', function()
-  pickers.find_files { cwd = utils.buffer_dir() }
+  pickers.find_files { cwd = utils.buffer_dir(), hidden = true }
 end, { desc = '[F]ile picker at buffer’s CWD' })
 vim.keymap.set('n', '<leader>d', function()
   pickers.diagnostics { bufnr = 0 }
