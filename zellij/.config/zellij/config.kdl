@@ -189,6 +189,7 @@ keybinds clear-defaults=true {
         bind "Alt n" { GoToNextTab; }
         bind "Alt t" { TogglePaneInGroup; }
         bind "Alt e" { ToggleFloatingPanes; }
+        bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "Alt Shift n" { MoveTab "Left"; }
         bind "Alt Shift p" { MoveTab "Right"; }
         bind "Alt h" "Alt Left" { MoveFocus "Left"; }
