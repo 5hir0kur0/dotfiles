@@ -5,10 +5,10 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     locked {
-        bind "Ctrl Space" { SwitchToMode "Normal"; }
+        bind "Alt Space" { SwitchToMode "Normal"; }
     }
     resize {
-        bind "Ctrl n" { SwitchToMode "Normal"; }
+        bind "Alt Shift r" { SwitchToMode "Normal"; }
         bind "h" "Left" { Resize "Increase Left"; }
         bind "j" "Down" { Resize "Increase Down"; }
         bind "k" "Up" { Resize "Increase Up"; }
@@ -21,7 +21,7 @@ keybinds clear-defaults=true {
         bind "-" { Resize "Decrease"; }
     }
     pane {
-        bind "Ctrl p" { SwitchToMode "Normal"; }
+        bind "Alt Shift p" { SwitchToMode "Normal"; }
         bind "h" "Left" { MoveFocus "Left"; }
         bind "l" "Right" { MoveFocus "Right"; }
         bind "j" "Down" { MoveFocus "Down"; }
@@ -42,7 +42,7 @@ keybinds clear-defaults=true {
         bind "p" { TogglePanePinned; SwitchToMode "Normal"; }
     }
     move {
-        bind "Ctrl m" { SwitchToMode "Normal"; }
+        bind "Alt Shift m" { SwitchToMode "Normal"; }
         bind "n" "Tab" { MovePane; }
         bind "p" { MovePaneBackwards; }
         bind "h" "Left" { MovePane "Left"; }
@@ -51,7 +51,7 @@ keybinds clear-defaults=true {
         bind "l" "Right" { MovePane "Right"; }
     }
     tab {
-        bind "Ctrl t" { SwitchToMode "Normal"; }
+        bind "Alt Shift t" { SwitchToMode "Normal"; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "h" "Left" "Up" "k" { GoToPreviousTab; }
         bind "l" "Right" "Down" "j" { GoToNextTab; }
@@ -73,7 +73,7 @@ keybinds clear-defaults=true {
         bind "Tab" { ToggleTab; }
     }
     scroll {
-        bind "Ctrl s" { SwitchToMode "Normal"; }
+        bind "Alt s" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
         bind "s" "/" "?" { SwitchToMode "EnterSearch"; SearchInput 0; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -87,7 +87,7 @@ keybinds clear-defaults=true {
         bind "Alt c" "Ctrl c" { Copy; }
     }
     search {
-        bind "Ctrl s" { SwitchToMode "Normal"; }
+        bind "Alt s" { SwitchToMode "Normal"; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
@@ -114,7 +114,7 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
     }
     session {
-        bind "Ctrl o" { SwitchToMode "Normal"; }
+        bind "Alt Shift s" { SwitchToMode "Normal"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
         bind "q" { Quit; }
@@ -190,7 +190,7 @@ keybinds clear-defaults=true {
         bind "Alt t" { TogglePaneInGroup; }
         bind "Alt e" { ToggleFloatingPanes; }
         bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
-        bind "Alt Shift n" { MoveTab "Left"; }
+        bind "Alt Shift r" { MoveTab "Left"; }
         bind "Alt Shift p" { MoveTab "Right"; }
         bind "Alt h" "Alt Left" { MoveFocus "Left"; }
         bind "Alt l" "Alt Right" { MoveFocus "Right"; }
@@ -204,7 +204,7 @@ keybinds clear-defaults=true {
         bind "Alt Shift f" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
         bind "Alt f" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
 
-        bind "Ctrl Space" { SwitchToMode "Locked"; }
+        bind "Alt Space" { SwitchToMode "Locked"; }
         bind "Alt =" "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt Shift [" { MovePaneBackwards; }
@@ -217,22 +217,22 @@ keybinds clear-defaults=true {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
     shared_except "pane" "locked" {
-        bind "Ctrl p" { SwitchToMode "Pane"; }
+        bind "Alt Shift p" { SwitchToMode "Pane"; }
     }
     shared_except "resize" "locked" {
-        bind "Ctrl n" { SwitchToMode "Resize"; }
+        bind "Alt Shift r" { SwitchToMode "Resize"; }
     }
     shared_except "scroll" "locked" {
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Alt s" { SwitchToMode "Scroll"; }
     }
     shared_except "session" "locked" {
-        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Alt Shift s" { SwitchToMode "Session"; }
     }
     shared_except "tab" "locked" {
-        bind "Ctrl t" { SwitchToMode "Tab"; }
+        bind "Alt Shift t" { SwitchToMode "Tab"; }
     }
     shared_except "move" "locked" {
-        bind "Ctrl m" { SwitchToMode "Move"; }
+        bind "Alt Shift m" { SwitchToMode "Move"; }
     }
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
@@ -271,7 +271,7 @@ simplified_ui false
 // Toggle between having pane frames around the panes
 pane_frames false
 
-theme "tokyo-night-dark"
+theme "ansi"
 
 // The name of the default layout to load on startup
 // Default: "default"
