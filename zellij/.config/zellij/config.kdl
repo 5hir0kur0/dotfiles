@@ -222,6 +222,11 @@ keybinds clear-defaults=true {
         bind "Alt 7" { GoToTab 7; }
         bind "Alt 8" { GoToTab 8; }
         bind "Alt 9" { GoToTab 9; }
+
+        bind "Alt Shift h" { Resize "Decrease Right"; }
+        bind "Alt Shift j" { Resize "Increase Down"; }
+        bind "Alt Shift k" { Resize "Decrease Down"; }
+        bind "Alt Shift l" { Resize "Increase Right"; }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
@@ -244,9 +249,9 @@ keybinds clear-defaults=true {
     shared_except "move" "locked" {
         bind "Alt Shift m" { SwitchToMode "Move"; }
     }
-    shared_except "tmux" "locked" {
-        bind "Ctrl b" { SwitchToMode "Tmux"; }
-    }
+    // shared_except "tmux" "locked" {
+    //     bind "Ctrl b" { SwitchToMode "Tmux"; }
+    // }
 }
 
 // Plugin aliases - can be used to change the implementation of Zellij
@@ -279,7 +284,7 @@ load_plugins {
 simplified_ui false
 
 // Toggle between having pane frames around the panes
-pane_frames false
+pane_frames true
 
 theme "ansi"
 
@@ -324,7 +329,3 @@ copy_clipboard "system"
 copy_on_select false
 
 show_startup_tips false
-
-web_client {
-    font "monospace"
-}
