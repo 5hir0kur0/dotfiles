@@ -627,12 +627,15 @@ vim.keymap.set("n", "<leader>b", pickers.buffers, { desc = "Search [B]uffers", }
 vim.keymap.set('n', '<leader>?', pickers.keymaps, { desc = '[?] Search Keymaps' })
 vim.keymap.set('n', '<leader>:', pickers.commands, { desc = '[:] Command Palette' })
 vim.keymap.set('n', '<leader><leader>', function() 
-  pickers.git_files({ show_untracked = true })
+  local ok = pcall(pickers.git_files, { show_untracked = true })
+  if not ok then
+    pickers.find_files { cwd = utils.buffer_dir(), hidden = true, follow = true }
+  end
 end , { desc = '[ ] Git Files' })
 vim.keymap.set("n", "<leader>/", pickers.live_grep, { desc = "[/] Grep Directory", })
 vim.keymap.set("n", "<leader>'", pickers.resume, { desc = "['] Open Last Picker", })
 vim.keymap.set('n', '<leader>F', function()
-  pickers.find_files { cwd = utils.buffer_dir(), hidden = true }
+  pickers.find_files { cwd = utils.buffer_dir(), hidden = true, follow = true }
 end, { desc = '[F]ile picker at buffer’s CWD' })
 vim.keymap.set('n', '<leader>d', function()
   pickers.diagnostics { bufnr = 0 }
