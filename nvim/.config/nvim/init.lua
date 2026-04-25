@@ -454,7 +454,10 @@ vim.keymap.set({ "v", "o" }, "in", function()
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
 
 -- INFO: completion engine
-vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
+vim.pack.add({ 
+    "https://github.com/saghen/blink.lib",
+    "https://github.com/saghen/blink.cmp"
+}, { confirm = false })
 
 require("blink.cmp").setup({
   completion = {
