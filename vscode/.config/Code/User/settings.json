@@ -116,6 +116,56 @@
                 "y",
                 "$"
             ]
+        },
+        {
+            // LSP: Goto Definition
+            "before": [
+                "g",
+                "d"
+            ],
+            "commands": [
+                "editor.action.revealDefinition"
+            ]
+        },
+        {
+            // LSP: Goto Declaration
+            "before": [
+                "g",
+                "D"
+            ],
+            "commands": [
+                "editor.action.goToDeclaration"
+            ]
+        },
+        {
+            // LSP: Find References
+            "before": [
+                "g",
+                "R"
+            ],
+            "commands": [
+                "editor.action.goToReferences"
+            ]
+        },
+        {
+            // LSP: Goto Implementation
+            "before": [
+                "g",
+                "I"
+            ],
+            "commands": [
+                "editor.action.goToImplementation"
+            ]
+        },
+        {
+            // LSP: Goto Type Definition
+            "before": [
+                "g",
+                "y"
+            ],
+            "commands": [
+                "editor.action.goToTypeDefinition"
+            ]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [

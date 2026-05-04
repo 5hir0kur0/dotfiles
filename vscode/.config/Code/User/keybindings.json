@@ -311,5 +311,5 @@
     {
         "key": "ctrl+q",
         "command": "-workbench.action.quit"
-    }
+    },
 ]
