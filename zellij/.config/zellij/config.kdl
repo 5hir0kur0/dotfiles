@@ -202,7 +202,7 @@ keybinds clear-defaults=true {
         bind "Alt o" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "Alt Shift o" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "Alt Shift f" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
-        bind "Alt f" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
+        bind "Alt Shift e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
 
         bind "Alt Space" { SwitchToMode "Locked"; }
         bind "Alt =" "Alt +" { Resize "Increase"; }
@@ -284,7 +284,7 @@ load_plugins {
 simplified_ui false
 
 // Toggle between having pane frames around the panes
-pane_frames true
+pane_frames false
 
 theme "ansi"
 
