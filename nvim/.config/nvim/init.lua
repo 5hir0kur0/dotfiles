@@ -514,7 +514,13 @@ local lsp_servers = {
     -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
     Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
   },
-  rust_analyzer = {},
+  rust_analyzer = {
+    ["rust-analyzer"] = {
+      check = {
+        command = "clippy",
+      }
+    }
+  },
   gopls = {},
 }
 
@@ -675,7 +681,7 @@ lint.linters_by_ft = lint.linters_by_ft or {}
 lint.linters_by_ft["markdown"] = { "vale" }
 lint.linters_by_ft["text"] = { "vale" }
 lint.linters_by_ft["sh"] = { "shellcheck" }
-lint.linters_by_ft["rust"] = { "clippy" }
+-- lint.linters_by_ft["rust"] = { "clippy" } // see below
 
 local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
