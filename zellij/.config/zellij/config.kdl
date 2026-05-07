@@ -196,6 +196,7 @@ keybinds clear-defaults=true {
         bind "Alt l" "Alt Right" { MoveFocus "Right"; }
         bind "Alt j" "Alt Down" { MoveFocus "Down"; }
         bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+        bind "Alt q" { CloseFocus; }
 
         bind "Alt c" { NewTab; SwitchToMode "Normal"; }
         bind "Alt Enter" { NewPane; SwitchToMode "Normal"; }

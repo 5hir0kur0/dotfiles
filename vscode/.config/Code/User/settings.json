@@ -29,6 +29,9 @@
     "git.suggestSmartCommit": false,
     "git.terminalGitEditor": true,
     "git.verboseCommit": true,
+    "git.blame.editorDecoration.enabled": true,
+    "git.blame.statusBarItem.enabled": true,
+    "git.addAICoAuthor": "off",
     //
     // -------------------
     // Workbench Settings:
@@ -303,7 +306,8 @@
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.stickyScroll.enabled": true,
     "terminal.integrated.suggest.enabled": true,
-    "terminal.integrated.enableImages": true,
+    // Font rendering becomes terrible when this is enabled for some reason.
+    "terminal.integrated.enableImages": false,
     "terminal.integrated.scrollback": 10000,
     //
     // ---------------
@@ -453,21 +457,7 @@
     "accessibility.signals.codeActionApplied": {
         "sound": "on"
     },
-    "accessibility.signals.diffLineDeleted": {
-        "sound": "on"
-    },
-    "accessibility.signals.diffLineInserted": {
-        "sound": "on"
-    },
-    "accessibility.signals.diffLineModified": {
-        "sound": "on"
-    },
     "accessibility.signalOptions.debouncePositionChanges": true,
-    "git.blame.editorDecoration.enabled": true,
-    "git.blame.statusBarItem.enabled": true,
-    "gitlens.plusFeatures.enabled": false,
-    "gitlens.currentLine.enabled": false,
-    "gitlens.currentLine.pullRequests.enabled": false,
     "gitlab.duoCodeSuggestions.enabled": false,
     "gitlab.duoChat.enabled": false,
     "[html]": {
