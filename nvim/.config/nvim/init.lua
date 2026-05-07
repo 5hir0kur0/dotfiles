@@ -575,6 +575,9 @@ for server, config in pairs(lsp_servers) do
       vim.keymap.set("n", "<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols,
         { buffer = bufnr, desc = "LSP: [S]ymbol Picker (global)", })
 
+      vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action,
+        { buffer = bufnr, desc = "LSP: Code [a]ction", })
+
       -- The following two autocommands are used to highlight references of the
       -- word under your cursor when your cursor rests there for a little while.
       --    See `:help CursorHold` for information about when this is executed
