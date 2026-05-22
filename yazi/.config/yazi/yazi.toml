@@ -28,6 +28,6 @@ prepend_previewers = [
 append_previewers = [{ url = "*", run = 'piper -- hexyl --border=none --terminal-width=$w "$1"' }]
 
 prepend_fetchers = [
-    { id = "git", url = "*", run = "git" },
-    { id = "git", url = "*/", run = "git" },
+    { group = "git", url = "*", run = "git" },
+    { group = "git", url = "*/", run = "git" },
 ]

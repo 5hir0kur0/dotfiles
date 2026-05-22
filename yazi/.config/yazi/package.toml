@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "43c6978"
-hash = "6fa6a05a81c98dd000fbca3cca6e9682"
+rev = "5d5c480"
+hash = "7b625412411be411153886894d9acaf"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
@@ -10,13 +10,13 @@ hash = "4761fffb60a12d37096c34a356380cdf"
 
 [[plugin.deps]]
 use = "Ape/open-with-cmd"
-rev = "e3d430f"
-hash = "d29c1ffa99099181faf8c01d1f59aa4c"
+rev = "eba191d"
+hash = "722a60eca1b338c9c24bb508d2d48578"
 
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "75f93be"
-hash = "defd59f9ca77ad958e7d86ae56a2736f"
+rev = "aa4804b"
+hash = "59d9ecb4774b28a4fb7ccd2c25973993"
 
 [[plugin.deps]]
 use = "dedukun/relative-motions"
@@ -25,17 +25,17 @@ hash = "e02a788e5b8ae0fb47fd0193dda589cc"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "43c6978"
+rev = "5d5c480"
 hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "43c6978"
-hash = "26db011a778f261d730d4f5f8bf24b3f"
+rev = "5d5c480"
+hash = "88e56a64b7ce7c4314427452343fef17"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "43c6978"
+rev = "5d5c480"
 hash = "187cc58ba7ac3befd49c342129e6f1b6"
 
 [[plugin.deps]]
@@ -50,22 +50,22 @@ hash = "f5afc904d5106ee368c8aa2ded43bd74"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "43c6978"
-hash = "4c0260feb50ea2437380690ffc241da7"
+rev = "5d5c480"
+hash = "9c7987da2d2a2120dac33abb64132004"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
-rev = "43c6978"
+rev = "5d5c480"
 hash = "c887903a63a2ff520081b6d90a4b3392"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:zoxide"
-rev = "43c6978"
+rev = "5d5c480"
 hash = "99aa06d3014798d86001c324468d497f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:piper"
-rev = "43c6978"
+rev = "5d5c480"
 hash = "384464b6df8cb807425c521f8cd790f3"
 
 [[flavor.deps]]
