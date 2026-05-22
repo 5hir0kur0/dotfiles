@@ -27,8 +27,8 @@ if [[ "$PATH" != *"$HOME/.elan/bin"* ]]; then
     export PATH="$PATH:$HOME/.elan/bin"
 fi
 
-export EDITOR=helix
-export VISUAL=helix
+export EDITOR=nvim
+export VISUAL=nvim
 
 export LESS='--mouse --use-color --ignore-case --chop-long-lines --raw-control-chars --incsearch --LONG-PROMPT'
 
