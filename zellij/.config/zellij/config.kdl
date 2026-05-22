@@ -314,6 +314,7 @@ theme "ansi"
 // copy_command "xclip -selection clipboard" // x11
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
+copy_command "xsel -p"
 
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
@@ -322,11 +323,11 @@ theme "ansi"
 //   - system (default)
 //   - primary
 //
-copy_clipboard "system"
+// copy_clipboard "primary"
 
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
 //
-copy_on_select false
+copy_on_select true
 
 show_startup_tips false
