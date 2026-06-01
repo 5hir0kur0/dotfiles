@@ -27,8 +27,12 @@ if [[ "$PATH" != *"$HOME/.elan/bin"* ]]; then
     export PATH="$PATH:$HOME/.elan/bin"
 fi
 
-export EDITOR=nvim
-export VISUAL=nvim
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    export EDITOR="code --wait"
+else
+    export EDITOR="nvim"
+fi
+export VISUAL="$EDITOR"
 
 export LESS='--mouse --use-color --ignore-case --chop-long-lines --raw-control-chars --incsearch --LONG-PROMPT'
 
