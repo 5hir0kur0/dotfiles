@@ -221,6 +221,7 @@
     // ----------------
     //
     "window.titleBarStyle": "custom",
+    "update.titleBar": false,
     "window.autoDetectColorScheme": true,
     "window.density.editorTabHeight": "compact",
     //
@@ -309,15 +310,19 @@
     // Font rendering becomes terrible when this is enabled for some reason.
     "terminal.integrated.enableImages": false,
     "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.env.linux": {
+        "EDITOR": "code --wait"
+    },
     //
     // ---------------
     // Chat Settings:
     // ---------------
     //
-    "chat.viewSessions.orientation": "stacked",
     "chat.fontSize": 15,
     "chat.fontFamily": "'Noto Serif', 'Noto Serif CJK JP', serif",
     "chat.mcp.gallery.enabled": true,
+    "chat.unifiedAgentsBar.enabled": true,
+    "chat.agent.sandbox.enabled": "on",
     //
     // ---------------
     // Files Settings:
