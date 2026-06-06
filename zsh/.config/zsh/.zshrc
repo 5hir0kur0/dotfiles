@@ -4,6 +4,8 @@
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}"/zsh/histfile
 HISTSIZE=420000
 SAVEHIST=420000
+# append history incrementally (as commands are entered, not on shell exit)
+setopt inc_append_history
 # don't enter command in history if it's the same as the previous command
 setopt histignoredups
 setopt histsavenodups
