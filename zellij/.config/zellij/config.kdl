@@ -55,6 +55,8 @@ keybinds clear-defaults=true {
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "h" "Left" "Up" "k" { GoToPreviousTab; }
         bind "l" "Right" "Down" "j" { GoToNextTab; }
+        bind "Shift h" "Shift Left" "Shift Up" "Shift k" { MoveTab "Left"; }
+        bind "Shift l" "Shift Right" "Shift Down" "Shift j" { MoveTab "Right"; }
         bind "n" { NewTab; SwitchToMode "Normal"; }
         bind "x" { CloseTab; SwitchToMode "Normal"; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
@@ -314,7 +316,7 @@ theme "ansi"
 // copy_command "xclip -selection clipboard" // x11
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
-copy_command "xsel -p"
+// copy_command "xsel -p"
 
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
@@ -323,7 +325,7 @@ copy_command "xsel -p"
 //   - system (default)
 //   - primary
 //
-// copy_clipboard "primary"
+copy_clipboard "primary"
 
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
