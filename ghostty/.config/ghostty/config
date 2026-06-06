@@ -32,8 +32,9 @@ font-size = 16
 adjust-cell-width = -4%
 adjust-cell-height = 8%
 # window-decoration = none
-# theme = light:TokyoNight Day,dark:TokyoNight Night
-theme = TokyoNight Night
+theme = light:Modus Operandi,dark:TokyoNight Night
+# theme = TokyoNight Night
+# theme = Modus Operandi
 
 shell-integration-features = true
 cursor-style = bar
