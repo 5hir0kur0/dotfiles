@@ -41,6 +41,7 @@
     "workbench.tree.enableStickyScroll": true,
     "workbench.list.smoothScrolling": true,
     "workbench.tree.indent": 16,
+    "workbench.commandPalette.history": 100,
     //
     // -------------
     // VIM Settings:
@@ -302,13 +303,16 @@
     "terminal.integrated.mouseWheelZoom": true,
     "terminal.integrated.fontLigatures.enabled": true,
     "terminal.integrated.fontSize": 20,
-    "terminal.integrated.fontFamily": "'Iosevka Slab', 'Iosevka NF', 'Monego', 'monaco', monospace",
+    "terminal.integrated.fontFamily": "'Iosevka Term Slab', 'Iosevka NF', 'Monego', 'monaco', monospace",
+    "terminal.integrated.fontLigatures.featureSettings": "\"calt\" on, \"ss07\" on, \"liga\" on, \"dlig\" on",
+    "terminal.integrated.gpuAcceleration": "off",
     "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "terminal.external.linuxExec": "ptyxis",
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.stickyScroll.enabled": true,
     "terminal.integrated.suggest.enabled": true,
     // Font rendering becomes terrible when this is enabled for some reason.
-    "terminal.integrated.enableImages": false,
+    "terminal.integrated.enableImages": true,
     "terminal.integrated.scrollback": 10000,
     "terminal.integrated.env.linux": {
         "EDITOR": "code --wait"
@@ -330,13 +334,14 @@
     //
     "files.insertFinalNewline": true,
     "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
         "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/*.olean": true
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/*.olean": true,
+        "**/build": true,
+        "**/CVS": true,
+        "**/Thumbs.db": true
     },
     "files.autoSave": "afterDelay",
     "files.trimTrailingWhitespace": true,
@@ -416,12 +421,14 @@
         "*": true,
         "plaintext": false,
         "markdown": true,
-        "scminput": false,
-        "latex": false
+        "scminput": false
     },
-    "github.copilot.editor.enableAutoCompletions": true,
     "svelte.enable-ts-plugin": true,
     "markdown-pdf.executablePath": "/usr/bin/chromium",
+    "markdown.preview.fontFamily": "'Noto Serif', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+    "markdown.preview.fontSize": 16,
+    "markdown.preview.typographer": true,
+    "markdown.preview.breaks": true,
     "redhat.telemetry.enabled": false,
     "cmake.configureOnOpen": true,
     "cSpell.userWords": [
