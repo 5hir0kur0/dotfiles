@@ -289,7 +289,9 @@ simplified_ui false
 // Toggle between having pane frames around the panes
 pane_frames false
 
-theme "ansi"
+// theme "ansi"
+
+theme "one-half-dark"
 
 // The name of the default layout to load on startup
 // Default: "default"
