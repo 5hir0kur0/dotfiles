@@ -6,7 +6,7 @@ config.font = wezterm.font_with_fallback({
 	-- 'Monaspace Xenon',
 	{
 		family = "Iosevka Term Slab",
-		harfbuzz_features = { "+ss07", "dlig" },
+		harfbuzz_features = { "+ss07", "kern", "liga", "clig", "dlig" },
 	},
 	"Noto Serif CJK JP",
 })
