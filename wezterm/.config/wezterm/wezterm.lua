@@ -32,6 +32,7 @@ config.force_reverse_video_cursor = true
 config.scrollback_lines = 10000
 -- scroll less fast (useful when scrolling via touchpad)
 config.alternate_buffer_wheel_scroll_speed = 1
+config.window_background_opacity = 0.8
 config.window_decorations = "RESIZE"
 config.window_padding = {
 	left = 0,
