@@ -326,7 +326,6 @@
     "chat.fontFamily": "'Noto Serif', 'Noto Serif CJK JP', serif",
     "chat.mcp.gallery.enabled": true,
     "chat.unifiedAgentsBar.enabled": true,
-    "chat.agent.sandbox.enabled": "on",
     //
     // ---------------
     // Files Settings:
@@ -409,6 +408,30 @@
         "-I",
         "${workspaceFolder}/vscode-build/extern/QmlUiCore"
     ],
+    // Rust Settings
+    "rust-analyzer.testExplorer": true,
+    "rust-analyzer.diagnostics.previewRustcOutput": true,
+    "rust-analyzer.diagnostics.styleLints.enable": true,
+    // A11y
+    "accessibility.signals.taskCompleted": {
+        "sound": "on"
+    },
+    "accessibility.signals.taskFailed": {
+        "sound": "on"
+    },
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    "accessibility.signals.terminalCommandFailed": {
+        "sound": "on"
+    },
+    "accessibility.signals.chatResponseReceived": {
+        "sound": "on"
+    },
+    "accessibility.signals.codeActionApplied": {
+        "sound": "on"
+    },
+    "accessibility.signalOptions.debouncePositionChanges": true,
     //
     // ---------------
     // Misc. Settings:
@@ -431,6 +454,11 @@
     "markdown.preview.breaks": true,
     "redhat.telemetry.enabled": false,
     "cmake.configureOnOpen": true,
+    "cmake.buildDirectory": "${workspaceFolder}/vscode-build",
+    "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+    ],
     "cSpell.userWords": [
         "Beamer",
         "heur",
@@ -447,29 +475,6 @@
         "editor.defaultFormatter": "foxundermoon.shell-format"
     },
     "editor.formatOnSave": true,
-    "cmake.pinnedCommands": [
-        "workbench.action.tasks.configureTaskRunner",
-        "workbench.action.tasks.runTask"
-    ],
-    "accessibility.signals.taskCompleted": {
-        "sound": "on"
-    },
-    "accessibility.signals.taskFailed": {
-        "sound": "on"
-    },
-    "accessibility.signals.terminalBell": {
-        "sound": "on"
-    },
-    "accessibility.signals.terminalCommandFailed": {
-        "sound": "on"
-    },
-    "accessibility.signals.chatResponseReceived": {
-        "sound": "on"
-    },
-    "accessibility.signals.codeActionApplied": {
-        "sound": "on"
-    },
-    "accessibility.signalOptions.debouncePositionChanges": true,
     "gitlab.duoCodeSuggestions.enabled": false,
     "gitlab.duoChat.enabled": false,
     "[html]": {
@@ -500,7 +505,6 @@
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
-    "cmake.buildDirectory": "${workspaceFolder}/vscode-build",
     "lean4.alwaysAskBeforeInstallingLeanVersions": false,
     "workbench.editorAssociations": {
         "*.copilotmd": "vscode.markdown.preview.editor",
@@ -512,9 +516,6 @@
     "tinymist.typstExtraArgs": [
         "--features=html"
     ],
-    "rust-analyzer.testExplorer": true,
-    "rust-analyzer.diagnostics.previewRustcOutput": true,
-    "rust-analyzer.diagnostics.styleLints.enable": true,
     "explorer.fileNesting.patterns": {
         "*.ts": "${capture}.js",
         "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
