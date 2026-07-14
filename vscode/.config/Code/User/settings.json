@@ -42,6 +42,7 @@
     "workbench.list.smoothScrolling": true,
     "workbench.tree.indent": 16,
     "workbench.commandPalette.history": 100,
+    "workbench.browser.searchEngine": "duckduckgo",
     //
     // -------------
     // VIM Settings:
@@ -396,7 +397,7 @@
     //
     "qt-core.additionalQtPaths": [
         {
-            "name": "Qt-6.10.2-linux-g++",
+            "name": "System qmake6",
             "path": "/usr/bin/qmake6"
         }
     ],
@@ -531,5 +532,70 @@
         "*.sdb": "${capture}.${extname}-*",
         "*.s3db": "${capture}.${extname}-*"
     },
+    "explorer.excludeGitIgnore": true,
     "telemetry.feedback.enabled": false,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "chat.tools.compressOutput.enabled": true,
+    "chat.tools.terminal.outputDeltas": true,
+    "chat.tools.terminal.autoApprove": {
+        "basename": true,
+        "cargo": true,
+        "cat": true,
+        "cd": true,
+        "clang": true,
+        "cmake": true,
+        "comm": true,
+        "ctest": true,
+        "cut": true,
+        "date": true,
+        "diff": true,
+        "echo": true,
+        "file": true,
+        "git": false,
+        "git commit": false,
+        "git push": false,
+        "git rm": false,
+        "git --no-pager describe": true,
+        "git --no-pager rev-list": true,
+        "git --no-pager tag": true,
+        "git rev-parse": true,
+        "git status": true,
+        "gofmt": true,
+        "go": true,
+        "ls": true,
+        "make": true,
+        "mkdir": true,
+        "mmdc": true,
+        "nm": true,
+        "npm info": true,
+        "npm ls": true,
+        "npm run": true,
+        "npm view": true,
+        "nproc": true,
+        "printf": true,
+        "pwd": true,
+        "stat": true,
+        "touch": true,
+        "uv": true,
+        "tail": true,
+        "grep": true,
+        "head": true,
+        "lake": true,
+        "rg": true,
+        "npx vitest": true
+    },
+    "chat.viewSessions.orientation": "stacked",
+    "chat.plugins.marketplaces": [
+        "github/copilot-plugins",
+        "github/awesome-copilot#marketplace",
+        "obra/superpowers-marketplace"
+    ],
+    "chat.tools.urls.autoApprove": {
+        "https://*": true,
+    },
+    "chat.tools.terminal.enableAutoApprove": true,
+    "chat.tools.terminal.ignoreDefaultAutoApproveRules": true,
+    "chat.agent.sandbox.allowAutoApprove": false,
 }
