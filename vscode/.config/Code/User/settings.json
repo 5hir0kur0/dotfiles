@@ -43,6 +43,7 @@
     "workbench.tree.indent": 16,
     "workbench.commandPalette.history": 100,
     "workbench.browser.searchEngine": "duckduckgo",
+    "workbench.experimental.modernUI": true,
     //
     // -------------
     // VIM Settings:
@@ -560,14 +561,18 @@
         "git --no-pager describe": true,
         "git --no-pager rev-list": true,
         "git --no-pager tag": true,
+        "git --no-pager show": true,
+        "git --no-pager diff": true,
         "git rev-parse": true,
         "git status": true,
+        "git diff": true,
         "gofmt": true,
         "go": true,
         "ls": true,
         "make": true,
         "mkdir": true,
         "mmdc": true,
+        "nl": true,
         "nm": true,
         "npm info": true,
         "npm ls": true,
@@ -584,7 +589,8 @@
         "head": true,
         "lake": true,
         "rg": true,
-        "npx vitest": true
+        "npx vitest": true,
+        "wc": true
     },
     "chat.viewSessions.orientation": "stacked",
     "chat.plugins.marketplaces": [
