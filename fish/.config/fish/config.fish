@@ -7,11 +7,6 @@ status is-interactive; or exit
 # prefixed with a space (equivalent of zsh's `hist_ignore_space`). Nothing to
 # configure here.
 
-## editor / misc
-
-set -gx EDITOR nvim
-set -gx VISUAL nvim
-
 # don't beep
 set -g fish_greeting
 
