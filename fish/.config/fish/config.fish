@@ -19,9 +19,9 @@ set -g fish_transient_prompt 1
 ## fzf (ctrl-t file search, ctrl-r history search; alt-c intentionally unbound)
 
 if command -q fzf
-    set -gx FZF_DEFAULT_OPTS "--height 42% --reverse --cycle --info=inline"
+    set -gx FZF_DEFAULT_OPTS "--height 42% --border --reverse --cycle --info=inline"
     set -gx FZF_CTRL_T_OPTS "--preview='bat --color=always --wrap=never --style=plain,changes {}'"
-    set -gx FZF_CTRL_R_OPTS '-e'
+    set -gx FZF_CTRL_R_OPTS '--exact'
     fzf_key_bindings
     # undo the alt-c (cd) binding; only want ctrl-t and ctrl-r
     bind --erase \ec 2>/dev/null
