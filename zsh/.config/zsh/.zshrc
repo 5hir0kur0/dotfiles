@@ -402,7 +402,7 @@ working_directory="\$(_my_fit_path2 '' \$((\$(_my_prompt_width) - 2)))"
 
 wd_50_percent="%\$(_my_prompt_width)<…<$working_directory"
 
-PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %# %f"
+PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %F{green}%# %f"
 
 # prompt for remote machines
 #PROMPT="%F{red}%(0?..[%?])%f%F{magenta}@%M%f%F{white}:%f%F{cyan}$wd_50_percent %# %f"
@@ -428,47 +428,10 @@ chpwd_functions+=( cd_fun )
 
 
 ## fzf
-export FZF_DEFAULT_OPTS="--height 42% --reverse --border --cycle --inline-info --border -1"
-export FZF_CTRL_T_OPTS="--preview='bash $HOME/.local/bin/preview.sh {}'"
-export FZF_CTRL_R_OPTS='-e'
+export FZF_DEFAULT_OPTS="--height 42% --border --reverse --cycle --info=inline"
+export FZF_CTRL_T_OPTS="--preview='bat --color=always --wrap=never --style=plain,changes {}'"
+export FZF_CTRL_R_OPTS='--exact'
 {source /usr/share/fzf/key-bindings.zsh || source /usr/share/fzf/shell/key-bindings.zsh} 2>/dev/null
-function fzf-locate-widget() {
-  local selected
-  if selected=$(locate / | grep -v '\.cache\|\.local' | FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" fzf); then
-    if [ -z "$LBUFFER" -a -f "$selected" ]; then
-      LBUFFER="rifle ""'$selected'"
-    else
-      LBUFFER="$LBUFFER""'$selected'"
-    fi
-  fi
-  zle redisplay
-}
-zle -N fzf-locate-widget
-function fzf-cd-widget () {
-    local cmd="command find -L . -mindepth 1 \\( -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune -o \\( -type d -o -type f \\) -print 2> /dev/null | cut -b3-"
-    setopt localoptions pipefail 2> /dev/null
-    local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS $FZF_CTRL_T_OPTS" fzf +m)"
-    if [[ -z "$dir" ]]
-    then
-        zle redisplay
-        return 0
-    fi
-    if [[ -d "$dir" ]]; then
-        cd "$dir"
-    elif [[ -f "$dir" ]]; then
-        cd "${dir%/*}"
-    else
-        echo "fzf-cd: neither a file nor a directory: $dir" 1>&2
-        return 1
-    fi
-    local ret=$?
-    zle fzf-redraw-prompt
-    return $ret
-}
-zle -N fzf-cd-widget
-bindkey '^T' fzf-cd-widget
-bindkey '\ei' fzf-locate-widget
-# /fzf
 
 if [ -f "$HOME/.config/zsh/.zsh_aliases" ]; then
     source "$HOME/.config/zsh/.zsh_aliases"
