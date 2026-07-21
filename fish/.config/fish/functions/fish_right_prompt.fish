@@ -6,9 +6,9 @@ function __my_git_status -d 'compact git branch/dirty status, similar to zsh vcs
     test -z "$branch"; and return
 
     set -l unstaged ''
-    git diff --no-ext-diff --quiet 2>/dev/null; or set unstaged (set_color --bold yellow)
+    git diff --no-ext-diff --quiet 2>/dev/null; or set unstaged (set_color --bold magenta)
 
-    echo -n (set_color --bold)git(set_color normal)' '(set_color blue)'['(set_color cyan)"$branch"$unstaged(set_color normal)(set_color blue)']'(set_color normal)
+    echo -n (set_color blue)'['(set_color cyan)"$unstaged$branch"(set_color normal)(set_color blue)']'(set_color normal)
 end
 
 function fish_right_prompt

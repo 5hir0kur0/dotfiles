@@ -59,5 +59,5 @@ function fish_prompt
     set -l prompt_char '%'
     fish_is_root_user; and set prompt_char '#'
 
-    echo -n "$status_display$path_display $prompt_char "(set_color normal)
+    echo -n "$status_display$path_display $(set_color green)$prompt_char "(set_color normal)
 end
