@@ -17,13 +17,44 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-use std/util "path add"
+## PATH
 
-path add "~/.local/bin"
-path add ($env.CARGO_HOME | path join "bin")
+use std/util 'path add'
 
-$env.config.buffer_editor = "helix"
-$env.config.show_banner = false
+path add '~/.local/bin'
+
+# rust
+path add ($env.CARGO_HOME? | default ('~/.cargo' | path expand) | path join 'bin')
+
+path add ('~/.local/bin' | path expand )
+
+# golang
+path add ($env.GOPATH | path join 'bin')
+
+# doom emacs
+path add ('~/.config/emacs/bin' | path expand)
+
+# lean
+path add ('~/.elan/bin' | path expand)
+
+## ENV
+
+if $env.TERM_PROGRAM == vscode {
+    $env.EDITOR = 'code --wait'
+} else {
+    $env.EDITOR = 'nvim'
+}
+$env.VISUAL = $env.EDITOR
+
+
+$env.LESS = '--mouse --use-color --ignore-case --chop-long-lines --raw-control-chars --incsearch --LONG-PROMPT'
+
+# build makepkg packages in /tmp (yields better performance because then
+# they're built in RAM [I mount /tmp as tmpfs])
+$env.BUILDDIR = "/tmp/.build-" + $env.USER
+
+# display man pages using neovim
+$env.MANPAGER = "nvim '+Man!'"
 
 # Check if the given program is installed
 def is-installed [] {
