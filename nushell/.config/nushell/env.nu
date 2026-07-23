@@ -66,3 +66,29 @@ if ("zoxide" | is-installed) {
 } else {
   touch ~/.config/nushell/.zoxide.nu
 }
+
+## SSH-AGENT
+
+def agent-alive [sock: string]: nothing -> bool {
+    if not ($sock | path exists) { return false }
+    (with-env {SSH_AUTH_SOCK: $sock} { ^ssh-add -l | complete }).exit_code != 2
+}
+
+do --env {
+    # An inherited socket (agent forwarding, systemd user service, gpg-agent)
+    # wins, but only if something actually answers on it.
+    if ($env.SSH_AUTH_SOCK? != null) and (agent-alive $env.SSH_AUTH_SOCK) { return }
+
+    let sock = $"($env.HOME)/.ssh/.ssh-agent.sock"
+    $env.SSH_AUTH_SOCK = $sock
+
+    if (agent-alive $sock) { return }
+
+    rm -f $sock   # stale socket from a dead agent; ssh-agent won't bind over it
+    ^ssh-agent -c -a $sock
+    | lines
+    | parse "setenv {name} {value};"
+    | transpose --header-row
+    | into record
+    | load-env
+}
