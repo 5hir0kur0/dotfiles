@@ -216,6 +216,8 @@ fi
 # use syntax highlighting (needs community/zsh-syntax-highlighting)
 {source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh} 2>/dev/null
 
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+
 ## prompt
 setopt prompt_subst
 #autoload -U colors && colors
