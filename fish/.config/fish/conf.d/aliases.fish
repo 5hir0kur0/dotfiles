@@ -10,7 +10,7 @@ alias hx helix
 alias vimdiff 'nvim -d'
 alias view "nvim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'"
 
-alias ew 'emacs -nw'
+alias enw 'emacs -nw'
 
 alias ls 'ls -q --color=auto --hyperlink=auto'
 alias ll 'ls -lh'
@@ -31,17 +31,13 @@ alias ........ 'cd ../../../../../../..'
 alias mv 'mv -iv'
 alias mkdir 'mkdir -pv'
 alias md mkdir
-alias take mcd
 
 alias rm trash
-alias rmback 'trash *~'
 alias cp 'cp --reflink=auto -iv'
 alias d dirs
 
 alias grep 'grep -i --color=auto'
 alias diff 'diff --color=auto'
-alias wdiff 'command dwdiff --color'
-alias dwdiff wdiff
 alias chardiff 'git diff --no-index --word-diff=color --word-diff-regex=.'
 alias g git
 alias gg 'git grep -i --break --heading'
@@ -52,15 +48,11 @@ alias ip 'ip -color'
 
 alias encrypt_gpg 'gpg --symmetric'
 
-alias c 'less -iFX'
-
 alias lessmesg "less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'"
 alias dmesg 'dmesg --follow --time-format reltime'
 alias lessjournal "less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
 
 alias man _nvim_man
-
-alias hcat 'highlight --force -O ansi'
 
 alias g++ 'g++ -Wall -Wextra -std=c++23'
 alias gcc 'gcc -Wall -Wextra -std=c23'
