@@ -234,7 +234,7 @@ zstyle ':vcs_info:*' enable git # svn
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' max-exports 1
 zstyle ':vcs_info:*' stagedstr '%S'
-zstyle ':vcs_info:*' unstagedstr "%B%F{yellow}"
+zstyle ':vcs_info:*' unstagedstr "%B%F{magenta}"
 zstyle ':vcs_info:*' branchformat '%b:%r'
 zstyle ':vcs_info:*' actionformats \
     '%B%m%%b%f %F{blue}[%s%F{cyan}:%F{blue}%r%F{cyan}@%F{green}%c%u%b%f%%b%%s%F{cyan}|%f%B%%S%a%%s%%b%F{blue}]%f'
