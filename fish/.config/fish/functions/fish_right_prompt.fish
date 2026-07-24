@@ -19,7 +19,7 @@ function fish_right_prompt
 
     set -l runtime_display ''
     if test -n "$CMD_DURATION"; and test "$CMD_DURATION" -gt 10000
-        set runtime_display ' '(set_color cyan)'['(__my_displaytime (math "$CMD_DURATION / 1000"))']'(set_color normal)
+        set runtime_display ' '(set_color cyan)'['(_my_displaytime (math "$CMD_DURATION / 1000"))']'(set_color normal)
     end
 
     set -l git_display (__my_git_status)

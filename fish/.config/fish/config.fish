@@ -37,9 +37,9 @@ end
 
 ## auto ls after cd
 
-function __my_cd_ls --on-variable PWD --description 'list directory contents after cd'
+function _my_cd_ls --on-variable PWD --description 'list directory contents after cd'
     status --is-command-substitution; and return
-    __my_cd_fun
+    _my_cd_fun
 end
 
 ## aliases / functions

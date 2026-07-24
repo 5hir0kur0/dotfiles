@@ -1,4 +1,4 @@
-function __my_displaytime -d 'format a number of seconds as a human-readable duration'
+function _my_displaytime -d 'format a number of seconds as a human-readable duration'
     set -l t $argv[1]
     set -l d (math -s0 "$t / 60 / 60 / 24")
     set -l h (math -s0 "$t / 60 / 60 % 24")

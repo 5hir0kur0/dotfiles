@@ -68,15 +68,12 @@ alias r yazi_cd
 
 alias wttr weather
 
-alias alert_completion _alert_completion
-alias alert_completion_me '_alert_completion --only-me'
-
 alias drmit 'docker run --interactive --tty --rm'
 alias dsai 'docker start -ai'
 
 alias strace 'strace -fCDYyy'
 
-alias displaytime __my_displaytime
+alias displaytime _my_displaytime
 
 if test -f ~/.local_fish_aliases
     source ~/.local_fish_aliases
