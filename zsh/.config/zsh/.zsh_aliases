@@ -10,7 +10,7 @@ function e {
     emacsclient "$@" & disown
 }
 
-alias ew='emacs -nw'
+alias enw='emacs -nw'
 
 alias ls='ls -q --color=auto --hyperlink=auto'
 alias ll='ls -lh'
@@ -34,24 +34,21 @@ function mcd() {
     [ -d "$1" ] || mkdir -p "$1"
     cd "$1" || return 1
 }
-alias take=mkcd
 #alias rm='rm -Iv --one-file-system'
 alias rm='trash'
-alias rmback='trash *~'
 alias cp='cp --reflink=auto -iv'
-alias d='dirs -v'
 
 alias grep='grep -i --color=auto'
 alias diff='diff --color=auto'
-alias wdiff='\dwdiff --color'
 alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
-alias dwdiff='wdiff'
 alias g='git'
 alias gg='git grep -i --break --heading'
 alias rg='\rg --smart-case'
 alias rg-all='\rg --smart-case --hidden'
 alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
 alias ip='ip -color'
+
+alias npr='npm run'
 
 alias encrypt_gpg='gpg --symmetric'
 
@@ -62,8 +59,6 @@ function decrypt_gpg() {
         gpg --output "${arg%.*}" --decrypt "$arg"
     done
 }
-
-alias c='less -iFX'
 
 # Allows to follow a pipe (given by `$1`) to be followed by `less`.
 # Directly piping into `less` kind of works but the following cannot be resumed
@@ -101,8 +96,6 @@ function _nvim_man() {
 }
 compdef _man _nvim_man
 alias man='_nvim_man'
-
-alias hcat="highlight --force -O ansi"
 
 alias g++="g++ -Wall -Wextra -std=c++23"
 alias gcc="gcc -Wall -Wextra -std=c23"
@@ -163,14 +156,6 @@ function f() {
 
 function ff() {
     find . -iname "*${1:?}*";
-}
-
-function fl() {
-    find . -type f -exec grep -q "${1:?}" {} \; -print
-}
-
-function gf() {
-    grep -iP "${@:?}" -R .
 }
 
 function gpdf() {
@@ -305,21 +290,9 @@ function xlpdf() {
     latexmk -c
 }
 
-function to_opus() {
-    if [[ -z "${1:-}" ]]; then
-        echo "usage: ${0} <file_to_convert> [<birtate>k]" 1>&2
-        return 1
-    fi
-    local old_name="${1}"
-    local new_name="${1%.*}.opus"
-    local bitrate="${2:-128k}"
-    echo "'${old_name}' -> '${new_name}' (bitrate: ${bitrate})"
-    ffmpeg -i "${old_name}" -c:a libopus -b:a "${bitrate}" "${new_name}"
-}
-
 # make notify-send always work (e.g. when run as root)
 # $1 needs to be either '--all' or a user id.
-function _notify_send() {
+function _my_notify_send() {
     local extracted_uid bus_paths
     if [[ "$1" == '--all' ]]; then
         bus_paths=(/run/user/*/bus)
@@ -334,7 +307,7 @@ function _notify_send() {
     done
 }
 
-function _alert_completion() {
+function _my_alert_completion() {
     local start=$SECONDS how time_str bus notify_arg
     if [[ "$1" == "--only-me" ]]; then
         shift
@@ -349,13 +322,13 @@ function _alert_completion() {
     fi
     echo -ne '\a'  # bell for tmux
     time_str=$(displaytime $((SECONDS-start)))
-    _notify_send "$notify_arg" "Task $how in $time_str" "$*"
+    _my_notify_send "$notify_arg" "Task $how in $time_str" "$*"
 }
 
 # usually I'm the only user anyway...
-alias alert_completion='_alert_completion'
+alias alert_completion='_my_alert_completion'
 # in case I'm not...
-alias alert_completion_me='_alert_completion --only-me'
+alias alert_completion_me='_my_alert_completion --only-me'
 
 # Zoxide
 eval "$(zoxide init zsh)" || true
