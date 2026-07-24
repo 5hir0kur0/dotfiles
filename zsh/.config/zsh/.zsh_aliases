@@ -103,15 +103,9 @@ alias gcc="gcc -Wall -Wextra -std=c23"
 alias yt='yt-dlp --add-metadata -ic'
 alias yta='yt-dlp --add-metadata -xic'
 
-function paru {
-    PKGEXT=.pkg.tar command paru --sudoloop --newsonupgrade --review \
-        --upgrademenu --fm yazi --nouseask --combinedupgrade --provides "$@"
-    sudo DIFFPROG='nvim -d' pacdiff
-}
-
 function update {
     paru -Syu
-    sudo pacdiff
+    sudo DIFFPROG='nvim -d' pacdiff
 }
 
 alias mpva='mpv --no-video'

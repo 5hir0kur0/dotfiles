@@ -404,7 +404,7 @@ working_directory="\$(_my_fit_path2 '' \$((\$(_my_prompt_width) - 2)))"
 
 wd_50_percent="%\$(_my_prompt_width)<…<$working_directory"
 
-PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %F{green}%# %f"
+PROMPT="%B%F{red}%(0?..[%?] )%b%f%F{cyan}$wd_50_percent %F{blue}%# %f"
 
 # prompt for remote machines
 #PROMPT="%F{red}%(0?..[%?])%f%F{magenta}@%M%f%F{white}:%f%F{cyan}$wd_50_percent %# %f"
