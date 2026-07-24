@@ -184,8 +184,11 @@ alias enw =  emacs -nw
 
 alias ll = ls
 alias md = mkdir
+alias \mv = mv
 alias mv = mv --interactive --verbose
+alias \cp = cp
 alias cp = cp --progress --interactive
+alias \rm = rm
 alias rm = rm --trash --interactive
 
 alias grep = grep -i --color=auto
@@ -218,10 +221,6 @@ alias yta = yt-dlp --add-metadata -xic
 
 alias mpva = mpv --no-video
 
-alias y = yazi_cd
-alias yazi = yazi_cd
-alias r = yazi_cd
-
 
 alias alert_completion_me = _my_alert_completion --only-me
 
@@ -231,3 +230,19 @@ alias dsai = docker start -ai
 alias strace = strace -fCDYyy
 
 alias displaytime = _my_displaytime
+
+## yazi
+
+def --env yazi_cd [...args] {
+    let tmp = (mktemp -t ".yazi-cwd.XXXXXX")
+    ^yazi ...$args --cwd-file $tmp
+    let cwd = (open $tmp)
+    if $cwd != $env.PWD and ($cwd | path exists) {
+        cd $cwd
+    }
+    \rm -fp $tmp
+}
+
+alias y = yazi_cd
+alias yazi = yazi_cd
+alias r = yazi_cd
