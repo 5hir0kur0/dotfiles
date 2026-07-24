@@ -52,8 +52,6 @@ alias lessmesg "less_pipe 'dmesg --follow --time-format reltime --color=always -
 alias dmesg 'dmesg --follow --time-format reltime'
 alias lessjournal "less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
 
-alias man _nvim_man
-
 alias g++ 'g++ -Wall -Wextra -std=c++23'
 alias gcc 'gcc -Wall -Wextra -std=c23'
 
