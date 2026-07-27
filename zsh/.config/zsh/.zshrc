@@ -362,7 +362,10 @@ function _my_fit_path2() {
         return
     fi
     # append empty element so that a leading slash will be output
-    if [[ $path_elements[1] != ~* ]]; then
+    # (escape the ~ so the test stays correct even when a caller such as
+    # fzf's ctrl-r widget leaks `extendedglob`, in which an unescaped ~ is
+    # the exclusion operator and would wrongly prepend a slash)
+    if [[ $path_elements[1] != \~* ]]; then
         path_elements=('' ${path_elements[@]})
     fi
     # don't shorten the first and the last element
