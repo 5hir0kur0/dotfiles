@@ -327,6 +327,7 @@ alias alert_completion_me='_my_alert_completion --only-me'
 # Zoxide
 eval "$(zoxide init zsh)" || true
 alias j=z
+alias ji=zi
 
 # Docker
 alias drmit='docker run --interactive --tty --rm'

@@ -139,8 +139,25 @@ zstyle ':completion:*:processes' command 'ps -efm | grep -vE \]\$\|-\$'
 # (stolen from: https://github.com/solnic/dotfiles/blob/master/home/zsh/completion.zsh)
 zstyle ':completion:*:processes-names' command "ps -eo cmd= | sed 's:\([^ ]*\).*:\1:;s:/[^ ]*/::;/^\[/d'"
 
-autoload -Uz compinit
-compinit
+# cache slow completers (e.g. package lists) between runs
+# (the caching layer won't create the directory itself, so make sure it exists)
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+[[ -d ${XDG_CACHE_HOME:-$HOME/.cache}/zsh ]] || mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+# complete ., .. and other special directories as entries
+zstyle ':completion:*' special-dirs true
+
+autoload -Uz compinit bashcompinit
+# only run the (expensive) fpath security audit at most once a day, otherwise
+# reuse the cached dump so startup stays fast
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+# allow bash-style completion scripts (some tools ship only these)
+bashcompinit
 
 zmodload zsh/complist
 # make shift-tab go to the previous completion
@@ -243,8 +260,8 @@ zstyle ':vcs_info:*' formats       \
 
 # show the run time of the last command if it exceeds a certain length
 
-export MY_CMD_RUNTIME=0
-export MY_RUNTIME_DISYPAY=''
+MY_CMD_RUNTIME=0
+MY_RUNTIME_DISPLAY=''
 
 function preexec() {
     MY_CMD_RUNTIME=$SECONDS
@@ -272,9 +289,9 @@ function precmd() {
     if [[ -n "$MY_CMD_RUNTIME" ]]; then
         MY_CMD_RUNTIME=$(( SECONDS - MY_CMD_RUNTIME ))
         if (( MY_CMD_RUNTIME > 10 )); then
-            MY_RUNTIME_DISYPAY=" %F{cyan}[$(displaytime ${MY_CMD_RUNTIME})]%f"
+            MY_RUNTIME_DISPLAY=" %F{cyan}[$(displaytime ${MY_CMD_RUNTIME})]%f"
         else
-            MY_RUNTIME_DISYPAY=''
+            MY_RUNTIME_DISPLAY=''
         fi
     fi
     MY_CMD_RUNTIME=''
@@ -289,9 +306,9 @@ function prompt_wrapper() {
 }
 
 # old rprompt
-#RPROMPT='%F{magenta}~%n%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
+#RPROMPT='%F{magenta}~%n%f$MY_RUNTIME_DISPLAY$(prompt_wrapper)'
 
-RPROMPT='$(print "%{\e[2m%}~%n%{\e[22m%}")%f$MY_RUNTIME_DISYPAY$(prompt_wrapper)'
+RPROMPT='$(print "%{\e[2m%}~%n%{\e[22m%}")%f$MY_RUNTIME_DISPLAY$(prompt_wrapper)'
 
 # helper function to shorten paths
 
