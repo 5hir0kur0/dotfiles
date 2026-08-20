@@ -58,15 +58,15 @@
     }
   },
   // Subword motion
-  {
-    "context": "VimControl && !menu && vim_mode != operator",
-    "bindings": {
-      "w": "vim::NextSubwordStart",
-      "b": "vim::PreviousSubwordStart",
-      "e": "vim::NextSubwordEnd",
-      "g e": "vim::PreviousSubwordEnd"
-    }
-  },
+  // {
+  //   "context": "VimControl && !menu && vim_mode != operator",
+  //   "bindings": {
+  //     "w": "vim::NextSubwordStart",
+  //     "b": "vim::PreviousSubwordStart",
+  //     "e": "vim::NextSubwordEnd",
+  //     "g e": "vim::PreviousSubwordEnd"
+  //   }
+  // },
   // Surround from visual mode
   {
     "context": "vim_mode == visual",
@@ -79,6 +79,19 @@
     "context": "vim_mode == visual",
     "bindings": {
       "shift-x": "vim::Exchange"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select || vim_mode == normal || vim_mode == visual) && !menu",
+    "bindings": {
+      "space b": "tab_switcher::ToggleAll",
+      "space space": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "space": "vim::WrappingRight"
     }
   }
 ]
