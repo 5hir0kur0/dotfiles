@@ -59,7 +59,7 @@
     "vim.useSystemClipboard": true,
     "vim.visualstar": true,
     "vim.hlsearch": true,
-    "vim.leader": " ",
+    "vim.leader": "<space>",
     "vim.showMarksInGutter": true,
     "vim.cursorStylePerMode.replace": "underline",
     "vim.history": 1000,
@@ -76,35 +76,33 @@
         "}"
     ],
     "vim.targets.enable": true,
-    // Plugins:
-    // --------
-    // Vim easymotion is required for Jump menu - <SPC> j
     "vim.easymotion": true,
+    "vim.easymotionKeys": "sadfjklewcmpgh",
     // Trigger the main which key menu with in the active editor with vim
     // This cannot be put into keybindings.json because it will
     // create conflict with Vim.
     // https://github.com/stevenguh/spacecode/issues/3
     "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "vspacecode.space"
-            ]
-        },
-        {
-            "before": [
-                ","
-            ],
-            "commands": [
-                "vspacecode.space",
-                {
-                    "command": "whichkey.triggerKey",
-                    "args": "m"
-                }
-            ]
-        },
+        // {
+        //     "before": [
+        //         "<space>"
+        //     ],
+        //     "commands": [
+        //         "vspacecode.space"
+        //     ]
+        // },
+        // {
+        //     "before": [
+        //         ","
+        //     ],
+        //     "commands": [
+        //         "vspacecode.space",
+        //         {
+        //             "command": "whichkey.triggerKey",
+        //             "args": "m"
+        //         }
+        //     ]
+        // },
         {
             "before": [
                 "K"
@@ -171,6 +169,21 @@
             ],
             "commands": [
                 "editor.action.goToTypeDefinition"
+            ]
+        },
+        {
+            // Jump to any word on screen
+            "before": [
+                "g",
+                "w"
+            ],
+            "after": [
+                "<leader>",
+                "<leader>",
+                "<leader>",
+                "b",
+                "d",
+                "w"
             ]
         }
     ],
@@ -599,25 +612,32 @@
         "npm info": true,
         "npm ls": true,
         "npm run": true,
+        "npm test": true,
         "npm view": true,
         "nproc": true,
         "npx vitest": true,
         "printf": true,
         "pwd": true,
         "rg": true,
+        "sed": true,
         "stat": true,
         "tail": true,
         "touch": true,
         "uv": true,
+        "uv run": true,
         "wc": true,
+        "timeout": true
     },
-    "chat.viewSessions.orientation": "stacked",
     "chat.plugins.marketplaces": [
         "github/copilot-plugins",
         "github/awesome-copilot#marketplace",
-        "obra/superpowers-marketplace"
+        "obra/superpowers-marketplace",
+        "DietrichGebert/ponytail",
+        "obra/superpowers"
     ],
     "chat.tools.urls.autoApprove": {
+        "https://code.visualstudio.com": true,
+        "https://github.com/microsoft/vscode/wiki/*": true,
         "https://*": true,
     },
     "chat.tools.terminal.enableAutoApprove": true,
