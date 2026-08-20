@@ -380,6 +380,7 @@
     "python.analysis.autoImportCompletions": true,
     "python.analysis.completeFunctionParens": true,
     "python.analysis.extraCommitChars": true,
+    "python.terminal.activateEnvironment": false,
     "python.analysis.typeCheckingMode": "standard",
     "python.terminal.launchArgs": [
         "-m",
@@ -432,6 +433,15 @@
     },
     "accessibility.signals.codeActionApplied": {
         "sound": "on"
+    },
+    "accessibility.signals.chatRequestSent": {
+        "sound": "on"
+    },
+    "accessibility.signals.chatUserActionRequired": {
+        "sound": "on",
+    },
+    "accessibility.signals.chatEditModifiedFile": {
+        "sound": "on",
     },
     "accessibility.signalOptions.debouncePositionChanges": true,
     //
@@ -538,9 +548,9 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "chat.tools.compressOutput.enabled": true,
     "chat.tools.terminal.outputDeltas": true,
     "chat.tools.terminal.autoApprove": {
+        "awk": true,
         "basename": true,
         "cargo": true,
         "cat": true,
@@ -555,9 +565,11 @@
         "echo": true,
         "file": true,
         "find": true,
+        "git checkout": false,
+        "git clean": false,
         "git commit": false,
+        "git stash": false,
         "git diff": true,
-        "git": false,
         "git log": true,
         "git merge-base": true,
         "git --no-pager describe": true,
@@ -567,6 +579,8 @@
         "git --no-pager show": true,
         "git --no-pager tag": true,
         "git push": false,
+        "git reset": false,
+        "git restore": false,
         "git rev-parse": true,
         "git rm": false,
         "git show": true,
