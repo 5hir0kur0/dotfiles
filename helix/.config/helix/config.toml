@@ -16,7 +16,7 @@ cursorline = true
 # text-width = 120
 popup-border = "all"
 end-of-line-diagnostics = "hint"
-jump-label-alphabet = "asdfjkl;ghqwertuiopnmxcvb"
+jump-label-alphabet = "sadfjklewcmpgh"
 completion-replace = true
 
 [editor.statusline]
