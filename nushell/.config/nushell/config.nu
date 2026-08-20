@@ -23,7 +23,7 @@ $env.config.show_banner = false
 $env.config.rm.always_trash = true
 $env.config.completions.algorithm = "prefix"
 $env.config.use_kitty_protocol = true
-$env.config.table.mode = "frameless"
+$env.config.table.mode = "compact" # "frameless"
 $env.config.table.index_mode = "auto"
 
 ## KEYBINDINGS
