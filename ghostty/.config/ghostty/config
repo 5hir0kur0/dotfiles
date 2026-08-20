@@ -33,6 +33,7 @@ adjust-cell-width = -4%
 adjust-cell-height = 8%
 # window-decoration = none
 theme = light:Modus Operandi,dark:TokyoNight Night
+theme = light:Modus Operandi,dark:Modus Vivendi
 # theme = TokyoNight Night
 # theme = Modus Operandi
 
