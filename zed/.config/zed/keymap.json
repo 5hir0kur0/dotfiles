@@ -81,11 +81,16 @@
       "shift-x": "vim::Exchange"
     }
   },
+  // Spacebar bindings
   {
-    "context": "(vim_mode == helix_normal || vim_mode == helix_select || vim_mode == normal || vim_mode == visual) && !menu",
+    "context": "VimControl || HelixControl",
     "bindings": {
       "space b": "tab_switcher::ToggleAll",
-      "space space": "file_finder::Toggle"
+      "space space": "file_finder::Toggle",
+      "space /": "text_finder::Toggle",
+      "space e": "project_panel::ToggleFocus",
+      "space ?": "zed::OpenKeymap",
+      "space :": "command_palette::Toggle"
     }
   },
   {
