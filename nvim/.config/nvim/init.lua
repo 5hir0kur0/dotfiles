@@ -733,5 +733,22 @@ require("todo-comments").setup({
 
 require('guess-indent').setup()
 
+-- INFO: Lean
+vim.pack.add({ "https://github.com/Julian/lean.nvim" }, { confirm = false })
+vim.g.lean_config = { mappings = true }
+
+-- INFO: Git
+vim.pack.add({ "https://github.com/NeogitOrg/neogit" }, { confirm = false })
+require("neogit").setup {
+  graph_style = "unicode",
+  signs = {
+    -- { CLOSED, OPENED }
+    hunk = { "", "" },
+    item = { "▷", "▽" },
+    section = { "▷", "▽" },
+  },
+}
+vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit UI" })
+
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
