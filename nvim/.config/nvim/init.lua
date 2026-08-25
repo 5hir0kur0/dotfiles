@@ -747,6 +747,18 @@ require("neogit").setup {
     item = { "▷", "▽" },
     section = { "▷", "▽" },
   },
+  builders = {
+    -- Default the commit popup to --verbose, so the staged diff shows up below
+    -- in the message buffer.
+    ---@param builder PopupBuilder
+    NeogitCommitPopup = function(builder)
+      for _, arg in ipairs(builder.state.args) do
+        if arg.cli == "verbose" then
+          arg.enabled = true
+        end
+      end
+    end,
+  },
 }
 vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Open Neogit UI" })
 
