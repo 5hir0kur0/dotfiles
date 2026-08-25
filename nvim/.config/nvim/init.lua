@@ -242,7 +242,12 @@ local buftype_blacklist = { terminal = true, help = true }
 local function should_save_view()
   local ft = vim.bo.filetype
   local bt = vim.bo.buftype
-  return not filetype_blacklist[ft] and not buftype_blacklist[bt] and vim.fn.expand '%' ~= ''
+  -- Only ever touch real, on-disk file buffers. Plugin buffers (neogit, neo-tree, ...)
+  -- have a name but buftype=nofile; running mkview/loadview on them writes a view file
+  -- containing `doautoall SessionLoadPost`, which detaches and destroys the buffer.
+  local file = vim.fn.expand '%'
+  return bt == '' and not filetype_blacklist[ft] and not buftype_blacklist[bt]
+    and file ~= '' and vim.fn.filereadable(file) == 1
 end
 
 local group = vim.api.nvim_create_augroup('AutoSaveFolds', { clear = true })
