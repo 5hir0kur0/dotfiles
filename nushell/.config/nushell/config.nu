@@ -183,6 +183,8 @@ alias view = nvim -R -n +'set nomodifiable noswapfile noundofile shadafile= view
 alias enw =  emacs -nw
 
 alias ll = ls
+alias la = ls --all
+alias l = ^ls -q --color=auto --hyperlink=auto
 alias md = mkdir
 alias \mv = mv
 alias mv = mv --interactive --verbose
