@@ -5,6 +5,7 @@ alias v=nvim
 alias hx=helix
 alias vimdiff='nvim -d'
 alias view="vim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'"
+alias vgit="nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'"
 
 function e {
     emacsclient "$@" & disown
