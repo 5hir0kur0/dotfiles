@@ -36,11 +36,32 @@ Bigger font for ace-window:
 #+END_SRC
 ** Theme
 #+BEGIN_SRC emacs-lisp
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(defvar my/light-theme 'modus-operandi)
+(defvar my/dark-theme  'modus-vivendi)
+
+(defun my/gnome-dark-p ()
+  "Return non-nil if GNOME's color-scheme is set to prefer-dark."
+  (string-match-p
+   "prefer-dark"
+   (or (ignore-errors
+         (car (process-lines "gsettings" "get"
+                             "org.gnome.desktop.interface" "color-scheme")))
+       "")))
+
+(defun my/sync-theme-with-gnome ()
+  "Load light or dark theme according to GNOME's current setting."
+  (interactive)
+  (let ((theme (if (my/gnome-dark-p) my/dark-theme my/light-theme)))
+    (unless (eq theme doom-theme)
+      (setq doom-theme theme)
+      (load-theme theme t))))
+
+(my/sync-theme-with-gnome)
 #+END_SRC
+
+#+RESULTS:
+: t
+
 ** Line Numbers
 #+BEGIN_SRC emacs-lisp
 ;; This determines the style of line numbers in effect. If set to `nil', line
