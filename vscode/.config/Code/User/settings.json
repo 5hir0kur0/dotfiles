@@ -19,7 +19,6 @@
     "editor.cursorBlinking": "smooth",
     "editor.linkedEditing": true,
     "editor.mouseWheelZoom": true,
-    "editor.renderWhitespace": "none",
     //
     // -------------
     // Git Settings:
@@ -77,7 +76,7 @@
     ],
     "vim.targets.enable": true,
     "vim.easymotion": true,
-    "vim.easymotionKeys": "sadfjklewcmpgh",
+    "vim.easymotionKeys": "fdsagerwcvbqtjklhnmpoiuz;",
     // Trigger the main which key menu with in the active editor with vim
     // This cannot be put into keybindings.json because it will
     // create conflict with Vim.
@@ -410,13 +409,7 @@
     // Qt Settings:
     // ---------------
     //
-    "qt-core.additionalQtPaths": [
-        {
-            "name": "System qmake6",
-            "path": "/usr/bin/qmake6"
-        }
-    ],
-    "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
+    "qt-core.qtInstallationRoot": "~/Qt",
     "qt-qml.doNotAskForQmllsDownload": true,
     "qt-qml.qmlls.customArgs": [
         "-I",
@@ -464,6 +457,8 @@
     //
     "debug.toolBarLocation": "docked",
     "diffEditor.experimental.showMoves": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "diffEditor.renderSideBySide": true,
     "breadcrumbs.enabled": false,
     "github.copilot.enable": {
         "*": true,
@@ -489,7 +484,6 @@
         "heur",
         "proptest"
     ],
-    "diffEditor.hideUnchangedRegions.enabled": true,
     "bitbake.parseOnSave": false,
     "markdown.preview.scrollPreviewWithEditor": false,
     "cSpell.enabled": false,
@@ -640,8 +634,59 @@
         "https://code.visualstudio.com": true,
         "https://github.com/microsoft/vscode/wiki/*": true,
         "https://*": true,
+        "file:": {
+            "approveRequest": true,
+            "approveResponse": false
+        }
     },
     "chat.tools.terminal.enableAutoApprove": true,
-    "chat.tools.terminal.ignoreDefaultAutoApproveRules": true,
-    "chat.agent.sandbox.allowAutoApprove": false,
+    "chat.tools.terminal.ignoreDefaultAutoApproveRules": false,
+    "chat.agent.sandbox.allowNetwork": true,
+    "agents.voice.liveTranscript": true,
+    "agents.voice.showTranscript": true,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "chat.agent.sandbox.fileSystem.linux": {
+        "denyRead": [
+            "/proc",
+            "/sys",
+            "/dev",
+            "/run",
+            "/etc/passwd",
+            "/etc/shadow",
+            "/etc/group",
+            "/etc/gshadow",
+            "/etc/sudoers",
+            "/etc/sudoers.d"
+        ],
+        "allowRead": [
+            "/etc",
+            "/usr",
+            "/tmp",
+            "/var",
+            "/lib",
+            "/lib64",
+            "/opt",
+            "/sbin",
+            "~/code/cstq",
+            "~/.cache",
+            "~/Qt",
+        ],
+        "allowWrite": [
+            ".",
+            "~/.cache",
+            "/tmp"
+        ],
+        "denyWrite": []
+    },
+    "chat.tools.terminal.outputCompaction": true,
+    "chat.titleBar.openInAgentsWindow.enabled": false,
+    "chat.viewSessions.orientation": "stacked",
+    "chat.agent.sandbox.enabled": "on",
+    "chat.agentsControl.enabled": "hidden",
+    "qt-core.additionalQtPaths": [
+        {
+            "name": "Qt-5.15.19-linux-g++-x86_64_from_PATH",
+            "path": "/usr/bin/qmake"
+        }
+    ]
 }
