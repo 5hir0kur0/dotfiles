@@ -1,6 +1,6 @@
 -- Add more spacing after icons
 function Entity:icon()
-	local icon = self._file:icon()
+	local icon = th.icon:match(self._file, { hovered = self._file.is_hovered })
 	if not icon then
 		return ""
 	elseif self._file.is_hovered then
@@ -17,4 +17,8 @@ require("full-border"):setup {
 require("git"):setup {
 	-- Order of status signs showing in the linemode
 	order = 1500,
+}
+
+require("zoxide"):setup {
+	update_db = true,
 }
