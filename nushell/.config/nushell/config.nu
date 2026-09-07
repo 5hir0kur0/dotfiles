@@ -201,6 +201,8 @@ alias vimdiff = nvim -d
 
 alias gitroot = cd (git rev-parse --show-toplevel)
 alias gr = gitroot
+alias vgit = nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'
+alias npr = npm run
 
 alias g = git
 alias gg = git grep -i --break --heading
