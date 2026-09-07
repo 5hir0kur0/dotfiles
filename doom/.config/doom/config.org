@@ -73,7 +73,7 @@ Show menu bar:
 #+BEGIN_SRC emacs-lisp
 ;; hide the client-side decoration title bar
 (add-to-list 'default-frame-alist '(undecorated . t))
-(menu-bar-mode 1)
+(menu-bar-mode 0)
 #+END_SRC
 * Customized Variables
 ** Miscellaneous
