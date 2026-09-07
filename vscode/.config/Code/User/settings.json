@@ -184,29 +184,38 @@
                 "d",
                 "w"
             ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "<leader>",
+            ],
+            "commands": [
+                "workbench.action.quickOpen"
+            ]
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "vspacecode.space"
-            ]
-        },
-        {
-            "before": [
-                ","
-            ],
-            "commands": [
-                "vspacecode.space",
-                {
-                    "command": "whichkey.triggerKey",
-                    "args": "m"
-                }
-            ]
-        },
+        // {
+        //     "before": [
+        //         "<space>"
+        //     ],
+        //     "commands": [
+        //         "vspacecode.space"
+        //     ]
+        // },
+        // {
+        //     "before": [
+        //         ","
+        //     ],
+        //     "commands": [
+        //         "vspacecode.space",
+        //         {
+        //             "command": "whichkey.triggerKey",
+        //             "args": "m"
+        //         }
+        //     ]
+        // },
         {
             "before": [
                 "<C-i>"
@@ -621,7 +630,8 @@
         "uv": true,
         "uv run": true,
         "wc": true,
-        "timeout": true
+        "timeout": true,
+        "pushd": true
     },
     "chat.plugins.marketplaces": [
         "github/copilot-plugins",
@@ -644,7 +654,6 @@
     "chat.agent.sandbox.allowNetwork": true,
     "agents.voice.liveTranscript": true,
     "agents.voice.showTranscript": true,
-    "editor.unicodeHighlight.ambiguousCharacters": false,
     "chat.agent.sandbox.fileSystem.linux": {
         "denyRead": [
             "/proc",
