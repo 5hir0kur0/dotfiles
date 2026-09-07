@@ -7,16 +7,9 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "Editor && mode == full",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
-    },
-  },
-  {
-    "context": "Editor && vim_mode == visual",
-    "bindings": {
-      "ctrl-d": "vim::SelectNext",
-      "ctrl-D": "vim::SelectPrevious"
+      "ctrl-shift-q": "text_finder::Toggle"
     },
   },
   {
@@ -24,20 +17,26 @@
     "bindings": {
       // Allow history navigation in Terminal
       "ctrl-p": null,
-      "ctrl-n": null
+      "ctrl-n": null,
+      // "escape escape": "terminal::ToggleViMode",
     }
   },
   {
-    "context": "vim_mode == normal || vim_mode == visual",
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "ctrl-d": "vim::SelectNext",
+      "ctrl-D": "vim::SelectPrevious",
+      "shift-s": "vim::PushAddSurrounds", // Surround from visual mode
+      "shift-x": "vim::Exchange",  // Exchange regions
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal || vim_mode == visual",
     "bindings": {
       "s": "vim::PushSneak",
-      "shift-s": "vim::PushSneakBackward"
-    }
-  },
-  {
-    "context": "vim_mode == normal || vim_mode == visual",
-    "bindings": {
-      "g w": "vim::HelixJumpToWord"
+      "shift-s": "vim::PushSneakBackward",
+      "g w": "vim::HelixJumpToWord",
+      "g O": "outline_panel::ToggleFocus",
     }
   },
   {
@@ -45,6 +44,8 @@
     "bindings": {
       "ctrl-t": "project_symbols::Toggle",    // vim default: go to older tag
       "ctrl-s": "workspace::Save",            // vim default: show signature
+      "alt-o": "editor::SelectLargerSyntaxNode",
+      "alt-i": "editor::SelectSmallerSyntaxNode",
     }
   },
   // Navigate between dock windows like normal editor windows
@@ -67,27 +68,13 @@
   //     "g e": "vim::PreviousSubwordEnd"
   //   }
   // },
-  // Surround from visual mode
-  {
-    "context": "vim_mode == visual",
-    "bindings": {
-      "shift-s": "vim::PushAddSurrounds"
-    }
-  },
-  // Exchange regions
-  {
-    "context": "vim_mode == visual",
-    "bindings": {
-      "shift-x": "vim::Exchange"
-    }
-  },
   // Spacebar bindings
   {
     "context": "VimControl || HelixControl",
     "bindings": {
       "space b": "tab_switcher::ToggleAll",
       "space space": "file_finder::Toggle",
-      "space /": "text_finder::Toggle",
+      "space /": "pane::DeploySearch",
       "space e": "project_panel::ToggleFocus",
       "space ?": "zed::OpenKeymap",
       "space :": "command_palette::Toggle"
