@@ -171,72 +171,8 @@ $env.config.completions.external = {
 ## ALIASES
 
 source ~/.config/nushell/.zoxide.nu
-alias j = z
-alias ji = zi
 
-alias fg = job unfreeze
-
-alias vim = nvim
-alias v = nvim
-alias hx = helix
-alias view = nvim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'
-alias enw =  emacs -nw
-
-alias ll = ls
-alias la = ls --all
-alias l = ^ls -q --color=auto --hyperlink=auto
-alias md = mkdir
-alias \mv = mv
-alias mv = mv --interactive --verbose
-alias \cp = cp
-alias cp = cp --progress --interactive
-alias \rm = rm
-alias rm = rm --trash --interactive
-
-alias grep = grep -i --color=auto
-
-alias diff = diff --color=auto
-alias chardiff = git diff --no-index --word-diff=color --word-diff-regex=.
-alias vimdiff = nvim -d
-
-alias gitroot = cd (git rev-parse --show-toplevel)
-alias gr = gitroot
-alias vgit = nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'
-alias npr = npm run
-
-alias g = git
-alias gg = git grep -i --break --heading
-alias rg = rg --smart-case
-alias rg-all = rg --smart-case --hidden
-alias fd-all = fd --follow --full-path --hidden --no-ignore --show-errors
-alias ip = ip -color
-
-alias lessmesg = less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'
-alias dmesg = dmesg --follow --time-format reltime
-alias lessjournal = less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'
-
-alias man = _nvim_man
-
-alias g++ = g++ -Wall -Wextra -std=c++23
-alias gcc = gcc -Wall -Wextra -std=c23
-
-alias yt = yt-dlp --add-metadata -ic
-alias yta = yt-dlp --add-metadata -xic
-
-alias mpva = mpv --no-video
-
-
-alias alert_completion_me = _my_alert_completion --only-me
-
-alias drmit = docker run --interactive --tty --rm
-alias dsai = docker start -ai
-
-alias strace = strace -fCDYyy
-
-alias displaytime = _my_displaytime
-
-## yazi
-
+# yazi wrapper that changes to the directory selected on exit
 def --env yazi_cd [...args] {
     let tmp = (mktemp -t ".yazi-cwd.XXXXXX")
     ^yazi ...$args --cwd-file $tmp
@@ -247,6 +183,52 @@ def --env yazi_cd [...args] {
     \rm -fp $tmp
 }
 
-alias y = yazi_cd
-alias yazi = yazi_cd
+alias alert_completion_me = _my_alert_completion --only-me
+alias chardiff = git diff --no-index --word-diff=color --word-diff-regex=.
+alias \cp = cp
+alias cp = cp --progress --interactive
+alias diff = diff --color=auto
+alias displaytime = _my_displaytime
+alias dmesg = dmesg --follow --time-format reltime
+alias drmit = docker run --interactive --tty --rm
+alias dsai = docker start -ai
+alias enw =  emacs -nw
+alias fd-all = fd --follow --full-path --hidden --no-ignore --show-errors
+alias fg = job unfreeze
+alias gcc = gcc -Wall -Wextra -std=c23
+alias gg = git grep -i --break --heading
+alias g = git
+alias g++ = g++ -Wall -Wextra -std=c++23
+alias gitroot = cd (git rev-parse --show-toplevel)
+alias grep = grep -i --color=auto
+alias gr = gitroot
+alias hx = helix
+alias ip = ip -color
+alias ji = zi
+alias j = z
+alias la = ls --all
+alias lessjournal = less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'
+alias lessmesg = less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'
+alias ll = ls
+alias l = ^ls -q --color=auto --hyperlink=auto
+alias man = _nvim_man
+alias md = mkdir
+alias mpva = mpv --no-video
+alias \mv = mv
+alias mv = mv --interactive --verbose
+alias npr = npm run
+alias rg-all = rg --smart-case --hidden
+alias rg = rg --smart-case
+alias \rm = rm
+alias rm = rm --trash --interactive
 alias r = yazi_cd
+alias strace = strace -fCDYyy
+alias vgit = nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'
+alias view = nvim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'
+alias vimdiff = nvim -d
+alias vim = nvim
+alias v = nvim
+alias yazi = yazi_cd
+alias yta = yt-dlp --add-metadata -xic
+alias yt = yt-dlp --add-metadata -ic
+alias y = yazi_cd
