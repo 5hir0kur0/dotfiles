@@ -67,6 +67,16 @@ if ("zoxide" | is-installed) {
   touch ~/.config/nushell/.zoxide.nu
 }
 
+## LS_COLORS
+#
+# nushell's built-in `ls` doesn't inherit LS_COLORS, so it falls back to the
+# lscolors crate's washed-out pastel theme. Seed it from dircolors' database so
+# the colors match GNU `ls` (as used from zsh).
+
+if ("dircolors" | is-installed) {
+  $env.LS_COLORS = (^dircolors --sh | lines | first | parse "LS_COLORS='{c}';" | get c.0)
+}
+
 ## SSH-AGENT
 
 def agent-alive [sock: string]: nothing -> bool {
