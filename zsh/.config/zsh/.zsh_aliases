@@ -1,57 +1,5 @@
-alias gitroot='cd "$(git rev-parse --show-toplevel)"'
-alias gr=gitroot
-alias vim=nvim
-alias v=nvim
-alias hx=helix
-alias vimdiff='nvim -d'
-alias view="vim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'"
-alias vgit="nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'"
-
-function e {
-    emacsclient "$@" & disown
-}
-
-alias enw='emacs -nw'
-
-alias ls='ls -q --color=auto --hyperlink=auto'
-alias ll='ls -lh'
-alias la='ls -A'
-alias lla='la -Alh'
-alias l='ls -C'
-alias lr='ls -lAht'
-alias lrr='lr --color=always | head'
-alias lsd='ls -ld'
-alias '..'='cd ..'
-alias '...'='cd ../..'
-alias '....'='cd ../../..'
-alias '.....'='cd ../../../..'
-alias '......'='cd ../../../../..'
-alias '.......'='cd ../../../../../..'
-alias '........'='cd ../../../../../../..'
-alias mv='mv -iv'
-alias mkdir='mkdir -pv'
-alias md=mkdir
-function mcd() {
-    [ -d "$1" ] || mkdir -p "$1"
-    cd "$1" || return 1
-}
-#alias rm='rm -Iv --one-file-system'
-alias rm='trash'
-alias cp='cp --reflink=auto -iv'
-
-alias grep='grep -i --color=auto'
-alias diff='diff --color=auto'
-alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
-alias g='git'
-alias gg='git grep -i --break --heading'
-alias rg='\rg --smart-case'
-alias rg-all='\rg --smart-case --hidden'
-alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
-alias ip='ip -color'
-
-alias npr='npm run'
-
-alias encrypt_gpg='gpg --symmetric'
+# Zoxide
+eval "$(zoxide init zsh)" || true
 
 function decrypt_gpg() {
     local arg
@@ -60,10 +8,20 @@ function decrypt_gpg() {
         gpg --output "${arg%.*}" --decrypt "$arg"
     done
 }
+function mcd() {
+    [ -d "$1" ] || mkdir -p "$1"
+    cd "$1" || return 1
+}
+function e {
+    emacsclient "$@" & disown
+}
 
 # Allows to follow a pipe (given by `$1`) to be followed by `less`.
 # Directly piping into `less` kind of works but the following cannot be resumed
 # using the `F` command after an interrupt.
+# With this function, the following of the pipe can be stopped with `^C`
+# to be able to scroll/search the buffer in `less`. The following of the pipe
+# can be continued using the `F` command of `less`.
 function less_pipe() {
     local tempfile=$(mktemp /tmp/.less_pipe.XXXX)
     local pipe_command=$1
@@ -74,12 +32,6 @@ function less_pipe() {
     \rm -v -- "$tempfile"
 }
 
-# In the following aliases, the following of the pipe can be stopped with `^C`
-# to be able to scroll/search the buffer in `less`. The following of the pipe
-# can be continued using the `F` command of `less`.
-alias lessmesg="less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'"
-alias dmesg="dmesg --follow --time-format reltime"
-alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
 
 function log_view() {
     cat "${@:?expected file name(s)}" | ccze --raw-ansi | less -rFXS
@@ -96,20 +48,11 @@ function _nvim_man() {
     nvim "+Man $* | bd #"
 }
 compdef _man _nvim_man
-alias man='_nvim_man'
-
-alias g++="g++ -Wall -Wextra -std=c++23"
-alias gcc="gcc -Wall -Wextra -std=c23"
-
-alias yt='yt-dlp --add-metadata -ic'
-alias yta='yt-dlp --add-metadata -xic'
 
 function update {
     paru -Syu
     sudo DIFFPROG='nvim -d' pacdiff
 }
-
-alias mpva='mpv --no-video'
 
 yazi_cd() {
     local tmp dir
@@ -125,9 +68,6 @@ yazi_cd() {
     fi
     echo -e "\e[6 q" # set cursor back to line
 }
-alias y=yazi_cd
-alias yazi=yazi_cd
-alias r=yazi_cd
 
 function findoldfiles() {
     find "${1:-.}" -atime "+${2:-60}"
@@ -254,8 +194,6 @@ function weather() {
         # | grep -E '^\s*┌|│|└' --color=never
 }
 
-alias wttr=weather
-
 function counttypes() {
     find ${*:-.} -type f -print0 | xargs -0 file --brief --mime | awk '
     {
@@ -320,28 +258,76 @@ function _my_alert_completion() {
     _my_notify_send "$notify_arg" "Task $how in $time_str" "$*"
 }
 
-# usually I'm the only user anyway...
-alias alert_completion='_my_alert_completion'
-# in case I'm not...
-alias alert_completion_me='_my_alert_completion --only-me'
-
-# Zoxide
-eval "$(zoxide init zsh)" || true
-alias j=z
-alias ji=zi
-
 # Docker
-alias drmit='docker run --interactive --tty --rm'
 function deitsh() {
     docker exec -it "${1:?expected container}" /bin/sh
 }
-alias dsai='docker start -ai'
 
 strace-fancy() {
     \strace -ftrCDTYyy -o "${1:?expected log file name}" -v -s128 "${2:?expected path to binary}"
 }
 
+alias alert_completion_me='_my_alert_completion --only-me'
+alias alert_completion='_my_alert_completion'
+alias '..'='cd ..'
+alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
+alias '......'='cd ../../../../..'
+alias '.......'='cd ../../../../../..'
+alias '........'='cd ../../../../../../..'
+alias chardiff='git diff --no-index --word-diff=color --word-diff-regex=.'
+alias cp='cp --reflink=auto -iv'
+alias diff='diff --color=auto'
+alias dmesg="dmesg --follow --time-format reltime"
+alias drmit='docker run --interactive --tty --rm'
+alias dsai='docker start -ai'
+alias encrypt_gpg='gpg --symmetric'
+alias enw='emacs -nw'
+alias fd-all='\fd --follow --full-path --hidden --no-ignore --show-errors'
+alias gcc="gcc -Wall -Wextra -std=c23"
+alias gg='git grep -i --break --heading'
+alias g='git'
+alias g++="g++ -Wall -Wextra -std=c++23"
+alias gitroot='cd "$(git rev-parse --show-toplevel)"'
+alias grep='grep -i --color=auto'
+alias gr=gitroot
+alias hx=helix
+alias ip='ip -color'
+alias ji=zi
+alias j=z
+alias la='ls -A'
+alias lessjournal="less_pipe 'journalctl --boot 0 --follow --no-tail | ccze --raw-ansi'"
+alias lessmesg="less_pipe 'dmesg --follow --time-format reltime --color=always --nopager'"
+alias lla='la -Alh'
+alias ll='ls -lh'
+alias l='ls -C'
+alias lr='ls -lAht'
+alias lrr='lr --color=always | head'
+alias lsd='ls -ld'
+alias ls='ls -q --color=auto --hyperlink=auto'
+alias man='_nvim_man'
+alias md=mkdir
+alias mkdir='mkdir -pv'
+alias mpva='mpv --no-video'
+alias mv='mv -iv'
+alias npr='npm run'
+alias rg-all='\rg --smart-case --hidden'
+alias rg='\rg --smart-case'
+#alias rm='rm -Iv --one-file-system'
+alias rm='trash'
+alias r=yazi_cd
 alias strace='strace -fCDYyy'
+alias vgit="nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'"
+alias view="vim -R -n +'set nomodifiable noswapfile noundofile shadafile= viewoptions=cursor' +'nnoremap q ZQ'"
+alias vimdiff='nvim -d'
+alias vim=nvim
+alias v=nvim
+alias wttr=weather
+alias yazi=yazi_cd
+alias yta='yt-dlp --add-metadata -xic'
+alias yt='yt-dlp --add-metadata -ic'
+alias y=yazi_cd
 
 if [ -f ~/.local_zsh_aliases ]; then
     source ~/.local_zsh_aliases
