@@ -21,7 +21,6 @@
 $env.config.buffer_editor = "helix"
 $env.config.show_banner = false
 $env.config.rm.always_trash = true
-$env.config.completions.algorithm = "prefix"
 $env.config.use_kitty_protocol = true
 $env.config.table.mode = "compact" # "frameless"
 $env.config.table.index_mode = "auto"
@@ -149,6 +148,8 @@ $env.PROMPT_INDICATOR = {||
 }
 
 ## COMPLETIONS
+
+$env.config.completions.algorithm = 'fuzzy'
 
 let fish_completer = {|spans|
   fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
@@ -447,6 +448,10 @@ def xlpdf [...files: string] {
     ^latexmk -c
 }
 
+def git-branch-rm-merged [] {
+  git branch --merged | lines | where (not ($it | str starts-with '* ')) | each {|br| git branch -d ($br | str trim) } | str trim
+}
+
 # yazi wrapper that changes to the directory selected on exit
 def --env yazi_cd [...args] {
     let tmp = (mktemp -t ".yazi-cwd.XXXXXX")
@@ -501,7 +506,7 @@ alias npr = npm run
 alias rg-all = rg --smart-case --hidden
 alias rg = rg --smart-case
 alias \rm = rm
-alias rm = rm --trash --interactive
+alias rm = rm --trash
 alias r = yazi_cd
 alias strace = strace -fCDYyy
 alias vgit = nvim -c 'autocmd User NeogitStatusRefreshed nnoremap <buffer> <nowait> q <cmd>q<cr>' -c 'Neogit kind=replace'
