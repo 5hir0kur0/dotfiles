@@ -1,0 +1,213 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "diff_view_style": "unified",
+  "ui_font_size": 16.0,
+  "title_bar": {
+    "show_menus": false,
+    "show_branch_status_icon": false
+  },
+  "status_bar": {
+    "line_endings_button": true
+  },
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_diagnostics": "errors",
+  },
+  "tab_bar": {
+    "show_tab_bar_buttons": true,
+    "show": false
+  },
+  "agent_ui_font_size": 18.0,
+  "text_rendering_mode": "platform_default",
+  "markdown_preview_font_size": 16.0,
+  "markdown_preview_code_font_family": "Iosevka Slab",
+  "markdown_preview_font_family": "Noto Serif",
+  "buffer_line_height": "standard",
+  "language_models": {
+    "mistral": {
+      "api_url": "https://api.mistral.ai/v1",
+      "available_models": [
+        {
+          "name": "zai-glm-5-2",
+          "display_name": "GLM 5.2 (Mistral)",
+          "max_tokens": 1048576,
+          "max_output_tokens": 32000,
+          "supports_tools": true,
+          "supports_images": false,
+          "supports_thinking": true
+        }
+      ]
+    },
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "max_severity": null, // same values as the `diagnostics_max_severity` from the editor settings
+    }
+  },
+  "tab_size": 4,
+  "show_edit_predictions": true,
+  "cli_default_open_behavior": "new_window",
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "which_key": {
+    "delay_ms": 250,
+    "enabled": true,
+  },
+  "edit_predictions": {
+    "disabled_globs": [
+    ],
+    "allow_data_collection": "no",
+    "provider": "codestral",
+  },
+  "agent_servers": {
+
+  },
+  "vim": {
+    "use_smartcase_find": false, // otherwise `f` and `t` will be case-insensitive with lowercase letters
+    "use_system_clipboard": "always",
+    "toggle_relative_line_numbers": true,
+  },
+  "ui_font_family": "Adwaita Sans",
+  "buffer_font_family": "Iosevka Slab",
+  "buffer_font_features": {
+    "calt": true,
+    "liga": true,
+    "dlig": true,
+    "ss07": true,
+  },
+  "buffer_font_weight": 400.0,
+  "buffer_font_size": 18.0,
+  "relative_line_numbers": "enabled",
+  "icon_theme": {
+    "mode": "system",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)",
+  },
+  "colorize_brackets": true,
+  "indent_guides": {
+    "coloring": "indent_aware",
+    "background_coloring": "indent_aware",
+  },
+  "minimap": {
+    "show": "auto",
+  },
+  "outline_panel": {
+    "dock": "right",
+  },
+  "git_panel": {
+    "tree_view": true,
+    "dock": "right",
+  },
+  "project_panel": {
+    "show_diagnostics": "all",
+    "diagnostic_badges": true,
+    "dock": "right",
+    "git_status_indicator": true,
+  },
+  "agent": {
+    "sandbox_permissions": {
+      "network_hosts": [
+        "docs.mistral.ai"
+      ],
+      "allow_fs_write_all": false
+    },
+    "use_modifier_to_send": true,
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "opencode",
+        "model": "go/deepseek-v4-flash",
+        "enable_thinking": true,
+        "effort": "xhigh"
+      },
+      {
+        "provider": "opencode",
+        "model": "go/glm-5.2",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-5",
+        "enable_thinking": true,
+        "effort": "high"
+      }
+    ],
+    "show_turn_stats": true,
+    "tool_permissions": {
+      "default": "allow",
+    },
+    "default_profile": "write",
+    "play_sound_when_agent_done": "always",
+    "default_model": {
+      // mistral maps enable_thinking -> reasoning_effort:"high"; `effort` is ignored here
+      "enable_thinking": true,
+      "provider": "mistral",
+      "model": "zai-glm-5-2",
+    },
+    "dock": "left",
+    "model_parameters": [],
+  },
+  "vim_mode": true,
+  "helix_mode": false,
+  "vertical_scroll_margin": 0.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
+  "autosave": { "after_delay": { "milliseconds": 500 } },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy",
+        },
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true,
+          },
+          "closureReturnTypeHints": {
+            "enable": "always",
+          },
+        },
+      },
+    },
+  },
+  "terminal": {
+    "env": { "GIT_EDITOR": "zeditor --wait" },
+    "font_family": "Iosevka Term Slab",
+    "font_features": {
+      "calt": true,
+      "liga": true,
+      "dlig": true,
+      "ss07": true,
+    },
+    "line_height": "standard",
+    "cursor_shape": "bar",
+    "minimum_contrast": 0, // use exact theme colors
+    "toolbar": {
+        "breadcrumbs": false
+    }
+  },
+}
