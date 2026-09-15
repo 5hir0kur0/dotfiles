@@ -169,6 +169,24 @@ $env.config.completions.external = {
   completer: $fish_completer
 }
 
+## HOOKS
+
+# Automatically run `ls` after every `cd`, cut off after 5 lines (mirrors zsh cd_fun)
+def _my_cd_ls []: nothing -> nothing {
+    let width = (term size).columns | if $in > 0 { $in } else { 80 }
+    let ls_lines = (^ls --color=always --format=across $"--width=($width)" | lines)
+    if ($ls_lines | length) <= 5 {
+        $ls_lines | each { print $in } | ignore
+    } else {
+        $ls_lines | first 5 | each { print $in } | ignore
+        print $"(ansi cyan_bold)[...](ansi reset)"
+    }
+}
+$env.config.hooks.env_change.PWD = ($env.config.hooks.env_change.PWD? | default []) ++ [
+    # `before` is null for the initial PWD at startup, which zsh's chpwd doesn't fire for either
+    {|before, after| if $before != null { _my_cd_ls } }
+]
+
 ## FUNCTIONS
 #
 # Ports of the zsh/fish shell functions. Nushell resolves `def`s in a second
