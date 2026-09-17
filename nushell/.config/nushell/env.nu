@@ -39,7 +39,7 @@ path add ('~/.elan/bin' | path expand)
 
 ## ENV
 
-if $env.TERM_PROGRAM == vscode {
+if $env.TERM_PROGRAM? == "vscode" {
     $env.EDITOR = 'code --wait'
 } else {
     $env.EDITOR = 'nvim'
