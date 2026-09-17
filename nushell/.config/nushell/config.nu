@@ -512,7 +512,7 @@ def --env yazi_cd [...args] {
     if $cwd != $env.PWD and ($cwd | path exists) {
         cd $cwd
     }
-    \rm -fp $tmp
+    ^rm -f $tmp
 }
 
 ## ALIASES
