@@ -495,7 +495,13 @@ def xlpdf [...files: string] {
 }
 
 def git-branch-rm-merged [] {
-  git branch --merged | lines | where (not ($it | str starts-with '* ')) | each {|br| git branch -d ($br | str trim) } | str trim
+  # skip the current branch and branches checked out in other worktrees (shown with '+')
+  git branch --format '%(HEAD)%09%(worktreepath)%09%(refname:short)' --merged
+  | lines
+  | split column (char tab) head wt name
+  | where head != '*' and wt == ''
+  | each {|br| git branch -d $br.name }
+  | str trim
 }
 
 # yazi wrapper that changes to the directory selected on exit
