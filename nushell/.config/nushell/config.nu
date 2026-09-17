@@ -33,10 +33,9 @@ $env.config.keybindings ++= [
     modifier: alt
     keycode: char_.
     mode: [emacs vi_normal vi_insert]
-    event: [
-      { edit: InsertString, value: "!$" }
-      { send: Enter }
-    ]
+    # reedline's `!$` only expands after a space and can't step further back,
+    # so repeated presses cycle through older last arguments via a host command
+    event: { send: executehostcommand, cmd: "_my_insert_last_arg" }
   }
   {
     # zsh-like: one Enter accepts the highlighted completion *and* runs the line.
@@ -67,6 +66,26 @@ $env.config.keybindings ++= [
     event: { until: [ { send: Menu name: completion_menu } { send: Enter } ] }
   }
 ]
+
+# zsh-like insert-last-word: insert the last argument of the previous command;
+# pressing again right away swaps it for the one from the command before that
+def --env _my_insert_last_arg []: nothing -> nothing {
+    let buffer = commandline
+    let cursor = commandline get-cursor
+    let state = $env._my_last_arg_state? | default {}
+    let repeat = $state.buffer? == $buffer and $state.cursor? == $cursor
+    let index = if $repeat { $state.index + 1 } else { 0 }
+    let start = if $repeat { $state.start } else { $cursor }
+    let arg = history | last 1000 | get command | reverse
+        | each {|cmd| try { ast --flatten $cmd | last | get content } catch { null } }
+        | compact --empty | uniq | get -o $index
+    if $arg == null { return }
+    let new_buffer = ($buffer | str substring -g 0..<$start) + $arg + ($buffer | str substring -g $cursor..)
+    let new_cursor = $start + ($arg | str length -g)
+    commandline edit --replace $new_buffer
+    commandline set-cursor $new_cursor
+    $env._my_last_arg_state = {buffer: $new_buffer, cursor: $new_cursor, index: $index, start: $start}
+}
 
 ## PROMPT
 #
