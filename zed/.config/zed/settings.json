@@ -25,6 +25,9 @@
     "show_tab_bar_buttons": true,
     "show": false
   },
+  "cursor_animation": {
+      "enabled": true,
+  },
   "agent_ui_font_size": 18.0,
   "text_rendering_mode": "platform_default",
   "markdown_preview_font_size": 16.0,
