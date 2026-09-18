@@ -107,6 +107,8 @@ vim.opt.foldlevelstart = 99
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+vim.opt.guifont = "Iosevka Term Slab:h14"
+
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
   update_in_insert = false,
