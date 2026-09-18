@@ -77,31 +77,7 @@
     "vim.targets.enable": true,
     "vim.easymotion": true,
     "vim.easymotionKeys": "fdsagerwcvbqtjklhnmpoiuz;",
-    // Trigger the main which key menu with in the active editor with vim
-    // This cannot be put into keybindings.json because it will
-    // create conflict with Vim.
-    // https://github.com/stevenguh/spacecode/issues/3
     "vim.normalModeKeyBindingsNonRecursive": [
-        // {
-        //     "before": [
-        //         "<space>"
-        //     ],
-        //     "commands": [
-        //         "vspacecode.space"
-        //     ]
-        // },
-        // {
-        //     "before": [
-        //         ","
-        //     ],
-        //     "commands": [
-        //         "vspacecode.space",
-        //         {
-        //             "command": "whichkey.triggerKey",
-        //             "args": "m"
-        //         }
-        //     ]
-        // },
         {
             "before": [
                 "K"
@@ -192,6 +168,15 @@
             ],
             "commands": [
                 "workbench.action.quickOpen"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                ";",
+            ],
+            "commands": [
+                "workbench.action.showCommands"
             ]
         }
     ],
@@ -631,7 +616,9 @@
         "uv run": true,
         "wc": true,
         "timeout": true,
-        "pushd": true
+        "pushd": true,
+        "strings": true,
+        "uniq": true
     },
     "chat.plugins.marketplaces": [
         "github/copilot-plugins",
