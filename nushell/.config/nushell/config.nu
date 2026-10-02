@@ -198,8 +198,8 @@ $env.PROMPT_INDICATOR = {||
 
 $env.config.completions.algorithm = 'fuzzy'
 
-let fish_completer = {|spans|
-  fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
+let fish_completer = {|place|
+  fish --command $"complete '--do-complete=($place.command | str replace --all "'" "\\'" | str join ' ')'"
   | from tsv --flexible --noheaders --no-infer
   | rename value description
   | update value {|row|
