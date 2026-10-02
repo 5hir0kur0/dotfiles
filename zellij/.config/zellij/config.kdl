@@ -335,3 +335,5 @@ copy_clipboard "primary"
 copy_on_select true
 
 show_startup_tips false
+
+default_shell "nu"
