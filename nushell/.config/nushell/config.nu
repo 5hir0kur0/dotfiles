@@ -234,6 +234,24 @@ $env.config.hooks.env_change.PWD = ($env.config.hooks.env_change.PWD? | default 
     {|before, after| if $before != null { _my_cd_ls } }
 ]
 
+# mailbox tag for results that `bg` jobs send to the main thread
+const _MY_BG_TAG = 7373
+
+# Print the results of finished `bg` jobs (like bash's "[1]+ Done" before the prompt)
+def _my_bg_report []: nothing -> nothing {
+    loop {
+        let msg = try { job recv --tag $_MY_BG_TAG --timeout 0sec } catch { null }
+        if $msg == null { break }
+        let ok = $msg.exit_code == 0
+        let status = if $ok { "done" } else { $"exit ($msg.exit_code)" }
+        print $"(ansi (if $ok { 'green_bold' } else { 'red_bold' }))[($msg.id)] ($status):(ansi reset) ($msg.description)"
+        if ($msg.output | is-not-empty) {
+            print ($msg.output | if ($in | describe) == "string" { str trim --right } else { $in })
+        }
+    }
+}
+$env.config.hooks.pre_prompt = ($env.config.hooks.pre_prompt? | default []) ++ [{|| _my_bg_report }]
+
 ## FUNCTIONS
 #
 # Ports of the zsh/fish shell functions. Nushell resolves `def`s in a second
@@ -246,6 +264,29 @@ def --wrapped _findq [...args] {
 }
 
 # find broken symlinks under the given paths (default: .)
+# Run `task` as a background job; its output (stdout+stderr of a trailing external command,
+# or the returned value) is printed before the next prompt once it finishes
+def bg [task: closure, --description (-d): string]: nothing -> int {
+    let src = view source $task | str replace -r '^\{\s*(\|[^|]*\|)?' '' | str replace -r '\}\s*$' ''
+    let description = $description | default ($src | str trim | str replace -ar '\s+' ' ')
+    # only a trailing external command's stderr and exit code can be captured, and trying it on
+    # anything else fails *after* the task already ran, so decide up front from the source
+    let external = try {
+        ast --json $src | get block | from json | get pipelines | last | get elements | last
+            | get expr.expr | columns | first | $in == "ExternalCall"
+    } catch { false }
+    job spawn --description $description {
+        let result = try {
+            if $external {
+                do $task o+e>| complete | {output: $in.stdout, exit_code: $in.exit_code}
+            } else {
+                {output: (do $task | collect), exit_code: 0}
+            }
+        } catch {|err| {output: ($err.rendered? | default $err.msg), exit_code: 1} }
+        {id: (job id), description: $description, ...$result} | job send 0 --tag $_MY_BG_TAG
+    }
+}
+
 def brokenlinks [...paths: string] {
     let p = if ($paths | is-empty) { ["."] } else { $paths }
     _findq ...$p -type l | lines | where {|l| not ($l | path exists) }
