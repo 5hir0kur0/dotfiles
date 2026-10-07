@@ -24,6 +24,7 @@ $env.config.rm.always_trash = true
 $env.config.use_kitty_protocol = true
 $env.config.table.mode = "compact" # "frameless"
 $env.config.table.index_mode = "auto"
+$env.config.error_style = "short"
 
 ## KEYBINDINGS
 
