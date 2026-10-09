@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "cursor_blink": false, // seems to cause high CPU usage on Linux (?)
+    "auto_signature_help": true,
     "markdown_preview": {
         "font_size": 16.0,
         "font_family": "Noto Serif",
@@ -38,6 +40,7 @@
     "cursor_animation": {
         "enabled": true,
     },
+    "completion_menu_item_kind": "symbol",
     "git": {
         "inline_blame": {
             "enabled": true,
@@ -87,7 +90,7 @@
     "edit_predictions": {
         "disabled_globs": [],
         "allow_data_collection": "no",
-        "provider": "zed",
+        "provider": "copilot",
     },
     "agent_servers": {},
     "vim": {
@@ -216,6 +219,7 @@
     },
     "terminal": {
         "bell": "system",
+        "blinking": "off",
         "env": { "GIT_EDITOR": "zeditor --wait" },
         "font_family": "Iosevka Term Slab",
         "font_features": {
@@ -232,6 +236,20 @@
         },
         "shell": {
             "program": "nu",
+        },
+    },
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+
+        // A set of modifiers which, when pressed, will toggle the visibility of inlay hints.
+        "toggle_on_modifiers_press": {
+            "control": true,
+            "shift": true,
+            "alt": true,
+            "function": true,
         },
     },
 }
