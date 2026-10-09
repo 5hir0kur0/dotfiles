@@ -38,34 +38,6 @@ $env.config.keybindings ++= [
     # so repeated presses cycle through older last arguments via a host command
     event: { send: executehostcommand, cmd: "_my_insert_last_arg" }
   }
-  {
-    # zsh-like: one Enter accepts the highlighted completion *and* runs the line.
-    # With a menu open the first Enter only inserts the match (reedline swallows
-    # it), so the second one submits; with no menu open the first Enter submits
-    # and the rest of the list is skipped.
-    # TODO This is kind of a hack that I can hopefully get rid of if these issues get resolved:
-    # - https://github.com/nushell/reedline/issues/1029
-    # - https://github.com/nushell/nushell/issues/18919
-    name: accept_completion_and_submit
-    modifier: none
-    keycode: enter
-    mode: [emacs vi_normal vi_insert]
-    event: [
-      { send: Enter }
-      { send: Enter }
-    ]
-  }
-  {
-    # ...and one that inserts the highlighted match *without* running the line.
-    # `Menu` reports itself inapplicable while a menu is already open, so this
-    # falls through to Enter (= accept, no submit) with the menu up, and merely
-    # opens the menu when there is none — never an accidental submit.
-    name: accept_completion_only
-    modifier: control
-    keycode: space
-    mode: [emacs vi_normal vi_insert]
-    event: { until: [ { send: Menu name: completion_menu } { send: Enter } ] }
-  }
 ]
 
 # zsh-like insert-last-word: insert the last argument of the previous command;
