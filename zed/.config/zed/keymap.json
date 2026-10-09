@@ -28,8 +28,6 @@
       "ctrl-D": "vim::SelectPrevious",
       "shift-s": "vim::PushAddSurrounds", // Surround from visual mode
       "shift-x": "vim::Exchange",  // Exchange regions
-      // "a n": "editor::SelectLargerSyntaxNode", // Select larger syntax node
-      // "i n": "editor::SelectSmallerSyntaxNode", // Select smaller syntax node
       // Neovim 0.13 Visual Q: one cursor per selected line
       "shift-q": [
         "editor::SplitSelectionIntoLines",
@@ -37,6 +35,18 @@
       ]
     },
   },
+  // {
+  //     "context": "vim_operator == a",
+  //     "bindings": {
+  //         "n": "vim::SelectLargerSyntaxNode", // Select larger syntax node
+  //     }
+  // },
+  // {
+  //   "context": "vim_operator == i",
+  //   "bindings": {
+  //       "n": "vim::SelectSmallerSyntaxNode", // Select smaller syntax node
+  //   }
+  // },
   {
     "context": "vim_mode == normal && !menu",
     "bindings": {
@@ -48,13 +58,13 @@
     "bindings": {
       // Neovim 0.13 Ctrl-l: clear multicursors
       "ctrl-l": "editor::Cancel",
-  
+
       // Approximation of Neovim gQ: restore previous cursor set
       "g shift-q": "editor::UndoSelection"
     }
   },
   {
-    "context": "VimControl && !menu",
+    "context": "(vim_mode == normal || vim_mode == visual) && !menu",
     "bindings": {
       "s": "vim::PushSneak",
       "shift-s": "vim::PushSneakBackward",
@@ -81,26 +91,16 @@
       "ctrl-w j": "workspace::ActivatePaneDown"
     }
   },
-  // Subword motion
-  // {
-  //   "context": "VimControl && !menu && vim_mode != operator",
-  //   "bindings": {
-  //     "w": "vim::NextSubwordStart",
-  //     "b": "vim::PreviousSubwordStart",
-  //     "e": "vim::NextSubwordEnd",
-  //     "g e": "vim::PreviousSubwordEnd"
-  //   }
-  // },
   // Spacebar bindings
   {
-    "context": "(VimControl || HelixControl) && !menu",
+    "context": "(vim_mode == normal || vim_mode == visual || helix_mode == normal || helix_mode == select) && !menu",
     "bindings": {
       "space b": "tab_switcher::ToggleAll",
       "space space": "file_finder::Toggle",
       "space /": "pane::DeploySearch",
       "space e": "project_panel::ToggleFocus",
       "space ?": "zed::OpenKeymap",
-      "space :": "command_palette::Toggle",
+      "space ;": "command_palette::Toggle",
       "space w": ["workspace::SendKeystrokes", "ctrl-w"]
     }
   },
