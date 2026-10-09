@@ -258,6 +258,7 @@
         "-workbench.action.debug.stepOut",
         "-workbench.action.debug.stepOver",
         "-workbench.action.debug.stop",
+        "-workbench.action.terminal.showSuggestions",
         "-workbench.action.firstEditorInGroup",
         "-workbench.action.focusActiveEditorGroup",
         "-workbench.action.focusEighthEditorGroup",
@@ -318,7 +319,7 @@
     "terminal.external.linuxExec": "ptyxis",
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.stickyScroll.enabled": false,
-    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.suggest.enabled": false,
     // Font rendering becomes terrible when this is enabled for some reason.
     "terminal.integrated.enableImages": true,
     "terminal.integrated.scrollback": 10000,
@@ -452,7 +453,7 @@
     "debug.toolBarLocation": "docked",
     "diffEditor.experimental.showMoves": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "diffEditor.renderSideBySide": true,
+    "diffEditor.renderSideBySide": false,
     "breadcrumbs.enabled": false,
     "github.copilot.enable": {
         "*": true,
@@ -676,13 +677,36 @@
     },
     "chat.tools.terminal.outputCompaction": true,
     "chat.titleBar.openInAgentsWindow.enabled": false,
-    "chat.viewSessions.orientation": "stacked",
-    "chat.agent.sandbox.enabled": "on",
-    "chat.agentsControl.enabled": "hidden",
     "qt-core.additionalQtPaths": [
         {
             "name": "Qt-5.15.19-linux-g++-x86_64_from_PATH",
             "path": "/usr/bin/qmake"
         }
-    ]
+    ],
+    "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
+    "qt-core.showWelcomePageOnActivation": false,
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "fish"
+        },
+        "nu": {
+            "path": "/bin/nu"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "nu",
+    // Agent/chat terminals use bash; interactive terminals keep nu.
+    "chat.tools.terminal.terminalProfile.linux": {
+        "path": "bash"
+    },
+    "chat.agent.sandbox.enabled": "on",
+    "editor.wordWrapIndicator": true,
+    "inlineChat.defaultModel": "GPT-6 Astra (copilot)",
+    "chat.viewSessions.orientation": "stacked"
 }
