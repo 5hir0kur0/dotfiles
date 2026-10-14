@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "semantic_tokens": "combined",
     "cursor_blink": false, // seems to cause high CPU usage on Linux (?)
     "auto_signature_help": true,
     "markdown_preview": {
@@ -88,13 +89,19 @@
         "enabled": true,
     },
     "edit_predictions": {
+        "copilot": {
+            "prediction_debounce": 100
+        },
+        "zed": {
+            "prediction_debounce": 100
+        },
         "disabled_globs": [],
         "allow_data_collection": "no",
         "provider": "copilot",
     },
     "agent_servers": {},
     "vim": {
-        "use_smartcase_find": false, // otherwise `f` and `t` will be case-insensitive with lowercase letters
+        "use_smartcase_find": true, // otherwise `f` and `t` will be case-insensitive with lowercase letters
         "use_system_clipboard": "always",
         "toggle_relative_line_numbers": true,
     },
@@ -136,15 +143,12 @@
         "diagnostic_badges": true,
         "dock": "right",
         "git_status_indicator": true,
+        "auto_reveal_entries": true,
+        "git_status": true,
+        "auto_fold_dirs": true,
     },
     "agent": {
         "sandbox_permissions": {
-            "write_paths": [
-                {
-                    "requested": "/home/inja/code/cstq/kleemann/spectivecommonpages",
-                    "resolved": "/home/inja/code/cstq/kleemann/spectivecommonpages",
-                },
-            ],
             "network_hosts": [
                 "*.mistral.ai",
                 "zed.dev",
@@ -157,7 +161,6 @@
                 "blog.olimorris.com",
                 "practical.li",
                 "registry.npmjs.org",
-                "gitlab01.services.wirtgen-group.com",
             ],
             "allow_fs_write_all": false,
         },
