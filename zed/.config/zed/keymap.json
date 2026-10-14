@@ -50,7 +50,14 @@
   {
     "context": "vim_mode == normal && !menu",
     "bindings": {
-        "1 shift-q": "editor::SelectAllMatches"
+        "1 shift-q": "editor::SelectAllMatches",
+        "shift-y": ["workspace::SendKeystrokes", "y $"] // Y consistent with D and C (i.e., operate on the rest of the line)
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore" // In insert mode, make jk escape to normal mode.
     }
   },
   {
@@ -93,7 +100,7 @@
   },
   // Spacebar bindings
   {
-    "context": "(vim_mode == normal || vim_mode == visual || helix_mode == normal || helix_mode == select) && !menu",
+    "context": "EmptyPane || SharedScreen || (vim_mode == normal || vim_mode == visual || helix_mode == normal || helix_mode == select) && !menu",
     "bindings": {
       "space b": "tab_switcher::ToggleAll",
       "space space": "file_finder::Toggle",
@@ -101,7 +108,10 @@
       "space e": "project_panel::ToggleFocus",
       "space ?": "zed::OpenKeymap",
       "space ;": "command_palette::Toggle",
-      "space w": ["workspace::SendKeystrokes", "ctrl-w"]
+      "space w": ["workspace::SendKeystrokes", "ctrl-w"],
+      "space t h": "workspace::ToggleLeftDock",
+      "space t l": "workspace::ToggleRightDock",
+      "space t w": "editor::ToggleSoftWrap"
     }
   },
   {
