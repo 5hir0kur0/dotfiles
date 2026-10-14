@@ -48,8 +48,8 @@ vim.opt.showmode = false
 --  See `:help 'clipboard'`
 vim.schedule(function() vim.opt.clipboard = 'unnamedplus' end)
 
--- enable break indent
-vim.opt.breakindent = true
+vim.opt.showbreak = "↪ "  -- mark wrapped continuation lines with a symbol
+vim.opt.breakindent = true -- make wrapped lines preserve indent
 
 -- save undo history
 vim.opt.undofile = true
