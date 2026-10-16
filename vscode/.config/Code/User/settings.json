@@ -452,8 +452,9 @@
     //
     "debug.toolBarLocation": "docked",
     "diffEditor.experimental.showMoves": true,
+    "diffEditor.renderSideBySide": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
-    "diffEditor.renderSideBySide": false,
+    "diffEditor.useInlineViewWhenSpaceIsLimited": false
     "breadcrumbs.enabled": false,
     "github.copilot.enable": {
         "*": true,
@@ -639,7 +640,6 @@
     },
     "chat.tools.terminal.enableAutoApprove": true,
     "chat.tools.terminal.ignoreDefaultAutoApproveRules": false,
-    "chat.agent.sandbox.allowNetwork": true,
     "agents.voice.liveTranscript": true,
     "agents.voice.showTranscript": true,
     "chat.agent.sandbox.fileSystem.linux": {
@@ -708,5 +708,6 @@
     "chat.agent.sandbox.enabled": "on",
     "editor.wordWrapIndicator": true,
     "inlineChat.defaultModel": "GPT-6 Astra (copilot)",
-    "chat.viewSessions.orientation": "stacked"
+    "chat.viewSessions.orientation": "stacked",
+    "chat.agent.sandbox.network.allowNetwork": true,
 }
