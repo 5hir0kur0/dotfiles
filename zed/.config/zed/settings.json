@@ -15,7 +15,7 @@
         "font_family": "Noto Serif",
         "code_font_family": "Iosevka Slab",
     },
-    "diff_view_style": "split",
+    "diff_view_style": "unified",
     "ui_font_size": 16.0,
     "title_bar": {
         "show_menus": false,
@@ -149,6 +149,7 @@
     },
     "agent": {
         "sandbox_permissions": {
+            "allow_unsandboxed": true,
             "network_hosts": [
                 "*.mistral.ai",
                 "zed.dev",
@@ -203,6 +204,9 @@
             "initialization_options": {
                 "check": {
                     "command": "clippy",
+                },
+                "procMacro": {
+                    "enable": true,
                 },
                 "inlayHints": {
                     "maxLength": null,
