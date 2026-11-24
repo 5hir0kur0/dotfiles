@@ -584,79 +584,84 @@ vim.pack.add({
 -- to check what clients are attached to the current buffer, use
 -- `:checkhealth vim.lsp`. to view default lsp keybindings, use `:h lsp-defaults`.
 for server, config in pairs(lsp_servers) do
-  vim.lsp.config(server, {
-    settings = config,
-
-    -- only create the keymaps if the server attaches successfully
-    on_attach = function(client, bufnr)
-      -- vim.lsp.buf.definition
-      vim.keymap.set("n", "gd", require('telescope.builtin').lsp_definitions,
-        { buffer = bufnr, desc = "LSP: [G]oto [D]efinition", })
-
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration,
-        { buffer = bufnr, desc = "LSP: [G]oto [D]eclaration", })
-
-      vim.keymap.set("n", "gR", require('telescope.builtin').lsp_references,
-        { buffer = bufnr, desc = "LSP: [G]oto [R]eferences", })
-
-      vim.keymap.set("n", "gI", require('telescope.builtin').lsp_implementations,
-        { buffer = bufnr, desc = "LSP: [G]oto [I]mplementations", })
-
-      vim.keymap.set("n", "gy", require('telescope.builtin').lsp_type_definitions,
-        { buffer = bufnr, desc = "LSP: [G]ode [Y] Type Def.", })
-
-      vim.keymap.set({"n", "v"}, "=", vim.lsp.buf.format,
-        { buffer = bufnr, desc = "LSP: [=] Format", })
-
-      vim.keymap.set("n", "<leader>s", require('telescope.builtin').lsp_document_symbols,
-        { buffer = bufnr, desc = "LSP: [S]ymbol Picker", })
-
-      vim.keymap.set("n", "<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols,
-        { buffer = bufnr, desc = "LSP: [S]ymbol Picker (global)", })
-
-      vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action,
-        { buffer = bufnr, desc = "LSP: Code [a]ction", })
-
-      -- The following two autocommands are used to highlight references of the
-      -- word under your cursor when your cursor rests there for a little while.
-      --    See `:help CursorHold` for information about when this is executed
-      --
-      -- When you move your cursor, the highlights will be cleared (the second autocommand).
-      if client and client:supports_method('textDocument/documentHighlight', bufnr) then
-        local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-          buffer = bufnr,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          buffer = bufnr,
-          group = highlight_augroup,
-          callback = vim.lsp.buf.clear_references,
-        })
-
-        vim.api.nvim_create_autocmd('LspDetach', {
-          group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-          callback = function(event2)
-            vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-          end,
-        })
-      end
-
-      -- The following code creates a keymap to toggle inlay hints in your
-      -- code, if the language server you are using supports them
-      --
-      -- This may be unwanted, since they displace some of your code
-      if client and client:supports_method('textDocument/inlayHint', bufnr) then
-        vim.keymap.set("n", "<leader>th", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }) end,
-          { buffer = bufnr, desc = "LSP: [T]oggle Inlay [H]ints", })
-      end
-    end,
-  })
+  vim.lsp.config(server, { settings = config })
   vim.lsp.enable(server)
 end
+
+-- set up keymaps etc. whenever a server attaches to a buffer.
+-- (using an autocmd rather than `on_attach` keeps the per-server `on_attach`
+-- from nvim-lspconfig intact, e.g. rust_analyzer's `:LspCargoReload`)
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+  callback = function(event)
+    local bufnr = event.buf
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    -- vim.lsp.buf.definition
+    vim.keymap.set("n", "gd", require('telescope.builtin').lsp_definitions,
+      { buffer = bufnr, desc = "LSP: [G]oto [D]efinition", })
+
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration,
+      { buffer = bufnr, desc = "LSP: [G]oto [D]eclaration", })
+
+    vim.keymap.set("n", "gR", require('telescope.builtin').lsp_references,
+      { buffer = bufnr, desc = "LSP: [G]oto [R]eferences", })
+
+    vim.keymap.set("n", "gI", require('telescope.builtin').lsp_implementations,
+      { buffer = bufnr, desc = "LSP: [G]oto [I]mplementations", })
+
+    vim.keymap.set("n", "gy", require('telescope.builtin').lsp_type_definitions,
+      { buffer = bufnr, desc = "LSP: [G]ode [Y] Type Def.", })
+
+    vim.keymap.set({"n", "v"}, "=", vim.lsp.buf.format,
+      { buffer = bufnr, desc = "LSP: [=] Format", })
+
+    vim.keymap.set("n", "<leader>s", require('telescope.builtin').lsp_document_symbols,
+      { buffer = bufnr, desc = "LSP: [S]ymbol Picker", })
+
+    vim.keymap.set("n", "<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols,
+      { buffer = bufnr, desc = "LSP: [S]ymbol Picker (global)", })
+
+    vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action,
+      { buffer = bufnr, desc = "LSP: Code [a]ction", })
+
+    -- The following two autocommands are used to highlight references of the
+    -- word under your cursor when your cursor rests there for a little while.
+    --    See `:help CursorHold` for information about when this is executed
+    --
+    -- When you move your cursor, the highlights will be cleared (the second autocommand).
+    if client and client:supports_method('textDocument/documentHighlight', bufnr) then
+      local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        buffer = bufnr,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.document_highlight,
+      })
+
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        buffer = bufnr,
+        group = highlight_augroup,
+        callback = vim.lsp.buf.clear_references,
+      })
+
+      vim.api.nvim_create_autocmd('LspDetach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        callback = function(event2)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+        end,
+      })
+    end
+
+    -- The following code creates a keymap to toggle inlay hints in your
+    -- code, if the language server you are using supports them
+    --
+    -- This may be unwanted, since they displace some of your code
+    if client and client:supports_method('textDocument/inlayHint', bufnr) then
+      vim.keymap.set("n", "<leader>th", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }) end,
+        { buffer = bufnr, desc = "LSP: [T]oggle Inlay [H]ints", })
+    end
+  end,
+})
 
 -- NOTE: if all you want is lsp + completion + highlighting, you're done.
 -- the rest of the lines are just quality-of-life/appearance plugins and
