@@ -324,16 +324,21 @@ require("mini.ai").setup({
 -- - sd'   - [S]urround [D]elete [']quotes
 -- - sr)'  - [S]urround [R]eplace [)] [']
 require("mini.surround").setup {
+  -- Number of lines within which surrounding is searched (same as mini.ai)
+  n_lines = 1000,
+
   -- Had to give up and change the bindings back to the tpope ones.
   -- (Because so many other tools like Doom, VS Code Vim, IntelliJ use them...)
   mappings = {
     add = "ys", -- Add surrounding in Normal and Visual modes
     delete = "ds", -- Delete surrounding
-    find = "sf", -- Find surrounding (to the right)
-    find_left = "sF", -- Find surrounding (to the left)
-    highlight = "sh", -- Highlight surrounding
+    -- find/highlight/update_n_lines are disabled: they started with `s`, which
+    -- made leap's `s` wait for `timeoutlen` (and leap / `[(` cover finding anyway)
+    find = "", -- Find surrounding (to the right)
+    find_left = "", -- Find surrounding (to the left)
+    highlight = "", -- Highlight surrounding
     replace = "cs", -- Replace surrounding
-    update_n_lines = "sn", -- Update `n_lines`
+    update_n_lines = "", -- Update `n_lines`
 
     suffix_last = "l", -- Suffix to search with "prev" method
     suffix_next = "n", -- Suffix to search with "next" method
