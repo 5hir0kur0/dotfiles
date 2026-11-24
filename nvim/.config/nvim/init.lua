@@ -445,8 +445,8 @@ require("gitsigns").setup({
 -- INFO: formatting and syntax highlighting
 vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
 
--- equivalent to :TSUpdate
-require("nvim-treesitter").update()
+-- parsers are installed on demand by the FileType autocmd below.
+-- run `:TSUpdate` manually after `vim.pack.update()` (new queries may need newer parsers)
 
 ---@param buf integer
 ---@param language string
@@ -515,7 +515,7 @@ vim.keymap.set({ "v", "o" }, "in", function()
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
 
 -- INFO: completion engine
-vim.pack.add({ 
+vim.pack.add({
     "https://github.com/saghen/blink.lib",
     "https://github.com/saghen/blink.cmp"
 }, { confirm = false })
@@ -557,10 +557,7 @@ require("blink.cmp").setup({
 -- lsp servers we want to use and their configuration
 -- see `:h lspconfig-all` for available servers and their settings
 local lsp_servers = {
-  lua_ls = {
-    -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
-    Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
-  },
+  lua_ls = {}, -- neovim-specific settings are applied in `on_init` below
   rust_analyzer = {
     ["rust-analyzer"] = {
       check = {
@@ -595,6 +592,35 @@ for server, config in pairs(lsp_servers) do
   vim.lsp.config(server, { settings = config })
   vim.lsp.enable(server)
 end
+
+-- configure lua_ls for neovim config/plugin development, unless the project
+-- has its own `.luarc.json` (then that takes precedence).
+-- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
+vim.lsp.config('lua_ls', {
+  on_init = function(client)
+    if client.workspace_folders then
+      local path = client.workspace_folders[1].name
+      if path ~= vim.fn.stdpath 'config'
+        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+        return
+      end
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua or {}, {
+      runtime = {
+        -- neovim uses LuaJIT
+        version = 'LuaJIT',
+        path = { 'lua/?.lua', 'lua/?/init.lua' },
+      },
+      workspace = {
+        -- don't ask about configuring the workspace for third-party libraries
+        checkThirdParty = false,
+        -- neovim's and the plugins' `lua/` dirs, for `vim.*` and `require` completion
+        library = vim.api.nvim_get_runtime_file('lua', true),
+      },
+    })
+  end,
+})
 
 -- set up keymaps etc. whenever a server attaches to a buffer.
 -- (using an autocmd rather than `on_attach` keeps the per-server `on_attach`
@@ -690,7 +716,7 @@ local utils = require("telescope.utils")
 vim.keymap.set("n", "<leader>b", pickers.buffers, { desc = "Search [B]uffers", })
 vim.keymap.set('n', '<leader>?', pickers.keymaps, { desc = '[?] Search Keymaps' })
 vim.keymap.set('n', '<leader>:', pickers.commands, { desc = '[:] Command Palette' })
-vim.keymap.set('n', '<leader><leader>', function() 
+vim.keymap.set('n', '<leader><leader>', function()
   local ok = pcall(pickers.git_files, { show_untracked = true })
   if not ok then
     pickers.find_files { cwd = utils.buffer_dir(), hidden = true, follow = true }
@@ -771,7 +797,7 @@ require("todo-comments").setup({
   signs = false,
 })
 
-require('guess-indent').setup()
+require('guess-indent').setup({})
 
 -- INFO: Lean
 vim.pack.add({ "https://github.com/Julian/lean.nvim" }, { confirm = false })

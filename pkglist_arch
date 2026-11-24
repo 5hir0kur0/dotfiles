@@ -52,6 +52,7 @@ libdvdcss
 libqalculate
 libreoffice-still
 linux-lts
+lua-language-server
 macchanger
 man-pages
 mediainfo
