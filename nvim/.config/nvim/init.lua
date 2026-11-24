@@ -406,16 +406,15 @@ require("gitsigns").setup({
     -- visual mode
     map('v', '<leader>=s', function()
       gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-    end, { desc = 'git [s]tage hunk' })
+    end, { desc = 'git [s]tage/unstage hunk' })
     map('v', '<leader>=r', function()
       gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
     end, { desc = 'git [r]eset hunk' })
 
     -- normal mode
-    map('n', '<leader>=s', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
+    map('n', '<leader>=s', gitsigns.stage_hunk, { desc = 'git [s]tage/unstage hunk' })
     map('n', '<leader>=r', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
     map('n', '<leader>=S', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
-    map('n', '<leader>=u', gitsigns.stage_hunk, { desc = 'git [u]ndo stage hunk' })
     map('n', '<leader>=R', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
     map('n', '<leader>=p', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
     map('n', '<leader>=b', function()
