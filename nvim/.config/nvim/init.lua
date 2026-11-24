@@ -15,6 +15,9 @@
 -- run `:h '{option_name}'` to see what they do and what values they can take.
 -- for example, `:h 'number'` for `vim.opt.number`.
 
+-- enable faster startup by caching compiled Lua modules
+vim.loader.enable()
+
 -- set <space> as the leader key
 -- must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
@@ -406,7 +409,13 @@ require("gitsigns").setup({
     map('n', '<leader>=u', gitsigns.stage_hunk, { desc = 'git [u]ndo stage hunk' })
     map('n', '<leader>=R', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
     map('n', '<leader>=p', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
-    map('n', '<leader>=b', gitsigns.blame_line, { desc = 'git [b]lame line' })
+    map('n', '<leader>=b', function()
+      gitsigns.blame_line { full = true }
+    end, { desc = 'git [b]lame line' })
+    map('n', '<leader>=q', gitsigns.setqflist, { desc = 'git hunk [q]uickfix list (this file)' })
+    map('n', '<leader>=Q', function()
+      gitsigns.setqflist 'all'
+    end, { desc = 'git hunk [Q]uickfix list (whole repo)' })
     map('n', '<leader>=d', gitsigns.diffthis, { desc = 'git [d]iff against index' })
     map('n', '<leader>=D', function()
       gitsigns.diffthis '@'
@@ -414,6 +423,10 @@ require("gitsigns").setup({
     -- Toggles
     map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
     map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+    map('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = '[T]oggle git intra-line [w]ord diff' })
+
+    -- Text object
+    map({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'git [i]nside [h]unk' })
   end,
 })
 
@@ -430,6 +443,9 @@ require("nvim-treesitter").update()
 ---@param buf integer
 ---@param language string
 local function treesitter_try_attach(buf, language)
+  -- the buffer might be gone by the time an async parser install completes
+  if not vim.api.nvim_buf_is_valid(buf) then return end
+
   -- check if parser exists and load it
   if not vim.treesitter.language.add(language) then return end
   -- enables syntax highlighting and other treesitter features
@@ -437,11 +453,18 @@ local function treesitter_try_attach(buf, language)
 
   -- enables treesitter based folds
   -- for more info on folds see `:help folds`
-  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  vim.wo.foldmethod = 'expr'
+  -- (target the window showing `buf`, which need not be the current one after an async install)
+  local win = vim.fn.bufwinid(buf)
+  if win ~= -1 then
+    vim.wo[win][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.wo[win][0].foldmethod = 'expr'
+  end
 
-  -- enables treesitter based indentation
-  vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  -- enables treesitter based indentation, if the language has an indent query
+  -- (otherwise keep vim's builtin indentexpr, which is better than treesitter without a query)
+  if vim.treesitter.query.get(language, 'indents') ~= nil then
+    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end
 end
 
 local available_parsers = require('nvim-treesitter').get_available()
