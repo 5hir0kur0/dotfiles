@@ -1,4 +1,3 @@
-#
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.
 #
@@ -11,13 +10,9 @@
 # reloaded while running; some only apply to new windows and others may require
 # a full restart to take effect.
 
-# Config syntax crash course
-# ==========================
-# # The config file consists of simple key-value pairs,
-# # separated by equals signs.
 font-family = "Iosevka Term Slab"
 font-family = "Noto Serif CJK JP"
-font-feature = +ss07, dlig
+font-feature = +ss07, dlig, calt, liga
 font-size = 16
 adjust-cell-width = -4%
 adjust-cell-height = 8%
