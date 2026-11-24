@@ -706,7 +706,7 @@ end, { desc = '[D]iagnostics (current buf)' })
 vim.keymap.set('n', '<leader>D', pickers.diagnostics, { desc = '[D]iagnostics (global)' })
 vim.keymap.set('n', '<leader>.', pickers.oldfiles, { desc = '[.] Search Recent Files' })
 vim.keymap.set('n', '<leader>j', pickers.jumplist, { desc = '[J]umplist' })
-vim.keymap.set('n', '<leader>g', pickers.git_status, { desc = '[G]it changed files' })
+vim.keymap.set('n', '<leader>=g', pickers.git_status, { desc = '[G]it changed files' })
 
 vim.keymap.set("n", "<leader>B", pickers.builtin, { desc = "Search [B]uiltin Pickers", })
 vim.keymap.set("n", "<leader>H", pickers.help_tags, { desc = "Search [H]elp", })
