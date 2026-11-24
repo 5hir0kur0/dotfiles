@@ -184,9 +184,11 @@ vim.keymap.set('n', '<leader>y', '"+yy', { desc = '[Y]ank to system clipboard' }
 vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', { desc = '[P]aste system clipboard' })
 vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P', { desc = '[P]aste system clipboard before' })
 -- vim.keymap.set('n', '<leader>k', 'K', { desc = '[K] Docs for item' })
--- somehow, just mapping this to `gc` didn't work
-vim.keymap.set({ 'n', 'v' }, '<C-c>', ':norm vgc<CR>', { desc = '<C-c> Comment selection' })
-vim.keymap.set({ 'n', 'v' }, '<leader>c', ':norm vgc<CR>', { desc = '[C]omment selection' })
+-- `gc`/`gcc` are themselves mappings (see `:h commenting`), hence `remap = true`
+vim.keymap.set('n', '<C-c>', 'gcc', { remap = true, desc = '<C-c> Comment line' })
+vim.keymap.set('x', '<C-c>', 'gc', { remap = true, desc = '<C-c> Comment selection' })
+vim.keymap.set('n', '<leader>c', 'gcc', { remap = true, desc = '[C]omment line' })
+vim.keymap.set('x', '<leader>c', 'gc', { remap = true, desc = '[C]omment selection' })
 vim.keymap.set({ 'n', 'v', 'o' }, 'g|', '|', { desc = '[G]oto | Column' })
 vim.keymap.set({ 'n', 'v', 'o' }, 'ge', 'G', { desc = '[G]oto [E]nd of File' })
 vim.keymap.set({ 'n', 'v', 'o' }, 'gh', '0', { desc = '[G]oto [H] line start' })
