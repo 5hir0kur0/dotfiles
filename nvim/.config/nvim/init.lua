@@ -224,8 +224,10 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 
 -- Relative numbers everywhere except insert mode
 
+local relnum_group = vim.api.nvim_create_augroup('relative-number-toggle', { clear = true })
+
 vim.api.nvim_create_autocmd("InsertEnter", {
-  group = augroup,
+  group = relnum_group,
   callback = function()
     vim.opt_local.relativenumber = false
     vim.opt_local.number = true
@@ -233,7 +235,7 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 
 vim.api.nvim_create_autocmd("InsertLeave", {
-  group = augroup,
+  group = relnum_group,
   callback = function()
     vim.opt_local.relativenumber = true
     vim.opt_local.number = true
